@@ -2,22 +2,23 @@
 
 #include <vector>
 
-#include <legs/chassis/basic_chassis.hpp>
+#include "api.h"
+#include "legs/chassis/basic_chassis.hpp"
 
+namespace legs {
 
-class DiffChassis : public BasicChassis 
+/* Forward declarations so that both classes are aware of each other*/
+class DiffChassisBuilder;
+class DiffChassis;
+
+class DiffChassis : public BasicChassis
 {
-public:
+
+};
+
+class DiffChassisBuilder
+{
     
-private:
-
 };
 
-class DiffChassisBuilder 
-{
-public:
-    DiffChassisBuilder& leftWheels(std::vector<int> motors);
-    DiffChassisBuilder& rightWheels(std::vector<int> motors);
-
-    DiffChassis build();
-};
+} // namespace legs

@@ -9,7 +9,7 @@ public:
 
     }
     
-    double apply(const double currentValue, const double targetValue) {}
+    double apply(const double currentValue, const double targetValue);
     
     /**
      * Automatically creates a task that runs the PID calculations on the 
@@ -21,7 +21,7 @@ public:
      * 
      * @returns The amount of force to apply to reach the target value
     */
-    double task(double& currentValue, double& targetValue, int delay = 10) {}
+    double task(double& currentValue, double& targetValue, int delay = 10);
 
     double p, i, d;
 };

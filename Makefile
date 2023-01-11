@@ -14,7 +14,7 @@ INCDIR=$(ROOT)/include
 
 WARNFLAGS+=
 EXTRA_CFLAGS=
-EXTRA_CXXFLAGS=
+EXTRA_CXXFLAGS= -DEIGEN_DONT_VECTORIZE
 
 # Set to 1 to enable hot/cold linking
 USE_PACKAGE:=1
@@ -27,7 +27,7 @@ EXCLUDE_COLD_LIBRARIES:=
 IS_LIBRARY:=0
 # TODO: CHANGE THIS!
 LIBNAME:=legs
-VERSION:=0.0.1
+VERSION:=0.1.0
 
 # EXCLUDE_SRC_FROM_LIB= $(SRCDIR)/unpublishedfile.c
 # this line excludes opcontrol.c and similar files

@@ -1,17 +1,19 @@
 #pragma once
 
-#include <Eigen/Core>
+#include "Eigen/Core"
 
 class BasicChassis
 {
 public:
+    virtual void cartesianVelocity(Eigen::Vector2d& velocity) {}
 
-    virtual void forwardVelocity(double velocity) = 0;
-    virtual void angularVelocity(double velocity) = 0;
+    virtual void forwardVelocity(double velocity) {}
+    virtual void horizontalVelocity(double velocity) {}
+    virtual void angularVelocity(double velocity) {}
 
 protected:
     // We want the constructor to be protected so that no objects are made
-    // directly from this class
+    // directly from this class, only by being inherited and implemented
     BasicChassis() {}
 
 private:
