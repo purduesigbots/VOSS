@@ -14,7 +14,7 @@ class BoomerangController : public BasicController
     #define DISABLE 0
     #define TRANSLATIONAL 1
     #define ANGULAR 2
-    
+
     public:
         void move(Eigen::Vector3d& target);
         void turn(double target);
@@ -36,6 +36,8 @@ class BoomerangController : public BasicController
         bool reverse;
         bool thru;
         bool can_reverse;
+
+        friend class BoomerangControllerBuilder;
 };
 
 class BoomerangControllerBuilder
