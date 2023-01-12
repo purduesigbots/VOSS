@@ -5,11 +5,11 @@
 class BasicChassis
 {
 public:
-    virtual void cartesianVelocity(Eigen::Vector2d& velocity) {}
+    virtual void setCartesianVelocity(Eigen::Vector2d& velocity) {}
 
-    virtual void forwardVelocity(double velocity) {}
-    virtual void horizontalVelocity(double velocity) {}
-    virtual void angularVelocity(double velocity) {}
+    virtual void setForwardVelocity(double velocity) {}
+    virtual void setHorizontalVelocity(double velocity) {}
+    virtual void setAngularVelocity(double velocity) {}
 
 protected:
     // We want the constructor to be protected so that no objects are made
