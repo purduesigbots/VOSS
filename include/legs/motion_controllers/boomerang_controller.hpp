@@ -23,8 +23,6 @@ class BoomerangController : public BasicController
     
     private:
         int mode = DISABLE;
-        BasicChassis chassis;
-        BasicModel model;
         Pid linearPid;
         Pid angularPid;
         double linear_exit_error;
@@ -44,8 +42,8 @@ class BoomerangController : public BasicController
 class BoomerangControllerBuilder
 {
     public:
-        BoomerangControllerBuilder& withChassis(BasicChassis chassis);
-        BoomerangControllerBuilder& withModel(BasicModel model);
+        BoomerangControllerBuilder& withChassis(BasicChassis& chassis);
+        BoomerangControllerBuilder& withModel(BasicModel& model);
         BoomerangControllerBuilder& withLinearPid(double p, double i, double d);
         BoomerangControllerBuilder& withAngularPid(double p, double i, double d);
         BoomerangControllerBuilder& withExitErrors(double linear, double angular);

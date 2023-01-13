@@ -15,13 +15,13 @@ void BoomerangController::turn(double target) {
 BoomerangControllerBuilder::BoomerangControllerBuilder() {
 }
 
-BoomerangControllerBuilder& BoomerangControllerBuilder::withChassis(BasicChassis chassis) {
-    this->controller.chassis = chassis;
+BoomerangControllerBuilder& BoomerangControllerBuilder::withChassis(BasicChassis& chassis) {
+    this->controller.chassis = &chassis;
     return *this;
 }
 
-BoomerangControllerBuilder& BoomerangControllerBuilder::withModel(BasicModel model) {
-    this->controller.model = model;
+BoomerangControllerBuilder& BoomerangControllerBuilder::withModel(BasicModel& model) {
+    this->controller.model = &model;
     return *this;
 }
 

@@ -10,6 +10,8 @@ class BasicController
 
     protected:
         BasicController() {}
+        BasicChassis* chassis = NULL;
+        BasicModel* model = NULL;
     
     private:
 };
