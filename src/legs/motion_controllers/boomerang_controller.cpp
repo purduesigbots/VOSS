@@ -15,6 +15,16 @@ void BoomerangController::turn(double target) {
 BoomerangControllerBuilder::BoomerangControllerBuilder() {
 }
 
+BoomerangControllerBuilder& BoomerangControllerBuilder::withChassis(BasicChassis chassis) {
+    this->controller.chassis = chassis;
+    return *this;
+}
+
+BoomerangControllerBuilder& BoomerangControllerBuilder::withModel(BasicModel model) {
+    this->controller.model = model;
+    return *this;
+}
+
 BoomerangControllerBuilder& BoomerangControllerBuilder::withLinearPid(double p, double i, double d) {
     this->controller.linearPid = Pid(p,i,d);
     return *this;

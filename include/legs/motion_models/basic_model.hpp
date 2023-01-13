@@ -5,8 +5,9 @@
 class BasicModel
 {
 public:
-    virtual Eigen::Vector3d getPose()       = 0;
-    virtual Eigen::Vector2d getPosition()   = 0;
-    virtual double          getHeading()    = 0;
-
+    virtual Eigen::Vector3d getPose() {}
+    virtual Eigen::Vector2d getPosition() {}
+    virtual double          getHeading() {}
+protected:
+    BasicModel() {}
 };
