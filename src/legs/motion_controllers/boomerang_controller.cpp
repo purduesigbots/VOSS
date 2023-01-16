@@ -4,8 +4,8 @@
 
 namespace legs {
 
-void BoomerangController::move(Eigen::Vector3d& target) {
-
+void BoomerangController::move(std::vector<double> target) {
+    mode = TRANSLATIONAL;
 }
 
 void BoomerangController::turn(double target) {
@@ -16,12 +16,12 @@ BoomerangControllerBuilder::BoomerangControllerBuilder() {
 }
 
 BoomerangControllerBuilder& BoomerangControllerBuilder::withChassis(BasicChassis& chassis) {
-    this->controller.chassis = &chassis;
+    this->controller.chassis = std::make_shared<BasicChassis>(chassis);
     return *this;
 }
 
 BoomerangControllerBuilder& BoomerangControllerBuilder::withModel(BasicModel& model) {
-    this->controller.model = &model;
+    this->controller.model = std::make_shared<BasicModel>(model);
     return *this;
 }
 

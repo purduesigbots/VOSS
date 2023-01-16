@@ -15,7 +15,7 @@ class BoomerangController : public BasicController
     #define ANGULAR 2
 
     public:
-        void move(Eigen::Vector3d& target);
+        void move(std::vector<double> target);
         void turn(double target);
     
     protected:
