@@ -9,19 +9,19 @@ void BoomerangController::move(std::vector<double> target) {
 }
 
 void BoomerangController::turn(double target) {
-
+    mode = ANGULAR;
 }
 
 BoomerangControllerBuilder::BoomerangControllerBuilder() {
 }
 
 BoomerangControllerBuilder& BoomerangControllerBuilder::withChassis(BasicChassis& chassis) {
-    this->controller.chassis = std::make_shared<BasicChassis>(chassis);
+    this->controller.chassis = std::shared_ptr<BasicChassis>(&chassis);
     return *this;
 }
 
 BoomerangControllerBuilder& BoomerangControllerBuilder::withModel(BasicModel& model) {
-    this->controller.model = std::make_shared<BasicModel>(model);
+    this->controller.model = std::shared_ptr<BasicModel>(&model);
     return *this;
 }
 
