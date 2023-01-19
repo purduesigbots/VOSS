@@ -26,6 +26,7 @@ namespace legs {
     class LegsDistanceTracker: BaseDistanceTracker {
         public:
             LegsDistanceTracker(unsigned int port_num, legs::distance_tracker_type type, bool reverse, double tpi);
+            LegsDistanceTracker(unsigned int port_num, int expander_port, bool reverse, double tpi);
             double get_dist_traveled();
         private:
             int port_num;
