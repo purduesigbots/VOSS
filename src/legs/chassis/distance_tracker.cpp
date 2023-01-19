@@ -39,10 +39,11 @@ namespace legs {
         this->type = LEGS_ADI_ENCODER;
         this->tpi = tpi;
 
-        if(!validate_port_adi(port_num)) {
+        if(!validate_port_adi(port_num) || !validate_port_adi(expander_port)) {
             printf(LEGS_ERR_INVALID_ENCODER_PORT);
             return;
         }
+
         enc = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>({expander_port, port_num, port_num + 1}), port_num < 0);
         enc->reset();
     }
