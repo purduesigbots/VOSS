@@ -5,19 +5,30 @@
 namespace legs {
 
 Eigen::Vector2d OdometryModel::getPosition() {
-    Eigen::Vector2d position(0.0, 0.0);
-
+    Eigen::Vector2d position(this->pose.x(), this->pose.y());
     return position;
 }
 
 Eigen::Vector3d OdometryModel::getPose() {
-    Eigen::Vector3d pose(0.0, 0.0, 0.0);
-
-    return pose;
+    return this->pose;
 }
 
 double OdometryModel::getHeading() {
-    return 0.0;
+    return this->pose.z();
+}
+
+int OdometryModel::odomTask() {
+    this->pose = Eigen::Vector3d(0.0, 0.0, 0.0);
+
+    while(true) {
+
+    }
+}
+
+void OdometryModel::begin() {
+    this->task = pros::Task([=](){
+        this->odomTask();
+    });
 }
 
 OdometryModelBuilder::OdometryModelBuilder() {
@@ -57,6 +68,7 @@ OdometryModelBuilder& OdometryModelBuilder::withMiddleEncoder(int port) {
     } else {
         this->odom.middleADIEncoder = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>(this->odom.expanderPort, port, port + 1), port < 0);
     }
+    this->hasMiddleEncoder = true;
     return *this;
 }
 
@@ -72,16 +84,21 @@ OdometryModelBuilder& OdometryModelBuilder::withRightRotation(int port) {
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleRotation(int port) {
     this->odom.middleRotation = std::make_shared<pros::Rotation>(port);
+    this->hasMiddleEncoder = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withTrackWidth(double track_width) {
     this->odom.track_width = track_width;
+    this->odom.left_right_distance = 0.5 * track_width;
+    this->hasTrackWidthOrLeftRightDistance = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRightDistance(double left_right_distance) {
     this->odom.left_right_distance = left_right_distance;
+    this->odom.track_width = 2 * left_right_distance;
+    this->hasTrackWidthOrLeftRightDistance = true;
     return *this;
 }
 
@@ -92,21 +109,29 @@ OdometryModelBuilder& OdometryModelBuilder::withMiddleDistance(double middle_dis
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRightTPI(double tpi) {
     this->odom.tpi = tpi;
+    this->hasTPI = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleTPI(double middle_tpi) {
     this->odom.middle_tpi = middle_tpi;
-    return *this;
-}
-
-OdometryModelBuilder& OdometryModelBuilder::withEncoderType(EncoderType_e_t type) {
-    this->odom.encoderType = type;
+    this->hasMiddleTPI = true;
     return *this;
 }
 
 OdometryModel OdometryModelBuilder::build() {
-    return this->odom;
+    if(this->hasTrackWidthOrLeftRightDistance && 
+       this->hasTPI &&
+       (
+        this->hasIMU || 
+        (this->hasMiddleEncoder && this->hasMiddleTPI)
+       )
+       ) {
+        this->odom.begin();
+        return this->odom;
+    } else {
+        // throw an error
+    }
 }
 
 }

@@ -33,10 +33,16 @@ class OdometryModel : public BasicModel
         double tpi;
         double middle_tpi;
 
+        Eigen::Vector3d pose;
+
+        pros::Task task;
+
         friend class OdometryModelBuilder;
     
     protected:
+        int odomTask();
         OdometryModel();
+        void begin();
 
     public:
         Eigen::Vector3d getPose();
@@ -48,6 +54,11 @@ class OdometryModelBuilder
 {
     private:
         OdometryModel odom;
+        bool hasTrackWidthOrLeftRightDistance;
+        bool hasTPI;
+        bool hasIMU;
+        bool hasMiddleEncoder;
+        bool hasMiddleTPI;
 
     public:
         OdometryModelBuilder& withImu(int port);
@@ -63,7 +74,6 @@ class OdometryModelBuilder
         OdometryModelBuilder& withMiddleDistance(double middle_distance);
         OdometryModelBuilder& withLeftRightTPI(double left_right_tpi);
         OdometryModelBuilder& withMiddleTPI(double middle_tpi);
-        OdometryModelBuilder& withEncoderType(EncoderType_e_t type);
 
         OdometryModel build();
 
