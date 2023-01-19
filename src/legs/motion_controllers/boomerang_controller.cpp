@@ -32,9 +32,9 @@ if (!(flags & ASYNC)) {
     waitUntilFinished();
     mode = DISABLE;
     if (!(flags & THRU)) {
-        chassis->angularVelocity(0);
-        chassis->forwardVelocity(0);
-        chassis->horizontalVelocity(0);
+        chassis->setAngularVelocity(0);
+        chassis->setForwardVelocity(0);
+        chassis->setHorizontalVelocity(0);
     }
 }
 
