@@ -1,4 +1,4 @@
 #pragma once
 
-#include "legs/chassis/basic_chassis.hpp"
-#include "legs/chassis/diff_chassis.hpp"
+#include "basic_chassis.hpp"
+#include "diff_chassis.hpp"
