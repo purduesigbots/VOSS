@@ -39,7 +39,7 @@ namespace legs {
         this->type = LEGS_ADI_ENCODER;
         this->tpi = tpi;
 
-        if(!validate_port_adi(port_num) || !validate_port_adi(expander_port)) {
+        if(!validate_port_adi(port_num) || !validate_port_smart(expander_port)) {
             printf(LEGS_ERR_INVALID_ENCODER_PORT);
             return;
         }
