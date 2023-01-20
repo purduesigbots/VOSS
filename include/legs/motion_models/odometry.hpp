@@ -32,6 +32,13 @@ class OdometryModel : public BasicModel
         double tpi;
         double middle_tpi;
 
+        double prev_left_pos;
+        double prev_right_pos;
+        double prev_middle_pos;
+        double prev_heading;
+
+        bool debug;
+
         Eigen::Vector3d pose;
 
         pros::Task task;
@@ -61,6 +68,7 @@ class OdometryModelBuilder
 
     public:
         OdometryModelBuilder& withImu(int port);
+        OdometryModelBuilder& withDebug(bool debug);
         OdometryModelBuilder& withExpander(int port);
         OdometryModelBuilder& withRightEncoder(int port);
         OdometryModelBuilder& withLeftEncoder(int port);

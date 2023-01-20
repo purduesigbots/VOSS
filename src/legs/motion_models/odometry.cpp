@@ -20,7 +20,59 @@ int OdometryModel::odomTask() {
     this->pose = Eigen::Vector3d(0.0, 0.0, 0.0);
 
     while(true) {
+        bool hasMiddleTracker = this->middleTracker != nullptr;
 
+		double left_pos = this->leftTracker->get_dist_traveled();
+		double right_pos = this->rightTracker->get_dist_traveled();
+		double middle_pos = hasMiddleTracker ? this->middleTracker->get_dist_traveled() : 0;
+
+		// calculate change in each encoder
+		double delta_left = (left_pos - prev_left_pos) / this->tpi;
+		double delta_right = (right_pos - prev_right_pos) / this->tpi;
+		double delta_middle = hasMiddleTracker
+		                          ? (middle_pos - prev_middle_pos) / this->middle_tpi
+		                          : 0;
+
+		// calculate new heading
+		double delta_angle;
+		if (this->imu != nullptr) {
+			this->pose(2) = -this->imu->get_rotation() * M_PI / 180.0;
+			delta_angle = this->pose.z() - prev_heading;
+		} else {
+			delta_angle = (delta_right - delta_left) / this->track_width;
+
+			this->pose(2) += delta_angle;
+		}
+
+		// store previous positions
+		prev_left_pos = left_pos;
+		prev_right_pos = right_pos;
+		prev_middle_pos = middle_pos;
+		prev_heading = this->pose.z();
+
+		// calculate local displacement
+		double local_x;
+		double local_y;
+
+		if (delta_angle) {
+			double i = sin(delta_angle / 2.0) * 2.0;
+			local_x = (delta_right / delta_angle - left_right_distance) * i;
+			local_y = (delta_middle / delta_angle + middle_distance) * i;
+		} else {
+			local_x = delta_right;
+			local_y = delta_middle;
+		}
+
+		double p = this->pose.z() - delta_angle / 2.0; // global angle
+
+		// convert to absolute displacement
+		this->pose(0) += cos(p) * local_x - sin(p) * local_y;
+		this->pose(1) += cos(p) * local_y + sin(p) * local_x;
+
+		if (this->debug)
+			printf("%.2f, %.2f, %.2f \n", this->pose.x(), this->pose.y(), this->pose.z());
+
+		pros::delay(10);
     }
 }
 
@@ -35,6 +87,11 @@ OdometryModelBuilder::OdometryModelBuilder() {
 
 OdometryModelBuilder& OdometryModelBuilder::withImu(int port) {
     this->odom.imu = std::make_shared<pros::Imu>(port);
+    return *this;
+}
+
+OdometryModelBuilder& OdometryModelBuilder::withDebug(bool debug) {
+    this->odom.debug = debug;
     return *this;
 }
 
