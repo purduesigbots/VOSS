@@ -2,6 +2,8 @@
 
 #include "api.h"
 #include "legs/motion_models/basic_model.hpp"
+#include "legs/chassis/distance_tracker.hpp"
+
 
 namespace legs {
 
@@ -20,12 +22,9 @@ class OdometryModel : public BasicModel
         EncoderType_e_t encoderType;
 
         std::shared_ptr<pros::Imu> imu = nullptr;
-        std::shared_ptr<pros::Rotation> rightRotation = nullptr;
-        std::shared_ptr<pros::Rotation> leftRotation = nullptr;
-        std::shared_ptr<pros::Rotation> middleRotation = nullptr;
-        std::shared_ptr<pros::ADIEncoder> rightADIEncoder = nullptr;
-        std::shared_ptr<pros::ADIEncoder> leftADIEncoder = nullptr;
-        std::shared_ptr<pros::ADIEncoder> middleADIEncoder = nullptr;
+        std::shared_ptr<LegsDistanceTracker> rightTracker = nullptr;
+        std::shared_ptr<LegsDistanceTracker> leftTracker = nullptr;
+        std::shared_ptr<LegsDistanceTracker> middleTracker = nullptr;
 
         double track_width;
         double left_right_distance;

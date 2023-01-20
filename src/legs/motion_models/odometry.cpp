@@ -1,5 +1,4 @@
 #include "legs/motion_models/odometry.hpp"
-
 #include "api.h"
 
 namespace legs {
@@ -45,45 +44,63 @@ OdometryModelBuilder& OdometryModelBuilder::withExpander(int port) {
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftEncoder(int port) {
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
     if(this->odom.expanderPort == 0) {
-        this->odom.leftADIEncoder = std::make_shared<pros::ADIEncoder>(port, port + 1, port < 0);
+        this->odom.leftTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, this->odom.tpi);
     } else {
-        this->odom.leftADIEncoder = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>(this->odom.expanderPort, port, port + 1), port < 0);
+        this->odom.leftTracker = std::make_shared<LegsDistanceTracker>(port, this->odom.expanderPort, port < 0, this->odom.tpi);
     }
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withRightEncoder(int port) {
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
     if(this->odom.expanderPort == 0) {
-        this->odom.rightADIEncoder = std::make_shared<pros::ADIEncoder>(port, port + 1, port < 0);
+        this->odom.rightTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, this->odom.tpi);
     } else {
-        this->odom.rightADIEncoder = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>(this->odom.expanderPort, port, port + 1), port < 0);
+        this->odom.rightTracker = std::make_shared<LegsDistanceTracker>(port, this->odom.expanderPort, port < 0, this->odom.tpi);
     }
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleEncoder(int port) {
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
     if(this->odom.expanderPort == 0) {
-        this->odom.middleADIEncoder = std::make_shared<pros::ADIEncoder>(port, port + 1, port < 0);
+        this->odom.middleTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, this->odom.tpi);
     } else {
-        this->odom.middleADIEncoder = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>(this->odom.expanderPort, port, port + 1), port < 0);
+        this->odom.middleTracker = std::make_shared<LegsDistanceTracker>(port, this->odom.expanderPort, port < 0, this->odom.tpi);
     }
     this->hasMiddleEncoder = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRotation(int port) {
-    this->odom.leftRotation = std::make_shared<pros::Rotation>(port);
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
+    this->odom.leftTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, this->odom.tpi);
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withRightRotation(int port) {
-    this->odom.rightRotation = std::make_shared<pros::Rotation>(port);
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
+    this->odom.rightTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, this->odom.tpi);
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleRotation(int port) {
-    this->odom.middleRotation = std::make_shared<pros::Rotation>(port);
+    if(this->odom.tpi == 0) {
+        //throw error
+    }
+    this->odom.middleTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, this->odom.tpi);
     this->hasMiddleEncoder = true;
     return *this;
 }
@@ -130,7 +147,7 @@ OdometryModel OdometryModelBuilder::build() {
         this->odom.begin();
         return this->odom;
     } else {
-        // throw an error
+        // throw error
     }
 }
 

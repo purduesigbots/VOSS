@@ -5,6 +5,7 @@
 #include "legs/chassis/basic_chassis.hpp"
 #include "legs/chassis/diff_chassis.hpp"
 #include "legs/chassis/chassis.hpp"
+#include "legs/chassis/distance_tracker.hpp"
 
 /* Motion Controller Files */
 #include "legs/motion_controllers/motion_controller.hpp"
