@@ -2,6 +2,7 @@
 
 #include "api.h"
 #include "legs/api.hpp"
+#include "legs/pid.hpp"
 
 namespace legs {
 

@@ -51,7 +51,7 @@ void BoomerangController::waitUntilFinished() {
     pros::delay(400);
     switch (mode) {
         case TRANSLATIONAL:
-            while ((model->getPose() - linear_target).squaredNorm() > linear_exit_error) {
+            while ((model->getPosition() - linear_target).norm() > linear_exit_error) {
                 pros::delay(10);
             }
 
