@@ -19,12 +19,18 @@ class BoomerangController : public BasicController
         void move(std::vector<double> target, double lead_pct, double max, double exit_error,
                   MoveFlags = NONE);
         void move(std::vector<double> target, MoveFlags = NONE);
-        void turn(double target);
+        void turn(double target, double max, double exit_error, MoveFlags = NONE);
+        void turn(double target, MoveFlags = NONE);
         void waitUntilFinished();
         bool settled();
+        std::array<double, 2> translational();
+        double angular();
     
     protected:
         BoomerangController();
+        void update();
+        void init();
+
     
     private:
         int mode = DISABLE;
@@ -32,8 +38,12 @@ class BoomerangController : public BasicController
         Pid angular_pid;
         Eigen::Vector2d linear_target;
         double angular_target;
+        Eigen::Vector2d prev_position;
+        double prev_angle;
+        int settle_count;
         double linear_exit_error;
         double angular_exit_error;
+        double exit_error;
         double linear_settle_thresh;
         double angular_settle_thresh;
         double settle_time;

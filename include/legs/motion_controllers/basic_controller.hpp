@@ -9,7 +9,7 @@ class BasicController
 {
     public:
         virtual void move(std::vector<double> target, MoveFlags = NONE) = 0;
-        virtual void turn(double target)                                = 0;
+        virtual void turn(double target, MoveFlags = NONE)              = 0;
 
     protected:
         BasicController() {}
