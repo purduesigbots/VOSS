@@ -1,4 +1,7 @@
-#include "pid.hpp"
+#include "legs/pid.hpp"
+#include "math.h"
+
+namespace legs {
 
 double error;
 double derivative;
@@ -12,12 +15,12 @@ Pid::Pid(double _p, double _i = 0.0, double _d = 0.0)
     d = _d;
     }
 
-Pid::apply(const double currentValue, const double targetValue){
+double Pid::apply(const double currentValue, const double targetValue){
     error = targetValue - currentValue;
     derivative = error - pe;
 	if ((pe > 0 && error < 0) || (pe < 0 && error > 0))
 		in = 0; // remove integral at zero error
-	double speed = error * kp +in * ki + derivative * kd;
+	double speed = error * p + in * i + derivative * d;
 
 	// only let integral wind up if near the target
 	if (fabs(error) < 15) {
@@ -30,8 +33,8 @@ Pid::apply(const double currentValue, const double targetValue){
     return speed;
 }
 
-
-
-Pid::PidOut(){
+double Pid::pidOut(){
     return speed;
+}
+
 }
