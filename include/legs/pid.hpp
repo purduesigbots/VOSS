@@ -3,11 +3,7 @@
 class Pid
 {
 public:
-    Pid(double _p, double _i = 0.0, double _d = 0.0) 
-    : p(_p), i(_i), d(_d)
-    {
-
-    }
+    Pid(double p, double i, double d);
     
     double apply(const double currentValue, const double targetValue);
     
@@ -23,5 +19,9 @@ public:
     */
     double task(double& currentValue, double& targetValue, int delay = 10);
 
+    double pidOut();
+
     double p, i, d;
+private:
+    double in, pe, speed;
 };
