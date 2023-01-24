@@ -12,7 +12,7 @@ Pid::Pid(double _p, double _i = 0.0, double _d = 0.0)
     d = _d;
     }
 
-    void Pid::apply(const double currentValue, const double targetValue){
+    double Pid::apply(const double currentValue, const double targetValue){
     error = targetValue - currentValue;
     derivative = error - pe;
 	if ((pe > 0 && error < 0) || (pe < 0 && error > 0))
@@ -25,6 +25,8 @@ Pid::Pid(double _p, double _i = 0.0, double _d = 0.0)
 	}
 
 	pe = error;
+
+    return speed;
 }
 
 double Pid::pidOut(){

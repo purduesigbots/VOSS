@@ -7,7 +7,7 @@ class Pid
 public:
     Pid(double p, double i, double d);
     
-    void apply(const double currentValue, const double targetValue);
+    double apply(const double currentValue, const double targetValue);
     
     /**
      * Automatically creates a task that runs the PID calculations on the 
