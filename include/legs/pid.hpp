@@ -7,7 +7,7 @@ class Pid
 public:
     Pid(double p, double i, double d);
     
-    double apply(const double currentValue, const double targetValue);
+    void apply(const double currentValue, const double targetValue);
     
     /**
      * Automatically creates a task that runs the PID calculations on the 
@@ -19,13 +19,13 @@ public:
      * 
      * @returns The amount of force to apply to reach the target value
     */
-    double task(double& currentValue, double& targetValue, int delay = 10);
+    void task(double& currentValue, double& targetValue, int delay = 10);
 
     double pidOut();
 
     double p, i, d;
 private:
-    double in, pe, speed;
+    double in, pe, speed, error, derivative;
 };
 
 }
