@@ -24,8 +24,9 @@ public:
     double pidOut();
 
     double p, i, d;
+    
 private:
     double in, pe, speed, error, derivative;
 };
 
-}
+} // namespace legs
