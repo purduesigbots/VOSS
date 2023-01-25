@@ -1,5 +1,7 @@
 #pragma once
 
+namespace legs {
+
 class Pid
 {
 public:
@@ -25,3 +27,5 @@ public:
 
     double p, i, d;
 };
+
+} // namespace legs
