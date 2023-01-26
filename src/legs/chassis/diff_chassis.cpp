@@ -12,31 +12,40 @@ namespace legs {
         // initialize the builder
     }
 
-    DiffChassisBuilder &DiffChassisBuilder::withImu(const pros::Imu &imu)
-    {
-        this->chassis.imu=std::make_shared<pros::Imu>(imu);
+    DiffChassisBuilder &DiffChassisBuilder::withLeftMotors(const pros::MotorGroup &leftMotors) {
+        this->chassis.leftMotors=std::make_shared<pros::MotorGroup>(leftMotors);
+        return *this;
     }
 
-    DiffChassisBuilder &DiffChassisBuilder::withImu(const int port)
-    {
-        std::shared_ptr<pros::Imu> tmp = std::make_shared<pros::Imu>(port);
-        return this->withImu(*tmp);
+    DiffChassisBuilder &DiffChassisBuilder::withRightMotors(const pros::MotorGroup &rightMotors) {
+        this->chassis.rightMotors=std::make_shared<pros::MotorGroup>(rightMotors);
+        return *this;
     }
 
     DiffChassis DiffChassisBuilder::build() {
-        if(this->chassis.leftEncoder==nullptr) {
-            if(this->chassis.leftMotors) {
-                
-            }
-        }
         return this->chassis;
     }
-
-
     // set left motors function
 
+    void DiffChassis::setForwardVelocity(double velocity) {
+        this->leftMotors->move_velocity(velocity);
+        this->rightMotors->move_velocity(velocity);
+    }
 
+    void DiffChassis::setAngularVelocity(double velocity) {
+        this->leftMotors->move_velocity(velocity);
+        this->rightMotors->move_velocity(-velocity);
+    }
 
+    void DiffChassis::setLeftVelocity(double velocity) {
+        this->leftMotors->move_velocity(velocity);
+    }
 
+    void DiffChassis::setRightVelocity(double velocity) {
+        this->rightMotors->move_velocity(velocity);
+    }
+
+    
 
 }
+
