@@ -21,9 +21,11 @@ class OdometryModel : public BasicModel
     private:
         // Please see the notes/Tasks.txt file for an explanation on why this
         // nested class exists.  
-        class Impl 
+        class Task
         { 
         public:
+            Task();
+
             int expanderPort = 0;
 
             EncoderType_e_t encoderType;
@@ -48,11 +50,10 @@ class OdometryModel : public BasicModel
 
             Eigen::Vector3d pose;
 
-            int odomTask();
+            int mainLoop();
             void begin();
         };
-
-        std::shared_ptr<Impl> impl;
+        std::shared_ptr<Task> task;
 
         friend class OdometryModelBuilder;
     
@@ -64,7 +65,7 @@ class OdometryModel : public BasicModel
         Eigen::Vector2d getPosition();
         double          getHeading();
         void setPose(double x, double y, double heading);
-        inline void begin() { impl->begin(); }
+        inline void begin() { task->begin(); }
 };
 
 class OdometryModelBuilder

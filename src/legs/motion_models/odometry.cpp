@@ -4,13 +4,13 @@
 namespace legs {
 
 //==============================================================================
-//                          ODOMETRY IMPLEMENTATION
+//                          ODOMETRY taskEMENTATION
 //
 // For an explanation on why this class exists, look at the notes/Tasks.txt text
 // file. 
 //==============================================================================
 
-int OdometryModel::Impl::odomTask() {
+int OdometryModel::Task::mainLoop() {
     this->pose[0] = 0;
     this->pose[1] = 0;
     this->pose[2] = 0;
@@ -72,9 +72,9 @@ int OdometryModel::Impl::odomTask() {
     }
 }
 
-void OdometryModel::Impl::begin() {
+void OdometryModel::Task::begin() {
     pros::Task odom([=](){
-        this->odomTask();
+        this->mainLoop();
     });
 }
 
@@ -83,26 +83,26 @@ void OdometryModel::Impl::begin() {
 //==============================================================================
 
 Eigen::Vector2d OdometryModel::getPosition() {
-    Eigen::Vector2d position(impl->pose.x(), impl->pose.y());
+    Eigen::Vector2d position(task->pose.x(), task->pose.y());
     return position;
 }
 
 Eigen::Vector3d OdometryModel::getPose() {
-    return impl->pose;
+    return task->pose;
 }
 
 void OdometryModel::setPose(double x, double y, double heading) {
-    impl->pose[0] = x;
-    impl->pose[1] = y;
-    impl->pose[2] = heading;
+    task->pose[0] = x;
+    task->pose[1] = y;
+    task->pose[2] = heading;
 }
 
 double OdometryModel::getHeading() {
-    return impl->pose.z();
+    return task->pose.z();
 }
 
 OdometryModel::OdometryModel() 
-: impl{std::shared_ptr<Impl>(new Impl())}
+: task{std::shared_ptr<task>(new task())}
 {
 }
 
@@ -115,109 +115,109 @@ OdometryModelBuilder::OdometryModelBuilder() {
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withImu(int port) {
-    odom.impl->imu = std::make_shared<pros::Imu>(port);
+    odom.task->imu = std::make_shared<pros::Imu>(port);
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withDebug(bool debug) {
-    odom.impl->debug = debug;
+    odom.task->debug = debug;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withExpander(int port) {
-    odom.impl->expanderPort = port;
+    odom.task->expanderPort = port;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftEncoder(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    if(odom.impl->expanderPort == 0) {
-        odom.impl->leftTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.impl->tpi);
+    if(odom.task->expanderPort == 0) {
+        odom.task->leftTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.task->tpi);
     } else {
-        odom.impl->leftTracker = std::make_shared<LegsDistanceTracker>(port, odom.impl->expanderPort, port < 0, odom.impl->tpi);
+        odom.task->leftTracker = std::make_shared<LegsDistanceTracker>(port, odom.task->expanderPort, port < 0, odom.task->tpi);
     }
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withRightEncoder(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    if(odom.impl->expanderPort == 0) {
-        odom.impl->rightTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.impl->tpi);
+    if(odom.task->expanderPort == 0) {
+        odom.task->rightTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.task->tpi);
     } else {
-        odom.impl->rightTracker = std::make_shared<LegsDistanceTracker>(port, odom.impl->expanderPort, port < 0, odom.impl->tpi);
+        odom.task->rightTracker = std::make_shared<LegsDistanceTracker>(port, odom.task->expanderPort, port < 0, odom.task->tpi);
     }
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleEncoder(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    if(odom.impl->expanderPort == 0) {
-        odom.impl->middleTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.impl->tpi);
+    if(odom.task->expanderPort == 0) {
+        odom.task->middleTracker = std::make_shared<LegsDistanceTracker>(port, LEGS_ADI_ENCODER, port < 0, odom.task->tpi);
     } else {
-        odom.impl->middleTracker = std::make_shared<LegsDistanceTracker>(port, odom.impl->expanderPort, port < 0, odom.impl->tpi);
+        odom.task->middleTracker = std::make_shared<LegsDistanceTracker>(port, odom.task->expanderPort, port < 0, odom.task->tpi);
     }
     this->hasMiddleEncoder = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRotation(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    odom.impl->leftTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.impl->tpi);
+    odom.task->leftTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.task->tpi);
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withRightRotation(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    odom.impl->rightTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.impl->tpi);
+    odom.task->rightTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.task->tpi);
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleRotation(int port) {
-    if(odom.impl->tpi == 0) {
+    if(odom.task->tpi == 0) {
         //throw error
     }
-    odom.impl->middleTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.impl->tpi);
+    odom.task->middleTracker = std::make_shared<legs::LegsDistanceTracker>(port, LEGS_ROTATION, port < 0, odom.task->tpi);
     this->hasMiddleEncoder = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withTrackWidth(double track_width) {
-    odom.impl->track_width = track_width;
-    odom.impl->left_right_distance = 0.5 * track_width;
+    odom.task->track_width = track_width;
+    odom.task->left_right_distance = 0.5 * track_width;
     this->hasTrackWidthOrLeftRightDistance = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRightDistance(double left_right_distance) {
-    odom.impl->left_right_distance = left_right_distance;
-    odom.impl->track_width = 2 * left_right_distance;
+    odom.task->left_right_distance = left_right_distance;
+    odom.task->track_width = 2 * left_right_distance;
     this->hasTrackWidthOrLeftRightDistance = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleDistance(double middle_distance) {
-    odom.impl->middle_distance = middle_distance;
+    odom.task->middle_distance = middle_distance;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withLeftRightTPI(double tpi) {
-    odom.impl->tpi = tpi;
+    odom.task->tpi = tpi;
     this->hasTPI = true;
     return *this;
 }
 
 OdometryModelBuilder& OdometryModelBuilder::withMiddleTPI(double middle_tpi) {
-    odom.impl->middle_tpi = middle_tpi;
+    odom.task->middle_tpi = middle_tpi;
     this->hasMiddleTPI = true;
     return *this;
 }
