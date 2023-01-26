@@ -23,17 +23,23 @@ class DiffChassis : public BasicChassis
             virtual void setAngularVelocity(double velocity) override;
             virtual void setLeftVelocity(double velocity);
             virtual void setRightVelocity(double velocity);
+            virtual void tank(double leftVelocity, double rightVelocity);
+            virtual void arcade(double forwardVelocity, double angularVelocity);
 
 };
 
 class DiffChassisBuilder
 {
+    public:
+        explicit DiffChassisBuilder();
 
-    explicit DiffChassisBuilder();
+        //DiffChassisBuilder &withLeftMotors(const pros::MotorGroup &leftMotors); motor group references do not work unknown reason
+        DiffChassisBuilder &withLeftMotors(const std::vector<int8_t> leftMotors);
+        //DiffChassisBuilder &withRightMotors(const pros::MotorGroup &rightMotors);
+        DiffChassisBuilder &withRightMotors(const std::vector<int8_t> rightMotors);
 
-    DiffChassisBuilder &withLeftMotors(const pros::MotorGroup &leftMotors);
-    DiffChassisBuilder &withRightMotors(const pros::MotorGroup &rightMotors);
-    DiffChassis build();
+
+        DiffChassis build();
 
     private:
         DiffChassis chassis;
