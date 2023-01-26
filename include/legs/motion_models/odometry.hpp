@@ -24,8 +24,6 @@ class OdometryModel : public BasicModel
         class Task
         { 
         public:
-            Task();
-
             int expanderPort = 0;
 
             EncoderType_e_t encoderType;

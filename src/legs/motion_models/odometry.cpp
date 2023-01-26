@@ -102,7 +102,7 @@ double OdometryModel::getHeading() {
 }
 
 OdometryModel::OdometryModel() 
-: task{std::shared_ptr<task>(new task())}
+: task{std::shared_ptr<Task>(new Task())}
 {
 }
 
