@@ -5,6 +5,9 @@ namespace legs {
 
 //==============================================================================
 //                          ODOMETRY IMPLEMENTATION
+//
+// For an explanation on why this class exists, look at the notes/Tasks.txt text
+// file. 
 //==============================================================================
 
 int OdometryModel::Impl::odomTask() {
@@ -61,10 +64,6 @@ int OdometryModel::Impl::odomTask() {
 		// convert to absolute displacement
 		this->pose(0) += cos(p) * local_x - sin(p) * local_y;
 		this->pose(1) += cos(p) * local_y + sin(p) * local_x;
-
-        pose.x() = 1;
-        pose.y() = 2;
-        pose.z() = 3;
 
 		if (this->debug)
 			printf("%.2f, %.2f, %.2f \n", this->pose.x(), this->pose.y(), this->pose.z());

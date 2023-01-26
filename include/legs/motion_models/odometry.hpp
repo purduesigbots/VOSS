@@ -19,7 +19,8 @@ class OdometryModel;
 class OdometryModel : public BasicModel
 {
     private:
- 
+        // Please see the notes/Tasks.txt file for an explanation on why this
+        // nested class exists.  
         class Impl 
         { 
         public:
