@@ -1,6 +1,9 @@
 #pragma once
 
 #include "api.h"
+
+#include <memory>
+
 #include "legs/motion_models/basic_model.hpp"
 #include "legs/chassis/distance_tracker.hpp"
 
@@ -16,35 +19,43 @@ class OdometryModel;
 class OdometryModel : public BasicModel
 {
     private:
+ 
+        class Impl 
+        { 
+        public:
+            int expanderPort = 0;
 
-        int expanderPort = 0;
+            EncoderType_e_t encoderType;
 
-        EncoderType_e_t encoderType;
+            std::shared_ptr<pros::Imu> imu = nullptr;
+            std::shared_ptr<LegsDistanceTracker> rightTracker = nullptr;
+            std::shared_ptr<LegsDistanceTracker> leftTracker = nullptr;
+            std::shared_ptr<LegsDistanceTracker> middleTracker = nullptr;
 
-        std::shared_ptr<pros::Imu> imu = nullptr;
-        std::shared_ptr<LegsDistanceTracker> rightTracker = nullptr;
-        std::shared_ptr<LegsDistanceTracker> leftTracker = nullptr;
-        std::shared_ptr<LegsDistanceTracker> middleTracker = nullptr;
+            double track_width;
+            double left_right_distance;
+            double middle_distance;
+            double tpi;
+            double middle_tpi;
 
-        double track_width;
-        double left_right_distance;
-        double middle_distance;
-        double tpi;
-        double middle_tpi;
+            double prev_left_pos;
+            double prev_right_pos;
+            double prev_middle_pos;
+            double prev_heading;
 
-        double prev_left_pos;
-        double prev_right_pos;
-        double prev_middle_pos;
-        double prev_heading;
+            bool debug;
 
-        bool debug;
+            Eigen::Vector3d pose;
 
-        Eigen::Vector3d pose;
+            int odomTask();
+            void begin();
+        };
+
+        std::shared_ptr<Impl> impl;
 
         friend class OdometryModelBuilder;
     
     protected:
-        int odomTask();
         OdometryModel();
 
     public:
@@ -52,7 +63,7 @@ class OdometryModel : public BasicModel
         Eigen::Vector2d getPosition();
         double          getHeading();
         void setPose(double x, double y, double heading);
-        void begin();
+        inline void begin() { impl->begin(); }
 };
 
 class OdometryModelBuilder

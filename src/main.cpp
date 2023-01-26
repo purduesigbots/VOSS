@@ -89,10 +89,8 @@ void opcontrol() {
 									   .withLeftEncoder(3)
 									   .withRightEncoder(7)
 									   .withMiddleEncoder(1)
-									   .withDebug(false)
+									   .withDebug(true)
 									   .build();
-	
-	model.begin();
 	
 	while (true) {
 		Eigen::Vector3d pose = model.getPose();
