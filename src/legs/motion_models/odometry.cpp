@@ -12,12 +12,20 @@ Eigen::Vector3d OdometryModel::getPose() {
     return this->pose;
 }
 
+void OdometryModel::setPose(double x, double y, double heading) {
+    this->pose[0] = x;
+    this->pose[1] = y;
+    this->pose[2] = heading;
+}
+
 double OdometryModel::getHeading() {
     return this->pose.z();
 }
 
 int OdometryModel::odomTask() {
-    this->pose = Eigen::Vector3d(0.0, 0.0, 0.0);
+    this->pose[0] = 0;
+    this->pose[1] = 0;
+    this->pose[2] = 0;
 
     while(true) {
         bool hasMiddleTracker = this->middleTracker != nullptr;
@@ -27,10 +35,10 @@ int OdometryModel::odomTask() {
 		double middle_pos = hasMiddleTracker ? this->middleTracker->get_dist_traveled() : 0;
 
 		// calculate change in each encoder
-		double delta_left = (left_pos - prev_left_pos) / this->tpi;
-		double delta_right = (right_pos - prev_right_pos) / this->tpi;
+		double delta_left = (left_pos - prev_left_pos);
+		double delta_right = (right_pos - prev_right_pos);
 		double delta_middle = hasMiddleTracker
-		                          ? (middle_pos - prev_middle_pos) / this->middle_tpi
+		                          ? (middle_pos - prev_middle_pos)
 		                          : 0;
 
 		// calculate new heading
@@ -77,9 +85,12 @@ int OdometryModel::odomTask() {
 }
 
 void OdometryModel::begin() {
-    this->task = pros::Task([=](){
+    pros::Task odom([=](){
         this->odomTask();
     });
+}
+
+OdometryModel::OdometryModel() {
 }
 
 OdometryModelBuilder::OdometryModelBuilder() {
@@ -201,7 +212,6 @@ OdometryModel OdometryModelBuilder::build() {
         (this->hasMiddleEncoder && this->hasMiddleTPI)
        )
        ) {
-        this->odom.begin();
         return this->odom;
     } else {
         // throw error

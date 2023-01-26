@@ -50,9 +50,9 @@ namespace legs {
 
     double LegsDistanceTracker::get_dist_traveled() {
         if(this->type == LEGS_ROTATION) {
-            return rot->get_position() * this->tpi;
+            return rot->get_position() / this->tpi;
         } else if (this->type == LEGS_ADI_ENCODER) {
-            return enc->get_value() * this->tpi;
+            return enc->get_value() / this->tpi;
         } else {
             return 0;
         }

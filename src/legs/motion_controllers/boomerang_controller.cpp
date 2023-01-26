@@ -215,7 +215,7 @@ void BoomerangController::update() {
 }
 
 void BoomerangController::init() {
-    pros::Task boomerang_task(update);
+    pros::Task boomerang_task([=](){update();});
 }
 
 BoomerangControllerBuilder::BoomerangControllerBuilder() {

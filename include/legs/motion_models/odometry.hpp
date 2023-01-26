@@ -41,19 +41,18 @@ class OdometryModel : public BasicModel
 
         Eigen::Vector3d pose;
 
-        pros::Task task;
-
         friend class OdometryModelBuilder;
     
     protected:
         int odomTask();
         OdometryModel();
-        void begin();
 
     public:
         Eigen::Vector3d getPose();
         Eigen::Vector2d getPosition();
         double          getHeading();
+        void setPose(double x, double y, double heading);
+        void begin();
 };
 
 class OdometryModelBuilder

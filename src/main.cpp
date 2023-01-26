@@ -1,4 +1,5 @@
 #include "main.h"
+#include "legs/api.hpp"
 
 /**
  * A callback function for LLEMU's center button.
@@ -80,10 +81,24 @@ void opcontrol() {
 	pros::Motor left_mtr(1);
 	pros::Motor right_mtr(2);
 
+	legs::OdometryModelBuilder builder;
+	legs::OdometryModel model = builder.withTrackWidth(5.64)
+									   .withMiddleDistance(4.75)
+									   .withLeftRightTPI(330)
+									   .withMiddleTPI(330)
+									   .withLeftEncoder(3)
+									   .withRightEncoder(7)
+									   .withMiddleEncoder(1)
+									   .withDebug(false)
+									   .build();
+	
+	model.begin();
+	
 	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+		Eigen::Vector3d pose = model.getPose();
+		pros::lcd::set_text(0, std::to_string(pose.x()));
+		pros::lcd::set_text(1, std::to_string(pose.y()));
+		pros::lcd::set_text(2, std::to_string(pose.z()));
 		int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 
