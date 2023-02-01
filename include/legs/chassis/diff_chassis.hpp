@@ -19,12 +19,14 @@ class DiffChassis : public BasicChassis
             std::shared_ptr<pros::MotorGroup> rightMotors;
 
         public:
+
             virtual void setForwardVelocity(double velocity) override;
             virtual void setAngularVelocity(double velocity) override;
             virtual void setLeftVelocity(double velocity);
             virtual void setRightVelocity(double velocity);
-            virtual void tank(double leftVelocity, double rightVelocity);
-            virtual void arcade(double forwardVelocity, double angularVelocity);
+            virtual void tank(double leftVoltage, double rightVoltage);
+            virtual void arcade(double forwardVoltage, double angularVoltage);
+            virtual void setBrakeMode(pros::motor_brake_mode_e_t brakeMode);
 
 };
 

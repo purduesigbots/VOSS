@@ -87,9 +87,10 @@ void opcontrol() {
 	while(true) {
 		
 		// set the chassis velocity
-		chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));
-		chassis.setAngularVelocity(master.get_analog(ANALOG_RIGHT_X));
+		//chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));
+		//chassis.setAngularVelocity(master.get_analog(ANALOG_RIGHT_X));
 
+		chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 		pros::delay(20);
 	}
 }

@@ -57,16 +57,20 @@ namespace legs {
         this->rightMotors->move_velocity(velocity);
     }
 
-    void DiffChassis::tank(double leftVelocity, double rightVelocity) {
-        this->leftMotors->move_velocity(leftVelocity);
-        this->rightMotors->move_velocity(rightVelocity);
+
+    void DiffChassis::tank(double leftVoltage, double rightVoltage) {
+        *this->leftMotors = leftVoltage;
+        *this->rightMotors = rightVoltage;
     }
 
-    void DiffChassis::arcade(double forwardVelocity, double angularVelocity) {
-        this->leftMotors->move_velocity(forwardVelocity+angularVelocity);
-        this->rightMotors->move_velocity(forwardVelocity-angularVelocity);
+    void DiffChassis::arcade(double forwardVoltage, double angularVoltage) {
+        *this->leftMotors = forwardVoltage+angularVoltage;
+        *this->rightMotors = forwardVoltage-angularVoltage;
     }
     
-
+    void DiffChassis::setBrakeMode(pros::motor_brake_mode_e_t brakeMode) {
+        this->leftMotors->set_brake_modes(brakeMode);
+        this->rightMotors->set_brake_modes(brakeMode);
+    }
 }
 
