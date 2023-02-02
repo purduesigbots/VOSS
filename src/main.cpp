@@ -1,6 +1,5 @@
 #include "main.h"
 #include "legs/api.hpp"
-
 /**
  * A callback function for LLEMU's center button.
  *
@@ -77,9 +76,6 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
 
 	legs::OdometryModelBuilder builder;
 	legs::OdometryModel model = builder.withTrackWidth(5.64)
@@ -92,6 +88,16 @@ void opcontrol() {
 									   .withDebug(true)
 									   .build();
 	
+    	// create a chassis
+	legs::DiffChassis chassis = legs::DiffChassisBuilder()
+		.withLeftMotors({1,13,-14})
+		.withRightMotors({16,-17,-18})
+		.build();
+
+        
+
+	pros::Controller master (pros::E_CONTROLLER_MASTER);
+        
 	while (true) {
 		Eigen::Vector3d pose = model.getPose();
 		pros::lcd::set_text(0, std::to_string(pose.x()));
@@ -100,8 +106,12 @@ void opcontrol() {
 		int left = master.get_analog(ANALOG_LEFT_Y);
 		int right = master.get_analog(ANALOG_RIGHT_Y);
 
-		left_mtr = left;
-		right_mtr = right;
+		
+		// set the chassis velocity
+		//chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));
+		//chassis.setAngularVelocity(master.get_analog(ANALOG_RIGHT_X));
+
+		chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 		pros::delay(20);
 	}
 }

@@ -4,7 +4,7 @@
 
 #include "api.h"
 #include "legs/chassis/basic_chassis.hpp"
-
+#include "legs/chassis/distance_tracker.hpp"
 namespace legs {
 
 /* Forward declarations so that both classes are aware of each other*/
@@ -13,27 +13,38 @@ class DiffChassis;
 
 class DiffChassis : public BasicChassis
 {
+        friend class DiffChassisBuilder;
+        private:
+            std::shared_ptr<pros::MotorGroup> leftMotors;
+            std::shared_ptr<pros::MotorGroup> rightMotors;
+
+        public:
+
+            virtual void setForwardVelocity(double velocity) override;
+            virtual void setAngularVelocity(double velocity) override;
+            virtual void setLeftVelocity(double velocity);
+            virtual void setRightVelocity(double velocity);
+            virtual void tank(double leftVoltage, double rightVoltage);
+            virtual void arcade(double forwardVoltage, double angularVoltage);
+            virtual void setBrakeMode(pros::motor_brake_mode_e_t brakeMode);
 
 };
 
 class DiffChassisBuilder
 {
+    public:
+        explicit DiffChassisBuilder();
 
-    explicit DiffChassisBuilder();
+        //DiffChassisBuilder &withLeftMotors(const pros::MotorGroup &leftMotors); motor group references do not work unknown reason
+        DiffChassisBuilder &withLeftMotors(const std::vector<int8_t> leftMotors);
+        //DiffChassisBuilder &withRightMotors(const pros::MotorGroup &rightMotors);
+        DiffChassisBuilder &withRightMotors(const std::vector<int8_t> rightMotors);
 
-    DiffChassisBuilder &withLeftMotors(const pros::MotorGroup &leftMotors);
-    DiffChassisBuilder &withRightMotors(const pros::MotorGroup &rightMotors);
 
-    DiffChassisBuilder &withHorizontalEncoders(const pros::ADIEncoder &leftEncoder, const pros::ADIEncoder &rightEncoder);
-    DiffChassisBuilder &withLeftEncoder(const pros::ADIEncoder &leftEncoder);
-    DiffChassisBuilder &withRightEncoder(const pros::ADIEncoder &rightEncoder);
-    DiffChassisBuilder &withPerpendicularEncoders(const pros::ADIEncoder &perpEncoder);
+        DiffChassis build();
 
-    DiffChassisBuilder &withHorizontalRotation(const pros::ADIEncoder &rotationEncoder);
-    DiffChassisBuilder &withLeftRotation(const pros::ADIEncoder &rotationEncoder);
-    DiffChassisBuilder &withRightRotation(const pros::ADIEncoder &rotationEncoder);
-
-    DiffChassisBuilder &withImu(const pros::Imu &imu);
+    private:
+        DiffChassis chassis;
 };
 
 } // namespace legs

@@ -2,7 +2,7 @@
 
 #include "Eigen/Core"
 
-class BasicModel
+class BasicTracker
 {
 public:
     virtual Eigen::Vector3d getPose()     = 0;
