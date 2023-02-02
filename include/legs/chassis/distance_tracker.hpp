@@ -9,7 +9,9 @@ namespace legs {
 
     typedef enum {
         LEGS_ROTATION,
-        LEGS_ADI_ENCODER
+        LEGS_ADI_ENCODER,
+        LEGS_MOT_ENCODER,
+        LEGS_INVALID_ENC_TYPE
     } distance_tracker_type;
 
 
@@ -28,12 +30,14 @@ namespace legs {
             LegsDistanceTracker(unsigned int port_num, legs::distance_tracker_type type, bool reverse, double tpi);
             LegsDistanceTracker(unsigned int port_num, int expander_port, bool reverse, double tpi);
             double get_dist_traveled();
+            void set_tpi(double tpi);
         private:
             int port_num;
             legs::distance_tracker_type type;
             double tpi;
             std::shared_ptr<pros::ADIEncoder> enc;
             std::shared_ptr<pros::Rotation> rot;
+            std::shared_ptr<pros::MotorGroup> mot;
     };
 
 }

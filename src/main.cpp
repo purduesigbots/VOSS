@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include "legs/api.hpp"
 /**
  * A callback function for LLEMU's center button.
  *
@@ -76,19 +76,21 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
 
-	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
+	// create a chassis
+	legs::DiffChassis chassis = legs::DiffChassisBuilder()
+		.withLeftMotors({1,13,-14})
+		.withRightMotors({16,-17,-18})
+		.build();
 
-		left_mtr = left;
-		right_mtr = right;
+	pros::Controller master (pros::E_CONTROLLER_MASTER);
+	while(true) {
+		
+		// set the chassis velocity
+		//chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));
+		//chassis.setAngularVelocity(master.get_analog(ANALOG_RIGHT_X));
+
+		chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
 		pros::delay(20);
 	}
 }
