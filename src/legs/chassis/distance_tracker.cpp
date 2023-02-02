@@ -34,10 +34,21 @@ namespace legs {
         }
     }
 
-    //constructor used for internal motor encoders
-    LegsDistanceTracker::LegsDistanceTracker(std::shared_ptr<pros::MotorGroup> m) {
-        this->type = LEGS_MOT_ENCODER;
-        this->mot = m;
+    LegsDistanceTracker::LegsDistanceTracker(unsigned int port_num, int expander_port, bool reverse, double tpi) {
+        
+        port_num = port_num >=97 ? port_num - 96 : port_num >=65 ? port_num -64 : port_num; // :)
+        
+        this->port_num = port_num;
+        this->type = LEGS_ADI_ENCODER;
+        this->tpi = tpi;
+
+        if(!validate_port_adi(port_num) || !validate_port_smart(expander_port)) {
+            printf(LEGS_ERR_INVALID_ENCODER_PORT);
+            return;
+        }
+
+        enc = std::make_shared<pros::ADIEncoder>(std::tuple<int, int, int>({expander_port, port_num, port_num + 1}), port_num < 0);
+        enc->reset();
     }
 
     double LegsDistanceTracker::get_dist_traveled() {
