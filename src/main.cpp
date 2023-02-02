@@ -77,14 +77,35 @@ void autonomous() {}
  */
 void opcontrol() {
 
-	// create a chassis
+	legs::OdometryModelBuilder builder;
+	legs::OdometryModel model = builder.withTrackWidth(5.64)
+									   .withMiddleDistance(4.75)
+									   .withLeftRightTPI(330)
+									   .withMiddleTPI(330)
+									   .withLeftEncoder(3)
+									   .withRightEncoder(7)
+									   .withMiddleEncoder(1)
+									   .withDebug(true)
+									   .build();
+	
+    	// create a chassis
 	legs::DiffChassis chassis = legs::DiffChassisBuilder()
 		.withLeftMotors({1,13,-14})
 		.withRightMotors({16,-17,-18})
 		.build();
 
+        
+
 	pros::Controller master (pros::E_CONTROLLER_MASTER);
-	while(true) {
+        
+	while (true) {
+		Eigen::Vector3d pose = model.getPose();
+		pros::lcd::set_text(0, std::to_string(pose.x()));
+		pros::lcd::set_text(1, std::to_string(pose.y()));
+		pros::lcd::set_text(2, std::to_string(pose.z()));
+		int left = master.get_analog(ANALOG_LEFT_Y);
+		int right = master.get_analog(ANALOG_RIGHT_Y);
+
 		
 		// set the chassis velocity
 		//chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));

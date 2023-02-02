@@ -57,19 +57,13 @@ namespace legs {
                 printf(LEGS_ERR_INVALID_ENCODER_PORT);
                 return 0;
             }
-            return rot->get_position() * this->tpi;
+            return rot->get_position() / this->tpi;
         } else if (this->type == LEGS_ADI_ENCODER) {
             if(enc==nullptr) {
                 printf(LEGS_ERR_INVALID_ENCODER_PORT);
                 return 0;
             }
-            return enc->get_value() * this->tpi;
-        } else if(this->type == LEGS_MOT_ENCODER) {
-            if(mot==nullptr) {
-                printf(LEGS_ERR_INVALID_ENCODER_PORT);
-                return 0;
-            }
-            return mot->get_positions()[0];
+            return enc->get_value() / this->tpi;
         } else {
             //throw std::runtime_error(LEGS_ERR_INVALID_ENCODER_TYPE);
             printf(LEGS_ERR_INVALID_ENCODER_TYPE);
