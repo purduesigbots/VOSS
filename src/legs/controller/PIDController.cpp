@@ -9,7 +9,7 @@ PIDController::PIDController(localizer::AbstractLocalizer& l)
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 
-chassis::ChassisCommand PIDController::get_command(Point target) {
+chassis::ChassisCommand PIDController::get_command(Pose target) {
 	Point current_pos = this->l->get_position();
 
 	double dx = target.x - current_pos.x;

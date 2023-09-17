@@ -20,7 +20,7 @@ public:
 	double linear_pid(double error);
 	double angular_pid(double error);
 
-	chassis::ChassisCommand get_command(Point target);
+	chassis::ChassisCommand get_command(Pose target);
 	void reset();
 
 	friend class PIDControllerBuilder;

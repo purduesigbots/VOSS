@@ -1,14 +1,9 @@
 #include "legs/chassis/AbstractChassis.hpp"
-#include "main.h"
 
 namespace legs::chassis {
 
 AbstractChassis::AbstractChassis(
-    std::initializer_list<int8_t> left_motors,
-    std::initializer_list<int8_t> right_motors,
     controller::AbstractController& default_controller) {
-	this->left_motors = std::make_unique<pros::Motor_Group>(left_motors);
-	this->right_motors = std::make_unique<pros::Motor_Group>(right_motors);
 	this->default_controller = &default_controller;
 }
 
@@ -22,9 +17,10 @@ void AbstractChassis::move(Pose target) {
 
 void AbstractChassis::move(Point target,
                            controller::AbstractController* controller) {
+
+	Pose pose_target = Pose{target.x, target.y, 361};
 	controller->reset();
-	while (!this->execute(controller->get_command(target))) {
-		printf("here\n");
+	while (!this->execute(controller->get_command(pose_target))) {
 		pros::delay(10);
 	}
 }

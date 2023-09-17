@@ -2,10 +2,16 @@
 
 #include "AbstractChassis.hpp"
 #include "ChassisCommand.hpp"
+#include <initializer_list>
+#include <memory>
 
 namespace legs::chassis {
 
 class DiffChassis : public AbstractChassis {
+
+private:
+	std::unique_ptr<pros::MotorGroup> left_motors;
+	std::unique_ptr<pros::MotorGroup> right_motors;
 
 public:
 	DiffChassis(std::initializer_list<int8_t> left_motors,

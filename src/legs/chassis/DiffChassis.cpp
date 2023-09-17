@@ -6,7 +6,10 @@ namespace legs::chassis {
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
                          controller::AbstractController& default_controller)
-    : AbstractChassis(left_motors, right_motors, default_controller) {
+    : AbstractChassis(default_controller) {
+
+	this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
+	this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 }
 
 void DiffChassis::tank(double left_speed, double right_speed) {

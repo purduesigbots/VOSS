@@ -13,8 +13,7 @@ protected:
 public:
 	AbstractController(localizer::AbstractLocalizer& l);
 
-	virtual chassis::ChassisCommand get_command(Pose target);
-	virtual chassis::ChassisCommand get_command(Point target);
+	virtual chassis::ChassisCommand get_command(Pose target) = 0;
 
 	virtual void reset() = 0;
 };
