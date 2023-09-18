@@ -21,7 +21,7 @@ public:
 	void tank(double left_speed, double right_speed);
 	void arcade(double forward_speed, double turn_speed);
 
-	bool execute(ChassisCommand cmd);
+	bool execute(ChassisCommand cmd, double max);
 };
 
 } // namespace legs::chassis

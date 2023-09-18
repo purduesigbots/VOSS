@@ -8,17 +8,17 @@ AbstractChassis::AbstractChassis(
 	this->default_controller = &default_controller;
 }
 
-void AbstractChassis::move(Point target, uint8_t flags) {
+void AbstractChassis::move(Point target, double max, uint8_t flags) {
 	this->move(target, this->default_controller, flags);
 }
 
-void AbstractChassis::move(Pose target, uint8_t flags) {
+void AbstractChassis::move(Pose target, double max, uint8_t flags) {
 	this->move(target, this->default_controller, flags);
 }
 
 void AbstractChassis::move(Point target,
                            controller::AbstractController* controller,
-                           uint8_t flags) {
+                           double max, uint8_t flags) {
 
 	Pose pose_target = Pose{target.x, target.y, 361};
 	this->move(pose_target, controller, flags);
@@ -26,7 +26,7 @@ void AbstractChassis::move(Point target,
 
 void AbstractChassis::move(Pose target,
                            controller::AbstractController* controller,
-                           uint8_t flags) {
+                           double max, uint8_t flags) {
 
 	this->m.take();
 
@@ -35,7 +35,8 @@ void AbstractChassis::move(Pose target,
 	pros::Task running_t([=]() {
 		controller->reset();
 		while (!this->execute(
-		    controller->get_command(flags & legs::REVERSE, flags & legs::THRU))) {
+		    controller->get_command(flags & legs::REVERSE, flags & legs::THRU),
+		    max)) {
 			pros::delay(10);
 		}
 		this->m.give();

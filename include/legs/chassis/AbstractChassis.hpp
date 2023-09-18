@@ -24,14 +24,14 @@ public:
 	virtual void tank(double left_speed, double right_speed) = 0;
 	virtual void arcade(double forward_speed, double turn_speed) = 0;
 
-	virtual bool execute(ChassisCommand cmd) = 0;
+	virtual bool execute(ChassisCommand cmd, double max) = 0;
 
 	void move(Point target, controller::AbstractController* controller,
-	          uint8_t flags = legs::NONE);
+	          double max = 100.0, uint8_t flags = legs::NONE);
 	void move(Pose target, controller::AbstractController* controller,
-	          uint8_t flags = legs::NONE);
-	void move(Point target, uint8_t flags = legs::NONE);
-	void move(Pose target, uint8_t flags = legs::NONE);
+	          double max = 100.0, uint8_t flags = legs::NONE);
+	void move(Point target, double max = 100.0, uint8_t flags = legs::NONE);
+	void move(Pose target, double max = 100.0, uint8_t flags = legs::NONE);
 };
 
 } // namespace legs::chassis

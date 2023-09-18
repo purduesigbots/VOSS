@@ -1,5 +1,6 @@
 #include "legs/chassis/DiffChassis.hpp"
 #include "pros/motors.h"
+#include <cmath>
 
 namespace legs::chassis {
 
@@ -25,7 +26,7 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
 	this->right_motors->move_voltage(120.0 * right);
 }
 
-bool DiffChassis::execute(ChassisCommand cmd) {
+bool DiffChassis::execute(ChassisCommand cmd, double max) {
 	return std::visit(
 	    overload{[=](Stop&) -> bool {
 		             this->left_motors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
@@ -36,6 +37,13 @@ bool DiffChassis::execute(ChassisCommand cmd) {
 		             return true;
 	             },
 	             [=](Voltages& v) -> bool {
+		             if (fabs(v.left) > max) {
+			             v.left = max * (v.left < 0 ? -1 : 1);
+		             }
+		             if (fabs(v.right) > max) {
+			             v.right = max * (v.right < 0 ? -1 : 1);
+		             }
+
 		             this->left_motors->move_voltage(120 * v.left);
 		             this->right_motors->move_voltage(120 * v.right);
 
