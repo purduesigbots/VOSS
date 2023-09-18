@@ -5,14 +5,17 @@
 
 #include "ChassisCommand.hpp"
 #include "legs/controller/AbstractController.hpp"
+
 #include "legs/utils/Point.hpp"
 #include "legs/utils/Pose.hpp"
+#include "legs/utils/flags.hpp"
 
 namespace legs::chassis {
 
 class AbstractChassis {
 
 protected:
+	pros::Mutex m;
 	controller::AbstractController* default_controller;
 
 public:
@@ -23,10 +26,12 @@ public:
 
 	virtual bool execute(ChassisCommand cmd) = 0;
 
-	void move(Point target, controller::AbstractController* controller);
-	void move(Pose target, controller::AbstractController* controller);
-	void move(Point target);
-	void move(Pose target);
+	void move(Point target, controller::AbstractController* controller,
+	          uint8_t flags = legs::NONE);
+	void move(Pose target, controller::AbstractController* controller,
+	          uint8_t flags = legs::NONE);
+	void move(Point target, uint8_t flags = legs::NONE);
+	void move(Pose target, uint8_t flags = legs::NONE);
 };
 
 } // namespace legs::chassis

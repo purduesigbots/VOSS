@@ -5,12 +5,11 @@
 namespace legs::controller {
 
 class PIDController : public AbstractController {
-private:
+protected:
 	double linear_kP, linear_kI, linear_kD;
 	double angular_kP, angular_kI, angular_kD;
 	double tracking_kP;
 	double exit_error;
-	double lead_pct;
 
 	double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 
@@ -20,7 +19,7 @@ public:
 	double linear_pid(double error);
 	double angular_pid(double error);
 
-	chassis::ChassisCommand get_command(Pose target);
+	chassis::ChassisCommand get_command(bool reverse, bool thru);
 	void reset();
 
 	friend class PIDControllerBuilder;

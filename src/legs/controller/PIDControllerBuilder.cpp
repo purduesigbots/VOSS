@@ -40,11 +40,6 @@ PIDControllerBuilder& PIDControllerBuilder::withExitError(double error) {
 	return *this;
 }
 
-PIDControllerBuilder& PIDControllerBuilder::withLeadPct(double lead_pct) {
-	this->ctrl.lead_pct = lead_pct;
-	return *this;
-}
-
 PIDController PIDControllerBuilder::build() {
 	return this->ctrl;
 }

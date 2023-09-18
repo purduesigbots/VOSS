@@ -9,7 +9,7 @@ PIDController::PIDController(localizer::AbstractLocalizer& l)
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 
-chassis::ChassisCommand PIDController::get_command(Pose target) {
+chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	Point current_pos = this->l->get_position();
 
 	double dx = target.x - current_pos.x;
@@ -26,7 +26,12 @@ chassis::ChassisCommand PIDController::get_command(Pose target) {
 		angle_error -= 2 * M_PI * angle_error / fabs(angle_error);
 	}
 
-	double lin_speed = linear_pid(distance_error);
+	double lin_speed;
+	if (thru) {
+		lin_speed = 100;
+	} else {
+		lin_speed = linear_pid(distance_error) * (reverse ? -1 : 1);
+	}
 	double ang_speed = angular_pid(angle_error);
 
 	return chassis::ChassisCommand{

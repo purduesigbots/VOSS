@@ -8,6 +8,7 @@
 
 #include "controller/AbstractController.hpp"
 #include "controller/BoomerangController.hpp"
+#include "controller/BoomerangControllerBuilder.hpp"
 #include "controller/PIDController.hpp"
 #include "controller/PIDControllerBuilder.hpp"
 
@@ -19,3 +20,4 @@
 
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
+#include "utils/flags.hpp"

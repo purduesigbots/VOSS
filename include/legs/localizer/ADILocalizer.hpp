@@ -29,8 +29,6 @@ public:
 	int getMiddleEncoderValue();
 
 	void update();
-
-	friend class ADILocalizerBuilder;
 };
 
 } // namespace legs::localizer
