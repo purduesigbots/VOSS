@@ -2,6 +2,7 @@
 
 #include "AbstractChassis.hpp"
 #include "ChassisCommand.hpp"
+#include "pros/motor_group.hpp"
 #include <initializer_list>
 #include <memory>
 

@@ -27,29 +27,26 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
 }
 
 bool DiffChassis::execute(ChassisCommand cmd, double max) {
-	return std::visit(
-	    overload{[=](Stop&) -> bool {
-		             this->left_motors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
-		             this->right_motors->set_brake_modes(pros::E_MOTOR_BRAKE_BRAKE);
-		             this->left_motors->move_voltage(0);
-		             this->right_motors->move_voltage(0);
+	return std::visit(overload{[=](Stop&) -> bool {
+		                           this->left_motors->move_voltage(0);
+		                           this->right_motors->move_voltage(0);
 
-		             return true;
-	             },
-	             [=](Voltages& v) -> bool {
-		             if (fabs(v.left) > max) {
-			             v.left = max * (v.left < 0 ? -1 : 1);
-		             }
-		             if (fabs(v.right) > max) {
-			             v.right = max * (v.right < 0 ? -1 : 1);
-		             }
+		                           return true;
+	                           },
+	                           [=](Voltages& v) -> bool {
+		                           if (fabs(v.left) > max) {
+			                           v.left = max * (v.left < 0 ? -1 : 1);
+		                           }
+		                           if (fabs(v.right) > max) {
+			                           v.right = max * (v.right < 0 ? -1 : 1);
+		                           }
 
-		             this->left_motors->move_voltage(120 * v.left);
-		             this->right_motors->move_voltage(120 * v.right);
+		                           this->left_motors->move_voltage(120 * v.left);
+		                           this->right_motors->move_voltage(120 * v.right);
 
-		             return false;
-	             }},
-	    cmd);
+		                           return false;
+	                           }},
+	                  cmd);
 }
 
 } // namespace legs::chassis

@@ -1,5 +1,6 @@
 #include "main.h"
 #include "legs/api.hpp"
+#include "pros/llemu.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -89,7 +90,9 @@ void opcontrol() {
 			chassis.move(legs::Point{24.0, 0.0});
 		}
 
-		pros::lcd::clear();
+		pros::lcd::clear_line(1);
+		pros::lcd::clear_line(2);
+		pros::lcd::clear_line(3);
 		pros::lcd::print(1, "%lf", p.x);
 		pros::lcd::print(2, "%lf", p.y);
 		pros::lcd::print(3, "%lf", p.theta);

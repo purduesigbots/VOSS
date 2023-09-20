@@ -17,6 +17,12 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	double distance_error = sqrt(dx * dx + dy * dy);
 	if (distance_error <= exit_error) {
+		close += 10;
+	} else {
+		close = 0;
+	}
+
+	if (close > 500) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 

@@ -16,9 +16,9 @@ private:
 	double track_width;
 	double left_right_dist, middle_dist;
 
-	std::unique_ptr<pros::ADIEncoder> left_encoder;
-	std::unique_ptr<pros::ADIEncoder> right_encoder;
-	std::unique_ptr<pros::ADIEncoder> middle_encoder;
+	std::unique_ptr<pros::adi::Encoder> left_encoder;
+	std::unique_ptr<pros::adi::Encoder> right_encoder;
+	std::unique_ptr<pros::adi::Encoder> middle_encoder;
 
 public:
 	ADILocalizer(int left, int right, int mid, double lr_tpi, double mid_tpi,

@@ -11,6 +11,8 @@ protected:
 	double tracking_kP;
 	double exit_error;
 
+	double close;
+
 	double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 
 public:

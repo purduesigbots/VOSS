@@ -20,14 +20,15 @@ ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
 	this->middle_encoder = nullptr;
 
 	if (left != 0)
-		this->left_encoder =
-		    std::make_unique<pros::ADIEncoder>(abs(left), abs(left) + 1, left < 0);
+		this->left_encoder = std::make_unique<pros::adi::Encoder>(
+		    abs(left), abs(left) + 1, left < 0);
 
 	if (right != 0)
-		this->right_encoder = std::make_unique<pros::ADIEncoder>(right, right + 1);
+		this->right_encoder =
+		    std::make_unique<pros::adi::Encoder>(right, right + 1);
 
 	if (mid != 0)
-		this->middle_encoder = std::make_unique<pros::ADIEncoder>(mid, mid + 1);
+		this->middle_encoder = std::make_unique<pros::adi::Encoder>(mid, mid + 1);
 }
 
 int ADILocalizer::getLeftEncoderValue() {
