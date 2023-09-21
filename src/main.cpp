@@ -1,6 +1,6 @@
 #include "main.h"
-#include "legs/api.hpp"
 #include "pros/llemu.hpp"
+#include "voss/api.hpp"
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -62,7 +62,7 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	auto odom = legs::localizer::ADILocalizerBuilder::newBuilder()
+	auto odom = voss::localizer::ADILocalizerBuilder::newBuilder()
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
@@ -72,22 +72,22 @@ void opcontrol() {
 
 	odom.begin_localization();
 
-	auto pid = legs::controller::PIDControllerBuilder::newBuilder(odom)
+	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(3, 0.03, 35)
 	               .withExitError(1.0)
 	               .build();
-	legs::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
 
 	while (true) {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
-		legs::Pose p = odom.get_pose();
+		voss::Pose p = odom.get_pose();
 
 		if (master.get_digital_new_press(DIGITAL_Y)) {
-			odom.set_pose(legs::Pose{0.0, 0.0, 0.0});
-			chassis.move(legs::Point{24.0, 0.0});
+			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
+			chassis.move(voss::Point{24.0, 0.0});
 		}
 
 		pros::lcd::clear_line(1);
