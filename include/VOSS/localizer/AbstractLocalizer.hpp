@@ -7,7 +7,7 @@ namespace voss::localizer {
 
 class AbstractLocalizer {
 protected:
-	bool mtx;
+	pros::Mutex mtx;
 	Pose pose;
 
 public:
