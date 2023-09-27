@@ -21,57 +21,46 @@ void AbstractLocalizer::begin_localization() {
 }
 
 void AbstractLocalizer::set_pose(Pose pose) {
-	while(true) {
-		if(this->mtx.try_lock()) {
-			this->pose = pose;
-			this->mtx.unlock();
-			return;
-		}
+	while(!this->mtx.try_lock())
 		pros::delay(10);
-	}
+
+	this->pose = pose;
+	this->mtx.unlock();
 }
 
 Pose AbstractLocalizer::get_pose() {
-	while(true) {
-		if(this->mtx.try_lock()) {
-			Pose ret = this->pose;
-			this->mtx.unlock();
-			return ret;
-		}
+	while(!this->mtx.try_lock())
 		pros::delay(10);
-	}
+
+	Pose ret = this->pose;
+	this->mtx.unlock();
+	return ret;
 }
 
 double AbstractLocalizer::get_orientation_rad() {
-	while(true) {
-		if(this->mtx.try_lock()) {
-			double ret = this->pose.theta;
-			this->mtx.unlock();
-			return ret;
-		}
+	while(!this->mtx.try_lock())
 		pros::delay(10);
-	}
+
+	double ret = this->pose.theta;
+	this->mtx.unlock();
+	return ret;
 }
 
 double AbstractLocalizer::get_orientation_deg() {
-	while(true){
-		if(this->mtx.try_lock()) {
-			double ret = this->pose.theta * 180 * M_1_PI;
-			this->mtx.unlock();
-			return ret;
-		}
+	while(!this->mtx.try_lock())
 		pros::delay(10);
-	}
+
+	double ret = this->pose.theta * 180 * M_1_PI;
+	this->mtx.unlock();
+	return ret;
 }
 
 Point AbstractLocalizer::get_position() {
-	while(true) {
-		if(this->mtx.try_lock()) {
-			Point ret = {this->pose.x, this->pose.y};
-			this->mtx.unlock();
-			return ret;
-		}
+	while(!this->mtx.try_lock())
 		pros::delay(10);
-	}
+
+	Point ret{this->pose.x, this->pose.y};
+	this->mtx.unlock();
+	return ret;
 }
 } // namespace voss::localizer
