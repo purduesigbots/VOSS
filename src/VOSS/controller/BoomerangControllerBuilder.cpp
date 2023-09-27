@@ -45,6 +45,12 @@ BoomerangControllerBuilder::withExitError(double error) {
 	return *this;
 }
 
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::withLeadPct(double lead_pct) {
+	this->ctrl.lead_pct = lead_pct;
+	return *this;
+}
+
 BoomerangController BoomerangControllerBuilder::build() {
 	return this->ctrl;
 }

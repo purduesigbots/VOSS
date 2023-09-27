@@ -11,7 +11,7 @@ BoomerangController::BoomerangController(localizer::AbstractLocalizer& l)
 chassis::ChassisCommand BoomerangController::get_command(bool reverse,
                                                          bool thru) {
 	// TODO: finish
-	return chassis::ChassisCommand{chassis::Stop{}};
+	return PIDController::get_command(reverse, thru);
 }
 
 } // namespace voss::controller
