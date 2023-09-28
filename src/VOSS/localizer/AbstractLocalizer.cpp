@@ -1,5 +1,4 @@
 #include "voss/localizer/AbstractLocalizer.hpp"
-#include "pros/rtos.hpp"
 #include <cmath>
 
 namespace voss::localizer {
