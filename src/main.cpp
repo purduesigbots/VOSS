@@ -46,6 +46,48 @@ void competition_initialize() {
 void autonomous() {
 }
 
+void localizer_getpose_threading_test(void* param){
+	if (param == NULL){
+		return;
+	}
+	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
+
+	while(true){
+		std::cout <<
+			"X: " << odom->get_pose().x <<
+			"Y: " << odom->get_pose().y <<
+			"Theta: " << odom->get_pose().theta << std::endl;
+
+		pros::delay(10);
+	}
+}
+
+void localizer_setpose_threading_test1(void* param){
+	if (param == NULL){
+		return;
+	}
+	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
+
+	while(true){
+		odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
+
+		pros::delay(10);
+	}
+}
+
+void localizer_setpose_threading_test2(void* param){
+	if (param == NULL){
+		return;
+	}
+	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
+
+	while(true){
+		odom->set_pose(voss::Pose{1.0, 1.0, 1.0});
+
+		pros::delay(10);
+	}
+}
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -78,6 +120,10 @@ void opcontrol() {
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+
+	pros::Task localizerTask0(localizer_getpose_threading_test, static_cast<void *>(&odom), "Localizer Get Pose Task");
+	pros::Task localizerTask1(localizer_setpose_threading_test1, static_cast<void *>(&odom), "Localizer Set Pose Task 1");
+	pros::Task localizerTask2(localizer_setpose_threading_test2, static_cast<void *>(&odom), "Localizer Set Pose Task 2");
 
 	while (true) {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
