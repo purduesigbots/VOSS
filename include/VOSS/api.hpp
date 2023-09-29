@@ -18,6 +18,8 @@
 #include "localizer/GPSLocalizer.hpp"
 #include "localizer/IMELocalizer.hpp"
 
+#include "selector/Selector.hpp"
+
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
 #include "utils/flags.hpp"
