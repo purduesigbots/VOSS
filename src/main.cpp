@@ -66,6 +66,7 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
+					.withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
 
