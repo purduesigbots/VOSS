@@ -35,10 +35,10 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 	                           },
 	                           [this, max](Voltages& v) -> bool {
 		                           if (fabs(v.left) > max) {
-			                           v.left = max * (v.left < 0 ? -1 : 1);
+			                           v.left = max * ((v.left < 0) ? -1 : 1);
 		                           }
 		                           if (fabs(v.right) > max) {
-			                           v.right = max * (v.right < 0 ? -1 : 1);
+			                           v.right = max * ((v.right < 0) ? -1 : 1);
 		                           }
 
 		                           this->left_motors->move_voltage(120 * v.left);

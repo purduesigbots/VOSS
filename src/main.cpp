@@ -1,4 +1,5 @@
 #include "main.h"
+#include "VOSS/utils/flags.hpp"
 #include "pros/llemu.hpp"
 #include "voss/api.hpp"
 
@@ -66,6 +67,7 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
+	                .withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
 
@@ -75,6 +77,7 @@ void opcontrol() {
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(3, 0.03, 35)
 	               .withExitError(1.0)
+	               .withMinError(5)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
@@ -88,7 +91,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0});
+			chassis.move(voss::Point{-24.0, 0.0}, 100.0, voss::REVERSE);
 		}
 
 		pros::lcd::clear_line(1);
