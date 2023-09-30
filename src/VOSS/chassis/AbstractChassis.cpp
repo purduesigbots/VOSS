@@ -1,4 +1,5 @@
 #include "voss/chassis/AbstractChassis.hpp"
+#include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
 namespace voss::chassis {
@@ -27,26 +28,25 @@ void AbstractChassis::move(Pose target,
                            controller::AbstractController* controller,
                            double max, uint8_t flags) {
 
-	this->m.take();
+	// this->m.take();
 
 	controller->set_target(target, flags & voss::RELATIVE);
 
-	pros::Task running_t([=]() {
+	pros::rtos::Task running_t([this, controller, flags, max]() {
 		controller->reset();
 		while (!this->execute(
 		    controller->get_command(flags & voss::REVERSE, flags & voss::THRU),
 		    max)) {
 			pros::delay(10);
 		}
-		this->m.give();
+		// this->m.give();
 	});
 
 	if (flags & voss::ASYNC) {
 		return;
 	}
 
-	this->m.take();
-	this->m.give();
+	running_t.join();
 }
 
 } // namespace voss::chassis
