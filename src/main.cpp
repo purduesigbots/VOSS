@@ -1,4 +1,5 @@
 #include "main.h"
+#include "VOSS/utils/flags.hpp"
 #include "pros/llemu.hpp"
 #include "voss/api.hpp"
 
@@ -90,7 +91,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0}, 50.0);
+			chassis.move(voss::Point{-24.0, 0.0}, 100.0, voss::REVERSE);
 		}
 
 		pros::lcd::clear_line(1);

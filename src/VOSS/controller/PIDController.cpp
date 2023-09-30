@@ -31,6 +31,10 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
 
+	if (reverse) {
+		angle_error = atan2(-dy, -dx) - this->l->get_orientation_rad();
+	}
+
 	while (fabs(angle_error) > M_PI) {
 		angle_error -= 2 * M_PI * angle_error / fabs(angle_error);
 	}
