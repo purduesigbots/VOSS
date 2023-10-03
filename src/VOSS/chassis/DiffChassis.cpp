@@ -2,15 +2,32 @@
 #include "pros/motors.h"
 #include <cmath>
 
+double slew(double current, double target, double step) {
+	if (fabs(current) > fabs(target))
+		step = 200;
+
+	if (target > current + step)
+		current += step;
+	else if (target < current - step)
+		current -= step;
+	else
+		current = target;
+
+	return current;
+}
+
 namespace voss::chassis {
 
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller::AbstractController& default_controller)
+                         controller::AbstractController& default_controller,
+						 double slew_step)
     : AbstractChassis(default_controller) {
-
 	this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
 	this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
+
+	this->slew_step = slew_step;
+	this->prev_voltages = {0, 0};
 }
 
 void DiffChassis::tank(double left_speed, double right_speed) {
@@ -41,8 +58,13 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 			                           v.right = max * ((v.right < 0) ? -1 : 1);
 		                           }
 
+								   v.left = slew(this->prev_voltages.left, v.left, this->slew_step);
+								   v.right = slew(this->prev_voltages.right, v.right, this->slew_step);
+
 		                           this->left_motors->move_voltage(120 * v.left);
 		                           this->right_motors->move_voltage(120 * v.right);
+
+								   this->prev_voltages = v;
 
 		                           return false;
 	                           }},
