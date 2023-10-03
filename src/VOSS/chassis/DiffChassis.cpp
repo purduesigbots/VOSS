@@ -26,7 +26,7 @@ DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
 	this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
 	this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 
-	this->slew_step = slew_step;
+	this->slew_step = slew_step > 0 ? slew_step : 200;
 	this->prev_voltages = {0, 0};
 }
 
