@@ -56,7 +56,6 @@ void localizer_getpose_threading_test(void* param){
     pros::lcd::print(4, "%lf", odom->get_pose().x);
     pros::lcd::print(5, "%lf", odom->get_pose().y);
     pros::lcd::print(6, "%lf", odom->get_pose().theta);
-			"Theta: " << odom->get_pose().theta << std::endl;
 
 		pros::delay(10);
 	}
