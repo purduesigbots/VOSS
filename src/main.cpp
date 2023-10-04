@@ -63,10 +63,10 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	auto odom = voss::localizer::ADILocalizerBuilder::newBuilder()
-	                .withLeftEncoder(-1)
-	                .withRightEncoder(3)
-	                .withLeftRightTPI(325)
+	auto odom = voss::localizer::IMELocalizerBuilder::newBuilder()
+	                .withleftMotors({-13, -15, -16})
+	                .withrightMotors({8, 7, 5})
+	                .withLeftRightTPI(19.5)
 	                .withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
@@ -99,7 +99,7 @@ void opcontrol() {
 		pros::lcd::clear_line(3);
 		pros::lcd::print(1, "%lf", p.x);
 		pros::lcd::print(2, "%lf", p.y);
-		pros::lcd::print(3, "%lf", p.theta);
+		pros::lcd::print(3, "%lf", odom.get_orientation_deg());
 
 		pros::delay(10);
 	}
