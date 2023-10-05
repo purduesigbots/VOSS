@@ -15,6 +15,9 @@ lv_obj_t* redLbl;
 lv_obj_t* blueLbl;
 lv_obj_t* skillsLbl;
 
+lv_obj_t* redBtnm;
+lv_obj_t* blueBtnm;
+
 int auton;
 const char* btnmMap[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 
@@ -34,7 +37,7 @@ void update_text() {
 	}
 }
 
-void init(int hue, int default_auton, const char** autons) {
+void init(int default_auton, const char** autons) {
 
 	int ptr = 0;
 	int i = 0;
@@ -59,7 +62,7 @@ void init(int hue, int default_auton, const char** autons) {
 
 	lv_theme_t* th =
 	    lv_theme_default_init(lv_disp_get_default(), lv_color_hex(0xCFB53B),
-	                          lv_color_hex(0xDFC54B), true, LV_FONT_DEFAULT);
+	                          lv_color_hex(0xCFB53B), true, LV_FONT_DEFAULT);
 
 	/*Create a Tab view object*/
 	lv_obj_t* tabview;
@@ -101,11 +104,17 @@ void init(int hue, int default_auton, const char** autons) {
 	// Release mutex
 	auton_mtx.give();
 
-	lv_obj_t* redBtnm = lv_btnmatrix_create(redTab);
+	redBtnm = lv_btnmatrix_create(redTab);
 	lv_btnmatrix_set_map(redBtnm, btnmMap);
+	lv_btnmatrix_set_one_checked(redBtnm, true);
 	lv_obj_set_size(redBtnm, 450, 50);
 	lv_obj_set_pos(redBtnm, 0, 100);
 	lv_obj_align(redBtnm, LV_ALIGN_CENTER, 0, 0);
+	lv_btnmatrix_set_btn_ctrl_all(redBtnm, LV_BTNMATRIX_CTRL_CHECKABLE);
+	if (auton > 0) {
+		lv_btnmatrix_set_btn_ctrl(redBtnm, abs(auton) - 1,
+		                          LV_BTNMATRIX_CTRL_CHECKED);
+	}
 	lv_obj_add_event_cb(
 	    redBtnm,
 	    [](lv_event_t* e) {
@@ -118,16 +127,23 @@ void init(int hue, int default_auton, const char** autons) {
 			    auton = autonMap[txt];
 			    update_text();
 			    auton_mtx.give();
+			    lv_btnmatrix_clear_btn_ctrl_all(blueBtnm, LV_BTNMATRIX_CTRL_CHECKED);
 		    }
 	    },
 	    LV_EVENT_ALL, NULL);
 
 	/*Add content to the tabs*/
-	lv_obj_t* blueBtnm = lv_btnmatrix_create(blueTab);
+	blueBtnm = lv_btnmatrix_create(blueTab);
 	lv_btnmatrix_set_map(blueBtnm, btnmMap);
+	lv_btnmatrix_set_one_checked(blueBtnm, true);
 	lv_obj_set_size(blueBtnm, 450, 50);
 	lv_obj_set_pos(blueBtnm, 0, 100);
 	lv_obj_align(blueBtnm, LV_ALIGN_CENTER, 0, 0);
+	lv_btnmatrix_set_btn_ctrl_all(blueBtnm, LV_BTNMATRIX_CTRL_CHECKABLE);
+	if (auton < 0) {
+		lv_btnmatrix_set_btn_ctrl(blueBtnm, abs(auton) - 1,
+		                          LV_BTNMATRIX_CTRL_CHECKED);
+	}
 	lv_obj_add_event_cb(
 	    blueBtnm,
 	    [](lv_event_t* e) {
@@ -140,6 +156,7 @@ void init(int hue, int default_auton, const char** autons) {
 			    auton = -1 * autonMap[txt];
 			    update_text();
 			    auton_mtx.give();
+			    lv_btnmatrix_clear_btn_ctrl_all(redBtnm, LV_BTNMATRIX_CTRL_CHECKED);
 		    }
 	    },
 	    LV_EVENT_ALL, NULL);
@@ -153,10 +170,16 @@ void init(int hue, int default_auton, const char** autons) {
 	lv_obj_add_event_cb(
 	    skillsBtn,
 	    [](lv_event_t* e) {
-		    auton_mtx.take();
-		    auton = 0;
-		    update_text();
-		    auton_mtx.give();
+		    lv_event_code_t code = lv_event_get_code(e);
+		    lv_obj_t* obj = lv_event_get_target(e);
+		    if (code == LV_EVENT_PRESSED) {
+			    auton_mtx.take();
+			    auton = 0;
+			    update_text();
+			    auton_mtx.give();
+			    lv_btnmatrix_clear_btn_ctrl_all(redBtnm, LV_BTNMATRIX_CTRL_CHECKED);
+			    lv_btnmatrix_clear_btn_ctrl_all(blueBtnm, LV_BTNMATRIX_CTRL_CHECKED);
+		    }
 	    },
 	    LV_EVENT_ALL, NULL);
 }

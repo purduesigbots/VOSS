@@ -8,8 +8,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	const char* b[] = {"Front", "Back", "Side", "Middle", ""};
-	voss::selector::init(0, 2, b);
+	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
+	voss::selector::init(2, autons);
 }
 
 /**
