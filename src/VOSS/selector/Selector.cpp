@@ -1,4 +1,5 @@
 #include "voss/selector/Selector.hpp"
+#include "liblvgl/lvgl.h"
 #include "pros/rtos.hpp"
 #include <cmath>
 #include <unordered_map>
@@ -6,30 +7,62 @@
 namespace voss::selector {
 
 std::unordered_map<const char*, int> autonMap;
-
-/*Create a Tab view object*/
-lv_obj_t* tabview;
+std::unordered_map<int, const char*> autonNameLookup;
 
 pros::Mutex auton_mtx;
 
+lv_obj_t* redLbl;
+lv_obj_t* blueLbl;
+lv_obj_t* skillsLbl;
+
 int auton;
-int autonCount;
 const char* btnmMap[11] = {"", "", "", "", "", "", "", "", "", "", ""};
+
+void update_text() {
+	if (auton != 0) {
+		const char* color = (auton > 0) ? "Red" : "Blue";
+		const char* autonName = autonNameLookup[abs(auton)];
+		lv_label_set_text_fmt(redLbl, "Currently running: %s %s", color, autonName);
+		lv_label_set_text_fmt(blueLbl, "Currently running: %s %s", color,
+		                      autonName);
+		lv_label_set_text_fmt(skillsLbl, "Currently running: %s %s", color,
+		                      autonName);
+	} else {
+		lv_label_set_text(redLbl, "Currently running: Skills");
+		lv_label_set_text_fmt(blueLbl, "Currently running: Skills");
+		lv_label_set_text_fmt(skillsLbl, "Currently running: Skills");
+	}
+}
 
 void init(int hue, int default_auton, const char** autons) {
 
+	int ptr = 0;
 	int i = 0;
 	do {
-		memcpy(&btnmMap[i], &autons[i], sizeof(&autons));
-		autonMap[autons[i]] = i + 1;
+		memcpy(&btnmMap[ptr], &autons[ptr], sizeof(&autons));
+		if (strcmp(autons[ptr], "\n") == 0) {
+			ptr++;
+			continue;
+		}
+		autonMap[autons[ptr]] = i + 1;
+		autonNameLookup[i + 1] = autons[ptr];
+		ptr++;
 		i++;
-	} while (strcmp(autons[i], "") != 0);
+	} while (strcmp(autons[ptr], "") != 0);
 
-	autonCount = i;
+	autonNameLookup[0] = "Skills";
+
+	// Lock mutex while constructing selector
 	auton_mtx.take();
-	auton = default_auton;
-	auton_mtx.give();
 
+	auton = default_auton;
+
+	lv_theme_t* th =
+	    lv_theme_default_init(lv_disp_get_default(), lv_color_hex(0xCFB53B),
+	                          lv_color_hex(0xDFC54B), true, LV_FONT_DEFAULT);
+
+	/*Create a Tab view object*/
+	lv_obj_t* tabview;
 	tabview = lv_tabview_create(lv_scr_act(), LV_DIR_TOP, 50);
 
 	/*Add 3 tabs (the tabs are page (lv_page) and can be scrolled*/
@@ -38,15 +71,36 @@ void init(int hue, int default_auton, const char** autons) {
 	lv_obj_t* skillsTab = lv_tabview_add_tab(tabview, "Skills");
 
 	// set default tab
-	auton_mtx.take();
 	if (auton < 0) {
 		lv_tabview_set_act(tabview, 1, LV_ANIM_OFF);
 	} else if (auton == 0) {
 		lv_tabview_set_act(tabview, 2, LV_ANIM_OFF);
 	}
-	auton_mtx.give();
+
+	lv_style_t lbl_style;
+	lv_style_init(&lbl_style);
+	lv_style_set_border_width(&lbl_style, 1);
+	lv_style_set_border_color(&lbl_style, th->color_primary);
+	// lv_style_set_pad_all(&lbl_style, 5);
 
 	/*Add content to the tabs*/
+	redLbl = lv_label_create(redTab);
+	lv_obj_add_style(redLbl, &lbl_style, 0);
+	lv_obj_align(redLbl, LV_ALIGN_CENTER, 0, -60);
+
+	blueLbl = lv_label_create(blueTab);
+	lv_obj_add_style(blueLbl, &lbl_style, 0);
+	lv_obj_align(blueLbl, LV_ALIGN_CENTER, 0, -60);
+
+	skillsLbl = lv_label_create(skillsTab);
+	lv_obj_add_style(skillsLbl, &lbl_style, 0);
+	lv_obj_align(skillsLbl, LV_ALIGN_CENTER, 0, -60);
+
+	update_text();
+
+	// Release mutex
+	auton_mtx.give();
+
 	lv_obj_t* redBtnm = lv_btnmatrix_create(redTab);
 	lv_btnmatrix_set_map(redBtnm, btnmMap);
 	lv_obj_set_size(redBtnm, 450, 50);
@@ -62,6 +116,7 @@ void init(int hue, int default_auton, const char** autons) {
 			    const char* txt = lv_btnmatrix_get_btn_text(obj, id);
 			    auton_mtx.take();
 			    auton = autonMap[txt];
+			    update_text();
 			    auton_mtx.give();
 		    }
 	    },
@@ -83,6 +138,7 @@ void init(int hue, int default_auton, const char** autons) {
 			    const char* txt = lv_btnmatrix_get_btn_text(obj, id);
 			    auton_mtx.take();
 			    auton = -1 * autonMap[txt];
+			    update_text();
 			    auton_mtx.give();
 		    }
 	    },
@@ -99,6 +155,7 @@ void init(int hue, int default_auton, const char** autons) {
 	    [](lv_event_t* e) {
 		    auton_mtx.take();
 		    auton = 0;
+		    update_text();
 		    auton_mtx.give();
 	    },
 	    LV_EVENT_ALL, NULL);

@@ -1,7 +1,4 @@
 #include "main.h"
-#include "VOSS/selector/Selector.hpp"
-#include "VOSS/utils/flags.hpp"
-#include "pros/llemu.hpp"
 #include "voss/api.hpp"
 
 /**
@@ -12,7 +9,7 @@
  */
 void initialize() {
 	const char* b[] = {"Front", "Back", "Side", "Middle", ""};
-	voss::selector::init(0, 0, b);
+	voss::selector::init(0, 2, b);
 }
 
 /**
@@ -85,7 +82,7 @@ void opcontrol() {
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
 
 	while (true) {
-		printf("%d\n", voss::selector::get_auton());
+		// printf("%d\n", voss::selector::get_auton());
 
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
