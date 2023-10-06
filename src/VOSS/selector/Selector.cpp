@@ -6,7 +6,6 @@
 
 namespace voss::selector {
 
-std::unordered_map<const char*, int> autonMap;
 std::unordered_map<int, const char*> autonNameLookup;
 
 pros::Mutex auton_mtx;
@@ -22,19 +21,20 @@ int auton;
 const char* btnmMap[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 
 void update_text() {
+	const char* color;
+	const char* autonName;
 	if (auton != 0) {
-		const char* color = (auton > 0) ? "Red" : "Blue";
-		const char* autonName = autonNameLookup[abs(auton)];
-		lv_label_set_text_fmt(redLbl, "Currently running: %s %s", color, autonName);
-		lv_label_set_text_fmt(blueLbl, "Currently running: %s %s", color,
-		                      autonName);
-		lv_label_set_text_fmt(skillsLbl, "Currently running: %s %s", color,
-		                      autonName);
+		color = (auton > 0) ? "Red" : "Blue";
+		autonName = autonNameLookup[abs(auton)];
 	} else {
-		lv_label_set_text(redLbl, "Currently running: Skills");
-		lv_label_set_text_fmt(blueLbl, "Currently running: Skills");
-		lv_label_set_text_fmt(skillsLbl, "Currently running: Skills");
+		color = "";
+		autonName = "Skills";
 	}
+
+	lv_label_set_text_fmt(redLbl, "Currently running: %s %s", color, autonName);
+	lv_label_set_text_fmt(blueLbl, "Currently running: %s %s", color, autonName);
+	lv_label_set_text_fmt(skillsLbl, "Currently running: %s %s", color,
+	                      autonName);
 }
 
 void init(int default_auton, const char** autons) {
@@ -47,7 +47,6 @@ void init(int default_auton, const char** autons) {
 			ptr++;
 			continue;
 		}
-		autonMap[autons[ptr]] = i + 1;
 		autonNameLookup[i + 1] = autons[ptr];
 		ptr++;
 		i++;
@@ -122,9 +121,8 @@ void init(int default_auton, const char** autons) {
 		    lv_obj_t* obj = lv_event_get_target(e);
 		    if (code == LV_EVENT_VALUE_CHANGED) {
 			    uint32_t id = lv_btnmatrix_get_selected_btn(obj);
-			    const char* txt = lv_btnmatrix_get_btn_text(obj, id);
 			    auton_mtx.take();
-			    auton = autonMap[txt];
+			    auton = id + 1;
 			    update_text();
 			    auton_mtx.give();
 			    lv_btnmatrix_clear_btn_ctrl_all(blueBtnm, LV_BTNMATRIX_CTRL_CHECKED);
@@ -151,9 +149,8 @@ void init(int default_auton, const char** autons) {
 		    lv_obj_t* obj = lv_event_get_target(e);
 		    if (code == LV_EVENT_VALUE_CHANGED) {
 			    uint32_t id = lv_btnmatrix_get_selected_btn(obj);
-			    const char* txt = lv_btnmatrix_get_btn_text(obj, id);
 			    auton_mtx.take();
-			    auton = -1 * autonMap[txt];
+			    auton = -1 * (id + 1);
 			    update_text();
 			    auton_mtx.give();
 			    lv_btnmatrix_clear_btn_ctrl_all(redBtnm, LV_BTNMATRIX_CTRL_CHECKED);
@@ -163,6 +160,7 @@ void init(int default_auton, const char** autons) {
 
 	lv_obj_t* skillsBtn = lv_btn_create(skillsTab);
 	lv_obj_t* label = lv_label_create(skillsBtn);
+	lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 	lv_label_set_text(label, "Skills");
 	lv_obj_set_size(skillsBtn, 450, 50);
 	lv_obj_set_pos(skillsBtn, 0, 100);
