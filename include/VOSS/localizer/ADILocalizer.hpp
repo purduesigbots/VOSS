@@ -10,12 +10,12 @@ namespace voss::localizer {
 class ADILocalizer : public AbstractLocalizer {
 
 private:
-  double prev_left_pos = {0.0}, prev_right_pos = {0.0}, prev_middle_pos = {0.0};
-  Pose prev_pose = {0.0, 0.0, 0.0};
+  std::atomic<double> *prev_left_pos, *prev_right_pos, *prev_middle_pos;
+  Pose prev_pose;
 
-  double left_right_tpi = {0.0}, middle_tpi = {0.0};
-  double track_width = {0.0};
-  double left_right_dist = {0.0}, middle_dist = {0.0};
+  std::atomic<double> *left_right_tpi, *middle_tpi;
+  std::atomic<double> *track_width;
+  std::atomic<double> *left_right_dist, *middle_dist;
 
   std::unique_ptr<pros::adi::Encoder> left_encoder;
   std::unique_ptr<pros::adi::Encoder> right_encoder;
