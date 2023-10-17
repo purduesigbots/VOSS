@@ -25,7 +25,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		close = 0;
 	}
 
-	if (close > 500) {
+	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 

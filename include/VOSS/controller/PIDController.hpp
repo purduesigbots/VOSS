@@ -12,6 +12,7 @@ protected:
 	double exit_error;
 	double min_error;
 	double can_reverse;
+	double settle_time;
 
 	double close;
 
