@@ -75,7 +75,10 @@ void ADILocalizer::update() {
 	prev_left_pos->store(left_pos);
 	prev_right_pos->store(right_pos);
 	prev_middle_pos->store(middle_pos);
+	while(!this->mtx->try_lock())
+		pros::delay(10);
 	prev_pose = pose;
+	this->mtx->unlock();
 
 	double local_x;
 	double local_y;
