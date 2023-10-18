@@ -19,4 +19,12 @@ void AbstractController::set_target(Pose target, bool relative) {
 	}
 }
 
+void AbstractController::set_angular_target(double angular_target, bool relative) {
+    if (relative) {
+        this->angular_target = angular_target;
+    } else {
+        this->angular_target = angular_target - this->l->get_orientation_rad();
+    }
+}
+
 } // namespace voss::controller
