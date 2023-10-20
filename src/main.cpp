@@ -1,8 +1,5 @@
 #include "main.h"
-#include "VOSS/utils/flags.hpp"
-#include "pros/llemu.hpp"
 #include "voss/api.hpp"
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -81,7 +78,8 @@ void opcontrol() {
 				   .withSettleTime(10000)
 	               .build();
 
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+	double slew = 0;
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
 
 	while (true) {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
@@ -92,7 +90,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{-24.0, 0.0}, 100.0, voss::REVERSE);
+			chassis.move(voss::Point{24.0, 0.0}, 100.0);
 		}
 
 		pros::lcd::clear_line(1);
