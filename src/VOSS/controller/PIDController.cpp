@@ -44,6 +44,41 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
+chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool thru) {
+	double current_angle = this->l->get_orientation_rad();
+	double target_angle = 0;
+	if (this->target.theta == 361) {
+		Point current_pos = this->l->get_position();
+		double dx = this->target.x - current_pos.x;
+		double dy = this->target.y - current_pos.y;
+		target_angle = atan2(dy, dx);
+	} else {
+		target_angle = this->angular_target;
+	}
+	double angular_error = target_angle - current_angle;
+
+	if (angular_error <= angular_exit_error) {
+		close += 10;
+	} else {
+		close = 0;
+	}
+
+	if (close > 500) {
+		return chassis::ChassisCommand{chassis::Stop{}};
+	}
+
+	while (angular_error > M_PI) {
+		angular_error -= 2 * M_PI;
+	}
+	while (angular_error < -M_PI) {
+		angular_error += 2 * M_PI;
+	}
+	double ang_speed = angular_pid(angular_error);
+	return chassis::ChassisCommand{
+		chassis::Voltages{-ang_speed, ang_speed}
+	};
+}
+
 double PIDController::linear_pid(double error) {
 	total_lin_err += error;
 
