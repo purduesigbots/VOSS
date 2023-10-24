@@ -53,6 +53,9 @@ void localizer_getpose_threading_test(void* param){
 	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
 
   while (true) {
+    pros::lcd::clear_line(4);
+		pros::lcd::clear_line(5);
+		pros::lcd::clear_line(6);
     pros::lcd::print(4, "%lf", odom->get_pose().x);
     pros::lcd::print(5, "%lf", odom->get_pose().y);
     pros::lcd::print(6, "%lf", odom->get_pose().theta);
@@ -107,6 +110,7 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
+                  .withMiddleTPI(1)
 	                .withTrackWidth(3.558)
 	                .build();
 
@@ -136,12 +140,12 @@ void opcontrol() {
 			chassis.move(voss::Point{24.0, 0.0});
 		}
 
-		pros::lcd::clear_line(1);
-		pros::lcd::clear_line(2);
-		pros::lcd::clear_line(3);
-		pros::lcd::print(1, "%lf", p.x);
-		pros::lcd::print(2, "%lf", p.y);
-		pros::lcd::print(3, "%lf", p.theta);
+		// pros::lcd::clear_line(1);
+		// pros::lcd::clear_line(2);
+		// pros::lcd::clear_line(3);
+		// pros::lcd::print(1, "%lf", p.x);
+		// pros::lcd::print(2, "%lf", p.y);
+		// pros::lcd::print(3, "%lf", p.theta);
 
 		pros::delay(10);
 	}

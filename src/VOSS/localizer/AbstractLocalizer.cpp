@@ -1,4 +1,5 @@
 #include "voss/localizer/AbstractLocalizer.hpp"
+#include "pros/llemu.hpp"
 #include <cmath>
 
 namespace voss::localizer {
@@ -13,6 +14,8 @@ void AbstractLocalizer::begin_localization() {
 		while (true) {
 			std::unique_lock<pros::Mutex> lock(this->mtx);
 			this->update();
+			pros::lcd::clear_line(1);
+    	pros::lcd::print(1, "Updating Localizer");
 			lock.unlock();
 
 			pros::delay(10);
