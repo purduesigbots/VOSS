@@ -1,4 +1,5 @@
 #include "voss/localizer/IMELocalizer.hpp"
+#include "pros/adi.h"
 #include "pros/adi.hpp"
 #include "pros/motor_group.hpp"
 
@@ -35,7 +36,8 @@ int IMELocalizer::getLeftEncoderValue() {
 	if (leftMotors) {
 		return this->leftMotors->get_position();
 	} else {
-		return 0.0;
+		errno = EIO;
+		return PROS_ERR;
 	}
 }
 
@@ -43,7 +45,8 @@ int IMELocalizer::getRightEncoderValue() {
 	if (rightMotors) {
 		return this->rightMotors->get_position();
 	} else {
-		return 0.0;
+		errno = EIO;
+		return PROS_ERR;
 	}
 }
 
@@ -51,7 +54,8 @@ int IMELocalizer::getMiddleEncoderValue() {
 	if (horizontalMotors) {
 		return this->horizontalMotors->get_position();
 	} else {
-		return 0.0;
+		errno = EIO;
+		return PROS_ERR;
 	}
 }
 

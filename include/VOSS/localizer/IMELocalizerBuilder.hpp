@@ -11,10 +11,12 @@ class IMELocalizerBuilder {
 	double track_width;
 	double middle_dist;
 
+
 public:
 	IMELocalizerBuilder();
 
 	static IMELocalizerBuilder newBuilder();
+
 
 	IMELocalizerBuilder& withleftMotors(std::vector<int8_t> m);
 	IMELocalizerBuilder& withrightMotors(std::vector<int8_t> m);
@@ -24,7 +26,9 @@ public:
 	IMELocalizerBuilder& withTrackWidth(double track_width);
 	IMELocalizerBuilder& withMiddleDistance(double middle_dist);
 
-	IMELocalizer build();
+	
+
+	std::shared_ptr<IMELocalizer> build();
 };
 
 } // namespace voss::localizer
