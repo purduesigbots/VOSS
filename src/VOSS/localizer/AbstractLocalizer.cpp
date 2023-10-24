@@ -9,58 +9,43 @@ AbstractLocalizer::AbstractLocalizer() {
 }
 
 void AbstractLocalizer::begin_localization() {
-  pros::Task localization_task([=]() {
-    while (true) {
-      if (this->mtx->try_lock()) {
-        this->update();
-        this->mtx->unlock();
-      }
-      pros::delay(10);
-    }
-  });
+	pros::Task localization_task([=]() {
+		while (true) {
+			std::unique_lock<pros::Mutex> lock(this->mtx);
+			this->update();
+			lock.unlock();
+
+			pros::delay(10);
+		}
+	});
 }
 
 void AbstractLocalizer::set_pose(Pose pose) {
-  while (!this->mtx->try_lock())
-    pros::delay(10);
-
-  this->pose = pose;
-  this->mtx->unlock();
+	std::unique_lock<pros::Mutex> lock(this->mtx);
+	this->pose = pose;
 }
 
 Pose AbstractLocalizer::get_pose() {
-  while (!this->mtx->try_lock())
-    pros::delay(10);
-
-  Pose ret = this->pose;
-  this->mtx->unlock();
-  return ret;
+	std::unique_lock<pros::Mutex> lock(this->mtx);
+	Pose ret = this->pose;
+	return ret;
 }
 
 double AbstractLocalizer::get_orientation_rad() {
-  while (!this->mtx->try_lock())
-    pros::delay(10);
-
-  double ret = this->pose.theta;
-  this->mtx->unlock();
-  return ret;
+	std::unique_lock<pros::Mutex> lock(this->mtx);
+	double ret = this->pose.theta;
+	return ret;
 }
 
 double AbstractLocalizer::get_orientation_deg() {
-  while (!this->mtx->try_lock())
-    pros::delay(10);
-
-  double ret = this->pose.theta * 180 * M_1_PI;
-  this->mtx->unlock();
-  return ret;
+	std::unique_lock<pros::Mutex> lock(this->mtx);
+	double ret = this->pose.theta * 180 * M_1_PI;
+	return ret;
 }
 
 Point AbstractLocalizer::get_position() {
-  while (!this->mtx->try_lock())
-    pros::delay(10);
-
-  Point ret{this->pose.x, this->pose.y};
-  this->mtx->unlock();
-  return ret;
+	std::unique_lock<pros::Mutex> lock(this->mtx);
+	Point ret{this->pose.x, this->pose.y};
+	return ret;
 }
 } // namespace voss::localizer

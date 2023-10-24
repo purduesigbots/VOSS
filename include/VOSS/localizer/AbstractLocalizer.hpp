@@ -1,5 +1,6 @@
 #pragma once
 
+#include <mutex>
 #include "pros/rtos.hpp"
 #include "voss/utils/Point.hpp"
 #include "voss/utils/Pose.hpp"
