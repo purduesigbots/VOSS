@@ -9,16 +9,11 @@ namespace voss::localizer {
 ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
                            double mid_tpi, double track_width,
                            double middle_dist)
-    : prev_left_pos(new std::atomic<double>(0.0)),
-			prev_right_pos(new std::atomic<double>(0.0)),
-			prev_middle_pos(new std::atomic<double>(0.0)),
-			prev_pose({0.0, 0.0, 0.0}),
-      left_right_tpi(new std::atomic<double>(lr_tpi)),
-			middle_tpi(new std::atomic<double>(mid_tpi)),
-			track_width(new std::atomic<double>(track_width)),
-      middle_dist(new std::atomic<double>(middle_dist)) {
+    : prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
+      left_right_tpi(lr_tpi), middle_tpi(mid_tpi), track_width(track_width),
+      middle_dist(middle_dist) {
 
-	this->left_right_dist->store(track_width / 2);
+	this->left_right_dist = track_width / 2;
 
 	this->left_encoder = nullptr;
 	this->right_encoder = nullptr;
@@ -65,28 +60,25 @@ void ADILocalizer::update() {
 	double right_pos = getRightEncoderValue();
 	double middle_pos = getMiddleEncoderValue();
 
-	double delta_left = (left_pos - prev_left_pos->load()) / left_right_tpi->load();
-	double delta_right = (right_pos - prev_right_pos->load()) / left_right_tpi->load();
-	double delta_middle = (middle_pos - prev_middle_pos->load()) / middle_tpi->load();
+	double delta_left = (left_pos - prev_left_pos) / left_right_tpi;
+	double delta_right = (right_pos - prev_right_pos) / left_right_tpi;
+	double delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
 
-	double delta_angle = (delta_right - delta_left) / track_width->load();
+	double delta_angle = (delta_right - delta_left) / track_width;
 	this->pose.theta += delta_angle;
 
-	prev_left_pos->store(left_pos);
-	prev_right_pos->store(right_pos);
-	prev_middle_pos->store(middle_pos);
-	while(!this->mtx->try_lock())
-		pros::delay(10);
+	prev_left_pos = left_pos;
+	prev_right_pos = right_pos;
+	prev_middle_pos = middle_pos;
 	prev_pose = pose;
-	this->mtx->unlock();
 
 	double local_x;
 	double local_y;
 
 	if (delta_angle) {
 		double i = sin(delta_angle / 2.0) * 2.0;
-		local_x = (delta_right / delta_angle - left_right_dist->load()) * i;
-		local_y = (delta_middle / delta_angle + middle_dist->load()) * i;
+		local_x = (delta_right / delta_angle - left_right_dist) * i;
+		local_y = (delta_middle / delta_angle + middle_dist) * i;
 	} else {
 		local_x = delta_right;
 		local_y = delta_middle;

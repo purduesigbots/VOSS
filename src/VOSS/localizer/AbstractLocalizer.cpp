@@ -5,7 +5,6 @@
 namespace voss::localizer {
 
 AbstractLocalizer::AbstractLocalizer() {
-  this->mtx = new pros::Mutex;
   this->pose = {0.0, 0.0, 0.0};
 }
 
