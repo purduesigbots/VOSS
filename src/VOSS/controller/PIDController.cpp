@@ -1,5 +1,6 @@
 #include "voss/controller/PIDController.hpp"
 #include "voss/chassis/ChassisCommand.hpp"
+#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::controller {
@@ -28,9 +29,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
 
-	while (fabs(angle_error) > M_PI) {
-		angle_error -= 2 * M_PI * angle_error / fabs(angle_error);
-	}
+	angle_error = voss::norm_delta(angle_error);
 
 	double lin_speed;
 	if (thru) {
@@ -57,7 +56,9 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool th
 	}
 	double angular_error = target_angle - current_angle;
 
-	if (angular_error <= angular_exit_error) {
+	angular_error = voss::norm_delta(angular_error);
+
+	if (fabs(angular_error) < angular_exit_error) {
 		close += 10;
 	} else {
 		close = 0;
@@ -65,13 +66,6 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool th
 
 	if (close > 500) {
 		return chassis::ChassisCommand{chassis::Stop{}};
-	}
-
-	while (angular_error > M_PI) {
-		angular_error -= 2 * M_PI;
-	}
-	while (angular_error < -M_PI) {
-		angular_error += 2 * M_PI;
 	}
 	double ang_speed = angular_pid(angular_error);
 	return chassis::ChassisCommand{

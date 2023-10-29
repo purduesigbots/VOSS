@@ -85,6 +85,7 @@ namespace voss::chassis {
     void AbstractChassis::turn(double target, controller::AbstractController *controller, double max, uint8_t flags) {
         this->m.take();
 
+        controller->set_target({0, 0, 0}, false);
         controller->set_angular_target(target, flags & voss::RELATIVE);
 
         this->turn_task(controller, max, flags);

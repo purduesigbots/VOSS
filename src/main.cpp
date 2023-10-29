@@ -75,6 +75,7 @@ void opcontrol() {
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(3, 0.03, 35)
 	               .withExitError(1.0)
+				   .withAngularExitError(1.0)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);

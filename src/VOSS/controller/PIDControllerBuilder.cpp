@@ -1,6 +1,7 @@
 #include "voss/controller/PIDControllerBuilder.hpp"
 #include "voss/controller/PIDController.hpp"
 #include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 
@@ -37,6 +38,11 @@ PIDControllerBuilder& PIDControllerBuilder::withTrackingKP(double kP) {
 
 PIDControllerBuilder& PIDControllerBuilder::withExitError(double error) {
 	this->ctrl.exit_error = error;
+	return *this;
+}
+
+PIDControllerBuilder& PIDControllerBuilder::withAngularExitError(double error) {
+	this->ctrl.angular_exit_error = voss::to_radians(error);
 	return *this;
 }
 
