@@ -17,7 +17,13 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	double dy = target.y - current_pos.y;
 
 	double distance_error = sqrt(dx * dx + dy * dy);
+
+	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
+
+	angle_error = voss::norm_delta(angle_error);
+
 	if (distance_error <= exit_error) {
+		angle_error = 0;
 		close += 10;
 	} else {
 		close = 0;
@@ -26,10 +32,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	if (close > 500) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
-
-	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
-
-	angle_error = voss::norm_delta(angle_error);
+	angle_error = voss::to_degrees(angle_error);
 
 	double lin_speed;
 	if (thru) {
@@ -67,6 +70,7 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool th
 	if (close > 500) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
+	angular_error = voss::to_degrees(angular_error);
 	double ang_speed = angular_pid(angular_error);
 	return chassis::ChassisCommand{
 		chassis::Voltages{-ang_speed, ang_speed}
