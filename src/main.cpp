@@ -125,8 +125,8 @@ void opcontrol() {
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
 
 	pros::Task localizerTask0(localizer_getpose_threading_test, static_cast<void *>(&odom), "Localizer Get Pose Task");
-	pros::Task localizerTask1(localizer_setpose_threading_test1, static_cast<void *>(&odom), "Localizer Set Pose Task 1");
-	pros::Task localizerTask2(localizer_setpose_threading_test2, static_cast<void *>(&odom), "Localizer Set Pose Task 2");
+	// pros::Task localizerTask1(localizer_setpose_threading_test1, static_cast<void *>(&odom), "Localizer Set Pose Task 1");
+	// pros::Task localizerTask2(localizer_setpose_threading_test2, static_cast<void *>(&odom), "Localizer Set Pose Task 2");
 
 	while (true) {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
