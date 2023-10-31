@@ -14,10 +14,16 @@ private:
 	std::unique_ptr<pros::MotorGroup> left_motors;
 	std::unique_ptr<pros::MotorGroup> right_motors;
 
+	double slew_step;
+	Voltages prev_voltages;
+
+	double slew(double target, bool is_left);
+
 public:
 	DiffChassis(std::initializer_list<int8_t> left_motors,
 	            std::initializer_list<int8_t> right_motors,
-	            controller::AbstractController& default_controller);
+	            controller::AbstractController& default_controller,
+	            double slew_step = 8);
 
 	void tank(double left_speed, double right_speed);
 	void arcade(double forward_speed, double turn_speed);

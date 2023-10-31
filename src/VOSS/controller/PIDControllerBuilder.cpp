@@ -40,6 +40,11 @@ PIDControllerBuilder& PIDControllerBuilder::withExitError(double error) {
 	return *this;
 }
 
+PIDControllerBuilder& PIDControllerBuilder::withMinError(double error) {
+	this->ctrl.min_error = error;
+	return *this;
+}
+
 PIDController PIDControllerBuilder::build() {
 	return this->ctrl;
 }
