@@ -1,4 +1,5 @@
 #include "main.h"
+#include "VOSS/localizer/IMELocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
 #include "pros/llemu.hpp"
 #include "voss/api.hpp"
@@ -10,7 +11,64 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+	// pros::lcd::initialize();
+
+	int valid = 0;
+	int invalid = 0;
+
+	for (int i = 0; i < 256; i++) {
+		std::vector<int8_t> left = {};
+		std::vector<int8_t> right = {};
+		std::vector<int8_t> horiz = {};
+		double lr_tpi = 0.0;
+		double mid_tpi = 0.0;
+		double track_width = 0.0;
+		double mid_dist = 0.0;
+
+		if (i & 0b10000000) {
+			left = {1};
+		}
+		if (i & 0b01000000) {
+			right = {2};
+		}
+		if (i & 0b00100000) {
+			lr_tpi = 1.0;
+		}
+		if (i & 0b00010000) {
+			track_width = 1.0;
+		}
+		if (i & 0b00001000) {
+			horiz = {3};
+		}
+		if (i & 0b00000100) {
+			mid_tpi = 1.0;
+		}
+		if (i & 0b00000010) {
+			mid_dist = 1.0;
+		}
+
+		auto odom = voss::localizer::IMELocalizerBuilder::newBuilder()
+		                .withleftMotors(left)
+		                .withrightMotors(right)
+		                .withhorizontalMotors(horiz)
+		                .withLeftRightTPI(lr_tpi)
+		                .withMiddleTPI(mid_tpi)
+		                .withTrackWidth(track_width)
+		                .withMiddleDistance(mid_dist)
+		                .build();
+
+		if (odom == nullptr) {
+			invalid++;
+		} else {
+			valid++;
+			printf("Valid %d: Case %d\n", valid, i);
+		}
+
+		pros::delay(10);
+	}
+
+	printf("# Valid: %d\n", valid);
+	printf("# Invalid: %d\n", invalid);
 }
 
 /**
@@ -61,47 +119,46 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	// pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	auto odom = voss::localizer::IMELocalizerBuilder::newBuilder()
-	                .withleftMotors({-13, -15, -16})
-	                .withrightMotors({8, 7, 5})
-	                .withLeftRightTPI(0)//19.5
-	                .withMiddleTPI(325)
-	                .withTrackWidth(3.558)
-	                .build();
+	// auto odom = voss::localizer::IMELocalizerBuilder::newBuilder()
+	//                 .withleftMotors({-13, -15, -16})
+	//                 .withrightMotors({8, 7, 5})
+	//                 .withLeftRightTPI(0) // 19.5
+	//                 .withMiddleTPI(325)
+	//                 .withTrackWidth(3.558)
+	//                 .build();
 
-	//odom->begin_localization();
+	// odom->begin_localization();
 
-	//auto pid = voss::controller::PIDControllerBuilder::newBuilder(*odom)
-	//               .withLinearConstants(7, 0.02, 40)
-	//               .withAngularConstants(3, 0.03, 35)
-	//               .withExitError(1.0)
-	//               .withMinError(5)
-	//               .build();
-//
-	//voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+	// auto pid = voss::controller::PIDControllerBuilder::newBuilder(*odom)
+	//                .withLinearConstants(7, 0.02, 40)
+	//                .withAngularConstants(3, 0.03, 35)
+	//                .withExitError(1.0)
+	//                .withMinError(5)
+	//                .build();
+	//
+	// voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
 
 	while (true) {
-		//chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
-		               //master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
+		// chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
+		// master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
-		voss::Pose p = odom->get_pose();
+		// voss::Pose p = odom->get_pose();
 
-		if (master.get_digital_new_press(DIGITAL_Y)) {
-			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
+		// if (master.get_digital_new_press(DIGITAL_Y)) {
+		// 	odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			//chassis.move(voss::Point{-24.0, 0.0}, 100.0, voss::REVERSE);
-		}
+		// 	//chassis.move(voss::Point{-24.0, 0.0}, 100.0, voss::REVERSE);
+		// }
 
-		pros::lcd::clear_line(1);
-		pros::lcd::clear_line(2);
-		pros::lcd::clear_line(3);
-		pros::lcd::print(1, "%lf", p.x);
-		pros::lcd::print(2, "%lf", p.y);
-		pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-		pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
-
+		// pros::lcd::clear_line(1);
+		// pros::lcd::clear_line(2);
+		// pros::lcd::clear_line(3);
+		// pros::lcd::print(1, "%lf", p.x);
+		// pros::lcd::print(2, "%lf", p.y);
+		// pros::lcd::print(3, "%lf", odom->get_orientation_deg());
+		// pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
 		pros::delay(10);
 	}
 }
