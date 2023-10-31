@@ -7,7 +7,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
+	voss::selector::init(2, autons);
 }
 
 /**
@@ -81,6 +82,8 @@ void opcontrol() {
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
 
 	while (true) {
+		// printf("%d\n", voss::selector::get_auton());
+
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
