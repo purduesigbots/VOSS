@@ -1,7 +1,5 @@
 #include "main.h"
-#include "pros/llemu.hpp"
 #include "voss/api.hpp"
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -9,7 +7,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
+	voss::selector::init(2, autons);
 }
 
 /**
@@ -120,15 +119,19 @@ void opcontrol() {
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(3, 0.03, 35)
 	               .withExitError(1.0)
+	               .withMinError(5)
 	               .build();
 
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+	double slew = 0;
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
 
 	pros::Task localizerTask0(localizer_getpose_threading_test, static_cast<void *>(&odom), "Localizer Get Pose Task");
 	// pros::Task localizerTask1(localizer_setpose_threading_test1, static_cast<void *>(&odom), "Localizer Set Pose Task 1");
 	// pros::Task localizerTask2(localizer_setpose_threading_test2, static_cast<void *>(&odom), "Localizer Set Pose Task 2");
 
 	while (true) {
+		// printf("%d\n", voss::selector::get_auton());
+
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
@@ -137,7 +140,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0});
+			chassis.move(voss::Point{24.0, 0.0}, 100.0);
 		}
 
 		// pros::lcd::clear_line(4);
