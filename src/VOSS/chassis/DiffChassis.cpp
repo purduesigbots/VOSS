@@ -7,7 +7,7 @@ namespace voss::chassis {
 double DiffChassis::slew(double target, bool is_left) {
 	double step = this->slew_step;
 	double current =
-	    is_left ? this->prev_voltages.left : this->prev_voltages.right;
+	    is_left ? (this->prev_voltages.linear - this->prev_voltages.angular) : (this->prev_voltages.linear + this->prev_voltages.angular);
 
 	if (fabs(current) > fabs(target))
 		step = 200;
@@ -49,30 +49,34 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
 
 bool DiffChassis::execute(ChassisCommand cmd, double max) {
 	return std::visit(overload{[this](Stop&) -> bool {
-		                           this->left_motors->move_voltage(0);
-		                           this->right_motors->move_voltage(0);
+			this->left_motors->move_voltage(0);
+			this->right_motors->move_voltage(0);
+			
+			return true;
+		},
+		[this, max](Voltages& v) -> bool {
+			double left = v.linear - v.angular;
+			double right = v.linear + v.angular;
 
-		                           return true;
-	                           },
-	                           [this, max](Voltages& v) -> bool {
-		                           if (fabs(v.left) > max) {
-			                           v.left = max * ((v.left < 0) ? -1 : 1);
-		                           }
-		                           if (fabs(v.right) > max) {
-			                           v.right = max * ((v.right < 0) ? -1 : 1);
-		                           }
+			if (fabs(left) > max) {
+				left = max * ((left < 0) ? -1 : 1);
+			}
+			if (fabs(right) > max) {
+				right = max * ((right < 0) ? -1 : 1);
+			}
 
-		                           v.left = slew(v.left, true);
-		                           v.right = slew(v.right, true);
+			left = slew(left, true);
+			right = slew(right, false);
 
-		                           this->left_motors->move_voltage(120 * v.left);
-		                           this->right_motors->move_voltage(120 * v.right);
+			this->left_motors->move_voltage(120 * left);
+			this->right_motors->move_voltage(120 * right);
 
-		                           this->prev_voltages = v;
+			this->prev_voltages = v;
 
-		                           return false;
-	                           }},
-	                  cmd);
+			return false;
+		}},
+		cmd
+	);
 }
 
 } // namespace voss::chassis

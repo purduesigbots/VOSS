@@ -76,7 +76,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	}
 
 	return chassis::ChassisCommand{
-	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+	    chassis::Voltages{lin_speed, ang_speed}};
 }
 
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool thru) {
@@ -105,7 +105,7 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool th
 	}
 	double ang_speed = angular_pid(angular_error);
 	return chassis::ChassisCommand{
-		chassis::Voltages{-ang_speed, ang_speed}
+		chassis::Voltages{0, ang_speed}
 	};
 }
 

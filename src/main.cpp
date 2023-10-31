@@ -94,7 +94,7 @@ void opcontrol() {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
 			chassis.move(voss::Point{24.0, 0.0});
-			//chassis.turn(90);
+			chassis.turn(90);
 		}
 
 		pros::lcd::clear_line(1);

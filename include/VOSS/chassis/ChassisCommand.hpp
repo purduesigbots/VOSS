@@ -6,8 +6,8 @@ namespace voss::chassis {
 
 struct Stop {};
 struct Voltages {
-	double left;
-	double right;
+	double linear;
+	double angular;
 };
 
 using ChassisCommand = std::variant<Stop, Voltages>;
