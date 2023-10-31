@@ -25,6 +25,8 @@ public:
 	void holonomic(double forward_speed, double turn_speed, double strafe_speed);
 	void tank(double left_speed, double right_speed);
 	void arcade(double forward_speed, double turn_speed);
+
+	bool execute(ChassisCommand cmd, double max);
 };
 
 }
