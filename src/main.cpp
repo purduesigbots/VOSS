@@ -73,8 +73,9 @@ void opcontrol() {
 
 	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
-	               .withAngularConstants(3, 0.03, 35)
+	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
+                 .withAngularExitError(1.0)
 	               .withMinError(5)
 	               .build();
 
@@ -92,7 +93,8 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0}, 100.0);
+			//chassis.move(voss::Point{24.0, 0.0});
+			chassis.turn(90);
 		}
 
 		pros::lcd::clear_line(1);

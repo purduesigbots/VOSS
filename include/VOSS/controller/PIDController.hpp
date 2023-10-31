@@ -10,6 +10,7 @@ protected:
 	double angular_kP, angular_kI, angular_kD;
 	double tracking_kP;
 	double exit_error;
+	double angular_exit_error;
 	double min_error;
 	double can_reverse;
 
@@ -23,7 +24,9 @@ public:
 	double linear_pid(double error);
 	double angular_pid(double error);
 
-	chassis::ChassisCommand get_command(bool reverse, bool thru);
+	chassis::ChassisCommand get_command(bool reverse, bool thru)override;
+    chassis::ChassisCommand get_angular_command(bool reverse, bool thru)override;
+
 	void reset();
 
 	friend class PIDControllerBuilder;
