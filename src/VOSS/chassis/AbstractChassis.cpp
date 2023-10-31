@@ -18,20 +18,21 @@ namespace voss::chassis {
                     max)) {
                 pros::delay(10);
             }
-            this->m.give();
+            //this->m.give();
         });
 
         if (flags & voss::ASYNC) {
             return;
         }
 
-        this->m.take();
-        this->m.give();
+        running_t.join();
+
+        //this->m.take();
+        //this->m.give();
     }
 
     void AbstractChassis::turn_task(controller::AbstractController* controller,
                                     double max, uint8_t flags) {
-
         pros::Task running_t([&]() {
             controller->reset();
             while (!this->execute(
@@ -39,24 +40,22 @@ namespace voss::chassis {
                     max)) {
                 pros::delay(10);
             }
-            this->m.give();
         });
 
         if (flags & voss::ASYNC) {
             return;
         }
 
-        this->m.take();
-        this->m.give();
+        running_t.join();
     }
 
 
     void AbstractChassis::move(Point target, double max, uint8_t flags) {
-        this->move(target, this->default_controller, flags);
+        this->move(target, this->default_controller, max, flags);
     }
 
     void AbstractChassis::move(Pose target, double max, uint8_t flags) {
-        this->move(target, this->default_controller, flags);
+        this->move(target, this->default_controller, max, flags);
     }
 
     void AbstractChassis::move(Point target,
@@ -64,14 +63,14 @@ namespace voss::chassis {
                                double max, uint8_t flags) {
 
         Pose pose_target = Pose{target.x, target.y, 361};
-        this->move(pose_target, controller, flags);
+        this->move(pose_target, controller, max, flags);
     }
 
     void AbstractChassis::move(Pose target,
                                controller::AbstractController *controller,
                                double max, uint8_t flags) {
 
-        this->m.take();
+        //this->m.take();
 
         controller->set_target(target, flags & voss::RELATIVE);
 
@@ -83,8 +82,9 @@ namespace voss::chassis {
     }
 
     void AbstractChassis::turn(double target, controller::AbstractController *controller, double max, uint8_t flags) {
-        this->m.take();
+        //this->m.take();
 
+        controller->set_target({0, 0, 0}, false);
         controller->set_angular_target(target, flags & voss::RELATIVE);
 
         this->turn_task(controller, max, flags);
@@ -95,7 +95,7 @@ namespace voss::chassis {
     }
 
     void AbstractChassis::turnTo(Point target, controller::AbstractController *controller, double max, uint8_t flags) {
-        this->m.take();
+        //this->m.take();
 
         controller->set_target({target.x, target.y, 361}, flags & voss::RELATIVE);
 

@@ -10,6 +10,7 @@ protected:
 	double angular_kP, angular_kI, angular_kD;
 	double tracking_kP;
 	double exit_error;
+	double angular_exit_error;
 
 	double close;
 
