@@ -11,6 +11,8 @@ protected:
 	double tracking_kP;
 	double exit_error;
 	double angular_exit_error;
+	double min_error;
+	double can_reverse;
 
 	double close;
 

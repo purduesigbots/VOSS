@@ -41,8 +41,14 @@ PIDControllerBuilder& PIDControllerBuilder::withExitError(double error) {
 	return *this;
 }
 
+
 PIDControllerBuilder& PIDControllerBuilder::withAngularExitError(double error) {
 	this->ctrl.angular_exit_error = voss::to_radians(error);
+  return *this;
+}
+
+PIDControllerBuilder& PIDControllerBuilder::withMinError(double error) {
+	this->ctrl.min_error = error;
 	return *this;
 }
 

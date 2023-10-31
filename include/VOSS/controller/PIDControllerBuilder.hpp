@@ -18,6 +18,7 @@ public:
 	PIDControllerBuilder& withTrackingKP(double kP);
 	PIDControllerBuilder& withExitError(double error);
 	PIDControllerBuilder& withAngularExitError(double error);
+	PIDControllerBuilder& withMinError(double error);
 
 	PIDController build();
 };

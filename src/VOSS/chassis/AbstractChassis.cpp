@@ -1,4 +1,5 @@
 #include "voss/chassis/AbstractChassis.hpp"
+#include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
 
 namespace voss::chassis {

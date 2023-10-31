@@ -1,7 +1,5 @@
 #include "main.h"
-#include "pros/llemu.hpp"
 #include "voss/api.hpp"
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -9,7 +7,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
+	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
+	voss::selector::init(2, autons);
 }
 
 /**
@@ -66,7 +65,7 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
-					.withMiddleTPI(1)
+	                .withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
 
@@ -76,12 +75,16 @@ void opcontrol() {
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
-				   .withAngularExitError(1.0)
+                 .withAngularExitError(1.0)
+	               .withMinError(5)
 	               .build();
 
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid);
+	double slew = 0;
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
 
 	while (true) {
+		// printf("%d\n", voss::selector::get_auton());
+
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
