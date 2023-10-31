@@ -30,7 +30,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	angle_error = voss::norm_delta(angle_error);
 
 	if (distance_error <= exit_error) {
-		angle_error = 0;
+		total_lin_err = 0;
 		close += 10;
 	} else {
 		close = 0;
