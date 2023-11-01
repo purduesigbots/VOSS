@@ -69,13 +69,13 @@ void opcontrol() {
 	                .withTrackWidth(3.558)
 	                .build();
 
-	odom.begin_localization();
+	odom->begin_localization();
 
 	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
-                 .withAngularExitError(1.0)
+	               .withAngularExitError(1.0)
 	               .withMinError(5)
 	               .build();
 
@@ -86,13 +86,13 @@ void opcontrol() {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
-		voss::Pose p = odom.get_pose();
+		voss::Pose p = odom->get_pose();
 
 		if (master.get_digital_new_press(DIGITAL_Y)) {
-			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
+			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
 
 			chassis.move(voss::Point{24.0, 0.0});
-			//chassis.turn(90);
+			// chassis.turn(90);
 		}
 
 		// pros::lcd::clear_line(4);
