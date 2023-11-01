@@ -63,7 +63,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 		                           }
 
 		                           v.left = slew(v.left, true);
-		                           v.right = slew(v.right, true);
+		                           v.right = slew(v.right, false);
 
 		                           this->left_motors->move_voltage(120 * v.left);
 		                           this->right_motors->move_voltage(120 * v.right);
