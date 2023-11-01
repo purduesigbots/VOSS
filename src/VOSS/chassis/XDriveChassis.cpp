@@ -1,4 +1,5 @@
 #include "XDriveChassis.hpp"
+#include <cmath>
 
 voss::chassis::XDriveChassis::XDriveChassis(
 		int8_t front_left_motor, int8_t back_left_motor, int8_t front_right_motor,
@@ -11,24 +12,24 @@ voss::chassis::XDriveChassis::XDriveChassis(
 }
 
 void voss::chassis::XDriveChassis::holonomic(double forward_speed, double turn_speed, double strafe_speed) {
-	this->front_left_motor->move_voltage(forward_speed + turn_speed + strafe_speed);
-	this->back_left_motor->move_voltage(forward_speed + turn_speed - strafe_speed);
-	this->front_right_motor->move_voltage(forward_speed - turn_speed - strafe_speed);
-	this->back_right_motor->move_voltage(forward_speed - turn_speed + strafe_speed);
+	this->front_left_motor->move_voltage(120 * (forward_speed + turn_speed + strafe_speed));
+	this->back_left_motor->move_voltage(120 * (forward_speed + turn_speed - strafe_speed));
+	this->front_right_motor->move_voltage(120 * (forward_speed - turn_speed - strafe_speed));
+	this->back_right_motor->move_voltage(120 * (forward_speed - turn_speed + strafe_speed));
 }
 
 void voss::chassis::XDriveChassis::tank(double left_speed, double right_speed) {
-	this->front_left_motor->move_voltage(left_speed);
-	this->back_left_motor->move_voltage(left_speed);
-	this->front_right_motor->move_voltage(right_speed);
-	this->back_right_motor->move_voltage(right_speed);
+	this->front_left_motor->move_voltage(120 * left_speed);
+	this->back_left_motor->move_voltage(120 * left_speed);
+	this->front_right_motor->move_voltage(120 * right_speed);
+	this->back_right_motor->move_voltage(120 * right_speed);
 }
 
 void voss::chassis::XDriveChassis::arcade(double forward_speed, double turn_speed) {
-	this->front_left_motor->move_voltage(forward_speed + turn_speed);
-	this->back_left_motor->move_voltage(forward_speed + turn_speed);
-	this->front_right_motor->move_voltage(forward_speed - turn_speed);
-	this->back_right_motor->move_voltage(forward_speed - turn_speed);
+	this->front_left_motor->move_voltage(120 * (forward_speed + turn_speed));
+	this->back_left_motor->move_voltage(120 * (forward_speed + turn_speed));
+	this->front_right_motor->move_voltage(120 * (forward_speed - turn_speed));
+	this->back_right_motor->move_voltage(120 * (forward_speed - turn_speed));
 }
 
 bool voss::chassis::XDriveChassis::execute(ChassisCommand cmd, double max) {
@@ -39,6 +40,28 @@ bool voss::chassis::XDriveChassis::execute(ChassisCommand cmd, double max) {
 			this->back_right_motor->move_voltage(0);
 
 			return true;
-		} // TODO: Add voltages
+		},
+		[this, max](Voltages& v) -> bool {
+			double front_left = v.linear + v.angular;
+			double back_left = v.linear + v.angular;
+			double front_right = v.linear - v.angular;
+			double back_right = v.linear - v.angular;
+
+			if (fabs(front_left) > max)
+				front_left = max * (front_left > 0 ? 1 : -1);
+			if (fabs(back_left) > max)
+				back_left = max * (back_left > 0 ? 1 : -1);
+			if (fabs(front_right) > max)
+				front_right = max * (front_right > 0 ? 1 : -1);
+			if (fabs(back_right) > max)
+				back_right = max * (back_right > 0 ? 1 : -1);
+
+			this->front_left_motor->move_voltage(120 * front_left);
+			this->back_left_motor->move_voltage(120 *  back_left);
+			this->front_right_motor->move_voltage(120 * front_right);
+			this->back_right_motor->move_voltage(120 * back_right);
+
+			return false;
+		}
 	}, cmd);
 }
