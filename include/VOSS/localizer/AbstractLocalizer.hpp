@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mutex>
+#include "pros/rtos.hpp"
 #include "voss/utils/Point.hpp"
 #include "voss/utils/Pose.hpp"
 
@@ -7,21 +9,21 @@ namespace voss::localizer {
 
 class AbstractLocalizer {
 protected:
-	bool mtx;
-	Pose pose;
+  pros::Mutex mtx;
+  Pose pose;
 
 public:
-	AbstractLocalizer();
+  AbstractLocalizer();
 
-	virtual void update() = 0;
-	void begin_localization();
+  virtual void update() = 0;
+  void begin_localization();
 
-	void set_pose(Pose pose);
+  void set_pose(Pose pose);
 
-	Pose get_pose();
-	double get_orientation_rad();
-	double get_orientation_deg();
-	Point get_position();
+  Pose get_pose();
+  double get_orientation_rad();
+  double get_orientation_deg();
+  Point get_position();
 };
 
 } // namespace voss::localizer

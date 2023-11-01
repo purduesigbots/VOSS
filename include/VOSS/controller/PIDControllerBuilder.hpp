@@ -17,6 +17,7 @@ public:
 	PIDControllerBuilder& withAngularConstants(double kP, double kI, double kD);
 	PIDControllerBuilder& withTrackingKP(double kP);
 	PIDControllerBuilder& withExitError(double error);
+	PIDControllerBuilder& withAngularExitError(double error);
 	PIDControllerBuilder& withMinError(double error);
 	PIDControllerBuilder& withSettleTime(double time);
 

@@ -14,7 +14,7 @@ private:
 public:
 	BoomerangController(localizer::AbstractLocalizer& l);
 
-	chassis::ChassisCommand get_command(bool reverse, bool thru);
+	chassis::ChassisCommand get_command(bool reverse, bool thru)override;
 
 	friend class BoomerangControllerBuilder;
 };

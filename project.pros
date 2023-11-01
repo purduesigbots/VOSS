@@ -78,9 +78,9 @@
                 "version": "4.0.5"
             },
             "liblvgl": {
-                "location": "/Users/krishshah/Library/Application Support/PROS/templates/liblvgl@8.3.6",
+                "location": "C:\\Users\\mayan\\AppData\\Roaming\\PROS\\templates\\liblvgl@8.3.6",
                 "metadata": {
-                    "origin": "kernel-4-mainline"
+                    "origin": "kernel-beta-mainline"
                 },
                 "name": "liblvgl",
                 "py/object": "pros.conductor.templates.local_template.LocalTemplate",

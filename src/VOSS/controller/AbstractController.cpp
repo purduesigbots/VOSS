@@ -1,4 +1,5 @@
 #include "voss/controller/AbstractController.hpp"
+#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::controller {
@@ -17,6 +18,15 @@ void AbstractController::set_target(Pose target, bool relative) {
 	} else {
 		this->target = target;
 	}
+}
+
+void AbstractController::set_angular_target(double angular_target, bool relative) {
+	angular_target = voss::to_radians(angular_target);
+    if (relative) {
+        this->angular_target = voss::norm(angular_target + this->l->get_orientation_rad());
+    } else {
+        this->angular_target = voss::norm(angular_target);
+    }
 }
 
 } // namespace voss::controller
