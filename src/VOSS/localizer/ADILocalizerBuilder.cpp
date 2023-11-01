@@ -48,8 +48,7 @@ ADILocalizerBuilder::withMiddleDistance(double middle_dist) {
 }
 
 ADILocalizer ADILocalizerBuilder::build() {
-	ADILocalizer l(left, right, mid, lr_tpi, mid_tpi, track_width, middle_dist);
-	return l;
+	return ADILocalizer(left, right, mid, lr_tpi, mid_tpi, track_width, middle_dist);
 }
 
 } // namespace voss::localizer

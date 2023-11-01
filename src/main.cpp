@@ -79,11 +79,9 @@ void opcontrol() {
 	               .withMinError(5)
 	               .build();
 
-	double slew = 0;
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
 
 	while (true) {
-		// printf("%d\n", voss::selector::get_auton());
 
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
@@ -97,12 +95,12 @@ void opcontrol() {
 			//chassis.turn(90);
 		}
 
-		pros::lcd::clear_line(1);
-		pros::lcd::clear_line(2);
-		pros::lcd::clear_line(3);
-		pros::lcd::print(1, "%lf", p.x);
-		pros::lcd::print(2, "%lf", p.y);
-		pros::lcd::print(3, "%lf", p.theta);
+		// pros::lcd::clear_line(4);
+		// pros::lcd::clear_line(5);
+		// pros::lcd::clear_line(6);
+		// pros::lcd::print(4, "%lf", p.x);
+		// pros::lcd::print(5, "%lf", p.y);
+		// pros::lcd::print(6, "%lf", p.theta);
 
 		pros::delay(10);
 	}
