@@ -7,8 +7,64 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
-	voss::selector::init(2, autons);
+	pros::lcd::initialize();
+
+	int valid = 0;
+	int invalid = 0;
+
+	for (int i = 0; i < 256; i++) {
+		char left = 0;
+		char right = 0;
+		char horiz = 0;
+		double lr_tpi = 0.0;
+		double mid_tpi = 0.0;
+		double track_width = 0.0;
+		double mid_dist = 0.0;
+
+		if (i & 0b10000000) {
+			left = 1;
+		}
+		if (i & 0b01000000) {
+			right = 2;
+		}
+		if (i & 0b00100000) {
+			lr_tpi = 1.0;
+		}
+		if (i & 0b00010000) {
+			track_width = 1.0;
+		}
+		if (i & 0b00001000) {
+			horiz = 3;
+		}
+		if (i & 0b00000100) {
+			mid_tpi = 1.0;
+		}
+		if (i & 0b00000010) {
+			mid_dist = 1.0;
+		}
+
+		auto odom = voss::localizer::ADILocalizerBuilder::newBuilder()
+		                .withLeftEncoder(left)
+		                .withRightEncoder(right)
+		                .withMiddleEncoder(horiz)
+		                .withLeftRightTPI(lr_tpi)
+		                .withMiddleTPI(mid_tpi)
+		                .withTrackWidth(track_width)
+		                .withMiddleDistance(mid_dist)
+		                .build();
+
+		if (odom == nullptr) {
+			invalid++;
+		} else {
+			valid++;
+			printf("Valid %d: Case %d\n", valid, i);
+		}
+
+		pros::delay(10);
+	}
+
+	printf("# Valid: %d\n", valid);
+	printf("# Invalid: %d\n", invalid);
 }
 
 /**
@@ -83,17 +139,17 @@ void opcontrol() {
 
 	while (true) {
 
-		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
-		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
+		// chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
+		//                master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
-		voss::Pose p = odom->get_pose();
+		// voss::Pose p = odom->get_pose();
 
-		if (master.get_digital_new_press(DIGITAL_Y)) {
-			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
+		// if (master.get_digital_new_press(DIGITAL_Y)) {
+		// 	odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0});
-			// chassis.turn(90);
-		}
+		// 	chassis.move(voss::Point{24.0, 0.0});
+		// 	// chassis.turn(90);
+		// }
 
 		// pros::lcd::clear_line(4);
 		// pros::lcd::clear_line(5);
