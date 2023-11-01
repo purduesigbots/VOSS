@@ -45,50 +45,6 @@ void competition_initialize() {
 void autonomous() {
 }
 
-void localizer_getpose_threading_test(void* param){
-	if (param == NULL){
-		return;
-	}
-	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
-
-  while (true) {
-    pros::lcd::clear_line(4);
-		pros::lcd::clear_line(5);
-		pros::lcd::clear_line(6);
-    pros::lcd::print(4, "%lf", odom->get_pose().x);
-    pros::lcd::print(5, "%lf", odom->get_pose().y);
-    pros::lcd::print(6, "%lf", odom->get_pose().theta);
-
-		pros::delay(10);
-	}
-}
-
-void localizer_setpose_threading_test1(void* param){
-	if (param == NULL){
-		return;
-	}
-	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
-
-	while(true){
-		odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
-
-		pros::delay(10);
-	}
-}
-
-void localizer_setpose_threading_test2(void* param){
-	if (param == NULL){
-		return;
-	}
-	voss::localizer::ADILocalizer *odom = static_cast<voss::localizer::ADILocalizer *>(param);
-
-	while(true){
-		odom->set_pose(voss::Pose{1.0, 1.0, 1.0});
-
-		pros::delay(10);
-	}
-}
-
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -109,7 +65,7 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
-                  .withMiddleTPI(325)
+	                .withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
 
@@ -122,15 +78,9 @@ void opcontrol() {
 	               .withMinError(5)
 	               .build();
 
-	double slew = 0;
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, slew);
-
-	pros::Task localizerTask0(localizer_getpose_threading_test, static_cast<void *>(&odom), "Localizer Get Pose Task");
-	// pros::Task localizerTask1(localizer_setpose_threading_test1, static_cast<void *>(&odom), "Localizer Set Pose Task 1");
-	// pros::Task localizerTask2(localizer_setpose_threading_test2, static_cast<void *>(&odom), "Localizer Set Pose Task 2");
+	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
 
 	while (true) {
-		// printf("%d\n", voss::selector::get_auton());
 
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
