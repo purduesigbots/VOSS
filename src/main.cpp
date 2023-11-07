@@ -75,7 +75,7 @@ void opcontrol() {
 	               .withExitError(1.0)
 	               .withAngularExitError(1.0)
 	               .withMinError(5)
-				   .withSettleTime(10000)
+	               .withSettleTime(200)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
