@@ -1,11 +1,12 @@
 #include "voss/controller/PIDController.hpp"
+#include "VOSS/utils/angle.hpp"
 #include "pros/llemu.hpp"
 #include "voss/chassis/ChassisCommand.hpp"
 #include <cmath>
 
 namespace voss::controller {
 
-PIDController::PIDController(localizer::AbstractLocalizer& l)
+PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0),
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
@@ -19,15 +20,6 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	double dy = target.y - current_pos.y;
 
 	double distance_error = sqrt(dx * dx + dy * dy);
-	if (distance_error <= exit_error) {
-		close += 10;
-	} else {
-		close = 0;
-	}
-
-	if (close > 500) {
-		return chassis::ChassisCommand{chassis::Stop{}};
-	}
 
 	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
 
@@ -35,8 +27,17 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		angle_error = atan2(-dy, -dx) - this->l->get_orientation_rad();
 	}
 
-	while (fabs(angle_error) > M_PI) {
-		angle_error -= 2 * M_PI * angle_error / fabs(angle_error);
+	angle_error = voss::norm_delta(angle_error);
+
+	if (distance_error <= exit_error) {
+		total_lin_err = 0;
+		close += 10;
+	} else {
+		close = 0;
+	}
+
+	if (close > settle_time) {
+		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
 	double lin_speed;
@@ -76,6 +77,35 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	return chassis::ChassisCommand{
 	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+}
+
+chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
+                                                           bool thru) {
+	double current_angle = this->l->get_orientation_rad();
+	double target_angle = 0;
+	if (this->target.theta == 361) {
+		Point current_pos = this->l->get_position();
+		double dx = this->target.x - current_pos.x;
+		double dy = this->target.y - current_pos.y;
+		target_angle = atan2(dy, dx);
+	} else {
+		target_angle = this->angular_target;
+	}
+	double angular_error = target_angle - current_angle;
+
+	angular_error = voss::norm_delta(angular_error);
+
+	if (fabs(angular_error) < angular_exit_error) {
+		close += 10;
+	} else {
+		close = 0;
+	}
+
+	if (close > settle_time) {
+		return chassis::ChassisCommand{chassis::Stop{}};
+	}
+	double ang_speed = angular_pid(angular_error);
+	return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
 }
 
 double PIDController::linear_pid(double error) {

@@ -1,10 +1,12 @@
 #include "voss/controller/AbstractController.hpp"
+#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::controller {
 
-AbstractController::AbstractController(localizer::AbstractLocalizer& l) {
-	this->l = &l;
+AbstractController::AbstractController(
+    std::shared_ptr<localizer::AbstractLocalizer> l) {
+	this->l = l;
 }
 
 void AbstractController::set_target(Pose target, bool relative) {
@@ -16,6 +18,17 @@ void AbstractController::set_target(Pose target, bool relative) {
 		this->target = Pose{x_new, y_new, 0};
 	} else {
 		this->target = target;
+	}
+}
+
+void AbstractController::set_angular_target(double angular_target,
+                                            bool relative) {
+	angular_target = voss::to_radians(angular_target);
+	if (relative) {
+		this->angular_target =
+		    voss::norm(angular_target + this->l->get_orientation_rad());
+	} else {
+		this->angular_target = voss::norm(angular_target);
 	}
 }
 

@@ -19,6 +19,8 @@
 #include "localizer/IMELocalizer.hpp"
 #include "localizer/IMELocalizerBuilder.hpp"
 
+#include "selector/Selector.hpp"
+
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
 #include "utils/flags.hpp"
