@@ -4,11 +4,11 @@
 namespace voss::localizer {
 
 AbstractLocalizer::AbstractLocalizer() {
-  this->pose = {0.0, 0.0, 0.0};
+	this->pose = {0.0, 0.0, 0.0};
 }
 
 void AbstractLocalizer::begin_localization() {
-	pros::Task localization_task([=]() {
+	pros::Task localization_task([this]() {
 		while (true) {
 			std::unique_lock<pros::Mutex> lock(this->mtx);
 			this->update();

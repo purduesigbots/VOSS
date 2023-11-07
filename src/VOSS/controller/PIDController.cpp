@@ -4,7 +4,6 @@
 #include "voss/chassis/ChassisCommand.hpp"
 #include <cmath>
 
-
 namespace voss::controller {
 
 PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
@@ -37,7 +36,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		close = 0;
 	}
 
-	if (close > 500) {
+	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
@@ -102,7 +101,7 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
 		close = 0;
 	}
 
-	if (close > 500) {
+	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 	double ang_speed = angular_pid(angular_error);

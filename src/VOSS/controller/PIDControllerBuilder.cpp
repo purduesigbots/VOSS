@@ -52,6 +52,11 @@ PIDControllerBuilder& PIDControllerBuilder::withMinError(double error) {
 	return *this;
 }
 
+PIDControllerBuilder& PIDControllerBuilder::withSettleTime(double time) {
+	this->ctrl.settle_time = (time > 0) ? time : 250;
+	return *this;
+}
+
 PIDController PIDControllerBuilder::build() {
 	return this->ctrl;
 }

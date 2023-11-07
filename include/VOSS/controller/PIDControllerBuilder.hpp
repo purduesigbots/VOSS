@@ -20,6 +20,7 @@ public:
 	PIDControllerBuilder& withExitError(double error);
 	PIDControllerBuilder& withAngularExitError(double error);
 	PIDControllerBuilder& withMinError(double error);
+	PIDControllerBuilder& withSettleTime(double time);
 
 	PIDController build();
 };
