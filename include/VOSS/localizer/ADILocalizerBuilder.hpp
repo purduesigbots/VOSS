@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ADILocalizer.hpp"
+#include <memory>
 
 namespace voss::localizer {
 
@@ -24,7 +25,7 @@ public:
 	ADILocalizerBuilder& withTrackWidth(double track_width);
 	ADILocalizerBuilder& withMiddleDistance(double middle_dist);
 
-	ADILocalizer build();
+	std::shared_ptr<ADILocalizer> build();
 };
 
 } // namespace voss::localizer

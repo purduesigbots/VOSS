@@ -7,8 +7,7 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	const char* autons[] = {"Front", "Back", "Side", "Middle", ""};
-	voss::selector::init(2, autons);
+	pros::lcd::initialize();
 }
 
 /**
@@ -65,17 +64,16 @@ void opcontrol() {
 	                .withLeftEncoder(-1)
 	                .withRightEncoder(3)
 	                .withLeftRightTPI(325)
-	                .withMiddleTPI(325)
 	                .withTrackWidth(3.558)
 	                .build();
 
-	odom.begin_localization();
+	odom->begin_localization();
 
 	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
-                 .withAngularExitError(1.0)
+	               .withAngularExitError(1.0)
 	               .withMinError(5)
 				   .withSettleTime(10000)
 	               .build();
@@ -87,21 +85,21 @@ void opcontrol() {
 		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
 		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
 
-		voss::Pose p = odom.get_pose();
+		voss::Pose p = odom->get_pose();
 
 		if (master.get_digital_new_press(DIGITAL_Y)) {
-			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
+			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0});
-			//chassis.turn(90);
+			chassis.move(voss::Point{24.0, 0.0}, 50);
+			// chassis.turn(90);
 		}
 
-		// pros::lcd::clear_line(4);
-		// pros::lcd::clear_line(5);
-		// pros::lcd::clear_line(6);
-		// pros::lcd::print(4, "%lf", p.x);
-		// pros::lcd::print(5, "%lf", p.y);
-		// pros::lcd::print(6, "%lf", p.theta);
+		pros::lcd::clear_line(4);
+		pros::lcd::clear_line(5);
+		pros::lcd::clear_line(6);
+		pros::lcd::print(4, "%lf", p.x);
+		pros::lcd::print(5, "%lf", p.y);
+		pros::lcd::print(6, "%lf", p.theta);
 
 		pros::delay(10);
 	}

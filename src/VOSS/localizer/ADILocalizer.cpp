@@ -24,11 +24,12 @@ ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
 		    abs(left), abs(left) + 1, left < 0);
 
 	if (right != 0)
-		this->right_encoder =
-		    std::make_unique<pros::adi::Encoder>(right, right + 1);
+		this->right_encoder = std::make_unique<pros::adi::Encoder>(
+		    abs(right), abs(right) + 1, right < 0);
 
 	if (mid != 0)
-		this->middle_encoder = std::make_unique<pros::adi::Encoder>(mid, mid + 1);
+		this->middle_encoder =
+		    std::make_unique<pros::adi::Encoder>(abs(mid), abs(mid) + 1, mid < 0);
 }
 
 int ADILocalizer::getLeftEncoderValue() {
@@ -60,11 +61,22 @@ void ADILocalizer::update() {
 	double right_pos = getRightEncoderValue();
 	double middle_pos = getMiddleEncoderValue();
 
-	double delta_left = (left_pos - prev_left_pos) / left_right_tpi;
-	double delta_right = (right_pos - prev_right_pos) / left_right_tpi;
-	double delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
+	double delta_left = 0.0;
+	if (left_encoder)
+		delta_left = (left_pos - prev_left_pos) / left_right_tpi;
 
-	double delta_angle = (delta_right - delta_left) / track_width;
+	double delta_right = 0.0;
+	if (right_encoder)
+		delta_right = (right_pos - prev_right_pos) / left_right_tpi;
+
+	double delta_middle = 0.0;
+	if (middle_encoder)
+		delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
+
+	double delta_angle = 0.0;
+	if (left_encoder || right_encoder)
+		delta_angle = (delta_right - delta_left) / track_width;
+
 	this->pose.theta += delta_angle;
 
 	prev_left_pos = left_pos;
