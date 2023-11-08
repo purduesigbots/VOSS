@@ -10,6 +10,7 @@ class IMELocalizerBuilder {
 	double lr_tpi, mid_tpi;
 	double track_width;
 	double middle_dist;
+	int imu_port;
 
 
 public:
@@ -25,6 +26,7 @@ public:
 	IMELocalizerBuilder& withLeftRightTPI(double lr_tpi);
 	IMELocalizerBuilder& withTrackWidth(double track_width);
 	IMELocalizerBuilder& withMiddleDistance(double middle_dist);
+	IMELocalizerBuilder& withIMU(int imu_port);
 
 	
 

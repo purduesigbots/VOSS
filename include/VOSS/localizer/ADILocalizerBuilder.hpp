@@ -7,7 +7,7 @@ namespace voss::localizer {
 
 class ADILocalizerBuilder {
 
-	int left, right, mid;
+	int left, right, mid, imu_port;
 	double lr_tpi, mid_tpi;
 	double track_width;
 	double middle_dist;
@@ -24,6 +24,7 @@ public:
 	ADILocalizerBuilder& withMiddleTPI(double mid_tpi);
 	ADILocalizerBuilder& withTrackWidth(double track_width);
 	ADILocalizerBuilder& withMiddleDistance(double middle_dist);
+	ADILocalizerBuilder& withIMU(int imu_port);
 
 	std::shared_ptr<ADILocalizer> build();
 };

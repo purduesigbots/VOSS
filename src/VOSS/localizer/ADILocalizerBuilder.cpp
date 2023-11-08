@@ -4,7 +4,7 @@
 namespace voss::localizer {
 
 ADILocalizerBuilder::ADILocalizerBuilder()
-    : left(0), right(0), mid(0), lr_tpi(0), mid_tpi(0), track_width(0) {
+    : left(0), right(0), mid(0), lr_tpi(0), mid_tpi(0), track_width(0), imu_port(0) {
 }
 
 ADILocalizerBuilder ADILocalizerBuilder::newBuilder() {
@@ -47,6 +47,10 @@ ADILocalizerBuilder::withMiddleDistance(double middle_dist) {
 	this->middle_dist = middle_dist;
 	return *this;
 }
+ADILocalizerBuilder& ADILocalizerBuilder::withIMU(int imu_port) {
+	this->imu_port = imu_port;
+	return *this;
+}
 
 std::shared_ptr<ADILocalizer> ADILocalizerBuilder::build() {
 	std::unordered_set<unsigned char> valid_representations = {
@@ -72,13 +76,13 @@ std::shared_ptr<ADILocalizer> ADILocalizerBuilder::build() {
 	rep |= (mid != 0) << 3;
 	rep |= (mid_tpi > 0) << 2;
 	rep |= (middle_dist > 0) << 1;
-	// rep |= (imu != 0) << 0;
+	rep |= (imu_port != 0) << 0;
 
 	if (valid_representations.find(rep) == valid_representations.end()) {
 		return nullptr;
 	} else {
 		return std::make_shared<ADILocalizer>(left, right, mid, lr_tpi, mid_tpi,
-		                                      track_width, middle_dist);
+		                                      track_width, middle_dist, imu_port);
 	}
 }
 

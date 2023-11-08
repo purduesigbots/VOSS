@@ -8,7 +8,7 @@ namespace voss::localizer {
 
 IMELocalizerBuilder::IMELocalizerBuilder()
     : leftMotors({}), rightMotors({}), horizontalMotors({}), lr_tpi(0),
-      mid_tpi(0), track_width(0) {
+      mid_tpi(0), track_width(0), imu_port(0) {
 }
 
 IMELocalizerBuilder IMELocalizerBuilder::newBuilder() {
@@ -54,6 +54,10 @@ IMELocalizerBuilder::withMiddleDistance(double middle_dist) {
 	this->middle_dist = middle_dist;
 	return *this;
 }
+IMELocalizerBuilder& IMELocalizerBuilder::withIMU(int imu_port) {
+	this->imu_port = imu_port;
+	return *this;
+}
 
 std::shared_ptr<IMELocalizer> IMELocalizerBuilder::build() {
 
@@ -80,15 +84,15 @@ std::shared_ptr<IMELocalizer> IMELocalizerBuilder::build() {
 	rep |= (horizontalMotors.size() != 0) << 3;
 	rep |= (mid_tpi > 0) << 2;
 	rep |= (middle_dist > 0) << 1;
-	// rep |= (imu != 0) << 0;
-
+	rep |= (imu_port != 0) << 0;
+	
 	if (valid_representations.find(rep) == valid_representations.end()) {
 		return nullptr;
 	}
 
 	return std::make_shared<IMELocalizer>(leftMotors, rightMotors,
 	                                      horizontalMotors, lr_tpi, mid_tpi,
-	                                      track_width, middle_dist);
+	                                      track_width, middle_dist, imu_port);
 }
 
 } // namespace voss::localizer

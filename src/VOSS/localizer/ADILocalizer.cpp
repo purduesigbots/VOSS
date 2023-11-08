@@ -8,16 +8,17 @@ namespace voss::localizer {
 
 ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
                            double mid_tpi, double track_width,
-                           double middle_dist)
+                           double middle_dist, int imu_port)
     : prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       left_right_tpi(lr_tpi), middle_tpi(mid_tpi), track_width(track_width),
-      middle_dist(middle_dist) {
+      middle_dist(middle_dist), imu_ports(imu_port) {
 
 	this->left_right_dist = track_width / 2;
 
 	this->left_encoder = nullptr;
 	this->right_encoder = nullptr;
 	this->middle_encoder = nullptr;
+	this->imu = nullptr;
 
 	if (left != 0)
 		this->left_encoder = std::make_unique<pros::adi::Encoder>(
@@ -30,9 +31,11 @@ ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
 	if (mid != 0)
 		this->middle_encoder =
 		    std::make_unique<pros::adi::Encoder>(abs(mid), abs(mid) + 1, mid < 0);
+	if (imu_port != 0)
+		this->imu = std::make_unique<pros::IMU>(imu_port);
 }
 
-int ADILocalizer::getLeftEncoderValue() {
+double ADILocalizer::getLeftEncoderValue() {
 	if (left_encoder) {
 		return this->left_encoder->get_value();
 	} else {
@@ -40,7 +43,7 @@ int ADILocalizer::getLeftEncoderValue() {
 	}
 }
 
-int ADILocalizer::getRightEncoderValue() {
+double ADILocalizer::getRightEncoderValue() {
 	if (right_encoder) {
 		return this->right_encoder->get_value();
 	} else {
@@ -48,7 +51,7 @@ int ADILocalizer::getRightEncoderValue() {
 	}
 }
 
-int ADILocalizer::getMiddleEncoderValue() {
+double ADILocalizer::getMiddleEncoderValue() {
 	if (middle_encoder) {
 		return this->middle_encoder->get_value();
 	} else {
@@ -56,10 +59,40 @@ int ADILocalizer::getMiddleEncoderValue() {
 	}
 }
 
+double ADILocalizer::getIMUValue() {
+	if (imu) {
+		return this->imu->get_rotation()*(M_PI / 180.0);
+	} else {
+		errno = EIO;
+		return PROS_ERR;
+	}
+}
+
+void ADILocalizer::calibrate(){
+	if (left_encoder) {
+		this->left_encoder->reset();
+	}
+	if (right_encoder) {
+		this->right_encoder->reset();
+	}
+	if (middle_encoder) {
+		this->middle_encoder->reset();
+	}
+	if (imu) {
+		this->imu->reset();
+		while(this->imu->is_calibrating()){
+			pros::delay(10);
+		}
+	}
+	this->pose = {0.0, 0.0, 0.0};
+
+}
+
 void ADILocalizer::update() {
 	double left_pos = getLeftEncoderValue();
 	double right_pos = getRightEncoderValue();
 	double middle_pos = getMiddleEncoderValue();
+	double imu_value = getIMUValue();
 
 	double delta_left = 0.0;
 	if (left_encoder)
@@ -72,12 +105,18 @@ void ADILocalizer::update() {
 	double delta_middle = 0.0;
 	if (middle_encoder)
 		delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
-
+	
 	double delta_angle = 0.0;
-	if (left_encoder || right_encoder)
-		delta_angle = (delta_right - delta_left) / track_width;
-
-	this->pose.theta += delta_angle;
+	
+	if(imu){
+		this->pose.theta = -1 * imu_value;
+	}
+	else{
+		//if (left_encoder || right_encoder){
+			delta_angle = (delta_right - delta_left) / track_width;
+			this->pose.theta += delta_angle;
+		//}
+	}
 
 	prev_left_pos = left_pos;
 	prev_right_pos = right_pos;
