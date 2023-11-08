@@ -4,50 +4,51 @@
 namespace voss::localizer {
 
 ADILocalizerBuilder::ADILocalizerBuilder()
-    : left(0), right(0), mid(0), lr_tpi(0), mid_tpi(0), track_width(0), imu_port(0) {
+    : left(0), right(0), mid(0), lr_tpi(0), mid_tpi(0), track_width(0),
+      imu_port(0) {
 }
 
-ADILocalizerBuilder ADILocalizerBuilder::newBuilder() {
+ADILocalizerBuilder ADILocalizerBuilder::new_builder() {
 	ADILocalizerBuilder builder;
 	return builder;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withLeftEncoder(int c) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_left_encoder(int c) {
 	this->left = c;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withRightEncoder(int c) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_right_encoder(int c) {
 	this->right = c;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withMiddleEncoder(int c) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_middle_encoder(int c) {
 	this->mid = c;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withLeftRightTPI(double lr_tpi) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_left_right_tpi(double lr_tpi) {
 	this->lr_tpi = lr_tpi;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withMiddleTPI(double mid_tpi) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_middle_tpi(double mid_tpi) {
 	this->mid_tpi = mid_tpi;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::withTrackWidth(double track_width) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_track_width(double track_width) {
 	this->track_width = track_width;
 	return *this;
 }
 
 ADILocalizerBuilder&
-ADILocalizerBuilder::withMiddleDistance(double middle_dist) {
+ADILocalizerBuilder::with_middle_distance(double middle_dist) {
 	this->middle_dist = middle_dist;
 	return *this;
 }
-ADILocalizerBuilder& ADILocalizerBuilder::withIMU(int imu_port) {
+ADILocalizerBuilder& ADILocalizerBuilder::with_imu(int imu_port) {
 	this->imu_port = imu_port;
 	return *this;
 }

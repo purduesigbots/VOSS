@@ -3,9 +3,8 @@
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
 #include "voss/localizer/AbstractLocalizer.hpp"
-#include <memory>
 #include <atomic>
-
+#include <memory>
 
 namespace voss::localizer {
 
@@ -29,10 +28,10 @@ public:
 	ADILocalizer(int left, int right, int mid, double lr_tpi, double mid_tpi,
 	             double track_width, double middle_dist, int imu_port);
 
-	double getLeftEncoderValue();
-	double getRightEncoderValue();
-	double getMiddleEncoderValue();
-	double getIMUValue();
+	double get_left_encoder_value();
+	double get_right_encoder_value();
+	double get_middle_encoder_value();
+	double get_imu_value();
 
 	void update();
 	void calibrate();

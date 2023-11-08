@@ -35,7 +35,7 @@ ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
 		this->imu = std::make_unique<pros::IMU>(imu_port);
 }
 
-double ADILocalizer::getLeftEncoderValue() {
+double ADILocalizer::get_left_encoder_value() {
 	if (left_encoder) {
 		return this->left_encoder->get_value();
 	} else {
@@ -43,7 +43,7 @@ double ADILocalizer::getLeftEncoderValue() {
 	}
 }
 
-double ADILocalizer::getRightEncoderValue() {
+double ADILocalizer::get_right_encoder_value() {
 	if (right_encoder) {
 		return this->right_encoder->get_value();
 	} else {
@@ -51,7 +51,7 @@ double ADILocalizer::getRightEncoderValue() {
 	}
 }
 
-double ADILocalizer::getMiddleEncoderValue() {
+double ADILocalizer::get_middle_encoder_value() {
 	if (middle_encoder) {
 		return this->middle_encoder->get_value();
 	} else {
@@ -59,16 +59,16 @@ double ADILocalizer::getMiddleEncoderValue() {
 	}
 }
 
-double ADILocalizer::getIMUValue() {
+double ADILocalizer::get_imu_value() {
 	if (imu) {
-		return this->imu->get_rotation()*(M_PI / 180.0);
+		return this->imu->get_rotation() * (M_PI / 180.0);
 	} else {
 		errno = EIO;
 		return PROS_ERR;
 	}
 }
 
-void ADILocalizer::calibrate(){
+void ADILocalizer::calibrate() {
 	if (left_encoder) {
 		this->left_encoder->reset();
 	}
@@ -80,19 +80,18 @@ void ADILocalizer::calibrate(){
 	}
 	if (imu) {
 		this->imu->reset();
-		while(this->imu->is_calibrating()){
+		while (this->imu->is_calibrating()) {
 			pros::delay(10);
 		}
 	}
 	this->pose = {0.0, 0.0, 0.0};
-
 }
 
 void ADILocalizer::update() {
-	double left_pos = getLeftEncoderValue();
-	double right_pos = getRightEncoderValue();
-	double middle_pos = getMiddleEncoderValue();
-	double imu_value = getIMUValue();
+	double left_pos = get_left_encoder_value();
+	double right_pos = get_right_encoder_value();
+	double middle_pos = get_middle_encoder_value();
+	double imu_value = get_imu_value();
 
 	double delta_left = 0.0;
 	if (left_encoder)
@@ -105,16 +104,15 @@ void ADILocalizer::update() {
 	double delta_middle = 0.0;
 	if (middle_encoder)
 		delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
-	
+
 	double delta_angle = 0.0;
-	
-	if(imu){
+
+	if (imu) {
 		this->pose.theta = -1 * imu_value;
-	}
-	else{
-		//if (left_encoder || right_encoder){
-			delta_angle = (delta_right - delta_left) / track_width;
-			this->pose.theta += delta_angle;
+	} else {
+		// if (left_encoder || right_encoder){
+		delta_angle = (delta_right - delta_left) / track_width;
+		this->pose.theta += delta_angle;
 		//}
 	}
 

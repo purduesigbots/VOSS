@@ -61,23 +61,23 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	auto odom = voss::localizer::IMELocalizerBuilder::newBuilder()
-	                .withleftMotors({-13, -15, -16})
-	                .withrightMotors({8, 7, 5})
-	                .withLeftRightTPI(19.5) // 19.5
-	                .withTrackWidth(8.4)    // 3.558
-	                .withIMU(18)
+	auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+	                .with_left_motors({-13, -15, -16})
+	                .with_right_motors({8, 7, 5})
+	                .with_left_right_tpi(19.5) // 19.5
+	                .with_track_width(8.4)     // 3.558
+	                .with_imu(18)
 	                .build();
 
 	odom->begin_localization();
 
-	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
-	               .withLinearConstants(7, 0.02, 40)
-	               .withAngularConstants(170, 0, 700)
-	               .withExitError(1.0)
-	               .withAngularExitError(1.0)
-	               .withMinError(5)
-	               .withSettleTime(200)
+	auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+	               .with_linear_constants(7, 0.02, 40)
+	               .with_angular_constants(170, 0, 700)
+	               .with_exit_error(1.0)
+	               .with_angular_exit_error(1.0)
+	               .with_min_error(5)
+	               .with_settle_time(200)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);

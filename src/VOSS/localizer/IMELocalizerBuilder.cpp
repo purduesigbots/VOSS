@@ -7,54 +7,54 @@
 namespace voss::localizer {
 
 IMELocalizerBuilder::IMELocalizerBuilder()
-    : leftMotors({}), rightMotors({}), horizontalMotors({}), lr_tpi(0),
+    : left_motors({}), right_motors({}), horizontal_motors({}), lr_tpi(0),
       mid_tpi(0), track_width(0), imu_port(0) {
 }
 
-IMELocalizerBuilder IMELocalizerBuilder::newBuilder() {
+IMELocalizerBuilder IMELocalizerBuilder::new_builder() {
 	IMELocalizerBuilder builder;
 	return builder;
 }
 
 IMELocalizerBuilder&
-IMELocalizerBuilder::withleftMotors(std::vector<int8_t> m) {
-	this->leftMotors = m;
+IMELocalizerBuilder::with_left_motors(std::vector<int8_t> m) {
+	this->left_motors = m;
 	return *this;
 }
 
 IMELocalizerBuilder&
-IMELocalizerBuilder::withrightMotors(std::vector<int8_t> m) {
-	this->rightMotors = m;
+IMELocalizerBuilder::with_right_motors(std::vector<int8_t> m) {
+	this->right_motors = m;
 	return *this;
 }
 
 IMELocalizerBuilder&
-IMELocalizerBuilder::withhorizontalMotors(std::vector<int8_t> m) {
-	this->horizontalMotors = m;
+IMELocalizerBuilder::with_horizontal_motors(std::vector<int8_t> m) {
+	this->horizontal_motors = m;
 	return *this;
 }
 
-IMELocalizerBuilder& IMELocalizerBuilder::withLeftRightTPI(double lr_tpi) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_left_right_tpi(double lr_tpi) {
 	this->lr_tpi = lr_tpi;
 	return *this;
 }
 
-IMELocalizerBuilder& IMELocalizerBuilder::withMiddleTPI(double mid_tpi) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_middle_tpi(double mid_tpi) {
 	this->mid_tpi = mid_tpi;
 	return *this;
 }
 
-IMELocalizerBuilder& IMELocalizerBuilder::withTrackWidth(double track_width) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_track_width(double track_width) {
 	this->track_width = track_width;
 	return *this;
 }
 
 IMELocalizerBuilder&
-IMELocalizerBuilder::withMiddleDistance(double middle_dist) {
+IMELocalizerBuilder::with_middle_distance(double middle_dist) {
 	this->middle_dist = middle_dist;
 	return *this;
 }
-IMELocalizerBuilder& IMELocalizerBuilder::withIMU(int imu_port) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_imu(int imu_port) {
 	this->imu_port = imu_port;
 	return *this;
 }
@@ -77,21 +77,21 @@ std::shared_ptr<IMELocalizer> IMELocalizerBuilder::build() {
 
 	unsigned char rep = 0;
 
-	rep |= (leftMotors.size() != 0) << 7;
-	rep |= (rightMotors.size() != 0) << 6;
+	rep |= (left_motors.size() != 0) << 7;
+	rep |= (right_motors.size() != 0) << 6;
 	rep |= (lr_tpi > 0) << 5;
 	rep |= (track_width > 0) << 4;
-	rep |= (horizontalMotors.size() != 0) << 3;
+	rep |= (horizontal_motors.size() != 0) << 3;
 	rep |= (mid_tpi > 0) << 2;
 	rep |= (middle_dist > 0) << 1;
 	rep |= (imu_port != 0) << 0;
-	
+
 	if (valid_representations.find(rep) == valid_representations.end()) {
 		return nullptr;
 	}
 
-	return std::make_shared<IMELocalizer>(leftMotors, rightMotors,
-	                                      horizontalMotors, lr_tpi, mid_tpi,
+	return std::make_shared<IMELocalizer>(left_motors, right_motors,
+	                                      horizontal_motors, lr_tpi, mid_tpi,
 	                                      track_width, middle_dist, imu_port);
 }
 

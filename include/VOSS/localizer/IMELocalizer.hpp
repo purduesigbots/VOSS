@@ -1,11 +1,10 @@
 #pragma once
 
 #include "pros/adi.hpp"
-#include "pros/motor_group.hpp"
 #include "pros/imu.hpp"
+#include "pros/motor_group.hpp"
 #include "voss/localizer/AbstractLocalizer.hpp"
 #include <memory>
-
 
 namespace voss::localizer {
 
@@ -20,19 +19,22 @@ private:
 	double left_right_dist, middle_dist;
 	int imu_ports;
 
-    std::unique_ptr<pros::MotorGroup> leftMotors;
-    std::unique_ptr<pros::MotorGroup> rightMotors;
-    std::unique_ptr<pros::MotorGroup> horizontalMotors;
+	std::unique_ptr<pros::MotorGroup> left_motors;
+	std::unique_ptr<pros::MotorGroup> right_motors;
+	std::unique_ptr<pros::MotorGroup> horizontal_motors;
 	std::unique_ptr<pros::IMU> imu;
 
-
 public:
-	IMELocalizer(std::vector<int8_t> leftMotorsPorts, std::vector<int8_t> rightMotorsPorts, std::vector<int8_t> horizontalMotor, double lr_tpi, double mid_tpi, double track_width, double middle_dist, int imu_port);
-    
-    double getLeftEncoderValue();
-	double getRightEncoderValue();
-	double getMiddleEncoderValue();
-	double getIMUValue();
+	IMELocalizer(std::vector<int8_t> left_motors_ports,
+	             std::vector<int8_t> right_motors_ports,
+	             std::vector<int8_t> horizontal_motors_ports, double lr_tpi,
+	             double mid_tpi, double track_width, double middle_dist,
+	             int imu_port);
+
+	double get_left_encoder_value();
+	double get_right_encoder_value();
+	double get_middle_encoder_value();
+	double get_imu_value();
 
 	void update();
 	void calibrate();

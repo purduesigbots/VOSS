@@ -15,16 +15,16 @@ class ADILocalizerBuilder {
 public:
 	ADILocalizerBuilder();
 
-	static ADILocalizerBuilder newBuilder();
+	static ADILocalizerBuilder new_builder();
 
-	ADILocalizerBuilder& withLeftEncoder(int c);
-	ADILocalizerBuilder& withRightEncoder(int c);
-	ADILocalizerBuilder& withMiddleEncoder(int c);
-	ADILocalizerBuilder& withLeftRightTPI(double lr_tpi);
-	ADILocalizerBuilder& withMiddleTPI(double mid_tpi);
-	ADILocalizerBuilder& withTrackWidth(double track_width);
-	ADILocalizerBuilder& withMiddleDistance(double middle_dist);
-	ADILocalizerBuilder& withIMU(int imu_port);
+	ADILocalizerBuilder& with_left_encoder(int c);
+	ADILocalizerBuilder& with_right_encoder(int c);
+	ADILocalizerBuilder& with_middle_encoder(int c);
+	ADILocalizerBuilder& with_left_right_tpi(double lr_tpi);
+	ADILocalizerBuilder& with_middle_tpi(double mid_tpi);
+	ADILocalizerBuilder& with_track_width(double track_width);
+	ADILocalizerBuilder& with_middle_distance(double middle_dist);
+	ADILocalizerBuilder& with_imu(int imu_port);
 
 	std::shared_ptr<ADILocalizer> build();
 };
