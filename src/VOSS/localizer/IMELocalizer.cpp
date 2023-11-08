@@ -9,7 +9,11 @@
 
 namespace voss::localizer {
 
-IMELocalizer::IMELocalizer(std::vector<int8_t> leftMotorsPorts, std::vector<int8_t> rightMotorsPorts, std::vector<int8_t> horizontalMotorsPorts, double lr_tpi, double mid_tpi, double track_width, double middle_dist, int imu_port)
+IMELocalizer::IMELocalizer(std::vector<int8_t> leftMotorsPorts,
+                           std::vector<int8_t> rightMotorsPorts,
+                           std::vector<int8_t> horizontalMotorsPorts,
+                           double lr_tpi, double mid_tpi, double track_width,
+                           double middle_dist, int imu_port)
     : prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       left_right_tpi(lr_tpi), middle_tpi(mid_tpi), track_width(track_width),
       middle_dist(middle_dist), imu_ports(imu_port) {
@@ -20,19 +24,19 @@ IMELocalizer::IMELocalizer(std::vector<int8_t> leftMotorsPorts, std::vector<int8
 	this->horizontalMotors = nullptr;
 	this->imu = nullptr;
 
-    if (leftMotorsPorts.size() > 0) {
-        this->leftMotors = std::make_unique<pros::MotorGroup>(leftMotorsPorts);
-    }
-    if (rightMotorsPorts.size() >0) {
-        this->rightMotors = std::make_unique<pros::MotorGroup>(rightMotorsPorts);
-    }
-    if (horizontalMotorsPorts.size() > 0) {
-        this->horizontalMotors = std::make_unique<pros::MotorGroup>(horizontalMotorsPorts);
-    }
+	if (leftMotorsPorts.size() > 0) {
+		this->leftMotors = std::make_unique<pros::MotorGroup>(leftMotorsPorts);
+	}
+	if (rightMotorsPorts.size() > 0) {
+		this->rightMotors = std::make_unique<pros::MotorGroup>(rightMotorsPorts);
+	}
+	if (horizontalMotorsPorts.size() > 0) {
+		this->horizontalMotors =
+		    std::make_unique<pros::MotorGroup>(horizontalMotorsPorts);
+	}
 	if (imu_port != 0) {
-        this->imu = std::make_unique<pros::IMU>(imu_port);
-    }
-	
+		this->imu = std::make_unique<pros::IMU>(imu_port);
+	}
 }
 
 double IMELocalizer::getLeftEncoderValue() {
@@ -64,26 +68,26 @@ double IMELocalizer::getMiddleEncoderValue() {
 
 double IMELocalizer::getIMUValue() {
 	if (imu) {
-		return this->imu->get_rotation()*(M_PI / 180.0);
+		return this->imu->get_rotation() * (M_PI / 180.0);
 	} else {
 		errno = EIO;
 		return PROS_ERR;
 	}
 }
-void IMELocalizer::calibrate(){
+void IMELocalizer::calibrate() {
 	if (imu) {
 		this->imu->reset();
-		while(imu->is_calibrating()){
+		while (imu->is_calibrating()) {
 			pros::delay(10);
 		}
 	}
-	if(leftMotors){
+	if (leftMotors) {
 		leftMotors->tare_position();
 	}
-	if(rightMotors){
+	if (rightMotors) {
 		rightMotors->tare_position();
 	}
-	if(horizontalMotors){
+	if (horizontalMotors) {
 		horizontalMotors->tare_position();
 	}
 	this->pose = {0.0, 0.0, 0.0};
@@ -95,15 +99,22 @@ void IMELocalizer::update() {
 	double middle_pos = getMiddleEncoderValue();
 	double imu_Value = getIMUValue();
 
-	double delta_left = (left_pos - prev_left_pos) / left_right_tpi;
-	double delta_right = (right_pos - prev_right_pos) / left_right_tpi;
-	double delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
-	double delta_angle = 0.0;
+	double delta_left = 0.0;
+	if (leftMotors)
+		delta_left = (left_pos - prev_left_pos) / left_right_tpi;
 
-	if (imu){
+	double delta_right = 0.0;
+	if (rightMotors)
+		delta_right = (right_pos - prev_right_pos) / left_right_tpi;
+
+	double delta_middle = 0.0;
+	if (horizontalMotors)
+		delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
+
+	double delta_angle = 0.0;
+	if (imu) {
 		this->pose.theta = -1 * imu_Value;
-	}
-	else{
+	} else {
 		delta_angle = (delta_right - delta_left) / track_width;
 		this->pose.theta += delta_angle;
 	}
