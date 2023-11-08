@@ -30,6 +30,7 @@ public:
 	void reset();
 
 	friend class PIDControllerBuilder;
+	friend class BoomerangControllerBuilder;
 };
 
 } // namespace voss::controller

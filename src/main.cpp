@@ -71,12 +71,13 @@ void opcontrol() {
 
 	odom.begin_localization();
 
-	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
+	auto pid = voss::controller::BoomerangControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
-                 .withAngularExitError(1.0)
+                   .withAngularExitError(1.0)
 	               .withMinError(5)
+				   .withLeadPct(0.6)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
@@ -91,7 +92,7 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom.set_pose(voss::Pose{0.0, 0.0, 0.0});
 
-			chassis.move(voss::Point{24.0, 0.0});
+			chassis.move(voss::Pose{24.0, 0.0, 90.0});
 			//chassis.turn(90);
 		}
 
