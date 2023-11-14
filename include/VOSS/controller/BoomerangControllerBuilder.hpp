@@ -14,13 +14,16 @@ public:
 	static BoomerangControllerBuilder
 	new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-	BoomerangControllerBuilder& with_linear_constants(double kP, double kI,
-	                                                  double kD);
-	BoomerangControllerBuilder& with_angular_constants(double kP, double kI,
-	                                                   double kD);
-	BoomerangControllerBuilder& with_tracking_kp(double kP);
-	BoomerangControllerBuilder& with_exit_error(double error);
-	BoomerangControllerBuilder& with_lead_pct(double lead_pct);
+	BoomerangControllerBuilder& withLinearConstants(double kP, double kI,
+	                                                double kD);
+	BoomerangControllerBuilder& withAngularConstants(double kP, double kI,
+	                                                 double kD);
+	BoomerangControllerBuilder& withTrackingKP(double kP);
+	BoomerangControllerBuilder& withExitError(double error);
+	BoomerangControllerBuilder& withAngularExitError(double error);
+	BoomerangControllerBuilder& withMinError(double error);
+	BoomerangControllerBuilder& withLeadPct(double lead_pct);
+	BoomerangControllerBuilder& withSettleTime(double time);
 
 	BoomerangController build();
 };

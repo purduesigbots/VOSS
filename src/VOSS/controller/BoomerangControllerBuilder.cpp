@@ -16,38 +16,56 @@ BoomerangControllerBuilder BoomerangControllerBuilder::new_builder(
 }
 
 BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_linear_constants(double kP, double kI,
-                                                  double kD) {
-	this->ctrl.linear_kP = kP;
-	this->ctrl.linear_kI = kI;
-	this->ctrl.linear_kD = kD;
+BoomerangControllerBuilder::withLinearConstants(double kP, double kI,
+                                                double kD) {
+	this->ctrl.child->linear_kP = kP;
+	this->ctrl.child->linear_kI = kI;
+	this->ctrl.child->linear_kD = kD;
 	return *this;
 }
 
 BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_angular_constants(double kP, double kI,
-                                                   double kD) {
-	this->ctrl.angular_kP = kP;
-	this->ctrl.angular_kI = kI;
-	this->ctrl.angular_kD = kD;
+BoomerangControllerBuilder::withAngularConstants(double kP, double kI,
+                                                 double kD) {
+	this->ctrl.child->angular_kP = kP;
+	this->ctrl.child->angular_kI = kI;
+	this->ctrl.child->angular_kD = kD;
 	return *this;
 }
 
 BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_tracking_kp(double kP) {
-	this->ctrl.tracking_kP = kP;
+BoomerangControllerBuilder::withTrackingKP(double kP) {
+	this->ctrl.child->tracking_kP = kP;
 	return *this;
 }
 
 BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_exit_error(double error) {
-	this->ctrl.exit_error = error;
+BoomerangControllerBuilder::withExitError(double error) {
+	this->ctrl.child->exit_error = error;
 	return *this;
 }
 
 BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_lead_pct(double lead_pct) {
+BoomerangControllerBuilder::withAngularExitError(double error) {
+	this->ctrl.child->angular_exit_error = error;
+	return *this;
+}
+
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::withMinError(double error) {
+	this->ctrl.child->min_error = error;
+	return *this;
+}
+
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::withLeadPct(double lead_pct) {
 	this->ctrl.lead_pct = lead_pct;
+	return *this;
+}
+
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::withSettleTime(double time) {
+	this->ctrl.child->settle_time = (time > 0) ? time : 250;
 	return *this;
 }
 
