@@ -69,10 +69,11 @@ void opcontrol() {
 
 	odom->begin_localization();
 
-	auto pid = voss::controller::PIDControllerBuilder::newBuilder(odom)
+	auto pid = voss::controller::BoomerangControllerBuilder::newBuilder(odom)
 	               .withLinearConstants(7, 0.02, 40)
 	               .withAngularConstants(170, 0, 700)
 	               .withExitError(1.0)
+                 .withLeadPct(0.6)
 	               .withAngularExitError(1.0)
 	               .withMinError(5)
 	               .withSettleTime(200)
@@ -89,9 +90,7 @@ void opcontrol() {
 
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
-
-			chassis.move(voss::Point{24.0, 0.0}, 50);
-			// chassis.turn(90);
+			chassis.move(voss::Pose{24.0, 0.0, 90.0});
 		}
 
 		pros::lcd::clear_line(4);

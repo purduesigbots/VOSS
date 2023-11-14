@@ -57,7 +57,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		} else {
 			// turn to face the finale pose angle if executing a pose movement
 			double poseError =
-			    (angle_error * M_PI / 180) - this->l->get_orientation_rad();
+			    (target.theta * M_PI / 180) - this->l->get_orientation_rad();
 			while (fabs(poseError) > M_PI)
 				poseError -= 2 * M_PI * poseError / fabs(poseError);
 			ang_speed = angular_pid(poseError);

@@ -20,7 +20,10 @@ public:
 	                                                 double kD);
 	BoomerangControllerBuilder& withTrackingKP(double kP);
 	BoomerangControllerBuilder& withExitError(double error);
+	BoomerangControllerBuilder& withAngularExitError(double error);
+	BoomerangControllerBuilder& withMinError(double error);
 	BoomerangControllerBuilder& withLeadPct(double lead_pct);
+	BoomerangControllerBuilder& withSettleTime(double time);
 
 	BoomerangController build();
 };
