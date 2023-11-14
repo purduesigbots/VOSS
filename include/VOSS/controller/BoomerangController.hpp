@@ -13,7 +13,8 @@ protected:
 	double lead_pct;
 
 public:
-	BoomerangController(localizer::AbstractLocalizer& l);
+	BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
+
 
 	chassis::ChassisCommand get_command(bool reverse, bool thru)override;
 	chassis::ChassisCommand get_angular_command(bool reverse, bool thru)override;

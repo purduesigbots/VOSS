@@ -1,12 +1,12 @@
 #include "voss/controller/PIDController.hpp"
+#include "VOSS/utils/angle.hpp"
 #include "pros/llemu.hpp"
 #include "voss/chassis/ChassisCommand.hpp"
-#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::controller {
 
-PIDController::PIDController(localizer::AbstractLocalizer& l)
+PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0),
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
@@ -22,21 +22,21 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	double distance_error = sqrt(dx * dx + dy * dy);
 
 	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
-  
-  if (reverse) {
+
+	if (reverse) {
 		angle_error = atan2(-dy, -dx) - this->l->get_orientation_rad();
 	}
 
 	angle_error = voss::norm_delta(angle_error);
 
-	if (distance_error <= exit_error) {
+	if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
 		total_lin_err = 0;
 		close += 10;
 	} else {
 		close = 0;
 	}
 
-	if (close > 500) {
+	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
@@ -79,7 +79,8 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool thru) {
+chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
+                                                           bool thru) {
 	double current_angle = this->l->get_orientation_rad();
 	double target_angle = 0;
 	if (this->target.theta == 361) {
@@ -100,13 +101,11 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse, bool th
 		close = 0;
 	}
 
-	if (close > 500) {
+	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 	double ang_speed = angular_pid(angular_error);
-	return chassis::ChassisCommand{
-		chassis::Voltages{-ang_speed, ang_speed}
-	};
+	return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
 }
 
 double PIDController::linear_pid(double error) {

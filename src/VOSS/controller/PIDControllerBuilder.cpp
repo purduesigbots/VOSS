@@ -1,16 +1,17 @@
 #include "voss/controller/PIDControllerBuilder.hpp"
+#include "VOSS/utils/angle.hpp"
 #include "voss/controller/PIDController.hpp"
 #include "voss/localizer/AbstractLocalizer.hpp"
-#include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 
-PIDControllerBuilder::PIDControllerBuilder(localizer::AbstractLocalizer& l)
+PIDControllerBuilder::PIDControllerBuilder(
+    std::shared_ptr<localizer::AbstractLocalizer> l)
     : ctrl(l) {
 }
 
-PIDControllerBuilder
-PIDControllerBuilder::newBuilder(localizer::AbstractLocalizer& l) {
+PIDControllerBuilder PIDControllerBuilder::newBuilder(
+    std::shared_ptr<localizer::AbstractLocalizer> l) {
 	PIDControllerBuilder builder(l);
 	return builder;
 }
@@ -41,14 +42,18 @@ PIDControllerBuilder& PIDControllerBuilder::withExitError(double error) {
 	return *this;
 }
 
-
 PIDControllerBuilder& PIDControllerBuilder::withAngularExitError(double error) {
 	this->ctrl.angular_exit_error = voss::to_radians(error);
-  return *this;
+	return *this;
 }
 
 PIDControllerBuilder& PIDControllerBuilder::withMinError(double error) {
 	this->ctrl.min_error = error;
+	return *this;
+}
+
+PIDControllerBuilder& PIDControllerBuilder::withSettleTime(double time) {
+	this->ctrl.settle_time = (time > 0) ? time : 250;
 	return *this;
 }
 

@@ -5,7 +5,7 @@
 
 namespace voss::controller {
 
-BoomerangController::BoomerangController(localizer::AbstractLocalizer& l)
+BoomerangController::BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(l) {
     child = std::make_shared<PIDController>(l);
 }

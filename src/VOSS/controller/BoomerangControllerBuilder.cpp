@@ -5,12 +5,12 @@
 namespace voss::controller {
 
 BoomerangControllerBuilder::BoomerangControllerBuilder(
-    localizer::AbstractLocalizer& l)
+    std::shared_ptr<localizer::AbstractLocalizer> l)
     : ctrl(l) {
 }
 
-BoomerangControllerBuilder
-BoomerangControllerBuilder::newBuilder(localizer::AbstractLocalizer& l) {
+BoomerangControllerBuilder BoomerangControllerBuilder::newBuilder(
+    std::shared_ptr<localizer::AbstractLocalizer> l) {
 	BoomerangControllerBuilder builder(l);
 	return builder;
 }
