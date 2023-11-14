@@ -17,6 +17,7 @@
 #include "localizer/AbstractLocalizer.hpp"
 #include "localizer/GPSLocalizer.hpp"
 #include "localizer/IMELocalizer.hpp"
+#include "localizer/IMELocalizerBuilder.hpp"
 
 #include "selector/Selector.hpp"
 

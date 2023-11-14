@@ -9,6 +9,7 @@ AbstractLocalizer::AbstractLocalizer() {
 
 void AbstractLocalizer::begin_localization() {
 	pros::Task localization_task([this]() {
+		this->calibrate();
 		while (true) {
 			std::unique_lock<pros::Mutex> lock(this->mtx);
 			this->update();
@@ -47,4 +48,5 @@ Point AbstractLocalizer::get_position() {
 	Point ret{this->pose.x, this->pose.y};
 	return ret;
 }
+
 } // namespace voss::localizer

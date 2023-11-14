@@ -1,59 +1,66 @@
-#include "voss/localizer/ADILocalizerBuilder.hpp"
+#include "voss/localizer/IMELocalizerBuilder.hpp"
+#include "IMELocalizer.hpp"
+#include "pros/adi.h"
+#include <memory>
 #include <unordered_set>
 
 namespace voss::localizer {
 
-ADILocalizerBuilder::ADILocalizerBuilder()
-    : left(0), right(0), mid(0), lr_tpi(0), mid_tpi(0), track_width(0),
-      imu_port(0) {
+IMELocalizerBuilder::IMELocalizerBuilder()
+    : left_motors({}), right_motors({}), horizontal_motors({}), lr_tpi(0),
+      mid_tpi(0), track_width(0), imu_port(0) {
 }
 
-ADILocalizerBuilder ADILocalizerBuilder::new_builder() {
-	ADILocalizerBuilder builder;
+IMELocalizerBuilder IMELocalizerBuilder::new_builder() {
+	IMELocalizerBuilder builder;
 	return builder;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_left_encoder(int c) {
-	this->left = c;
+IMELocalizerBuilder&
+IMELocalizerBuilder::with_left_motors(std::vector<int8_t> m) {
+	this->left_motors = m;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_right_encoder(int c) {
-	this->right = c;
+IMELocalizerBuilder&
+IMELocalizerBuilder::with_right_motors(std::vector<int8_t> m) {
+	this->right_motors = m;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_middle_encoder(int c) {
-	this->mid = c;
+IMELocalizerBuilder&
+IMELocalizerBuilder::with_horizontal_motors(std::vector<int8_t> m) {
+	this->horizontal_motors = m;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_left_right_tpi(double lr_tpi) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_left_right_tpi(double lr_tpi) {
 	this->lr_tpi = lr_tpi;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_middle_tpi(double mid_tpi) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_middle_tpi(double mid_tpi) {
 	this->mid_tpi = mid_tpi;
 	return *this;
 }
 
-ADILocalizerBuilder& ADILocalizerBuilder::with_track_width(double track_width) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_track_width(double track_width) {
 	this->track_width = track_width;
 	return *this;
 }
 
-ADILocalizerBuilder&
-ADILocalizerBuilder::with_middle_distance(double middle_dist) {
+IMELocalizerBuilder&
+IMELocalizerBuilder::with_middle_distance(double middle_dist) {
 	this->middle_dist = middle_dist;
 	return *this;
 }
-ADILocalizerBuilder& ADILocalizerBuilder::with_imu(int imu_port) {
+IMELocalizerBuilder& IMELocalizerBuilder::with_imu(int imu_port) {
 	this->imu_port = imu_port;
 	return *this;
 }
 
-std::shared_ptr<ADILocalizer> ADILocalizerBuilder::build() {
+std::shared_ptr<IMELocalizer> IMELocalizerBuilder::build() {
+
 	std::unordered_set<unsigned char> valid_representations = {
 	    0b11111111, 0b11110111, 0b11110101, 0b11110011, 0b11110001, 0b10111111,
 	    0b10110111, 0b10110101, 0b10110011, 0b10110001, 0b1111111,  0b1110111,
@@ -70,21 +77,22 @@ std::shared_ptr<ADILocalizer> ADILocalizerBuilder::build() {
 
 	unsigned char rep = 0;
 
-	rep |= (left != 0) << 7;
-	rep |= (right != 0) << 6;
+	rep |= (left_motors.size() != 0) << 7;
+	rep |= (right_motors.size() != 0) << 6;
 	rep |= (lr_tpi > 0) << 5;
 	rep |= (track_width > 0) << 4;
-	rep |= (mid != 0) << 3;
+	rep |= (horizontal_motors.size() != 0) << 3;
 	rep |= (mid_tpi > 0) << 2;
 	rep |= (middle_dist > 0) << 1;
 	rep |= (imu_port != 0) << 0;
 
 	if (valid_representations.find(rep) == valid_representations.end()) {
 		return nullptr;
-	} else {
-		return std::make_shared<ADILocalizer>(left, right, mid, lr_tpi, mid_tpi,
-		                                      track_width, middle_dist, imu_port);
 	}
+
+	return std::make_shared<IMELocalizer>(left_motors, right_motors,
+	                                      horizontal_motors, lr_tpi, mid_tpi,
+	                                      track_width, middle_dist, imu_port);
 }
 
 } // namespace voss::localizer

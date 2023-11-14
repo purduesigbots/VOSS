@@ -1,4 +1,5 @@
 #include "main.h"
+#include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "voss/api.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -60,46 +61,42 @@ void autonomous() {
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	auto odom = voss::localizer::ADILocalizerBuilder::newBuilder()
-	                .withLeftEncoder(-1)
-	                .withRightEncoder(3)
-	                .withLeftRightTPI(325)
-	                .withTrackWidth(3.558)
+	auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+	                .with_left_motors({-13, -15, -16})
+	                .with_right_motors({8, 7, 5})
+	                .with_left_right_tpi(19.5) // 19.5
+	                .with_track_width(8.4)     // 3.558
+	                .with_imu(18)
 	                .build();
 
 	odom->begin_localization();
 
-	auto pid = voss::controller::BoomerangControllerBuilder::newBuilder(odom)
-	               .withLinearConstants(7, 0.02, 40)
-	               .withAngularConstants(170, 0, 700)
-	               .withExitError(1.0)
-                 .withLeadPct(0.6)
-	               .withAngularExitError(1.0)
-	               .withMinError(5)
-	               .withSettleTime(200)
+	auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+	               .with_linear_constants(7, 0.02, 40)
+	               .with_angular_constants(170, 0, 700)
+	               .with_exit_error(1.0)
+	               .with_angular_exit_error(1.0)
+	               .with_min_error(5)
+	               .with_settle_time(200)
 	               .build();
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
 
 	while (true) {
 
-		chassis.arcade(master.get_analog(ANALOG_LEFT_Y) * 128.0 / 100.0,
-		               master.get_analog(ANALOG_RIGHT_X) * 128.0 / 100.0);
-
 		voss::Pose p = odom->get_pose();
 
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
-			chassis.move(voss::Pose{24.0, 0.0, 90.0});
 		}
 
-		pros::lcd::clear_line(4);
-		pros::lcd::clear_line(5);
-		pros::lcd::clear_line(6);
-		pros::lcd::print(4, "%lf", p.x);
-		pros::lcd::print(5, "%lf", p.y);
-		pros::lcd::print(6, "%lf", p.theta);
-
+		pros::lcd::clear_line(1);
+		pros::lcd::clear_line(2);
+		pros::lcd::clear_line(3);
+		pros::lcd::print(1, "%lf", p.x);
+		pros::lcd::print(2, "%lf", p.y);
+		pros::lcd::print(3, "%lf", odom->get_orientation_deg());
+		pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
 		pros::delay(10);
 	}
 }
