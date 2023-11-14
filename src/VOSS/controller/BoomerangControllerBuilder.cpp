@@ -63,6 +63,12 @@ BoomerangControllerBuilder::withLeadPct(double lead_pct) {
 	return *this;
 }
 
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::withSettleTime(double time) {
+	this->ctrl.child->settle_time = (time > 0) ? time : 250;
+	return *this;
+}
+
 BoomerangController BoomerangControllerBuilder::build() {
 	return this->ctrl;
 }

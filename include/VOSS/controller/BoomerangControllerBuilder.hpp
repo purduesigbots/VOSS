@@ -23,6 +23,7 @@ public:
 	BoomerangControllerBuilder& withAngularExitError(double error);
 	BoomerangControllerBuilder& withMinError(double error);
 	BoomerangControllerBuilder& withLeadPct(double lead_pct);
+	BoomerangControllerBuilder& withSettleTime(double time);
 
 	BoomerangController build();
 };
