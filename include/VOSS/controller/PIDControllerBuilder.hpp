@@ -9,16 +9,18 @@ private:
 	controller::PIDController ctrl;
 
 public:
-	PIDControllerBuilder(localizer::AbstractLocalizer& l);
+	PIDControllerBuilder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-	static PIDControllerBuilder newBuilder(localizer::AbstractLocalizer& l);
+	static PIDControllerBuilder
+	new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-	PIDControllerBuilder& withLinearConstants(double kP, double kI, double kD);
-	PIDControllerBuilder& withAngularConstants(double kP, double kI, double kD);
-	PIDControllerBuilder& withTrackingKP(double kP);
-	PIDControllerBuilder& withExitError(double error);
-	PIDControllerBuilder& withAngularExitError(double error);
-	PIDControllerBuilder& withMinError(double error);
+	PIDControllerBuilder& with_linear_constants(double kP, double kI, double kD);
+	PIDControllerBuilder& with_angular_constants(double kP, double kI, double kD);
+	PIDControllerBuilder& with_tracking_kp(double kP);
+	PIDControllerBuilder& with_exit_error(double error);
+	PIDControllerBuilder& with_angular_exit_error(double error);
+	PIDControllerBuilder& with_min_error(double error);
+	PIDControllerBuilder& with_settle_time(double time);
 
 	PIDController build();
 };

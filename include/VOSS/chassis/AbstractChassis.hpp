@@ -18,11 +18,11 @@ protected:
 	pros::Mutex m;
 	controller::AbstractController* default_controller;
 
-    void move_task(controller::AbstractController* controller,
-                   double max, uint8_t flags);
+	void move_task(controller::AbstractController* controller, double max,
+	               uint8_t flags);
 
-    void turn_task(controller::AbstractController* controller,
-                   double max, uint8_t flags);
+	void turn_task(controller::AbstractController* controller, double max,
+	               uint8_t flags);
 
 public:
 	AbstractChassis(controller::AbstractController& default_controller);
@@ -39,13 +39,12 @@ public:
 	void move(Point target, double max = 100.0, uint8_t flags = voss::NONE);
 	void move(Pose target, double max = 100.0, uint8_t flags = voss::NONE);
 
-    void turn(double target, controller::AbstractController* controller,
-              double max = 100.0, uint8_t flags = voss::NONE);
-    void turn(double target, double max = 100.0, uint8_t flags = voss::NONE);
-    void turnTo(Point target, controller::AbstractController* controller,
-              double max = 100.0, uint8_t flags = voss::NONE);
-    void turnTo(Point target, double max = 100.0, uint8_t flags = voss::NONE);
-
+	void turn(double target, controller::AbstractController* controller,
+	          double max = 100.0, uint8_t flags = voss::NONE);
+	void turn(double target, double max = 100.0, uint8_t flags = voss::NONE);
+	void turn_to(Point target, controller::AbstractController* controller,
+	             double max = 100.0, uint8_t flags = voss::NONE);
+	void turn_to(Point target, double max = 100.0, uint8_t flags = voss::NONE);
 };
 
 } // namespace voss::chassis

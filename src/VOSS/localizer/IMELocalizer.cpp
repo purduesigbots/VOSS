@@ -1,65 +1,72 @@
-#include "voss/localizer/ADILocalizer.hpp"
+#include "voss/localizer/IMELocalizer.hpp"
+#include "AbstractLocalizer.hpp"
+#include "pros/adi.h"
 #include "pros/adi.hpp"
+#include "pros/motor_group.hpp"
 
 #include <cmath>
 #include <memory>
 
 namespace voss::localizer {
 
-ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
-                           double mid_tpi, double track_width,
+IMELocalizer::IMELocalizer(std::vector<int8_t> left_motors_ports,
+                           std::vector<int8_t> right_motors_ports,
+                           std::vector<int8_t> horizontal_motors_ports,
+                           double lr_tpi, double mid_tpi, double track_width,
                            double middle_dist, int imu_port)
     : prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       left_right_tpi(lr_tpi), middle_tpi(mid_tpi), track_width(track_width),
       middle_dist(middle_dist), imu_ports(imu_port) {
 
 	this->left_right_dist = track_width / 2;
-
-	this->left_encoder = nullptr;
-	this->right_encoder = nullptr;
-	this->middle_encoder = nullptr;
+	this->left_motors = nullptr;
+	this->right_motors = nullptr;
+	this->horizontal_motors = nullptr;
 	this->imu = nullptr;
 
-	if (left != 0)
-		this->left_encoder = std::make_unique<pros::adi::Encoder>(
-		    abs(left), abs(left) + 1, left < 0);
-
-	if (right != 0)
-		this->right_encoder = std::make_unique<pros::adi::Encoder>(
-		    abs(right), abs(right) + 1, right < 0);
-
-	if (mid != 0)
-		this->middle_encoder =
-		    std::make_unique<pros::adi::Encoder>(abs(mid), abs(mid) + 1, mid < 0);
-	if (imu_port != 0)
+	if (left_motors_ports.size() > 0) {
+		this->left_motors = std::make_unique<pros::MotorGroup>(left_motors_ports);
+	}
+	if (right_motors_ports.size() > 0) {
+		this->right_motors = std::make_unique<pros::MotorGroup>(right_motors_ports);
+	}
+	if (horizontal_motors_ports.size() > 0) {
+		this->horizontal_motors =
+		    std::make_unique<pros::MotorGroup>(horizontal_motors_ports);
+	}
+	if (imu_port != 0) {
 		this->imu = std::make_unique<pros::IMU>(imu_port);
-}
-
-double ADILocalizer::get_left_encoder_value() {
-	if (left_encoder) {
-		return this->left_encoder->get_value();
-	} else {
-		return 0.0;
 	}
 }
 
-double ADILocalizer::get_right_encoder_value() {
-	if (right_encoder) {
-		return this->right_encoder->get_value();
+double IMELocalizer::get_left_encoder_value() {
+	if (left_motors) {
+		return this->left_motors->get_position();
 	} else {
-		return 0.0;
+		errno = EIO;
+		return PROS_ERR;
 	}
 }
 
-double ADILocalizer::get_middle_encoder_value() {
-	if (middle_encoder) {
-		return this->middle_encoder->get_value();
+double IMELocalizer::get_right_encoder_value() {
+	if (right_motors) {
+		return this->right_motors->get_position();
 	} else {
-		return 0.0;
+		errno = EIO;
+		return PROS_ERR;
 	}
 }
 
-double ADILocalizer::get_imu_value() {
+double IMELocalizer::get_middle_encoder_value() {
+	if (horizontal_motors) {
+		return this->horizontal_motors->get_position();
+	} else {
+		errno = EIO;
+		return PROS_ERR;
+	}
+}
+
+double IMELocalizer::get_imu_value() {
 	if (imu) {
 		return this->imu->get_rotation() * (M_PI / 180.0);
 	} else {
@@ -67,53 +74,49 @@ double ADILocalizer::get_imu_value() {
 		return PROS_ERR;
 	}
 }
-
-void ADILocalizer::calibrate() {
-	if (left_encoder) {
-		this->left_encoder->reset();
-	}
-	if (right_encoder) {
-		this->right_encoder->reset();
-	}
-	if (middle_encoder) {
-		this->middle_encoder->reset();
-	}
+void IMELocalizer::calibrate() {
 	if (imu) {
 		this->imu->reset();
-		while (this->imu->is_calibrating()) {
+		while (imu->is_calibrating()) {
 			pros::delay(10);
 		}
+	}
+	if (left_motors) {
+		left_motors->tare_position();
+	}
+	if (right_motors) {
+		right_motors->tare_position();
+	}
+	if (horizontal_motors) {
+		horizontal_motors->tare_position();
 	}
 	this->pose = {0.0, 0.0, 0.0};
 }
 
-void ADILocalizer::update() {
+void IMELocalizer::update() {
 	double left_pos = get_left_encoder_value();
 	double right_pos = get_right_encoder_value();
 	double middle_pos = get_middle_encoder_value();
-	double imu_value = get_imu_value();
+	double imu_Value = get_imu_value();
 
 	double delta_left = 0.0;
-	if (left_encoder)
+	if (left_motors)
 		delta_left = (left_pos - prev_left_pos) / left_right_tpi;
 
 	double delta_right = 0.0;
-	if (right_encoder)
+	if (right_motors)
 		delta_right = (right_pos - prev_right_pos) / left_right_tpi;
 
 	double delta_middle = 0.0;
-	if (middle_encoder)
+	if (horizontal_motors)
 		delta_middle = (middle_pos - prev_middle_pos) / middle_tpi;
 
 	double delta_angle = 0.0;
-
 	if (imu) {
-		this->pose.theta = -1 * imu_value;
+		this->pose.theta = -1 * imu_Value;
 	} else {
-		// if (left_encoder || right_encoder){
 		delta_angle = (delta_right - delta_left) / track_width;
 		this->pose.theta += delta_angle;
-		//}
 	}
 
 	prev_left_pos = left_pos;

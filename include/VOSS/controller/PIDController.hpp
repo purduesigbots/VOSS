@@ -13,23 +13,25 @@ protected:
 	double angular_exit_error;
 	double min_error;
 	double can_reverse;
+	double settle_time;
 
 	double close;
 
 	double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 
 public:
-	PIDController(localizer::AbstractLocalizer& l);
+	PIDController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
 	double linear_pid(double error);
 	double angular_pid(double error);
 
-	chassis::ChassisCommand get_command(bool reverse, bool thru)override;
-    chassis::ChassisCommand get_angular_command(bool reverse, bool thru)override;
+	chassis::ChassisCommand get_command(bool reverse, bool thru) override;
+	chassis::ChassisCommand get_angular_command(bool reverse, bool thru) override;
 
-	void reset();
+	void reset() override;
 
 	friend class PIDControllerBuilder;
+	friend class BoomerangControllerBuilder;
 };
 
 } // namespace voss::controller

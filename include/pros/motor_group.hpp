@@ -73,7 +73,7 @@ class MotorGroup : public virtual AbstractMotor {
  	 * }
 	 * \endcode
 	 */
-	explicit MotorGroup(const std::initializer_list<std::int8_t>, const pros::v5::MotorGears gearset = pros::v5::MotorGears::green,
+	explicit MotorGroup(std::initializer_list<std::int8_t>, const pros::v5::MotorGears gearset = pros::v5::MotorGears::green,
 	                    const pros::v5::MotorUnits encoder_units = pros::v5::MotorUnits::degrees);
 	/**
 	 * Constructs a new MotorGroup object.
