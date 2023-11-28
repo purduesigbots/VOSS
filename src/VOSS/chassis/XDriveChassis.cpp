@@ -13,8 +13,8 @@ voss::chassis::XDriveChassis::XDriveChassis(
 
 void voss::chassis::XDriveChassis::holonomic(double forward_speed, double turn_speed, double strafe_speed) {
 	this->front_left_motor->move_voltage(120 * (forward_speed + turn_speed + strafe_speed));
-	this->back_left_motor->move_voltage(120 * (forward_speed + turn_speed - strafe_speed));
-	this->front_right_motor->move_voltage(120 * (forward_speed - turn_speed - strafe_speed));
+	this->front_right_motor->move_voltage(120 * (-forward_speed + turn_speed + strafe_speed));
+	this->back_left_motor->move_voltage(120 * (-forward_speed - turn_speed + strafe_speed));
 	this->back_right_motor->move_voltage(120 * (forward_speed - turn_speed + strafe_speed));
 }
 
@@ -27,8 +27,8 @@ void voss::chassis::XDriveChassis::tank(double left_speed, double right_speed) {
 
 void voss::chassis::XDriveChassis::arcade(double forward_speed, double turn_speed) {
 	this->front_left_motor->move_voltage(120 * (forward_speed + turn_speed));
-	this->back_left_motor->move_voltage(120 * (forward_speed + turn_speed));
-	this->front_right_motor->move_voltage(120 * (forward_speed - turn_speed));
+	this->front_right_motor->move_voltage(120 * (-forward_speed + turn_speed));
+	this->back_left_motor->move_voltage(120 * (-forward_speed - turn_speed));
 	this->back_right_motor->move_voltage(120 * (forward_speed - turn_speed));
 }
 

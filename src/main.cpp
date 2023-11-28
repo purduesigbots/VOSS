@@ -80,7 +80,8 @@ void opcontrol() {
 	               .with_settle_time(200)
 	               .build();
 
-	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
+	// voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
+  voss::chassis::XDriveChassis chassis(16, -7, 15, -6, pid);
 
 	while (true) {
 
@@ -89,6 +90,10 @@ void opcontrol() {
 		if (master.get_digital_new_press(DIGITAL_Y)) {
 			odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
 		}
+
+    chassis.holonomic(master.get_analog(ANALOG_LEFT_Y),
+                      master.get_analog(ANALOG_RIGHT_X),
+                      master.get_analog(ANALOG_LEFT_X));
 
 		pros::lcd::clear_line(1);
 		pros::lcd::clear_line(2);
