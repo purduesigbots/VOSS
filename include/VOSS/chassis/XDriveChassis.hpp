@@ -11,14 +11,14 @@ class XDriveChassis : public AbstractChassis {
 
 private:
 	std::unique_ptr<pros::Motor> front_left_motor;
+  std::unique_ptr<pros::Motor> front_right_motor;
 	std::unique_ptr<pros::Motor> back_left_motor;
-	std::unique_ptr<pros::Motor> front_right_motor;
 	std::unique_ptr<pros::Motor> back_right_motor;
 
 public:
 	XDriveChassis(int8_t front_left_motor,
-								int8_t back_left_motor,
 								int8_t front_right_motor,
+								int8_t back_left_motor,
 								int8_t back_right_motor,
 								controller::AbstractController& default_controller);
 

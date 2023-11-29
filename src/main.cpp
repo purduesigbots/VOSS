@@ -81,7 +81,7 @@ void opcontrol() {
 	               .build();
 
 	// voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
-  voss::chassis::XDriveChassis chassis(16, -7, 15, -6, pid);
+  voss::chassis::XDriveChassis chassis(16, 15, -7, -6, pid);
 
 	while (true) {
 
