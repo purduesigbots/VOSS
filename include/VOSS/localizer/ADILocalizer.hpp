@@ -35,6 +35,8 @@ public:
 
 	void update();
 	void calibrate();
+
+	void set_pose(Pose pose);
 };
 
 } // namespace voss::localizer
