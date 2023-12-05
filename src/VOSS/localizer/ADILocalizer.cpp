@@ -1,4 +1,5 @@
 #include "voss/localizer/ADILocalizer.hpp"
+#include "ADILocalizer.hpp"
 #include "pros/adi.hpp"
 
 #include <cmath>
@@ -138,6 +139,11 @@ void ADILocalizer::update() {
 	// convert to absolute displacement
 	this->pose.x += cos(p) * local_x - sin(p) * local_y;
 	this->pose.y += sin(p) * local_x + cos(p) * local_y;
+}
+
+void ADILocalizer::set_pose(Pose pose) {
+	this->AbstractLocalizer::set_pose(pose);
+	this->imu->set_heading(pose.theta);
 }
 
 } // namespace voss::localizer

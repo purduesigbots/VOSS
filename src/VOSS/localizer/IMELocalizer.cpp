@@ -1,5 +1,6 @@
 #include "voss/localizer/IMELocalizer.hpp"
 #include "AbstractLocalizer.hpp"
+#include "IMELocalizer.hpp"
 #include "pros/adi.h"
 #include "pros/adi.hpp"
 #include "pros/motor_group.hpp"
@@ -141,6 +142,11 @@ void IMELocalizer::update() {
 	// convert to absolute displacement
 	this->pose.x += cos(p) * local_x - sin(p) * local_y;
 	this->pose.y += sin(p) * local_x + cos(p) * local_y;
+}
+
+void IMELocalizer::set_pose(Pose pose) {
+	this->AbstractLocalizer::set_pose(pose);
+	this->imu->set_heading(pose.theta);
 }
 
 } // namespace voss::localizer
