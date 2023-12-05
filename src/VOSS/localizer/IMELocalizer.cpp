@@ -146,7 +146,9 @@ void IMELocalizer::update() {
 
 void IMELocalizer::set_pose(Pose pose) {
 	this->AbstractLocalizer::set_pose(pose);
-	this->imu->set_heading(pose.theta);
+	if (this->imu) {
+		this->imu->set_heading(pose.theta);
+	}
 }
 
 } // namespace voss::localizer
