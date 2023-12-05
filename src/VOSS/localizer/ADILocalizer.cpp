@@ -144,7 +144,7 @@ void ADILocalizer::update() {
 void ADILocalizer::set_pose(Pose pose) {
 	this->AbstractLocalizer::set_pose(pose);
 	if (this->imu) {
-		this->imu->set_heading(pose.theta);
+		this->imu->set_rotation(-pose.theta);
 	}
 }
 
