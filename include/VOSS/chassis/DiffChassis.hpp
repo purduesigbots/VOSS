@@ -29,6 +29,8 @@ public:
 	void arcade(double forward_speed, double turn_speed);
 
 	bool execute(ChassisCommand cmd, double max);
+
+    auto getMotors();
 };
 
 } // namespace voss::chassis
