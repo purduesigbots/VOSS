@@ -34,6 +34,8 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
 }
 
 chassis::ChassisCommand BoomerangController::get_angular_command(bool reverse, bool thru) {
+    child->set_target(target, false);
+    child->set_angular_target(angular_target, false);
     return child->get_angular_command(reverse, thru);
 }
 

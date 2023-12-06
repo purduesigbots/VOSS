@@ -1,6 +1,7 @@
 #include "voss/controller/BoomerangControllerBuilder.hpp"
 #include "voss/controller/BoomerangController.hpp"
 #include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 
@@ -47,7 +48,7 @@ BoomerangControllerBuilder::with_exit_error(double error) {
 
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_angular_exit_error(double error) {
-	this->ctrl.child->angular_exit_error = error;
+	this->ctrl.child->angular_exit_error = voss::to_radians(error);
 	return *this;
 }
 
