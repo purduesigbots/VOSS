@@ -70,7 +70,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
 		                           this->prev_voltages = v;
 
-		                           return false;
+		                           return v.chainedExecutable;
 	                           }},
 	                  cmd);
 }

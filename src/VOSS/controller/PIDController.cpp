@@ -13,7 +13,7 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
 
 chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	Point current_pos = this->l->get_position();
-
+    bool chainedExecutable = false;
 	bool noPose = this->target.theta == 361;
 
 	double dx = target.x - current_pos.x;
@@ -30,6 +30,9 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	angle_error = voss::norm_delta(angle_error);
 
 	if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
+        if(thru) {
+            chainedExecutable = true;
+        }
 		total_lin_err = 0;
 		close += 10;
 	} else {
@@ -76,7 +79,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	}
 
 	return chassis::ChassisCommand{
-	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed, chainedExecutable}};
 }
 
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
