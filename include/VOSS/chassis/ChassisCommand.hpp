@@ -8,6 +8,7 @@ struct Stop {};
 struct Voltages {
 	double left;
 	double right;
+    bool chainedExecutable;
 };
 
 using ChassisCommand = std::variant<Stop, Voltages>;
