@@ -30,7 +30,14 @@ public:
 
 	bool execute(ChassisCommand cmd, double max);
 
-    auto getMotors();
+    auto getMotors() const {
+        struct ChassisMotorSet{
+            pros::MotorGroup* left;
+            pros::MotorGroup* right;
+        };
+
+        return ChassisMotorSet{this->left_motors.get(), this->right_motors.get()};
+    }
 };
 
 } // namespace voss::chassis

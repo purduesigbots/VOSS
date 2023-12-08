@@ -75,13 +75,4 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 	                  cmd);
 }
 
-auto DiffChassis::getMotors() {
-    struct ChassisMotorSet{
-        pros::MotorGroup* left;
-        pros::MotorGroup* right;
-    };
-
-    return ChassisMotorSet{this->left_motors.get(), this->right_motors.get()};
-}
-
 } // namespace voss::chassis
