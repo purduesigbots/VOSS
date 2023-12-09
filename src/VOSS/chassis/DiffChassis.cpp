@@ -70,8 +70,26 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
 		                           this->prev_voltages = v;
 
-		                           return v.chainedExecutable;
-	                           }},
+		                           return false;
+	                           },
+                               [this, max](Chained& v){
+                                   if (fabs(v.left) > max) {
+                                       v.left = max * ((v.left < 0) ? -1 : 1);
+                                   }
+                                   if (fabs(v.right) > max) {
+                                       v.right = max * ((v.right < 0) ? -1 : 1);
+                                   }
+
+                                   v.left = slew(v.left, true);
+                                   v.right = slew(v.right, false);
+
+                                   this->left_motors->move_voltage(120 * v.left);
+                                   this->right_motors->move_voltage(120 * v.right);
+
+                                   this->prev_voltages = {v.left, v.right};
+
+                                   return true;
+                               }},
 	                  cmd);
 }
 
