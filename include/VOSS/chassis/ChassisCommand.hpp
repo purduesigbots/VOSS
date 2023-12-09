@@ -8,10 +8,13 @@ struct Stop {};
 struct Voltages {
 	double left;
 	double right;
-    bool chainedExecutable;
+};
+struct Chained {
+    double left;
+    double right;
 };
 
-using ChassisCommand = std::variant<Stop, Voltages>;
+using ChassisCommand = std::variant<Stop, Voltages, Chained>;
 
 template <class... Ts> struct overload : Ts... {
 	using Ts::operator()...;
