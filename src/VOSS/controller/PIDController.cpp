@@ -37,7 +37,6 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
         if(thru) {
             chainedExecutable = true;
         } else {
-            lin_speed = linear_pid(distance_error) * (reverse ? -1 : 1);
             total_lin_err = 0;
             close += 10;
         }
@@ -48,6 +47,8 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
+
+    lin_speed = thru ? 100.0 : (linear_pid(distance_error) * (reverse ? -1 : 1));
 
 	double ang_speed;
 	if (distance_error < min_error) {
