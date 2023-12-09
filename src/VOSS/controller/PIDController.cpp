@@ -29,25 +29,24 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	angle_error = voss::norm_delta(angle_error);
 
-	if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
+    double lin_speed;
+
+
+
+    if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
         if(thru) {
             chainedExecutable = true;
+        } else {
+            lin_speed = linear_pid(distance_error) * (reverse ? -1 : 1);
+            total_lin_err = 0;
+            close += 10;
         }
-		total_lin_err = 0;
-		close += 10;
-	} else {
-		close = 0;
-	}
+    } else {
+        close = 0;
+    }
 
 	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
-	}
-
-	double lin_speed;
-	if (thru) {
-		lin_speed = 100;
-	} else {
-		lin_speed = linear_pid(distance_error) * (reverse ? -1 : 1);
 	}
 
 	double ang_speed;
@@ -77,9 +76,13 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 		ang_speed = angular_pid(angle_error);
 	}
+    if(chainedExecutable){
+        return chassis::ChassisCommand{
+                chassis::Chained{100.0 - ang_speed, 100.0 + ang_speed}};
+    }
 
-	return chassis::ChassisCommand{
-	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed, chainedExecutable}};
+    return chassis::ChassisCommand{
+        chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
