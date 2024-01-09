@@ -82,6 +82,8 @@ void opcontrol() {
 
 	voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
 
+    auto [leftM, rightM] = chassis.getMotors();
+
 	while (true) {
 
 		voss::Pose p = odom->get_pose();
