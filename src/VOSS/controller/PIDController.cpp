@@ -13,7 +13,7 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
 
 chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	Point current_pos = this->l->get_position();
-
+    bool chainedExecutable = false;
 	bool noPose = this->target.theta == 361;
 
 	double dx = target.x - current_pos.x;
@@ -29,23 +29,26 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	angle_error = voss::norm_delta(angle_error);
 
-	if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
-		total_lin_err = 0;
-		close += 10;
-	} else {
-		close = 0;
-	}
+    double lin_speed;
+
+
+
+    if (distance_error <= exit_error || (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
+        if(thru) {
+            chainedExecutable = true;
+        } else {
+            total_lin_err = 0;
+            close += 10;
+        }
+    } else {
+        close = 0;
+    }
 
 	if (close > settle_time) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
-	double lin_speed;
-	if (thru) {
-		lin_speed = 100;
-	} else {
-		lin_speed = linear_pid(distance_error) * (reverse ? -1 : 1);
-	}
+    lin_speed = thru ? 100.0 : (linear_pid(distance_error) * (reverse ? -1 : 1));
 
 	double ang_speed;
 	if (distance_error < min_error) {
@@ -74,9 +77,13 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 		ang_speed = angular_pid(angle_error);
 	}
+    if(chainedExecutable){
+        return chassis::ChassisCommand{
+                chassis::Chained{100.0 - ang_speed, 100.0 + ang_speed}};
+    }
 
-	return chassis::ChassisCommand{
-	    chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+    return chassis::ChassisCommand{
+        chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
