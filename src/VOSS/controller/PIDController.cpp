@@ -12,7 +12,9 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
 }
 
 chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
+	counter += 10;
 	Point current_pos = this->l->get_position();
+	double current_angle = this->l->get_orientation_rad();
     bool chainedExecutable = false;
 	bool noPose = this->target.theta == 361;
 
@@ -21,10 +23,10 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 	double distance_error = sqrt(dx * dx + dy * dy);
 
-	double angle_error = atan2(dy, dx) - this->l->get_orientation_rad();
+	double angle_error = atan2(dy, dx) - current_angle;
 
 	if (reverse) {
-		angle_error = atan2(-dy, -dx) - this->l->get_orientation_rad();
+		angle_error = atan2(-dy, -dx) - current_angle;
 	}
 
 	angle_error = voss::norm_delta(angle_error);
@@ -48,6 +50,21 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
+	if (fabs(distance_error - prev_lin_err) < 0.1 && fabs(current_angle - prev_angle) < voss::to_radians(0.1) && counter > 400) {
+		if (thru) {
+			chainedExecutable = true;
+		}
+		close_2 += 10;
+	} else {
+		close_2 = 0;
+	}
+
+	prev_angle = current_angle;
+
+	if (close_2 > settle_time * 2) {
+		return chassis::ChassisCommand{chassis::Stop{}};
+	}
+
     lin_speed = thru ? 100.0 : (linear_pid(distance_error) * (reverse ? -1 : 1));
 
 	double ang_speed;
@@ -60,7 +77,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		} else {
 			// turn to face the finale pose angle if executing a pose movement
 			double poseError =
-			    (target.theta * M_PI / 180) - this->l->get_orientation_rad();
+			    (target.theta * M_PI / 180) - current_angle;
 			while (fabs(poseError) > M_PI)
 				poseError -= 2 * M_PI * poseError / fabs(poseError);
 			ang_speed = angular_pid(poseError);
@@ -88,6 +105,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
                                                            bool thru) {
+	counter += 10;
 	double current_angle = this->l->get_orientation_rad();
 	double target_angle = 0;
 	if (this->target.theta == 361) {
@@ -109,6 +127,15 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
 	}
 
 	if (close > settle_time) {
+		return chassis::ChassisCommand{chassis::Stop{}};
+	}
+	if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) && counter > 400) {
+		close_2 += 10;
+	} else {
+		close_2 = 0;
+	}
+
+	if (close_2 > settle_time * 2) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 	double ang_speed = angular_pid(angular_error);
@@ -143,6 +170,7 @@ void PIDController::reset() {
 	this->prev_ang_err = 0;
 	this->total_ang_err = 0;
 	this->can_reverse = false;
+	this->counter = 0;
 }
 
 } // namespace voss::controller
