@@ -106,6 +106,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
                                                            bool thru) {
 	counter += 10;
+    int dir = reverse? -1 : 1;
 	double current_angle = this->l->get_orientation_rad();
 	double target_angle = 0;
 	if (this->target.theta == 361) {
@@ -139,7 +140,7 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 	double ang_speed = angular_pid(angular_error);
-	return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
+	return chassis::ChassisCommand{chassis::Voltages{-ang_speed * dir, ang_speed * dir}};
 }
 
 double PIDController::linear_pid(double error) {
