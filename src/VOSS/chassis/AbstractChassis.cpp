@@ -12,11 +12,14 @@ AbstractChassis::AbstractChassis(
 void AbstractChassis::move_task(controller::AbstractController* controller,
                                 double max, uint8_t flags) {
 
-	pros::Task running_t([&]() {
+	pros::Task running_t([&, controller]() {
 		controller->reset();
 		while (!this->execute(
 		    controller->get_command(flags & voss::REVERSE, flags & voss::THRU),
 		    max)) {
+			if (pros::competition::is_disabled()) {
+				return;
+			}
 			pros::delay(10);
 		}
 		// this->m.give();
@@ -34,11 +37,14 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
 
 void AbstractChassis::turn_task(controller::AbstractController* controller,
                                 double max, uint8_t flags) {
-	pros::Task running_t([&]() {
+	pros::Task running_t([&, controller]() {
 		controller->reset();
 		while (!this->execute(controller->get_angular_command(flags & voss::REVERSE,
 		                                                      flags & voss::THRU),
 		                      max)) {
+			if (pros::competition::is_disabled()) {
+				return;
+			}
 			pros::delay(10);
 		}
 	});
