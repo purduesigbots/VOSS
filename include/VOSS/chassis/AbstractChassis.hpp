@@ -19,10 +19,10 @@ protected:
 	controller::AbstractController* default_controller;
 
 	void move_task(controller::AbstractController* controller, double max,
-	               uint8_t flags);
+	               voss::Flags flags);
 
 	void turn_task(controller::AbstractController* controller, double max,
-	               uint8_t flags);
+	               voss::Flags flags);
 
 public:
 	AbstractChassis(controller::AbstractController& default_controller);
@@ -33,18 +33,18 @@ public:
 	virtual bool execute(ChassisCommand cmd, double max) = 0;
 
 	void move(Point target, controller::AbstractController* controller,
-	          double max = 100.0, uint8_t flags = voss::NONE);
+	          double max = 100.0, voss::Flags flags = voss::Flags::NONE);
 	void move(Pose target, controller::AbstractController* controller,
-	          double max = 100.0, uint8_t flags = voss::NONE);
-	void move(Point target, double max = 100.0, uint8_t flags = voss::NONE);
-	void move(Pose target, double max = 100.0, uint8_t flags = voss::NONE);
+	          double max = 100.0, voss::Flags flags = voss::Flags::NONE);
+	void move(Point target, double max = 100.0, voss::Flags flags = voss::Flags::NONE);
+	void move(Pose target, double max = 100.0, voss::Flags flags = voss::Flags::NONE);
 
 	void turn(double target, controller::AbstractController* controller,
-	          double max = 100.0, uint8_t flags = voss::NONE);
-	void turn(double target, double max = 100.0, uint8_t flags = voss::NONE);
+	          double max = 100.0, voss::Flags flags = voss::Flags::NONE);
+	void turn(double target, double max = 100.0, voss::Flags flags = voss::Flags::NONE);
 	void turn_to(Point target, controller::AbstractController* controller,
-	             double max = 100.0, uint8_t flags = voss::NONE);
-	void turn_to(Point target, double max = 100.0, uint8_t flags = voss::NONE);
+	             double max = 100.0, voss::Flags flags = voss::Flags::NONE);
+	void turn_to(Point target, double max = 100.0, voss::Flags flags = voss::Flags::NONE);
 };
 
 } // namespace voss::chassis
