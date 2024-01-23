@@ -16,6 +16,9 @@ protected:
 	double settle_time;
 
 	double close;
+	double close_2;
+	int counter;
+	double prev_angle;
 
 	double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 

@@ -15,7 +15,7 @@ void AbstractController::set_target(Pose target, bool relative) {
 		double h = l->get_orientation_rad(); // robot heading in radians
 		double x_new = p.x + target.x * cos(h) - target.y * sin(h);
 		double y_new = p.y + target.x * sin(h) + target.y * cos(h);
-		this->target = Pose{x_new, y_new, 0};
+		this->target = Pose{x_new, y_new, 361};
 	} else {
 		this->target = target;
 	}

@@ -55,12 +55,11 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 		                           return true;
 	                           },
 	                           [this, max](Voltages& v) -> bool {
-		                           if (fabs(v.left) > max) {
-			                           v.left = max * ((v.left < 0) ? -1 : 1);
-		                           }
-		                           if (fabs(v.right) > max) {
-			                           v.right = max * ((v.right < 0) ? -1 : 1);
-		                           }
+									double v_max = std::max(fabs(v.left), fabs(v.right));
+									if (v_max > max) {
+										v.left = v.left * max / v_max;
+										v.right = v.right * max / v_max;
+									}
 
 		                           v.left = slew(v.left, true);
 		                           v.right = slew(v.right, false);
@@ -73,12 +72,11 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 		                           return false;
 	                           },
                                [this, max](Chained& v){
-                                   if (fabs(v.left) > max) {
-                                       v.left = max * ((v.left < 0) ? -1 : 1);
-                                   }
-                                   if (fabs(v.right) > max) {
-                                       v.right = max * ((v.right < 0) ? -1 : 1);
-                                   }
+                                   double v_max = std::max(fabs(v.left), fabs(v.right));
+									if (v_max > max) {
+										v.left = v.left * max / v_max;
+										v.right = v.right * max / v_max;
+									}
 
                                    v.left = slew(v.left, true);
                                    v.right = slew(v.right, false);

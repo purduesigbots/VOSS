@@ -4,10 +4,13 @@
 
 namespace voss {
 
-const uint8_t NONE = 0b0000;
-const uint8_t ASYNC = 0b0001;
-const uint8_t REVERSE = 0b0010;
-const uint8_t RELATIVE = 0b0100;
-const uint8_t THRU = 0b1000;
+enum class Flags { NONE = 0b0000, ASYNC = 0b0001, REVERSE = 0b0010, RELATIVE = 0b0100, THRU = 0b1000 };
 
+auto inline operator|(Flags flag1, Flags flag2) {
+    return static_cast<Flags>(static_cast<uint8_t>(flag1) | static_cast<uint8_t>(flag2));
+}
+
+auto inline operator&(Flags flag1, Flags flag2) {
+    return static_cast<bool>(static_cast<uint8_t>(flag1) & static_cast<uint8_t>(flag2));
+}
 } // namespace voss
