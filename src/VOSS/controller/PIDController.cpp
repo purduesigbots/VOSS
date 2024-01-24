@@ -13,6 +13,7 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
 
 chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	counter += 10;
+    int dir = reverse ? -1 : 1;
 	Point current_pos = this->l->get_position();
 	double current_angle = this->l->get_orientation_rad();
     bool chainedExecutable = false;
@@ -65,7 +66,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 		return chassis::ChassisCommand{chassis::Stop{}};
 	}
 
-    lin_speed = thru ? 100.0 : (linear_pid(distance_error) * (reverse ? -1 : 1));
+    lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
 
 	double ang_speed;
 	if (distance_error < min_error) {
@@ -96,7 +97,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 	}
     if(chainedExecutable){
         return chassis::ChassisCommand{
-                chassis::Chained{100.0 - ang_speed, 100.0 + ang_speed}};
+                chassis::Chained{dir * 100.0 - ang_speed, dir * 100.0 + ang_speed}};
     }
 
     return chassis::ChassisCommand{
