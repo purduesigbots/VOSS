@@ -12,15 +12,15 @@
 #include "controller/PIDController.hpp"
 #include "controller/PIDControllerBuilder.hpp"
 
+#include "localizer/AbstractLocalizer.hpp"
 #include "localizer/ADILocalizer.hpp"
 #include "localizer/ADILocalizerBuilder.hpp"
-#include "localizer/AbstractLocalizer.hpp"
 #include "localizer/GPSLocalizer.hpp"
 #include "localizer/IMELocalizer.hpp"
 #include "localizer/IMELocalizerBuilder.hpp"
 
 #include "selector/Selector.hpp"
 
+#include "utils/flags.hpp"
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
-#include "utils/flags.hpp"

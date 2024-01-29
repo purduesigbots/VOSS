@@ -8,20 +8,20 @@
 namespace voss::controller {
 
 class BoomerangController : public AbstractController {
-protected:
-	std::shared_ptr<PIDController> child = nullptr;
-	double lead_pct;
+  protected:
+    std::shared_ptr<PIDController> child = nullptr;
+    double lead_pct;
 
-public:
-	BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
+  public:
+    BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
+    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::ChassisCommand get_angular_command(bool reverse,
+                                                bool thru) override;
 
-	chassis::ChassisCommand get_command(bool reverse, bool thru)override;
-	chassis::ChassisCommand get_angular_command(bool reverse, bool thru)override;
+    void reset();
 
-	void reset();
-
-	friend class BoomerangControllerBuilder;
+    friend class BoomerangControllerBuilder;
 };
 
 } // namespace voss::controller

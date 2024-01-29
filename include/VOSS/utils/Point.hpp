@@ -3,8 +3,8 @@
 namespace voss {
 
 struct Point {
-	double x;
-	double y;
+    double x;
+    double y;
 };
 
 } // namespace voss
