@@ -10,4 +10,4 @@ double norm(double radians);
 
 double norm_delta(double radians);
 
-}
+} // namespace voss
