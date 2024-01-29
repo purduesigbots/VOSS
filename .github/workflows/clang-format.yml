@@ -19,4 +19,4 @@ jobs:
             with:
                 default_author: github_actions
                 message: 'Committing clang-format changes'
-                push: 'origin HEAD:${{ github.event.pull_request.head.label }}'
+                push: 'origin HEAD:${{ github.event.pull_request.head.ref }}'
