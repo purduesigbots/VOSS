@@ -1,21 +1,6 @@
 #include "main.h"
-#include "legs/api.hpp"
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
-
+#include "VOSS/api.hpp"
+#include "VOSS/localizer/ADILocalizerBuilder.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -23,12 +8,7 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	using namespace pros::literals;
-
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
-
-	pros::lcd::register_btn1_cb(on_center_button);
+    pros::lcd::initialize();
 }
 
 /**
@@ -36,7 +16,8 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -47,7 +28,8 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -60,7 +42,8 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -76,42 +59,46 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+    pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	legs::OdometryModelBuilder builder;
-	legs::OdometryModel model = builder.withTrackWidth(5.64)
-									   .withMiddleDistance(4.75)
-									   .withLeftRightTPI(330)
-									   .withMiddleTPI(330)
-									   .withLeftEncoder(3)
-									   .withRightEncoder(7)
-									   .withMiddleEncoder(1)
-									   .withDebug(true)
-									   .build();
-	
-    	// create a chassis
-	legs::DiffChassis chassis = legs::DiffChassisBuilder()
-		.withLeftMotors({1,13,-14})
-		.withRightMotors({16,-17,-18})
-		.build();
+    auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+                    .with_left_motors({-13, -15, -16})
+                    .with_right_motors({8, 7, 5})
+                    .with_left_right_tpi(19.5) // 19.5
+                    .with_track_width(8.4)     // 3.558
+                    .with_imu(18)
+                    .build();
 
-        
+    odom->begin_localization();
 
-	pros::Controller master (pros::E_CONTROLLER_MASTER);
-        
-	while (true) {
-		Eigen::Vector3d pose = model.getPose();
-		pros::lcd::set_text(0, std::to_string(pose.x()));
-		pros::lcd::set_text(1, std::to_string(pose.y()));
-		pros::lcd::set_text(2, std::to_string(pose.z()));
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
+    auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+                   .with_linear_constants(7, 0.02, 40)
+                   .with_angular_constants(170, 0, 700)
+                   .with_exit_error(1.0)
+                   .with_angular_exit_error(1.0)
+                   .with_min_error(5)
+                   .with_settle_time(200)
+                   .build();
 
-		
-		// set the chassis velocity
-		//chassis.setForwardVelocity(master.get_analog(ANALOG_LEFT_Y));
-		//chassis.setAngularVelocity(master.get_analog(ANALOG_RIGHT_X));
+    voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
 
-		chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
-		pros::delay(20);
-	}
+    auto [leftM, rightM] = chassis.getMotors();
+
+    while (true) {
+
+        voss::Pose p = odom->get_pose();
+
+        if (master.get_digital_new_press(DIGITAL_Y)) {
+            odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
+        }
+
+        pros::lcd::clear_line(1);
+        pros::lcd::clear_line(2);
+        pros::lcd::clear_line(3);
+        pros::lcd::print(1, "%lf", p.x);
+        pros::lcd::print(2, "%lf", p.y);
+        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
+        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
+        pros::delay(10);
+    }
 }
