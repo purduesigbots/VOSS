@@ -1,0 +1,22 @@
+name: Clang Format
+
+on: pull_request
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Checkout
+            uses: actions/checkout@v2
+        -   name: Format
+            uses: DoozyX/clang-format-lint-action@v0.16.2
+            with:
+                source: './src ./include/VOSS'
+                clangFormatVersion: 14
+                inplace: True
+        -   name: Commit
+            uses: EndBug/add-and-commit@v9
+            with:
+                author_name: Clang Robot
+                author_email: robot@example.com
+                message: 'Committing clang-format changes'
