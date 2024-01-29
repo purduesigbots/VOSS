@@ -1,6 +1,6 @@
 #include "main.h"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
-#include "voss/api.hpp"
+#include "VOSS/api.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *

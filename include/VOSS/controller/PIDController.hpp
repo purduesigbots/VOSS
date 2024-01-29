@@ -1,6 +1,6 @@
 #pragma once
 
-#include "voss/controller/AbstractController.hpp"
+#include "VOSS/controller/AbstractController.hpp"
 
 namespace voss::controller {
 

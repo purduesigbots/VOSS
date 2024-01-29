@@ -1,4 +1,4 @@
-#include "voss/selector/Selector.hpp"
+#include "VOSS/selector/Selector.hpp"
 #include "liblvgl/lvgl.h"
 #include "pros/rtos.hpp"
 

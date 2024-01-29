@@ -1,7 +1,7 @@
 #pragma once
 
-#include "voss/chassis/ChassisCommand.hpp"
-#include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/chassis/ChassisCommand.hpp"
+#include "VOSS/localizer/AbstractLocalizer.hpp"
 
 namespace voss::controller {
 

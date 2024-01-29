@@ -1,8 +1,8 @@
 #pragma once
 
 #include "pros/rtos.hpp"
-#include "voss/utils/Point.hpp"
-#include "voss/utils/Pose.hpp"
+#include "VOSS/utils/Point.hpp"
+#include "VOSS/utils/Pose.hpp"
 #include <mutex>
 
 

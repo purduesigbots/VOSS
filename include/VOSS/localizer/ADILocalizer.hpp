@@ -2,7 +2,7 @@
 
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
-#include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/localizer/AbstractLocalizer.hpp"
 #include <atomic>
 #include <memory>
 

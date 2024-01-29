@@ -1,6 +1,6 @@
 #pragma once
 
-#include "voss/controller/BoomerangController.hpp"
+#include "VOSS/controller/BoomerangController.hpp"
 
 namespace voss::controller {
 

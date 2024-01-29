@@ -1,4 +1,4 @@
-#include "voss/controller/AbstractController.hpp"
+#include "VOSS/controller/AbstractController.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 

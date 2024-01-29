@@ -1,7 +1,7 @@
-#include "voss/controller/PIDControllerBuilder.hpp"
+#include "VOSS/controller/PIDControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
-#include "voss/controller/PIDController.hpp"
-#include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/controller/PIDController.hpp"
+#include "VOSS/localizer/AbstractLocalizer.hpp"
 
 namespace voss::controller {
 

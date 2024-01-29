@@ -1,6 +1,6 @@
-#include "voss/controller/BoomerangControllerBuilder.hpp"
-#include "voss/controller/BoomerangController.hpp"
-#include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/controller/BoomerangControllerBuilder.hpp"
+#include "VOSS/controller/BoomerangController.hpp"
+#include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {

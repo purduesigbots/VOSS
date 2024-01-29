@@ -4,11 +4,11 @@
 #include "pros/motors.hpp"
 
 #include "ChassisCommand.hpp"
-#include "voss/controller/AbstractController.hpp"
+#include "VOSS/controller/AbstractController.hpp"
 
-#include "voss/utils/Point.hpp"
-#include "voss/utils/Pose.hpp"
-#include "voss/utils/flags.hpp"
+#include "VOSS/utils/Point.hpp"
+#include "VOSS/utils/Pose.hpp"
+#include "VOSS/utils/flags.hpp"
 
 namespace voss::chassis {
 

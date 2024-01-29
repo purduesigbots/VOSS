@@ -3,7 +3,7 @@
 #include "pros/adi.hpp"
 #include "pros/imu.hpp"
 #include "pros/motor_group.hpp"
-#include "voss/localizer/AbstractLocalizer.hpp"
+#include "VOSS/localizer/AbstractLocalizer.hpp"
 #include <memory>
 
 namespace voss::localizer {

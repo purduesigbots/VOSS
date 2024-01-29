@@ -1,5 +1,5 @@
-#include "voss/controller/BoomerangController.hpp"
-#include "voss/chassis/ChassisCommand.hpp"
+#include "VOSS/controller/BoomerangController.hpp"
+#include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 

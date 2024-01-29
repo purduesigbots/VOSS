@@ -1,7 +1,6 @@
-#include "voss/controller/PIDController.hpp"
+#include "VOSS/controller/PIDController.hpp"
 #include "VOSS/utils/angle.hpp"
-#include "pros/llemu.hpp"
-#include "voss/chassis/ChassisCommand.hpp"
+#include "VOSS/chassis/ChassisCommand.hpp"
 #include <cmath>
 
 namespace voss::controller {
