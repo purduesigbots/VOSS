@@ -79,15 +79,16 @@ void opcontrol() {
                    .with_settle_time(200)
                    .build();
     auto arc = voss::controller::ArcPIDControllerBuilder::new_builder(odom)
-                    .with_linear_constants(6, 0, 50)
-                    .with_track_width(14)
-                    .with_exit_error(1.0)
-                    .with_min_error(5.0)
-                    .with_settle_time(200)
-                    .with_slew(8)
-                    .build();
+                   .with_linear_constants(6, 0, 50)
+                   .with_track_width(14)
+                   .with_exit_error(1.0)
+                   .with_min_error(5.0)
+                   .with_settle_time(200)
+                   .with_slew(8)
+                   .build();
 
-    voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid, 8);
+    voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid,
+                                       8);
 
     auto [leftM, rightM] = chassis.getMotors();
 
@@ -95,7 +96,8 @@ void opcontrol() {
 
         voss::Pose p = odom->get_pose();
 
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
+        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
+                       master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0.0});

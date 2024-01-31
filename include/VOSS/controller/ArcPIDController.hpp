@@ -5,7 +5,7 @@
 namespace voss::controller {
 
 class ArcPIDController : public AbstractController {
-protected:
+  protected:
     double linear_kP, linear_kI, linear_kD;
     double track_width;
     double exit_error;
@@ -20,7 +20,7 @@ protected:
 
     double prev_lin_err, total_lin_err;
 
-public:
+  public:
     ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
     double linear_pid(double error);
@@ -28,7 +28,7 @@ public:
     chassis::ChassisCommand get_command(bool reverse, bool thru) override;
     chassis::ChassisCommand get_angular_command(bool reverse,
                                                 bool thru) override;
-    
+
     void reset() override;
 
     friend class ArcPIDControllerBuilder;

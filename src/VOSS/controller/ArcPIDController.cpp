@@ -1,11 +1,13 @@
 #include "VOSS/controller/ArcPIDController.hpp"
 
-#include <cmath>
 #include "VOSS/utils/angle.hpp"
+#include <cmath>
 
 namespace voss::controller {
 
-ArcPIDController::ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l): AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0) {
+ArcPIDController::ArcPIDController(
+    std::shared_ptr<localizer::AbstractLocalizer> l)
+    : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0) {
 }
 
 chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
@@ -24,7 +26,7 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
     double c = (this->target.x - current_pos.x) / 2;
     double d = cos(current_angle);
     double e = current_pos.x - this->target.x;
-    double f = (this->target.y- current_pos.y) / 2;
+    double f = (this->target.y - current_pos.y) / 2;
 
     // apply cramer's rule to solve for t
     double t;
@@ -43,7 +45,7 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
 
     angle_error = voss::norm_delta(angle_error);
 
-    if (distance_error <= exit_error||
+    if (distance_error <= exit_error ||
         (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
         this->close += 10;
     } else {
@@ -59,7 +61,8 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
     if (distance_error < this->min_error) {
         this->can_reverse = true;
         lin_speed *= cos(angle_error);
-        //return chassis::ChassisCommand{chassis::Voltages{lin_speed, lin_speed}};
+        // return chassis::ChassisCommand{chassis::Voltages{lin_speed,
+        // lin_speed}};
         t = prev_t;
     } else if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
         lin_speed = -lin_speed;
@@ -72,8 +75,8 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
 
     double left_speed, right_speed;
     if (t != 0.0) {
-        //left_speed = (t - track_width / 2) / t * lin_speed;
-        //right_speed = (t + track_width / 2) / t * lin_speed;
+        // left_speed = (t - track_width / 2) / t * lin_speed;
+        // right_speed = (t + track_width / 2) / t * lin_speed;
         left_speed = lin_speed * (2 - track_width / t) / 2;
         right_speed = lin_speed * (2 + track_width / t) / 2;
     } else {
@@ -85,7 +88,8 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
     return chassis::ChassisCommand{chassis::Voltages{left_speed, right_speed}};
 }
 
-chassis::ChassisCommand ArcPIDController::get_angular_command(bool reverse, bool thru) {
+chassis::ChassisCommand ArcPIDController::get_angular_command(bool reverse,
+                                                              bool thru) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
@@ -94,7 +98,7 @@ double ArcPIDController::linear_pid(double error) {
 
     double speed = linear_kP * error + linear_kD * (error - prev_lin_err) +
                    linear_kI * total_lin_err;
-    
+
     this->prev_lin_err = error;
 
     return speed;
