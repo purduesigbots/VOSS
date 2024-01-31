@@ -13,6 +13,8 @@ protected:
     double can_reverse;
     double settle_time;
     double prev_t;
+    double slew;
+    double prev_lin_speed;
 
     double close;
 

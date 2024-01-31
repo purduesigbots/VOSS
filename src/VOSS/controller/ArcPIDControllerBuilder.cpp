@@ -37,6 +37,11 @@ ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_settle_time(double settle
     return *this;
 }
 
+ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_slew(double slew) {
+    this->ctrl.slew = slew;
+    return *this;
+}
+
 ArcPIDController ArcPIDControllerBuilder::build() {
     return this->ctrl;
 }
