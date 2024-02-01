@@ -1,6 +1,5 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/localizer/ADILocalizerBuilder.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -62,11 +61,11 @@ void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 
     auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
-                    .with_left_motors({-13, -15, -16})
-                    .with_right_motors({8, 7, 5})
-                    .with_left_right_tpi(19.5) // 19.5
-                    .with_track_width(8.4)     // 3.558
-                    .with_imu(18)
+                    .with_left_motors({-2, -3, -6, -5})
+                    .with_right_motors({11, 12, 19, 20})
+                    .with_left_right_tpi(18.24) // 19.5
+                    .with_track_width(9.75)     // 3.558
+                    .with_imu(13)
                     .build();
 
     odom->begin_localization();
@@ -79,8 +78,17 @@ void opcontrol() {
                    .with_min_error(5)
                    .with_settle_time(200)
                    .build();
+    auto arc = voss::controller::ArcPIDControllerBuilder::new_builder(odom)
+                   .with_linear_constants(6, 0, 50)
+                   .with_track_width(14)
+                   .with_exit_error(1.0)
+                   .with_min_error(5.0)
+                   .with_settle_time(200)
+                   .with_slew(8)
+                   .build();
 
-    voss::chassis::DiffChassis chassis({-13, -15, -16}, {8, 7, 5}, pid, 8);
+    voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid,
+                                       8);
 
     auto [leftM, rightM] = chassis.getMotors();
 
@@ -88,8 +96,12 @@ void opcontrol() {
 
         voss::Pose p = odom->get_pose();
 
+        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
+                       master.get_analog(ANALOG_RIGHT_X));
+
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
+            chassis.move(voss::Point(36, 36), &arc);
         }
 
         pros::lcd::clear_line(1);

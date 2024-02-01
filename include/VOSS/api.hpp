@@ -7,6 +7,8 @@
 #include "chassis/XDriveChassis.hpp"
 
 #include "controller/AbstractController.hpp"
+#include "controller/ArcPIDController.hpp"
+#include "controller/ArcPIDControllerBuilder.hpp"
 #include "controller/BoomerangController.hpp"
 #include "controller/BoomerangControllerBuilder.hpp"
 #include "controller/PIDController.hpp"
@@ -21,6 +23,7 @@
 
 #include "selector/Selector.hpp"
 
+#include "utils/angle.hpp"
 #include "utils/flags.hpp"
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
