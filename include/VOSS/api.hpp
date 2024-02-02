@@ -13,6 +13,8 @@
 #include "controller/BoomerangControllerBuilder.hpp"
 #include "controller/PIDController.hpp"
 #include "controller/PIDControllerBuilder.hpp"
+#include "controller/SwingController.hpp"
+#include "controller/SwingControllerBuilder.hpp"
 
 #include "localizer/AbstractLocalizer.hpp"
 #include "localizer/ADILocalizer.hpp"
