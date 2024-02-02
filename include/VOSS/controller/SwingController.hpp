@@ -1,7 +1,7 @@
 #pragma once
 
-#include "VOSS/controller/AbstractController.hpp"
 #include "PIDController.hpp"
+#include "VOSS/controller/AbstractController.hpp"
 
 namespace voss::controller {
 class SwingController : public AbstractController {
@@ -17,6 +17,7 @@ class SwingController : public AbstractController {
 
     double prev_ang_err, total_ang_err;
     double prev_ang_speed;
+
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);
 

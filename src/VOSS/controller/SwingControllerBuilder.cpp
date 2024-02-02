@@ -17,7 +17,8 @@ SwingControllerBuilder SwingControllerBuilder::new_builder(
 }
 
 SwingControllerBuilder&
-SwingControllerBuilder::with_angular_constants(double kP, double kI, double kD) {
+SwingControllerBuilder::with_angular_constants(double kP, double kI,
+                                               double kD) {
     this->ctrl.angular_kP = kP;
     this->ctrl.angular_kI = kI;
     this->ctrl.angular_kD = kD;
@@ -38,6 +39,5 @@ SwingControllerBuilder& SwingControllerBuilder::with_settle_time(double time) {
 SwingController SwingControllerBuilder::build() {
     return this->ctrl;
 }
-
 
 } // namespace voss::controller

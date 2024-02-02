@@ -1,16 +1,17 @@
 #include "VOSS/controller/SwingController.hpp"
 #include "VOSS/utils/angle.hpp"
 
-
-namespace voss::controller{
-SwingController::SwingController(std::shared_ptr<localizer::AbstractLocalizer> l) :
-      AbstractController(l){};
+namespace voss::controller {
+SwingController::SwingController(
+    std::shared_ptr<localizer::AbstractLocalizer> l)
+    : AbstractController(l){};
 
 chassis::ChassisCommand SwingController::get_command(bool reverse, bool thru) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
-chassis::ChassisCommand SwingController::get_angular_command(bool reverse, bool thru) {
+chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
+                                                             bool thru) {
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -48,28 +49,33 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse, bool 
 
     double ang_speed = angular_pid(angular_error);
     chassis::ChassisCommand command;
-    if(!this->can_reverse && !((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) && this->prev_ang_speed != 0){
+    if (!this->can_reverse &&
+        !((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
+        this->prev_ang_speed != 0) {
         can_reverse = true;
     }
 
-    if(!this->can_reverse) {
-        if(reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0} : chassis::Swing{0, ang_speed};
+    if (!this->can_reverse) {
+        if (reverse) {
+            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
+                                              : chassis::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed} : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
+                                              : chassis::Swing{-ang_speed, 0};
         }
     } else {
-        if(!reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0} : chassis::Swing{0, ang_speed};
+        if (!reverse) {
+            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
+                                              : chassis::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed} : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
+                                              : chassis::Swing{-ang_speed, 0};
         }
     }
 
     prev_ang_speed = ang_speed;
 
     return command;
-
 }
 
 double SwingController::angular_pid(double error) {
@@ -90,4 +96,4 @@ void SwingController::reset() {
     this->counter = 0;
     this->can_reverse = false;
 }
-};
+}; // namespace voss::controller

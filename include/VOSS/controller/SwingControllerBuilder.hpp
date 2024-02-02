@@ -20,7 +20,7 @@ class SwingControllerBuilder {
                                                    double kD);
     SwingControllerBuilder& with_angular_exit_error(double error);
     SwingControllerBuilder& with_settle_time(double time);
-//    SwingControllerBuilder& with_slew(double slew);
+    //    SwingControllerBuilder& with_slew(double slew);
 
     SwingController build();
 };
