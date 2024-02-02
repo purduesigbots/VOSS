@@ -87,6 +87,12 @@ void opcontrol() {
                    .with_slew(8)
                    .build();
 
+    auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
+                     .with_angular_constants(170, 0, 700)
+                     .with_angular_exit_error(0.5)
+                     .with_settle_time(200)
+                     .build();
+
     voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid,
                                        8);
 
@@ -100,8 +106,8 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose(voss::Pose{0.0, 0.0, 0.0});
-            chassis.move(voss::Point(36, 36), &arc);
+            odom->set_pose(voss::Pose{0.0, 0.0, 0});
+            chassis.turn(90, &swing, 100, voss::Flags::RELATIVE);
         }
 
         pros::lcd::clear_line(1);
