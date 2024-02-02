@@ -88,7 +88,34 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
                      this->prev_voltages = {v.left, v.right};
 
                      return true;
-                 }},
+                 },
+                 [this, max](Swing& v) {
+                     double v_max = std::max(fabs(v.left), fabs(v.right));
+                     if(v.right == 0){
+                         this->right_motors->set_brake_mode(pros::MotorBrake::hold);
+                         this->right_motors->brake();
+                         if (v_max > max) {
+                             v.left = v.left * max / v_max;
+                         }
+                         v.left = slew(v.left, true);
+                         this->left_motors->move_voltage(120 * v.left);
+                         this->prev_voltages = {v.left, 0.0};
+
+                     } else if(v.left == 0){
+                         this->left_motors->set_brake_mode(pros::MotorBrake::hold);
+                         this->left_motors->brake();
+                         if (v_max > max) {
+                             v.right = v.right * max / v_max;
+                         }
+                         v.right = slew(v.right, false);
+
+                         this->right_motors->move_voltage(120 * v.right);
+                         this->prev_voltages = {0.0, v.right};
+                     }
+
+                     return false;
+                 }
+        },
         cmd);
 }
 
