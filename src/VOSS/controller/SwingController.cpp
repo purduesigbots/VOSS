@@ -49,8 +49,7 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
 
     double ang_speed = angular_pid(angular_error);
     chassis::ChassisCommand command;
-    if (!this->can_reverse &&
-        !((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
+    if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
         can_reverse = true;
     }
