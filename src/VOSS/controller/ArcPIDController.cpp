@@ -108,6 +108,7 @@ void ArcPIDController::reset() {
     this->prev_lin_err = 0.0;
     this->total_lin_err = 0.0;
     this->prev_lin_speed = 0.0;
+    this->can_reverse = false;
 }
 
 } // namespace voss::controller

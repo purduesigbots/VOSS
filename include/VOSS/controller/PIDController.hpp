@@ -12,13 +12,15 @@ class PIDController : public AbstractController {
     double exit_error;
     double angular_exit_error;
     double min_error;
-    double can_reverse;
+    bool can_reverse;
     double settle_time;
 
     double close;
     double close_2;
     int counter;
+    int shake_count;
     double prev_angle;
+    double prev_ang_speed;
 
     double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 

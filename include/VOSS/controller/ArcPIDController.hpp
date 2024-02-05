@@ -10,7 +10,7 @@ class ArcPIDController : public AbstractController {
     double track_width;
     double exit_error;
     double min_error;
-    double can_reverse;
+    bool can_reverse;
     double settle_time;
     double prev_t;
     double slew;
