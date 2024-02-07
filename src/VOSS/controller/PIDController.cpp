@@ -1,7 +1,9 @@
 #include "VOSS/controller/PIDController.hpp"
+#include "PIDControllerBuilder.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <memory>
 
 namespace voss::controller {
 
@@ -173,6 +175,17 @@ void PIDController::reset() {
     this->total_ang_err = 0;
     this->can_reverse = false;
     this->counter = 0;
+}
+
+PIDController* PIDController::modify_linear_constants(double kP, double kI,
+                                                      double kD) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_linear_constants(kP, kI, kD)
+                       .build();
+
+    this->p = &pid_mod;
+
+    return this->p;
 }
 
 } // namespace voss::controller

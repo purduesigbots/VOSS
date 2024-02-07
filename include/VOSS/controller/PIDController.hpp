@@ -1,11 +1,14 @@
 #pragma once
 
 #include "VOSS/controller/AbstractController.hpp"
+#include <memory>
 
 namespace voss::controller {
 
 class PIDController : public AbstractController {
   protected:
+    PIDController* p;
+
     double linear_kP, linear_kI, linear_kD;
     double angular_kP, angular_kI, angular_kD;
     double tracking_kP;
@@ -33,6 +36,8 @@ class PIDController : public AbstractController {
                                                 bool thru) override;
 
     void reset() override;
+
+    PIDController* modify_linear_constants(double kP, double kI, double kD);
 
     friend class PIDControllerBuilder;
     friend class BoomerangControllerBuilder;

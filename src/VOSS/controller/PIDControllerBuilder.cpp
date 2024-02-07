@@ -8,11 +8,19 @@ namespace voss::controller {
 PIDControllerBuilder::PIDControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : ctrl(l) {
+
+    this->ctrl.p = nullptr;
 }
 
 PIDControllerBuilder PIDControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
     PIDControllerBuilder builder(l);
+    return builder;
+}
+
+PIDControllerBuilder PIDControllerBuilder::from(PIDController pid) {
+    PIDControllerBuilder builder(pid.l);
+    builder.ctrl = pid;
     return builder;
 }
 
