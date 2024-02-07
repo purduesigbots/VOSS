@@ -24,6 +24,7 @@ class BoomerangControllerBuilder {
     BoomerangControllerBuilder& with_min_error(double error);
     BoomerangControllerBuilder& with_lead_pct(double lead_pct);
     BoomerangControllerBuilder& with_settle_time(double time);
+    BoomerangControllerBuilder& with_min_vel_for_thru(double min_vel);
 
     BoomerangController build();
 };
