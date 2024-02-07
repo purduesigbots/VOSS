@@ -76,8 +76,20 @@ void opcontrol() {
                    .with_exit_error(1.0)
                    .with_angular_exit_error(1.0)
                    .with_min_error(5)
+                   .with_min_vel_for_thru(15)
                    .with_settle_time(200)
                    .build();
+
+    auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
+                         .with_linear_constants(7, 0.02, 40)
+                         .with_angular_constants(170, 0, 700)
+                         .with_exit_error(1.0)
+                         .with_angular_exit_error(1.0)
+                         .with_min_error(5)
+                         .with_min_vel_for_thru(15)
+                         .with_settle_time(200)
+                         .build();
+
     auto arc = voss::controller::ArcPIDControllerBuilder::new_builder(odom)
                    .with_linear_constants(6, 0, 50)
                    .with_track_width(14)
@@ -99,7 +111,6 @@ void opcontrol() {
     auto [leftM, rightM] = chassis.getMotors();
 
     while (true) {
-
         voss::Pose p = odom->get_pose();
 
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
@@ -107,7 +118,8 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0});
-            chassis.turn(90, &swing, 100, voss::Flags::RELATIVE);
+            chassis.move(voss::Pose{24, 24, 45}, &boomerang, 100.0, voss::Flags::THRU);
+            chassis.move(voss::Pose{36, -5, 270}, &boomerang, 100.0);
         }
 
         pros::lcd::clear_line(1);
