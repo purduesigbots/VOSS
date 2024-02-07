@@ -33,44 +33,62 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
     double lin_speed;
 
-    if (distance_error <= exit_error ||
-        (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
-        if (thru) {
-            chainedExecutable = true;
+    lin_speed = linear_pid(distance_error) * dir;
+
+    if (thru) {
+        if (target.theta != 361) {
+            if ((current_pos.y - this->target.y) *
+                        cos(voss::to_radians(this->target.theta) + M_PI_2) <
+                    (current_pos.x - this->target.x) *
+                        sin(voss::to_radians(this->target.theta) + M_PI_2) &&
+                (Point::getDistance(current_pos, {target.x, target.y}) <
+                 this->min_error)) {
+                chainedExecutable = true;
+            } else if (Point::getDistance(current_pos, {target.x, target.y}) < this->min_error * 2) {
+                lin_speed *= cos(angle_error);
+            }
         } else {
+            double m =
+                fabs((current_pos.y - target.y) / (current_pos.x - target.x));
+            if (current_pos.y + this->min_error >=
+                (-1.0 / m) * (current_pos.x + min_error - target.x) +
+                    target.y) {
+                chainedExecutable = true;
+            }
+        }
+        lin_speed = std::fmax(lin_speed, this->min_vel);
+    } else{
+
+        if (distance_error <= exit_error ||
+            (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
             total_lin_err = 0;
             close += 10;
+        } else {
+            close = 0;
         }
-    } else {
-        close = 0;
-    }
 
-    if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
-
-    if (fabs(distance_error - prev_lin_err) < 0.1 &&
-        fabs(current_angle - prev_angle) < voss::to_radians(0.1) &&
-        counter > 400) {
-        if (thru) {
-            chainedExecutable = true;
+        if (close > settle_time) {
+            return chassis::ChassisCommand{chassis::Stop{}};
         }
-        close_2 += 10;
-    } else {
-        close_2 = 0;
+
+        if (fabs(distance_error - prev_lin_err) < 0.1 &&
+            fabs(current_angle - prev_angle) < voss::to_radians(0.1) &&
+            counter > 400) {
+            close_2 += 10;
+        } else {
+            close_2 = 0;
+        }
+
+        if (close_2 > settle_time * 2) {
+            return chassis::ChassisCommand{chassis::Stop{}};
+        }
     }
 
     prev_angle = current_angle;
 
-    if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
-
-    lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
-
     double ang_speed;
-    if (distance_error < min_error) {
-        this->can_reverse = true;
+    if (distance_error < min_error || (thru && distance_error < min_error * 3)) {
+        this->can_reverse = !thru;
 
         if (noPose) {
             ang_speed = 0; // disable turning when close to the point to prevent
@@ -95,11 +113,13 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
 
         ang_speed = angular_pid(angle_error);
     }
-    if (chainedExecutable) {
-        return chassis::ChassisCommand{
-            chassis::Chained{dir * 100.0 - ang_speed, dir * 100.0 + ang_speed}};
-    }
 
+
+    if (chainedExecutable) {
+        return chassis::ChassisCommand{chassis::Chained{
+            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
+            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+    }
     return chassis::ChassisCommand{
         chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
@@ -173,6 +193,7 @@ void PIDController::reset() {
     this->total_ang_err = 0;
     this->can_reverse = false;
     this->counter = 0;
+    this->min_vel = 0;
 }
 
 } // namespace voss::controller
