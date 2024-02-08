@@ -29,8 +29,6 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
     bool chainedExecutable = false;
     bool noPose = this->target.theta == 361;
     double angle_error;
-    //    double adv_dist = fabs(this->vel) * 0.001;
-    bool slowDown = false;
     double m = fabs((current_pos.y - target.y) / (current_pos.x - target.x));
 
     angle_error = atan2(dy, dx) - current_angle;
@@ -106,6 +104,10 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
         }
 
         ang_speed = angular_pid(angle_error);
+    }
+
+    if(thru) {
+        lin_speed *= cos(angle_error);
     }
 
     if (chainedExecutable) {
