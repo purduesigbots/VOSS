@@ -76,10 +76,9 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
     }
 
     lin_speed = dir * linear_pid(distance_error);
-    if(thru){
+    if (thru) {
         lin_speed = fmax(lin_speed, this->min_vel);
     }
-
 
     double ang_speed;
     if (distance_error < min_error && !thru) {
@@ -108,7 +107,6 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
 
         ang_speed = angular_pid(angle_error);
     }
-
 
     if (chainedExecutable) {
         return chassis::ChassisCommand{chassis::Chained{
