@@ -28,6 +28,7 @@ class BoomerangController : public AbstractController {
     double min_vel;
 
     double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
+
   public:
     BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
 

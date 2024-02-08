@@ -105,7 +105,6 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
         chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-
 chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
                                                            bool thru) {
     counter += 10;
