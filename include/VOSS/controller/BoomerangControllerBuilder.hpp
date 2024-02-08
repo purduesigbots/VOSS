@@ -18,7 +18,6 @@ class BoomerangControllerBuilder {
                                                       double kD);
     BoomerangControllerBuilder& with_angular_constants(double kP, double kI,
                                                        double kD);
-    BoomerangControllerBuilder& with_tracking_kp(double kP);
     BoomerangControllerBuilder& with_exit_error(double error);
     BoomerangControllerBuilder& with_angular_exit_error(double error);
     BoomerangControllerBuilder& with_min_error(double error);
