@@ -22,8 +22,7 @@ class DiffChassis : public AbstractChassis {
   public:
     DiffChassis(std::initializer_list<int8_t> left_motors,
                 std::initializer_list<int8_t> right_motors,
-                controller_ptr default_controller,
-                double slew_step = 8);
+                controller_ptr default_controller, double slew_step = 8);
 
     void tank(double left_speed, double right_speed);
     void arcade(double forward_speed, double turn_speed);
