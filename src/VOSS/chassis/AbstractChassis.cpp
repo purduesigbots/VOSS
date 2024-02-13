@@ -10,8 +10,9 @@ AbstractChassis::AbstractChassis(
 }
 
 void AbstractChassis::move_task(controller::AbstractController* controller,
-                                double max, voss::Flags flags) {
-
+                                double max, voss::Flags flags,
+                                double exitTime) {
+    int t = 0;
     pros::Task running_t([&, controller]() {
         controller->reset();
         while (
@@ -21,6 +22,11 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
             if (pros::competition::is_disabled()) {
                 return;
             }
+            if (t > exitTime) {
+                return;
+            }
+
+            t += 10;
             pros::delay(10);
         }
         // this->m.give();
@@ -37,7 +43,9 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
 }
 
 void AbstractChassis::turn_task(controller::AbstractController* controller,
-                                double max, voss::Flags flags) {
+                                double max, voss::Flags flags,
+                                double exitTime) {
+    int t = 0;
     pros::Task running_t([&, controller]() {
         controller->reset();
         while (!this->execute(
@@ -47,6 +55,12 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
             if (pros::competition::is_disabled()) {
                 return;
             }
+
+            if (t > exitTime) {
+                return;
+            }
+
+            t += 10;
             pros::delay(10);
         }
     });
@@ -58,59 +72,63 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
     running_t.join();
 }
 
-void AbstractChassis::move(Point target, double max, voss::Flags flags) {
-    this->move(target, this->default_controller, max, flags);
+void AbstractChassis::move(Point target, double max, voss::Flags flags,
+                           double exitTime) {
+    this->move(target, this->default_controller, max, flags, exitTime);
 }
 
-void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
-    this->move(target, this->default_controller, max, flags);
+void AbstractChassis::move(Pose target, double max, voss::Flags flags,
+                           double exitTime) {
+    this->move(target, this->default_controller, max, flags, exitTime);
 }
 
 void AbstractChassis::move(Point target,
                            controller::AbstractController* controller,
-                           double max, voss::Flags flags) {
+                           double max, voss::Flags flags, double exitTime) {
     Pose pose_target = Pose{target.x, target.y, 361};
-    this->move(pose_target, controller, max, flags);
+    this->move(pose_target, controller, max, flags, exitTime);
 }
 
 void AbstractChassis::move(Pose target,
                            controller::AbstractController* controller,
-                           double max, voss::Flags flags) {
+                           double max, voss::Flags flags, double exitTime) {
     // this->m.take();
 
     controller->set_target(target, flags & voss::Flags::RELATIVE);
 
-    this->move_task(controller, max, flags);
+    this->move_task(controller, max, flags, exitTime);
 }
 
-void AbstractChassis::turn(double target, double max, voss::Flags flags) {
-    this->turn(target, this->default_controller, max, flags);
+void AbstractChassis::turn(double target, double max, voss::Flags flags,
+                           double exitTime) {
+    this->turn(target, this->default_controller, max, flags, exitTime);
 }
 
 void AbstractChassis::turn(double target,
                            controller::AbstractController* controller,
-                           double max, voss::Flags flags) {
+                           double max, voss::Flags flags, double exitTime) {
     // this->m.take();
 
     controller->set_target({0, 0, 0}, false);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
-    this->turn_task(controller, max, flags);
+    this->turn_task(controller, max, flags, exitTime);
 }
 
-void AbstractChassis::turn_to(Point target, double max, voss::Flags flags) {
-    this->turn_to(target, this->default_controller, max, flags);
+void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
+                              double exitTime) {
+    this->turn_to(target, this->default_controller, max, flags, exitTime);
 }
 
 void AbstractChassis::turn_to(Point target,
                               controller::AbstractController* controller,
-                              double max, voss::Flags flags) {
+                              double max, voss::Flags flags, double exitTime) {
     // this->m.take();
 
     controller->set_target({target.x, target.y, 361},
                            flags & voss::Flags::RELATIVE);
 
-    this->turn_task(controller, max, flags);
+    this->turn_task(controller, max, flags, exitTime);
 }
 
 } // namespace voss::chassis
