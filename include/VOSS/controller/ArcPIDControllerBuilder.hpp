@@ -27,7 +27,7 @@ class ArcPIDControllerBuilder {
     ArcPIDControllerBuilder& with_settle_time(double time);
     ArcPIDControllerBuilder& with_slew(double slew);
 
-    ArcPIDController build();
+    std::shared_ptr<ArcPIDController> build();
 };
 
 } // namespace voss::controller

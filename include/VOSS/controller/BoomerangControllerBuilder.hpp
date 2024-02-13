@@ -25,7 +25,7 @@ class BoomerangControllerBuilder {
     BoomerangControllerBuilder& with_lead_pct(double lead_pct);
     BoomerangControllerBuilder& with_settle_time(double time);
 
-    BoomerangController build();
+    std::shared_ptr<BoomerangController> build();
 };
 
 } // namespace voss::controller
