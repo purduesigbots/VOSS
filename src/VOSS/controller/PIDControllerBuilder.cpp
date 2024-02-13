@@ -58,8 +58,8 @@ PIDControllerBuilder& PIDControllerBuilder::with_settle_time(double time) {
     return *this;
 }
 
-PIDController PIDControllerBuilder::build() {
-    return this->ctrl;
+std::shared_ptr<PIDController> PIDControllerBuilder::build() {
+    return std::make_shared<PIDController>(this->ctrl);
 }
 
 } // namespace voss::controller
