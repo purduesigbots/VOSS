@@ -33,7 +33,8 @@ class AbstractChassis {
     virtual bool execute(ChassisCommand cmd, double max) = 0;
 
     void move(Point target, controller::AbstractController* controller,
-              double max = 100.0, voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE,
+              double exitTime = 22500);
     void move(Pose target, controller::AbstractController* controller,
               double max = 100.0, voss::Flags flags = voss::Flags::NONE,
               double exitTime = 22500);

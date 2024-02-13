@@ -59,7 +59,7 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
             if (t > exitTime) {
                 return;
             }
-            
+
             t += 10;
             pros::delay(10);
         }
