@@ -12,16 +12,21 @@ AbstractChassis::AbstractChassis(
 void AbstractChassis::move_task(controller::AbstractController* controller,
                                 double max, voss::Flags flags,
                                 double exitTime) {
-    std::uint32_t timer = pros::millis(); //start timer
+    int t = 0;
     pros::Task running_t([&, controller]() {
         controller->reset();
         while (
             !this->execute(controller->get_command(flags & voss::Flags::REVERSE,
                                                    flags & voss::Flags::THRU),
-                           max) || timer <= exitTime) {
+                           max)) {
             if (pros::competition::is_disabled()) {
                 return;
             }
+            if (t > exitTime) {
+                return;
+            }
+
+            t += 10;
             pros::delay(10);
         }
         // this->m.give();
@@ -40,16 +45,22 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
 void AbstractChassis::turn_task(controller::AbstractController* controller,
                                 double max, voss::Flags flags,
                                 double exitTime) {
-    std::uint32_t timer = pros::millis();
+    int t = 0;
     pros::Task running_t([&, controller]() {
         controller->reset();
         while (!this->execute(
             controller->get_angular_command(flags & voss::Flags::REVERSE,
                                             flags & voss::Flags::THRU),
-            max) || timer <= exitTime) {
+            max)) {
             if (pros::competition::is_disabled()) {
                 return;
             }
+
+            if (t > exitTime) {
+                return;
+            }
+            
+            t += 10;
             pros::delay(10);
         }
     });
