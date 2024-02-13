@@ -26,7 +26,7 @@ class PIDControllerBuilder {
     PIDControllerBuilder& with_min_error(double error);
     PIDControllerBuilder& with_settle_time(double time);
 
-    PIDController build();
+    std::shared_ptr<PIDController> build();
 };
 
 } // namespace voss::controller

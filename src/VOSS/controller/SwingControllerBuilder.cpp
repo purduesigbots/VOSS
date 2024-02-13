@@ -36,8 +36,8 @@ SwingControllerBuilder& SwingControllerBuilder::with_settle_time(double time) {
     return *this;
 }
 
-SwingController SwingControllerBuilder::build() {
-    return this->ctrl;
+std::shared_ptr<SwingController> SwingControllerBuilder::build() {
+    return std::make_shared<SwingController>(this->ctrl);
 }
 
 } // namespace voss::controller

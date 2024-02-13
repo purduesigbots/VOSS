@@ -123,11 +123,8 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0});
-
-            chassis.move(voss::Point{48, 0});
-            chassis.turn(180);
-            chassis.move(voss::Point{0, 0},
-                         pid.modify_linear_constants(0.5, 0, 0));
+            chassis.turn(180, 100, voss::Flags::NONE, 10000);
+            chassis.turn(0, swing);
         }
 
         pros::lcd::clear_line(1);
