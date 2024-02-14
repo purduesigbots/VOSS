@@ -24,7 +24,8 @@ class AbstractChassis {
                    double exitTime);
 
     void turn_task(controller_ptr controller, double max, voss::Flags flags,
-                   double exitTime);
+                   voss::AngularDirection direction, double exitTime);
+  
 
   public:
     AbstractChassis(controller_ptr default_controller);
@@ -44,15 +45,26 @@ class AbstractChassis {
               voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
 
     void turn(double target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE,
+              voss::AngularDirection direction = voss::AngularDirection::AUTO,
+              double exitTime = 22500);
+  
     void turn(double target, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
-    void turn_to(Point target, controller_ptr controller, double max = 100.0,
-                 voss::Flags flags = voss::Flags::NONE,
-                 double exitTime = 22500);
-    void turn_to(Point target, double max = 100.0,
-                 voss::Flags flags = voss::Flags::NONE,
-                 double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE,
+              voss::AngularDirection direction = voss::AngularDirection::AUTO,
+              double exitTime = 22500);
+  
+    void
+    turn_to(Point target, controller_ptr controller, double max = 100.0,
+            voss::Flags flags = voss::Flags::NONE,
+            voss::AngularDirection direction = voss::AngularDirection::AUTO,
+            double exitTime = 22500);
+  
+    void
+    turn_to(Point target, double max = 100.0,
+            voss::Flags flags = voss::Flags::NONE,
+            voss::AngularDirection direction = voss::AngularDirection::AUTO,
+            double exitTime = 22500);
 };
 
 } // namespace voss::chassis
