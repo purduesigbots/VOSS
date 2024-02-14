@@ -14,6 +14,7 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
 
     pros::Task running_t([&, controller]() {
         controller->reset();
+		//Loops until movement is complete or robot is disabled
         while (
             !this->execute(controller->get_command(flags & voss::Flags::REVERSE,
                                                    flags & voss::Flags::THRU),
@@ -26,6 +27,7 @@ void AbstractChassis::move_task(controller::AbstractController* controller,
         // this->m.give();
     });
 
+	//Early exit for async movement
     if (flags & voss::Flags::ASYNC) {
         return;
     }
@@ -40,6 +42,7 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
                                 double max, voss::Flags flags) {
     pros::Task running_t([&, controller]() {
         controller->reset();
+		//Loops until movement is complete or robot is disabled
         while (!this->execute(
             controller->get_angular_command(flags & voss::Flags::REVERSE,
                                             flags & voss::Flags::THRU),
@@ -51,6 +54,7 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
         }
     });
 
+	//Early exit for async movement
     if (flags & voss::Flags::ASYNC) {
         return;
     }
@@ -58,6 +62,7 @@ void AbstractChassis::turn_task(controller::AbstractController* controller,
     running_t.join();
 }
 
+//Overloaded constructors move functions to allow for different parameters
 void AbstractChassis::move(Point target, double max, voss::Flags flags) {
     this->move(target, this->default_controller, max, flags);
 }
