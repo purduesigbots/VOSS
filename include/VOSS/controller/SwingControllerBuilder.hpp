@@ -22,7 +22,7 @@ class SwingControllerBuilder {
     SwingControllerBuilder& with_settle_time(double time);
     //    SwingControllerBuilder& with_slew(double slew);
 
-    SwingController build();
+    std::shared_ptr<SwingController> build();
 };
 
 } // namespace voss::controller

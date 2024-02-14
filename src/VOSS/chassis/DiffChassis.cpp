@@ -26,8 +26,7 @@ double DiffChassis::slew(double target, bool is_left) {
 //Overloaded constructor for creating differential chassis with different controller layouts
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller::AbstractController& default_controller,
-                         double slew_step)
+                         controller_ptr default_controller, double slew_step)
     : AbstractChassis(default_controller) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);

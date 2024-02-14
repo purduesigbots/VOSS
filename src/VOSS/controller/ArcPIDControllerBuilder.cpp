@@ -50,8 +50,8 @@ ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_slew(double slew) {
     return *this;
 }
 
-ArcPIDController ArcPIDControllerBuilder::build() {
-    return this->ctrl;
+std::shared_ptr<ArcPIDController> ArcPIDControllerBuilder::build() {
+    return std::make_shared<ArcPIDController>(this->ctrl);
 }
 
 } // namespace voss::controller
