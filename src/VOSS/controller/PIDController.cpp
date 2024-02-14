@@ -104,8 +104,9 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
         chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
-                                                           bool thru) {
+chassis::ChassisCommand
+PIDController::get_angular_command(bool reverse, bool thru,
+                                   voss::AngularDirection direction) {
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -120,6 +121,20 @@ chassis::ChassisCommand PIDController::get_angular_command(bool reverse,
     double angular_error = target_angle - current_angle;
 
     angular_error = voss::norm_delta(angular_error);
+
+    if (fabs(angular_error) < voss::to_radians(5)) {
+        turn_overshoot = true;
+    }
+
+    if (!turn_overshoot) {
+        if (direction == voss::AngularDirection::COUNTERCLOCKWISE &&
+            angular_error < 0) {
+            angular_error += 2 * M_PI;
+        } else if (direction == voss::AngularDirection::CLOCKWISE &&
+                   angular_error > 0) {
+            angular_error -= 2 * M_PI;
+        }
+    }
 
     if (fabs(angular_error) < angular_exit_error) {
         close += 10;
@@ -173,6 +188,7 @@ void PIDController::reset() {
     this->total_ang_err = 0;
     this->can_reverse = false;
     this->counter = 0;
+    this->turn_overshoot = false;
 }
 
 } // namespace voss::controller

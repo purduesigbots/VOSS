@@ -88,8 +88,9 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
     return chassis::ChassisCommand{chassis::Voltages{left_speed, right_speed}};
 }
 
-chassis::ChassisCommand ArcPIDController::get_angular_command(bool reverse,
-                                                              bool thru) {
+chassis::ChassisCommand
+ArcPIDController::get_angular_command(bool reverse, bool thru,
+                                      voss::AngularDirection direction) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
