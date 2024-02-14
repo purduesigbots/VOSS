@@ -53,6 +53,7 @@ ADILocalizerBuilder& ADILocalizerBuilder::with_imu(int imu_port) {
     return *this;
 }
 
+//Check to see if the attempted object to be build will be a valid build
 std::shared_ptr<ADILocalizer> ADILocalizerBuilder::build() {
     std::unordered_set<unsigned char> valid_representations = {
         0b11111111, 0b11101111, 0b11110111, 0b11110101, 0b11100111, 0b11100101,

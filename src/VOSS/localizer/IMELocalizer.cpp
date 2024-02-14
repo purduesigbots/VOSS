@@ -10,6 +10,7 @@
 
 namespace voss::localizer {
 
+//Creating a localizer object with varibale option based on internal motor encoders
 IMELocalizer::IMELocalizer(std::vector<int8_t> left_motors_ports,
                            std::vector<int8_t> right_motors_ports,
                            std::vector<int8_t> horizontal_motors_ports,
@@ -95,7 +96,10 @@ void IMELocalizer::calibrate() {
     }
     this->pose = {0.0, 0.0, 0.0};
 }
-
+//Calculates the current position of the robot
+//Uses the change in value of the encoders to calculate the change in position
+//If no imu is present, the robot's heading is calculated using the difference in the left and right encoder values
+//Angle is the differnce between the robot heading and the global angle
 void IMELocalizer::update() {
     double left_pos = get_left_encoder_value();
     double right_pos = get_right_encoder_value();
