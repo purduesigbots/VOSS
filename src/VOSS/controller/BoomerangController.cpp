@@ -1,4 +1,6 @@
 #include "VOSS/controller/BoomerangController.hpp"
+#include "BoomerangControllerBuilder.hpp"
+#include "PIDController.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
@@ -41,6 +43,92 @@ chassis::ChassisCommand BoomerangController::get_angular_command(bool reverse,
 
 void BoomerangController::reset() {
     child->reset();
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_linear_constants(double kP, double kI, double kD) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_linear_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_angular_constants(double kP, double kI, double kD) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_angular_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_tracking_kp(double kP) {
+    auto pid_mod =
+        BoomerangControllerBuilder::from(*this).with_tracking_kp(kP).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_exit_error(double exit_error) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_angular_exit_error(double exit_error) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_angular_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_min_error(double min_error) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_min_error(min_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_lead_pct(double lead_pct) {
+    auto pid_mod =
+        BoomerangControllerBuilder::from(*this).with_lead_pct(lead_pct).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<BoomerangController>
+BoomerangController::modify_settle_time(double settle_time) {
+    auto pid_mod = BoomerangControllerBuilder::from(*this)
+                       .with_settle_time(settle_time)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
 }
 
 } // namespace voss::controller

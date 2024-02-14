@@ -8,11 +8,19 @@ namespace voss::controller {
 SwingControllerBuilder::SwingControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : ctrl(l) {
+
+    this->ctrl.p = nullptr;
 }
 
 SwingControllerBuilder SwingControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
     SwingControllerBuilder builder(l);
+    return builder;
+}
+
+SwingControllerBuilder SwingControllerBuilder::from(SwingController swc) {
+    SwingControllerBuilder builder(swc.l);
+    builder.ctrl = swc;
     return builder;
 }
 

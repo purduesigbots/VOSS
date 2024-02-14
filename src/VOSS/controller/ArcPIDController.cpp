@@ -1,5 +1,5 @@
 #include "VOSS/controller/ArcPIDController.hpp"
-
+#include "ArcPIDControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 
@@ -108,6 +108,68 @@ void ArcPIDController::reset() {
     this->prev_lin_err = 0.0;
     this->total_lin_err = 0.0;
     this->prev_lin_speed = 0.0;
+}
+
+std::shared_ptr<ArcPIDController>
+ArcPIDController::modify_linear_constants(double kP, double kI, double kD) {
+    auto pid_mod = ArcPIDControllerBuilder::from(*this)
+                       .with_linear_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<ArcPIDController>
+ArcPIDController::modify_track_width(double track_width) {
+    auto pid_mod = ArcPIDControllerBuilder::from(*this)
+                       .with_track_width(track_width)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<ArcPIDController>
+ArcPIDController::modify_exit_error(double exit_error) {
+    auto pid_mod = ArcPIDControllerBuilder::from(*this)
+                       .with_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<ArcPIDController>
+ArcPIDController::modify_min_error(double min_error) {
+    auto pid_mod =
+        ArcPIDControllerBuilder::from(*this).with_min_error(min_error).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<ArcPIDController>
+ArcPIDController::modify_settle_time(double settle_time) {
+    auto pid_mod = ArcPIDControllerBuilder::from(*this)
+                       .with_settle_time(settle_time)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<ArcPIDController> ArcPIDController::modify_slew(double slew) {
+    auto pid_mod = ArcPIDControllerBuilder::from(*this).with_slew(slew).build();
+
+    this->p = pid_mod;
+
+    return this->p;
 }
 
 } // namespace voss::controller

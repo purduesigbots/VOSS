@@ -7,7 +7,7 @@ namespace voss::controller {
 
 class PIDController : public AbstractController {
   protected:
-    PIDController* p;
+    std::shared_ptr<PIDController> p;
 
     double linear_kP, linear_kI, linear_kD;
     double angular_kP, angular_kI, angular_kD;
@@ -37,7 +37,15 @@ class PIDController : public AbstractController {
 
     void reset() override;
 
-    PIDController* modify_linear_constants(double kP, double kI, double kD);
+    std::shared_ptr<PIDController> modify_linear_constants(double kP, double kI,
+                                                           double kD);
+    std::shared_ptr<PIDController>
+    modify_angular_constants(double kP, double kI, double kD);
+    std::shared_ptr<PIDController> modify_tracking_kp(double kP);
+    std::shared_ptr<PIDController> modify_exit_error(double exit_error);
+    std::shared_ptr<PIDController> modify_angular_exit_error(double exit_error);
+    std::shared_ptr<PIDController> modify_min_error(double min_error);
+    std::shared_ptr<PIDController> modify_settle_time(double settle_time);
 
     friend class PIDControllerBuilder;
     friend class BoomerangControllerBuilder;

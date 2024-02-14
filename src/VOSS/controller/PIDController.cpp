@@ -177,13 +177,74 @@ void PIDController::reset() {
     this->counter = 0;
 }
 
-PIDController* PIDController::modify_linear_constants(double kP, double kI,
-                                                      double kD) {
+std::shared_ptr<PIDController>
+PIDController::modify_linear_constants(double kP, double kI, double kD) {
     auto pid_mod = PIDControllerBuilder::from(*this)
                        .with_linear_constants(kP, kI, kD)
                        .build();
 
-    this->p = &pid_mod;
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_angular_constants(double kP, double kI, double kD) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_angular_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController> PIDController::modify_tracking_kp(double kP) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_tracking_kp(kP).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_exit_error(double exit_error) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_exit_error(exit_error).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_angular_exit_error(double exit_error) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_angular_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_min_error(double min_error) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_min_error(min_error).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_settle_time(double settle_time) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_settle_time(settle_time).build();
+
+    this->p = pid_mod;
 
     return this->p;
 }

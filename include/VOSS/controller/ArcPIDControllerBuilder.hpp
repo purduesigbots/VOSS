@@ -14,6 +14,8 @@ class ArcPIDControllerBuilder {
     static ArcPIDControllerBuilder
     new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
+    static ArcPIDControllerBuilder from(ArcPIDController arc);
+
     ArcPIDControllerBuilder& with_linear_constants(double kP, double kI,
                                                    double kD);
     /*

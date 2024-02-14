@@ -2,10 +2,12 @@
 
 #include "PIDController.hpp"
 #include "VOSS/controller/AbstractController.hpp"
+#include <memory>
 
 namespace voss::controller {
 class SwingController : public AbstractController {
   protected:
+    std::shared_ptr<SwingController> p;
     double angular_kP, angular_kI, angular_kD;
     double angular_exit_error;
     double settle_time;
@@ -28,6 +30,11 @@ class SwingController : public AbstractController {
     double angular_pid(double error);
 
     void reset() override;
+
+    std::shared_ptr<SwingController>
+    modify_angular_constants(double kP, double kI, double kD);
+    std::shared_ptr<SwingController> modify_angular_exit_error(double error);
+    std::shared_ptr<SwingController> modify_settle_time(double time);
 
     friend class SwingControllerBuilder;
 };

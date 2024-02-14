@@ -9,6 +9,7 @@ namespace voss::controller {
 
 class BoomerangController : public AbstractController {
   protected:
+    std::shared_ptr<BoomerangController> p;
     std::shared_ptr<PIDController> child = nullptr;
     double lead_pct;
 
@@ -19,7 +20,19 @@ class BoomerangController : public AbstractController {
     chassis::ChassisCommand get_angular_command(bool reverse,
                                                 bool thru) override;
 
-    void reset();
+    void reset() override;
+
+    std::shared_ptr<BoomerangController>
+    modify_linear_constants(double kP, double kI, double kD);
+    std::shared_ptr<BoomerangController>
+    modify_angular_constants(double kP, double kI, double kD);
+    std::shared_ptr<BoomerangController> modify_tracking_kp(double kP);
+    std::shared_ptr<BoomerangController> modify_exit_error(double error);
+    std::shared_ptr<BoomerangController>
+    modify_angular_exit_error(double error);
+    std::shared_ptr<BoomerangController> modify_min_error(double error);
+    std::shared_ptr<BoomerangController> modify_lead_pct(double lead_pct);
+    std::shared_ptr<BoomerangController> modify_settle_time(double time);
 
     friend class BoomerangControllerBuilder;
 };
