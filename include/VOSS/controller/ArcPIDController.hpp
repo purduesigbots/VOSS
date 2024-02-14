@@ -26,8 +26,9 @@ class ArcPIDController : public AbstractController {
     double linear_pid(double error);
 
     chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru, voss::AngularDirection direction) override;
+    chassis::ChassisCommand
+    get_angular_command(bool reverse, bool thru,
+                        voss::AngularDirection direction) override;
 
     void reset() override;
 

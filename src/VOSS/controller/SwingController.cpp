@@ -10,8 +10,9 @@ chassis::ChassisCommand SwingController::get_command(bool reverse, bool thru) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
-chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
-                                                             bool thru, voss::AngularDirection direction) {
+chassis::ChassisCommand
+SwingController::get_angular_command(bool reverse, bool thru,
+                                     voss::AngularDirection direction) {
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -32,9 +33,11 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
     }
 
     if (!turn_overshoot) {
-        if (direction == voss::AngularDirection::COUNTERCLOCKWISE && angular_error < 0) {
+        if (direction == voss::AngularDirection::COUNTERCLOCKWISE &&
+            angular_error < 0) {
             angular_error += 2 * M_PI;
-        } else if (direction == voss::AngularDirection::CLOCKWISE && angular_error > 0) {
+        } else if (direction == voss::AngularDirection::CLOCKWISE &&
+                   angular_error > 0) {
             angular_error -= 2 * M_PI;
         }
     }

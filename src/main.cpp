@@ -107,9 +107,11 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0});
-            chassis.turn(270, 100, voss::Flags::NONE, voss::AngularDirection::COUNTERCLOCKWISE);
+            chassis.turn(270, 100, voss::Flags::NONE,
+                         voss::AngularDirection::COUNTERCLOCKWISE);
             chassis.turn(0);
-            chassis.turn(-270, swing, 100, voss::Flags::NONE, voss::AngularDirection::CLOCKWISE);
+            chassis.turn(-270, swing, 100, voss::Flags::NONE,
+                         voss::AngularDirection::CLOCKWISE);
         }
 
         pros::lcd::clear_line(1);

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cmath>
 #include "VOSS/utils/flags.hpp"
+#include <cmath>
 
 namespace voss {
 
