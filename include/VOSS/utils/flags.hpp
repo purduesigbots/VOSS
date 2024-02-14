@@ -21,4 +21,10 @@ auto inline operator&(Flags flag1, Flags flag2) {
     return static_cast<bool>(static_cast<uint8_t>(flag1) &
                              static_cast<uint8_t>(flag2));
 }
+
+enum class AngularDirection {
+    AUTO,
+    COUNTERCLOCKWISE,
+    CLOCKWISE
+};
 } // namespace voss

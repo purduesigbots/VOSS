@@ -1,13 +1,27 @@
 #pragma once
 
+#include <cmath>
+#include "VOSS/utils/flags.hpp"
+
 namespace voss {
 
-double to_radians(double degrees);
+inline double to_radians(double degrees) {
+    return degrees * M_PI / 180;
+}
 
-double to_degrees(double radians);
+inline double to_degrees(double radians) {
+    return radians * 180 * M_1_PI;
+}
 
-double norm(double radians);
+inline double norm(double radians) {
+    radians = fmod(radians, 2 * M_PI);
+    if (radians < 0)
+        radians += 2 * M_PI;
+    return radians;
+}
 
-double norm_delta(double radians);
+inline double norm_delta(double radians) {
+    return std::remainder(radians, 2 * M_PI);
+}
 
 } // namespace voss

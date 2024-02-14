@@ -2,6 +2,7 @@
 
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
+#include "VOSS/utils/flags.hpp"
 
 namespace voss::controller {
 
@@ -17,7 +18,7 @@ class AbstractController {
 
     virtual chassis::ChassisCommand get_command(bool reverse, bool thru) = 0;
     virtual chassis::ChassisCommand get_angular_command(bool reverse,
-                                                        bool thru) = 0;
+                                                        bool thru, voss::AngularDirection direction) = 0;
 
     virtual void reset() = 0;
 

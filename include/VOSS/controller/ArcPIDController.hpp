@@ -27,7 +27,7 @@ class ArcPIDController : public AbstractController {
 
     chassis::ChassisCommand get_command(bool reverse, bool thru) override;
     chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru) override;
+                                                bool thru, voss::AngularDirection direction) override;
 
     void reset() override;
 

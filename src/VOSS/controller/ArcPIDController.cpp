@@ -89,7 +89,7 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
 }
 
 chassis::ChassisCommand ArcPIDController::get_angular_command(bool reverse,
-                                                              bool thru) {
+                                                              bool thru, voss::AngularDirection direction) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
