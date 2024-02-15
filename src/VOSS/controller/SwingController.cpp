@@ -70,7 +70,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
     }
 
     if (!this->can_reverse) {
-        if (reverse) {
+        if (!reverse) {
             command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
                                               : chassis::Swing{0, ang_speed};
         } else {
@@ -78,7 +78,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
                                               : chassis::Swing{-ang_speed, 0};
         }
     } else {
-        if (!reverse) {
+        if (reverse) {
             command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
                                               : chassis::Swing{0, ang_speed};
         } else {
