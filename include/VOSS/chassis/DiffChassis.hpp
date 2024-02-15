@@ -15,7 +15,7 @@ class DiffChassis : public AbstractChassis {
     std::unique_ptr<pros::MotorGroup> right_motors;
 
     double slew_step;
-    Voltages prev_voltages;
+    diff_commands::Voltages prev_voltages;
 
     double slew(double target, bool is_left);
 
@@ -27,7 +27,7 @@ class DiffChassis : public AbstractChassis {
     void tank(double left_speed, double right_speed);
     void arcade(double forward_speed, double turn_speed);
 
-    bool execute(ChassisCommand cmd, double max);
+    bool execute(DiffChassisCommand cmd, double max);
 
     auto getMotors() const {
         struct ChassisMotorSet {

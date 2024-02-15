@@ -6,11 +6,12 @@ SwingController::SwingController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(l){};
 
-chassis::ChassisCommand SwingController::get_command(bool reverse, bool thru) {
-    return chassis::ChassisCommand{chassis::Stop{}};
+chassis::DiffChassisCommand SwingController::get_command(bool reverse,
+                                                         bool thru) {
+    return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-chassis::ChassisCommand
+chassis::DiffChassisCommand
 SwingController::get_angular_command(bool reverse, bool thru,
                                      voss::AngularDirection direction) {
     counter += 10;
@@ -49,7 +50,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -59,11 +60,11 @@ SwingController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     double ang_speed = angular_pid(angular_error);
-    chassis::ChassisCommand command;
+    chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
         can_reverse = !can_reverse;
@@ -71,19 +72,23 @@ SwingController::get_angular_command(bool reverse, bool thru,
 
     if (!this->can_reverse) {
         if (reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     } else {
         if (!reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     }
 
