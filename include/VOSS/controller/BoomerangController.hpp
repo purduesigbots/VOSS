@@ -16,8 +16,8 @@ class BoomerangController : public AbstractController {
   public:
     BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand
+    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction) override;
 

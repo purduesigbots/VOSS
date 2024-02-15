@@ -32,7 +32,7 @@ class AbstractChassis {
     virtual void tank(double left_speed, double right_speed) = 0;
     virtual void arcade(double forward_speed, double turn_speed) = 0;
 
-    virtual bool execute(ChassisCommand cmd, double max) = 0;
+    virtual bool execute(DiffChassisCommand cmd, double max) = 0;
 
     void move(Point target, controller_ptr controller, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);

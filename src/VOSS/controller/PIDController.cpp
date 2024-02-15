@@ -10,7 +10,8 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 
-chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
+chassis::DiffChassisCommand PIDController::get_command(bool reverse,
+                                                       bool thru) {
     counter += 10;
     int dir = reverse ? -1 : 1;
     Point current_pos = this->l->get_position();
@@ -46,7 +47,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     if (fabs(distance_error - prev_lin_err) < 0.1 &&
@@ -63,7 +64,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
     prev_angle = current_angle;
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
@@ -96,15 +97,16 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
         ang_speed = angular_pid(angle_error);
     }
     if (chainedExecutable) {
-        return chassis::ChassisCommand{
-            chassis::Chained{dir * 100.0 - ang_speed, dir * 100.0 + ang_speed}};
+        return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
+            dir * 100 - ang_speed,
+            dir * 100.0 + ang_speed}};
     }
 
-    return chassis::ChassisCommand{
-        chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+    return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
+        lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::ChassisCommand
+chassis::DiffChassisCommand
 PIDController::get_angular_command(bool reverse, bool thru,
                                    voss::AngularDirection direction) {
     counter += 10;
@@ -143,7 +145,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -153,10 +155,11 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     double ang_speed = angular_pid(angular_error);
-    return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
+    return chassis::DiffChassisCommand{
+        chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
 
 double PIDController::linear_pid(double error) {
