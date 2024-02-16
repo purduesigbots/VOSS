@@ -20,8 +20,10 @@ bool SettleExitCondition::is_met(Pose current_pose) {
     return false;
 }
 
-SettleExitCondition::SettleExitCondition(int settle_time, double tolerance)
+SettleExitCondition::SettleExitCondition(Pose target_pose, int settle_time,
+                                         double tolerance)
     : settle_time(settle_time), tolerance(tolerance) {
+    this->target_pose = target_pose;
     this->current_time = 0;
     this->prev_pose = Pose{0, 0, 0};
 }

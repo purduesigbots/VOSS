@@ -13,7 +13,7 @@ class SettleExitCondition : public AbstractExitCondition {
     double tolerance;
 
   public:
-    SettleExitCondition(int settle_time, double tolerance);
+    SettleExitCondition(Pose target_pose, int settle_time, double tolerance);
     bool is_met(Pose current_pose);
 };
 } // namespace voss::controller

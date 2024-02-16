@@ -17,6 +17,7 @@
 #include "controller/SwingControllerBuilder.hpp"
 
 #include "exit_conditions/AbstractExitCondition.hpp"
+#include "exit_conditions/ExitConditions.hpp"
 #include "exit_conditions/SettleExitCondition.hpp"
 #include "exit_conditions/TimeOutExitCondition.hpp"
 #include "exit_conditions/ToleranceAngularExitCondition.hpp"

@@ -10,7 +10,7 @@ class ToleranceLinearExitCondition : public AbstractExitCondition {
     double tolerance;
 
   public:
-    ToleranceLinearExitCondition(double tolerance);
+    ToleranceLinearExitCondition(Pose target_pose, double tolerance);
     bool is_met(Pose current_pose);
 };
 
