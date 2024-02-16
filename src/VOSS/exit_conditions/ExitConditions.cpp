@@ -29,30 +29,33 @@ ExitConditions& ExitConditions::set_target(voss::Pose new_target) {
 
 ExitConditions& ExitConditions::add_settle(int settle_time, double tolerance) {
     SettleExitCondition ec(this->target_pose, settle_time, tolerance);
-    this->conditions.push_back(std::make_shared<AbstractExitCondition>(ec));
+    this->conditions.push_back(std::make_shared<SettleExitCondition>(ec));
     return *this;
 }
 
 ExitConditions& ExitConditions::add_timeout(int timeout) {
     TimeOutExitCondition ec(timeout);
-    this->conditions.push_back(std::make_shared<AbstractExitCondition>(ec));
+    this->conditions.push_back(std::make_shared<TimeOutExitCondition>(ec));
     return *this;
 }
 
 ExitConditions& ExitConditions::add_angular_tolerance(double tolerance) {
     ToleranceAngularExitCondition ec(this->target_pose, tolerance);
-    this->conditions.push_back(std::make_shared<AbstractExitCondition>(ec));
+    this->conditions.push_back(
+        std::make_shared<ToleranceAngularExitCondition>(ec));
     return *this;
 }
 
 ExitConditions& ExitConditions::add_linear_tolerance(double tolerance) {
     ToleranceLinearExitCondition ec(this->target_pose, tolerance);
-    this->conditions.push_back(std::make_shared<AbstractExitCondition>(ec));
+    this->conditions.push_back(
+        std::make_shared<ToleranceLinearExitCondition>(ec));
     return *this;
 }
 
-ExitConditions& ExitConditions::add_condition(AbstractExitCondition& ec) {
-    this->conditions.push_back(std::make_shared<AbstractExitCondition>(ec));
+ExitConditions&
+ExitConditions::add_condition(std::shared_ptr<AbstractExitCondition> ec) {
+    this->conditions.push_back(ec);
     return *this;
 }
 

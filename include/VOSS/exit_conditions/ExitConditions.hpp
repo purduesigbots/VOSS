@@ -7,11 +7,10 @@
 
 namespace voss::controller {
 
-class ExitConditions {
+class ExitConditions : public AbstractExitCondition {
 
   private:
     std::vector<std::shared_ptr<controller::AbstractExitCondition>> conditions;
-    voss::Pose target_pose;
 
     ExitConditions();
 
@@ -23,7 +22,7 @@ class ExitConditions {
     ExitConditions& add_timeout(int timeout);
     ExitConditions& add_angular_tolerance(double tolerance);
     ExitConditions& add_linear_tolerance(double tolerance);
-    ExitConditions& add_condition(AbstractExitCondition& ec);
+    ExitConditions& add_condition(std::shared_ptr<AbstractExitCondition> ec);
 
     bool is_met(voss::Pose current_pose);
     bool all_met(voss::Pose current_pose);
