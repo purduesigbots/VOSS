@@ -1,6 +1,8 @@
 #include "main.h"
 #include "VOSS/api.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/exit_conditions/ExitConditions.hpp"
+#include <memory>
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -94,8 +96,13 @@ void opcontrol() {
                      .with_settle_time(200)
                      .build();
 
+    auto ec = voss::controller::ExitConditions::new_conditions()
+                  .add_settle(200, 1.0)
+                  .add_timeout(5000)
+                  .build();
+
     voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid,
-                                       8);
+                                       ec, 8);
 
     auto [leftM, rightM] = chassis.getMotors();
 

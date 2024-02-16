@@ -5,6 +5,7 @@
 #include "ToleranceAngularExitCondition.hpp"
 #include "ToleranceLinearExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
+#include <memory>
 
 namespace voss::controller {
 
@@ -77,6 +78,10 @@ bool ExitConditions::all_met(voss::Pose current_pose) {
     }
 
     return true;
+}
+
+std::shared_ptr<ExitConditions> ExitConditions::build() {
+    return std::make_shared<ExitConditions>(*this);
 }
 
 } // namespace voss::controller

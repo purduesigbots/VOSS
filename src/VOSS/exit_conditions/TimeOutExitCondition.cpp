@@ -7,6 +7,7 @@ TimeOutExitCondition::TimeOutExitCondition(int timeout) : timeout(timeout) {
 }
 
 bool TimeOutExitCondition::is_met(Pose current_pose) {
+    this->current_time += 10;
     return current_time >= this->timeout;
 }
 

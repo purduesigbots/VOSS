@@ -4,7 +4,7 @@
 
 namespace voss::chassis {
 
-//Limits acceleration by slew step
+// Limits acceleration by slew step
 double DiffChassis::slew(double target, bool is_left) {
     double step = this->slew_step;
     double current =
@@ -23,11 +23,13 @@ double DiffChassis::slew(double target, bool is_left) {
     return current;
 }
 
-//Overloaded constructor for creating differential chassis with different controller layouts
+// Overloaded constructor for creating differential chassis with different
+// controller layouts
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller_ptr default_controller, double slew_step)
-    : AbstractChassis(default_controller) {
+                         controller_ptr default_controller, ec_ptr ec,
+                         double slew_step)
+    : AbstractChassis(default_controller, ec) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 
@@ -48,7 +50,8 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
     this->right_motors->move_voltage(120.0 * right);
 }
 
-//Evoke the chassis to move according to how it was set up using the constructor, returns true if movement is complete
+// Evoke the chassis to move according to how it was set up using the
+// constructor, returns true if movement is complete
 bool DiffChassis::execute(ChassisCommand cmd, double max) {
     return std::visit(
         overload{
@@ -75,7 +78,9 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
                 return false;
             },
-            //Logic allowing for individual movements within a chain of movements to be registered at completed even though robot may still be moving
+            // Logic allowing for individual movements within a chain of
+            // movements to be registered at completed even though robot may
+            // still be moving
             [this, max](Chained& v) {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v_max > max) {
@@ -93,7 +98,9 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
                 return true;
             },
-            //Logic to brake one side of the drive alloing for a turn around the side of the robot and returning true when the turn is finished
+            // Logic to brake one side of the drive alloing for a turn around
+            // the side of the robot and returning true when the turn is
+            // finished
             [this, max](Swing& v) {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v.right == 0) {
