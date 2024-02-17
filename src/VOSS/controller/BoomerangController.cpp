@@ -15,12 +15,15 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
     // TODO: finish
 
     Point current_pos = this->l->get_position();
-    double dx = target.x - current_pos.x;
-    double dy = target.y - current_pos.y;
+    double k = this->min_vel / 100;
+    Point virtualTarget = {target.x + k * cos(voss::to_radians(target.theta)),
+                           target.y + k * sin(voss::to_radians(target.theta))};
+    double dx = virtualTarget.x - current_pos.x;
+    double dy = virtualTarget.y - current_pos.y;
     double distance_error = sqrt(dx * dx + dy * dy);
     double at = voss::to_radians(target.theta);
-    this->carrotPoint = {target.x - distance_error * cos(at) * lead_pct,
-                         target.y - distance_error * sin(at) * lead_pct,
+    this->carrotPoint = {virtualTarget.x - distance_error * cos(at) * lead_pct,
+                         virtualTarget.y - distance_error * sin(at) * lead_pct,
                          target.theta};
     counter += 10;
     int dir = reverse ? -1 : 1;
@@ -43,7 +46,13 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
 
     if (thru &&
         current_pos.y + this->min_error >=
-            (-1.0 / m) * (current_pos.x + min_error - target.x) + target.y) {
+            (-1.0 / m) * (current_pos.x + min_error - virtualTarget.x) + virtualTarget.y
+        /*thru && (current_pos.y - virtualTarget.y) *
+                cos(voss::to_radians(target.theta) + M_PI_2) <
+            (current_pos.x - virtualTarget.x) *
+                sin(voss::to_radians(target.theta) + M_PI_2) &&
+        (pow((current_pos.y - virtualTarget.y), 2) +
+         pow((current_pos.x - virtualTarget.x), 2)) < pow(10, 2)*/) {
         chainedExecutable = true;
     }
 
@@ -106,7 +115,7 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
         ang_speed = angular_pid(angle_error);
     }
 
-    if(thru) {
+    if (thru) {
         lin_speed *= cos(angle_error);
     }
 
