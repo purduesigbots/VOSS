@@ -22,6 +22,7 @@ class PIDController : public AbstractController {
     double close_2;
     int counter;
     double prev_angle;
+    bool turn_overshoot;
 
     double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
 
@@ -31,9 +32,10 @@ class PIDController : public AbstractController {
     double linear_pid(double error);
     double angular_pid(double error);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru) override;
+    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
+    get_angular_command(bool reverse, bool thru,
+                        voss::AngularDirection direction) override;
 
     void reset() override;
 

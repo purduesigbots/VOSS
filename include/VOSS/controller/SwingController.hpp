@@ -16,6 +16,7 @@ class SwingController : public AbstractController {
     double close;
     double close_2;
     int counter;
+    bool turn_overshoot;
 
     double prev_ang_err, total_ang_err;
     double prev_ang_speed;
@@ -23,9 +24,10 @@ class SwingController : public AbstractController {
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru) override;
+    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
+    get_angular_command(bool reverse, bool thru,
+                        voss::AngularDirection direction) override;
 
     double angular_pid(double error);
 

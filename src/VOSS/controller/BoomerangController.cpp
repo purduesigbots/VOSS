@@ -13,8 +13,8 @@ BoomerangController::BoomerangController(
     child = std::make_shared<PIDController>(l);
 }
 
-chassis::ChassisCommand BoomerangController::get_command(bool reverse,
-                                                         bool thru) {
+chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
+                                                             bool thru) {
     // TODO: finish
     if (target.theta > 360) {
         child->set_target(target, false);
@@ -34,11 +34,12 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
     return child->get_command(reverse, thru);
 }
 
-chassis::ChassisCommand BoomerangController::get_angular_command(bool reverse,
-                                                                 bool thru) {
+chassis::DiffChassisCommand
+BoomerangController::get_angular_command(bool reverse, bool thru,
+                                         voss::AngularDirection direction) {
     child->set_target(target, false);
     child->set_angular_target(angular_target, false);
-    return child->get_angular_command(reverse, thru);
+    return child->get_angular_command(reverse, thru, direction);
 }
 
 void BoomerangController::reset() {
