@@ -4,19 +4,20 @@
 
 namespace voss::controller {
 bool SettleExitCondition::is_met(Pose current_pose) {
-    this->current_time += 10;
 
     if (this->current_time < this->settle_time) {
         if (std::abs(current_pose.x - this->prev_pose.x) < this->tolerance &&
             std::abs(current_pose.y - this->prev_pose.y) < this->tolerance &&
             std::abs(current_pose.theta - this->prev_pose.theta) <
                 this->tolerance) {
-            this->current_time++;
+            this->current_time += 10;
         } else {
             current_time = 0;
             prev_pose = current_pose;
         }
     } else {
+        this->current_time = 0;
+        this->prev_pose = Pose{0, 0, 0};
         return true;
     }
     return false;

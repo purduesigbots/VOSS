@@ -68,30 +68,22 @@ void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 
     auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
-                    .with_left_motors({-2, -3, -6, -5})
-                    .with_right_motors({11, 12, 19, 20})
-                    .with_left_right_tpi(18.24) // 19.5
-                    .with_track_width(9.75)     // 3.558
-                    .with_imu(13)
+                    .with_left_motors({-1, 2, -5, 11})
+                    .with_right_motors({-7, 8, -9, 10})
+                    .with_track_width(11.23)
+                    .with_left_right_tpi(13.749)
                     .build();
 
     odom->begin_localization();
 
     auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-                   .with_linear_constants(7, 0.02, 40)
-                   .with_angular_constants(170, 0, 700)
-                   .with_exit_error(1.0)
-                   .with_angular_exit_error(1.0)
+                   .with_linear_constants(5, 0, 12)
+                   .with_angular_constants(170, 0.05, 700)
+                   .with_tracking_kp(60)
+                   .with_exit_error(1)
+                   .with_angular_exit_error(2)
                    .with_min_error(5)
                    .with_settle_time(200)
-                   .build();
-    auto arc = voss::controller::ArcPIDControllerBuilder::new_builder(odom)
-                   .with_linear_constants(6, 0, 50)
-                   .with_track_width(14)
-                   .with_exit_error(1.0)
-                   .with_min_error(5.0)
-                   .with_settle_time(200)
-                   .with_slew(8)
                    .build();
 
     auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
@@ -100,13 +92,10 @@ void opcontrol() {
                      .with_settle_time(200)
                      .build();
 
-    auto ec = voss::controller::ExitConditions::new_conditions()
-                  .add_settle(200, 1.0)
-                  .add_timeout(5000)
-                  .build();
+    auto ec = std::make_shared<voss::controller::TimeOutExitCondition>(100);
 
-    voss::chassis::DiffChassis chassis({-2, -3, -6, -5}, {11, 12, 19, 20}, pid,
-                                       ec, 8);
+    auto chassis = voss::chassis::DiffChassis({-1, 2, -5, 11}, {-7, 8, -9, 10},
+                                              pid, ec, 8);
 
     auto [leftM, rightM] = chassis.getMotors();
 
@@ -122,67 +111,7 @@ void opcontrol() {
             odom->set_pose({0, 0, 0});
             const int TEST_NO = 1;
 
-            voss::Pose target = {48, 0, 0};
-            std::shared_ptr<AbstractExitCondition> ec = nullptr;
-
-            switch (TEST_NO) {
-            case 1:
-                ec = std::make_shared<SettleExitCondition>(target, 200, 1.0);
-                break;
-            case 2:
-                ec = std::make_shared<TimeOutExitCondition>(5000);
-                break;
-            case 3:
-                ec = std::make_shared<ToleranceAngularExitCondition>(target,
-                                                                     1.0);
-                break;
-            case 4:
-                ec =
-                    std::make_shared<ToleranceLinearExitCondition>(target, 1.0);
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
-                break;
-            case 13:
-                break;
-            case 14:
-                break;
-            case 15:
-                break;
-            case 16:
-                break;
-            case 17:
-                break;
-            case 18:
-                break;
-            case 19:
-                break;
-            case 20:
-                break;
-            case 21:
-                break;
-            case 22:
-                break;
-            case 23:
-                break;
-            case 24:
-                break;
-            }
-
-            chassis.move(target, pid, ec);
+            chassis.move(voss::Point{48, 0}, pid, ec);
         }
 
         pros::lcd::clear_line(1);

@@ -55,10 +55,6 @@ PIDController::get_command(bool reverse, bool thru,
         close = 0;
     }
 
-    if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
-
     if (fabs(distance_error - prev_lin_err) < 0.1 &&
         fabs(current_angle - prev_angle) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -71,10 +67,6 @@ PIDController::get_command(bool reverse, bool thru,
     }
 
     prev_angle = current_angle;
-
-    if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
 
     lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
 
@@ -105,6 +97,11 @@ PIDController::get_command(bool reverse, bool thru,
 
         ang_speed = angular_pid(angle_error);
     }
+
+    if (ec->is_met(this->l->get_pose())) {
+        return chassis::ChassisCommand{chassis::Stop{}};
+    }
+
     // Runs at the end of a through movement
     if (chainedExecutable) {
         return chassis::ChassisCommand{
@@ -145,9 +142,6 @@ PIDController::get_angular_command(bool reverse, bool thru,
         close = 0;
     }
 
-    if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
         close_2 += 10;
@@ -155,9 +149,10 @@ PIDController::get_angular_command(bool reverse, bool thru,
         close_2 = 0;
     }
 
-    if (close_2 > settle_time * 2) {
+    if (ec->is_met(this->l->get_pose())) {
         return chassis::ChassisCommand{chassis::Stop{}};
     }
+
     double ang_speed = angular_pid(angular_error);
     return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
 }

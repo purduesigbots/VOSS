@@ -4,7 +4,6 @@
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 
-
 namespace voss::controller {
 
 class AbstractController {
@@ -26,7 +25,8 @@ class AbstractController {
 
     virtual void reset() = 0;
 
-    void set_target(Pose target, bool relative);
+    void set_target(Pose target, bool relative,
+                    std::shared_ptr<AbstractExitCondition> ec);
     void set_angular_target(double angle, bool relative);
 };
 

@@ -43,18 +43,11 @@ chassis::ChassisCommand SwingController::get_angular_command(
         close = 0;
     }
 
-    if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
         close_2 += 10;
     } else {
         close_2 = 0;
-    }
-
-    if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
     }
 
     double ang_speed = angular_pid(angular_error);
@@ -83,6 +76,10 @@ chassis::ChassisCommand SwingController::get_angular_command(
     }
 
     prev_ang_speed = ang_speed;
+
+    if (ec->is_met(this->l->get_pose())) {
+        return chassis::ChassisCommand{chassis::Stop{}};
+    }
 
     return command;
 }

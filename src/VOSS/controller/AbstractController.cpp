@@ -1,6 +1,8 @@
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <memory>
 
 namespace voss::controller {
 
@@ -9,9 +11,10 @@ AbstractController::AbstractController(
     this->l = l;
 }
 
-//Set desired postion with x, y, and heading
-//Relative target position WIP
-void AbstractController::set_target(Pose target, bool relative) {
+// Set desired postion with x, y, and heading
+// Relative target position WIP
+void AbstractController::set_target(Pose target, bool relative,
+                                    std::shared_ptr<AbstractExitCondition> ec) {
     if (relative) {
         Point p = l->get_position();         // robot position
         double h = l->get_orientation_rad(); // robot heading in radians
@@ -21,9 +24,11 @@ void AbstractController::set_target(Pose target, bool relative) {
     } else {
         this->target = target;
     }
+
+    ec->set_target(this->target);
 }
 
-//Set desired orientation
+// Set desired orientation
 void AbstractController::set_angular_target(double angular_target,
                                             bool relative) {
     angular_target = voss::to_radians(angular_target);

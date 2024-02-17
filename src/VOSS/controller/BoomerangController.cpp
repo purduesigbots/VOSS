@@ -16,7 +16,7 @@ BoomerangController::get_command(bool reverse, bool thru,
                                  std::shared_ptr<AbstractExitCondition> ec) {
     // TODO: finish
     if (target.theta > 360) {
-        child->set_target(target, false);
+        child->set_target(target, false, ec);
     } else {
         Point current_pos = this->l->get_position();
         double dx = target.x - current_pos.x;
@@ -28,14 +28,14 @@ BoomerangController::get_command(bool reverse, bool thru,
                             target.theta};
         // printf("current: %f %f\n", current_pos.x, current_pos.y);
         // printf("carrotPoint: %f %f\n", carrotPoint.x, carrotPoint.y);
-        child->set_target(carrotPoint, false);
+        child->set_target(carrotPoint, false, ec);
     }
     return child->get_command(reverse, thru, ec);
 }
 
 chassis::ChassisCommand BoomerangController::get_angular_command(
     bool reverse, bool thru, std::shared_ptr<AbstractExitCondition> ec) {
-    child->set_target(target, false);
+    child->set_target(target, false, ec);
     child->set_angular_target(angular_target, false);
     return child->get_angular_command(reverse, thru, ec);
 }

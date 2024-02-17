@@ -56,10 +56,6 @@ ArcPIDController::get_command(bool reverse, bool thru,
         this->close = 0;
     }
 
-    if (close >= settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
-    }
-
     double lin_speed = thru ? 100.0 : this->linear_pid(distance_error);
 
     if (distance_error < this->min_error) {
@@ -89,6 +85,11 @@ ArcPIDController::get_command(bool reverse, bool thru,
     }
     prev_t = t;
     prev_lin_speed = lin_speed;
+
+    if (ec->is_met(this->l->get_pose())) {
+        return chassis::ChassisCommand{chassis::Stop{}};
+    }
+
     return chassis::ChassisCommand{chassis::Voltages{left_speed, right_speed}};
 }
 
