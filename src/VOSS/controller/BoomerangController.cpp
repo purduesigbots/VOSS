@@ -11,8 +11,9 @@ BoomerangController::BoomerangController(
     child = std::make_shared<PIDController>(l);
 }
 
-chassis::ChassisCommand BoomerangController::get_command(bool reverse,
-                                                         bool thru) {
+chassis::ChassisCommand
+BoomerangController::get_command(bool reverse, bool thru,
+                                 std::shared_ptr<AbstractExitCondition> ec) {
     // TODO: finish
     if (target.theta > 360) {
         child->set_target(target, false);
@@ -29,14 +30,14 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
         // printf("carrotPoint: %f %f\n", carrotPoint.x, carrotPoint.y);
         child->set_target(carrotPoint, false);
     }
-    return child->get_command(reverse, thru);
+    return child->get_command(reverse, thru, ec);
 }
 
-chassis::ChassisCommand BoomerangController::get_angular_command(bool reverse,
-                                                                 bool thru) {
+chassis::ChassisCommand BoomerangController::get_angular_command(
+    bool reverse, bool thru, std::shared_ptr<AbstractExitCondition> ec) {
     child->set_target(target, false);
     child->set_angular_target(angular_target, false);
-    return child->get_angular_command(reverse, thru);
+    return child->get_angular_command(reverse, thru, ec);
 }
 
 void BoomerangController::reset() {

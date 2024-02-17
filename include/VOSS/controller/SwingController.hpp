@@ -2,6 +2,7 @@
 
 #include "PIDController.hpp"
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
 namespace voss::controller {
 class SwingController : public AbstractController {
@@ -21,9 +22,12 @@ class SwingController : public AbstractController {
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru) override;
+    chassis::ChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
+    chassis::ChassisCommand
+    get_angular_command(bool reverse, bool thru,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     double angular_pid(double error);
 

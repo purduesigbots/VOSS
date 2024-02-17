@@ -2,6 +2,10 @@
 #include "VOSS/api.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/exit_conditions/ExitConditions.hpp"
+#include "VOSS/exit_conditions/SettleExitCondition.hpp"
+#include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
 #include <memory>
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -114,9 +118,71 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose(voss::Pose{0.0, 0.0, 0});
-            chassis.turn(180, 100, voss::Flags::NONE, 10000);
-            chassis.turn(0, swing);
+            using namespace voss::controller;
+            odom->set_pose({0, 0, 0});
+            const int TEST_NO = 1;
+
+            voss::Pose target = {48, 0, 0};
+            std::shared_ptr<AbstractExitCondition> ec = nullptr;
+
+            switch (TEST_NO) {
+            case 1:
+                ec = std::make_shared<SettleExitCondition>(target, 200, 1.0);
+                break;
+            case 2:
+                ec = std::make_shared<TimeOutExitCondition>(5000);
+                break;
+            case 3:
+                ec = std::make_shared<ToleranceAngularExitCondition>(target,
+                                                                     1.0);
+                break;
+            case 4:
+                ec =
+                    std::make_shared<ToleranceLinearExitCondition>(target, 1.0);
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
+            case 13:
+                break;
+            case 14:
+                break;
+            case 15:
+                break;
+            case 16:
+                break;
+            case 17:
+                break;
+            case 18:
+                break;
+            case 19:
+                break;
+            case 20:
+                break;
+            case 21:
+                break;
+            case 22:
+                break;
+            case 23:
+                break;
+            case 24:
+                break;
+            }
+
+            chassis.move(target, pid, ec);
         }
 
         pros::lcd::clear_line(1);

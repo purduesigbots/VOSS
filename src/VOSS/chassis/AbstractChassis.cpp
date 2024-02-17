@@ -17,10 +17,10 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
     pros::Task running_t([&, controller]() {
         controller->reset();
         // Loops until movement is complete or robot is disabled
-        while (
-            !this->execute(controller->get_command(flags & voss::Flags::REVERSE,
-                                                   flags & voss::Flags::THRU),
-                           max)) {
+        while (!this->execute(
+            controller->get_command(flags & voss::Flags::REVERSE,
+                                    flags & voss::Flags::THRU, ec),
+            max)) {
             if (pros::competition::is_disabled()) {
                 return;
             }
@@ -54,7 +54,7 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
         // Loops until movement is complete or robot is disabled
         while (!this->execute(
             controller->get_angular_command(flags & voss::Flags::REVERSE,
-                                            flags & voss::Flags::THRU),
+                                            flags & voss::Flags::THRU, ec),
             max)) {
             if (pros::competition::is_disabled()) {
                 return;

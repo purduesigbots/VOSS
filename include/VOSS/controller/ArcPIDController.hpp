@@ -1,6 +1,8 @@
 #pragma once
 
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
+
 
 namespace voss::controller {
 
@@ -25,9 +27,12 @@ class ArcPIDController : public AbstractController {
 
     double linear_pid(double error);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand get_angular_command(bool reverse,
-                                                bool thru) override;
+    chassis::ChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
+    chassis::ChassisCommand
+    get_angular_command(bool reverse, bool thru,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     void reset() override;
 

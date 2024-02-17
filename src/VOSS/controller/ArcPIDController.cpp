@@ -1,7 +1,9 @@
 #include "VOSS/controller/ArcPIDController.hpp"
 
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <memory>
 
 namespace voss::controller {
 
@@ -10,7 +12,9 @@ ArcPIDController::ArcPIDController(
     : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0) {
 }
 
-chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
+chassis::ChassisCommand
+ArcPIDController::get_command(bool reverse, bool thru,
+                              std::shared_ptr<AbstractExitCondition> ec) {
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
 
@@ -88,8 +92,8 @@ chassis::ChassisCommand ArcPIDController::get_command(bool reverse, bool thru) {
     return chassis::ChassisCommand{chassis::Voltages{left_speed, right_speed}};
 }
 
-chassis::ChassisCommand ArcPIDController::get_angular_command(bool reverse,
-                                                              bool thru) {
+chassis::ChassisCommand ArcPIDController::get_angular_command(
+    bool reverse, bool thru, std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::ChassisCommand{chassis::Stop{}};
 }
 
