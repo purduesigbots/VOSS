@@ -39,6 +39,7 @@ class PIDController : public AbstractController {
 
     friend class PIDControllerBuilder;
     friend class BoomerangControllerBuilder;
+    friend class PPControllerBuilder;
 };
 
 } // namespace voss::controller

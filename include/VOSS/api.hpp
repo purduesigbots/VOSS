@@ -15,6 +15,8 @@
 #include "controller/PIDControllerBuilder.hpp"
 #include "controller/SwingController.hpp"
 #include "controller/SwingControllerBuilder.hpp"
+#include "controller/PPController.hpp"
+#include "controller/PPControllerBuilder.hpp"
 
 #include "localizer/AbstractLocalizer.hpp"
 #include "localizer/ADILocalizer.hpp"

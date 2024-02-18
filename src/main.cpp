@@ -1,5 +1,6 @@
 #include "main.h"
 #include "VOSS/api.hpp"
+#include "VOSS/utils/Pose.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -96,6 +97,11 @@ void opcontrol() {
                      .with_settle_time(200)
                      .build();
 
+    auto PP = voss::controller::PPControllerBuilder::new_builder(odom)
+                  .with_lookahead_distance(10)
+                  .with_PID(pid)
+                  .build();
+
     voss::chassis::DiffChassis chassis({-2, -3, -12, 1, 11},
                                        {-7, -20, 6, 5, 19}, pid, 8);
 
@@ -115,6 +121,16 @@ void opcontrol() {
             chassis.turn(0);
             chassis.turn(-270, swing, 100, voss::Flags::NONE,
                          voss::AngularDirection::CLOCKWISE);
+        }
+
+        if (master.get_digital_new_press(DIGITAL_X)) {
+          auto path = std::vector<voss::Point> {
+            {0, 48},
+            {0, 48},
+            {24, 60},
+          };
+          odom->set_pose(voss::Pose{0, 0, 90});
+          chassis.follow(path, pid, 100, voss::Flags::NONE);
         }
 
         pros::lcd::clear_line(1);
