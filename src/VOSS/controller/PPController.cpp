@@ -6,16 +6,43 @@
 #include "VOSS/chassis/ChassisCommand.hpp"
 
 namespace voss::controller {
-PPController::PPController(std::shared_ptr<voss::localizer::AbstractLocalizer> l): AbstractController(l) {
-    this->pidController->reset();
+PPController::PPController(
+    std::shared_ptr<voss::localizer::AbstractLocalizer> l)
+    : AbstractController(l) {
+    child = std::make_shared<PIDController>(l);
+    //        this->child->reset();
 }
+
+chassis::DiffChassisCommand PPController::get_command(bool reverse, bool thru) {
+    voss::Point p = this->l->get_position();
+    double overallLinearError =
+        voss::Point::getDistance(p, *this->target_path.end());
+    int minIndex = this->closest();
+
+    if (!this->arrived && minIndex < this->target_path.size() - 1) {
+        voss::Point lookAheadPt = this->absToLocal((this->getLookAheadPoint(
+            std::max(std::min(lookAheadDist, overallLinearError), 5.0))));
+        voss::Pose lookAheadPose = {
+            lookAheadPt.x, lookAheadPt.y,
+            361}; // 361 is a flag to indicate that the theta is not set
+        this->child->set_target(lookAheadPose, false);
+    }
+    return this->child->get_command(reverse, true);
+}
+
+chassis::DiffChassisCommand
+PPController::get_angular_command(bool reverse, bool thru,
+                                  voss::AngularDirection direction) {
+    return chassis::DiffChassisCommand{chassis::Stop{}};
+};
 
 bool voss::controller::PPController::isArrived() const {
     return this->arrived;
 }
 
-int PPController::closest(const std::vector<voss::Point> &path) {
-    voss::Point robot = this->localizer->get_position();
+int PPController::closest() {
+    auto path = this->target_path;
+    voss::Point robot = this->l->get_position();
     double dx = path[0].x - robot.x;
     double dy = path[0].y - robot.y;
     double minD = sqrt(dx * dx + dy * dy);
@@ -33,7 +60,7 @@ int PPController::closest(const std::vector<voss::Point> &path) {
 }
 
 voss::Point PPController::absToLocal(voss::Point pt) {
-    voss::Pose currentPos = this->localizer->get_pose();
+    voss::Pose currentPos = this->l->get_pose();
     double dx = pt.x - currentPos.x;
     double dy = pt.y - currentPos.y;
 
@@ -44,8 +71,9 @@ voss::Point PPController::absToLocal(voss::Point pt) {
     return {x, y};
 }
 
-voss::Point PPController::getLookAheadPoint(const std::vector<voss::Point> &path, double lookAheadDist) {
-    voss::Point robot = this->localizer->get_position();
+voss::Point PPController::getLookAheadPoint(double lookAheadDist) {
+    voss::Point robot = this->l->get_position();
+    auto path = this->target_path;
 
     double dx = path[path.size() - 1].x - robot.x;
     double dy = path[path.size() - 1].y - robot.y;
@@ -63,7 +91,7 @@ voss::Point PPController::getLookAheadPoint(const std::vector<voss::Point> &path
         // if suitable distance is found
         if (voss::Point::getDistance(coord, robot) > lookAheadDist &&
             voss::Point::getDistance(prevCoord, robot) < lookAheadDist &&
-            this->closest(path) < i) {
+            this->closest() < i) {
 
             // interpolation
             double prevX = prevCoord.x;
@@ -88,7 +116,8 @@ voss::Point PPController::getLookAheadPoint(const std::vector<voss::Point> &path
 
                 lookAheadPt = {newX, newY};
 
-                double distToSelf = voss::Point::getDistance(lookAheadPt, robot);
+                double distToSelf =
+                    voss::Point::getDistance(lookAheadPt, robot);
 
                 if (distToSelf < lookAheadDist) {
                     minT = midT;
@@ -100,35 +129,13 @@ voss::Point PPController::getLookAheadPoint(const std::vector<voss::Point> &path
         }
     }
 
-    lookAheadPt = path[this->closest(path)];
+    lookAheadPt = path[this->closest()];
     return lookAheadPt;
 }
 
 void PPController::reset() {
-    this->pidController->reset();
+    this->child->reset();
     this->arrived = false;
 }
 
-chassis::DiffChassisCommand
-PPController::get_command(bool reverse, bool thru) {
-    voss::Point p = this->localizer->get_position();
-    double overallLinearError = voss::Point::getDistance(p, *this->target_path.end());
-    int minIndex = this->closest(this->target_path);
-
-
-    int dir = reverse ? -1 : 1;
-    if (!this->arrived && minIndex < this->target_path.size() - 1) {
-        double toNextPointError = voss::Point::getDistance(p, this->target_path.at(minIndex));
-        voss::Point lookAheadPt = this->absToLocal(
-                (this->getLookAheadPoint(this->target_path, std::max(std::min(lookAheadDist, overallLinearError), 5.0))));
-        voss::Pose lookAheadPose = {lookAheadPt.x, lookAheadPt.y, 361}; // 361 is a flag to indicate that the theta is not set
-        this->pidController->set_target(lookAheadPose, false);
-                }
-
-    return this->pidController->get_command(reverse, thru);
-}
-chassis::DiffChassisCommand PPController::get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction) {
-    return chassis::DiffChassisCommand{chassis::Stop{}};
-                        };
 } // namespace voss::controller
