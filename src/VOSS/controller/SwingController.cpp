@@ -1,10 +1,12 @@
 #include "VOSS/controller/SwingController.hpp"
+
+#include <utility>
 #include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 SwingController::SwingController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(l){};
+    : AbstractController(std::move(l)){};
 
 chassis::DiffChassisCommand SwingController::get_command(bool reverse,
                                                          bool thru) {

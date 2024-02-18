@@ -5,7 +5,7 @@
 namespace voss::chassis {
 
 AbstractChassis::AbstractChassis(controller_ptr default_controller) {
-    this->default_controller = default_controller;
+    this->default_controller = std::move(default_controller);
 }
 
 void AbstractChassis::move_task(controller_ptr controller, double max,
@@ -73,18 +73,18 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
 
 void AbstractChassis::move(Point target, double max, voss::Flags flags,
                            double exitTime) {
-    this->move(target, this->default_controller, max, flags, exitTime);
+    this->move(target, std::move(this->default_controller), max, flags, exitTime);
 }
 
 void AbstractChassis::move(Pose target, double max, voss::Flags flags,
                            double exitTime) {
-    this->move(target, this->default_controller, max, flags, exitTime);
+    this->move(target, std::move(this->default_controller), max, flags, exitTime);
 }
 
 void AbstractChassis::move(Point target, controller_ptr controller, double max,
                            voss::Flags flags, double exitTime) {
     Pose pose_target = Pose{target.x, target.y, 361};
-    this->move(pose_target, controller, max, flags, exitTime);
+    this->move(pose_target, std::move(controller), max, flags, exitTime);
 }
 
 void AbstractChassis::move(Pose target, controller_ptr controller, double max,
@@ -93,12 +93,12 @@ void AbstractChassis::move(Pose target, controller_ptr controller, double max,
 
     controller->set_target(target, flags & voss::Flags::RELATIVE);
 
-    this->move_task(controller, max, flags, exitTime);
+    this->move_task(std::move(controller), max, flags, exitTime);
 }
 
 void AbstractChassis::turn(double target, double max, voss::Flags flags,
                            voss::AngularDirection direction, double exitTime) {
-    this->turn(target, this->default_controller, max, flags, direction,
+    this->turn(target, std::move(this->default_controller), max, flags, direction,
                exitTime);
 }
 
@@ -110,13 +110,13 @@ void AbstractChassis::turn(double target, controller_ptr controller, double max,
     controller->set_target({0, 0, 0}, false);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
-    this->turn_task(controller, max, flags, direction, exitTime);
+    this->turn_task(std::move(controller), max, flags, direction, exitTime);
 }
 
 void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
                               voss::AngularDirection direction,
                               double exitTime) {
-    this->turn_to(target, this->default_controller, max, flags, direction,
+    this->turn_to(target, std::move(this->default_controller), max, flags, direction,
                   exitTime);
 }
 
@@ -129,7 +129,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
     controller->set_target({target.x, target.y, 361},
                            flags & voss::Flags::RELATIVE);
 
-    this->turn_task(controller, max, flags, direction, exitTime);
+    this->turn_task(std::move(controller), max, flags, direction, exitTime);
 }
 
 } // namespace voss::chassis

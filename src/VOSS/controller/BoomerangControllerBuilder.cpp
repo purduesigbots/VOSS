@@ -1,4 +1,6 @@
 #include "VOSS/controller/BoomerangControllerBuilder.hpp"
+
+#include <utility>
 #include "VOSS/controller/BoomerangController.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/angle.hpp"
@@ -7,12 +9,12 @@ namespace voss::controller {
 
 BoomerangControllerBuilder::BoomerangControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : ctrl(l) {
+    : ctrl(std::move(l)) {
 }
 
 BoomerangControllerBuilder BoomerangControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
-    BoomerangControllerBuilder builder(l);
+    BoomerangControllerBuilder builder(std::move(l));
     return builder;
 }
 

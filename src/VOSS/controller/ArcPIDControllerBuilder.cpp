@@ -1,15 +1,17 @@
 #include "VOSS/controller/ArcPIDControllerBuilder.hpp"
 
+#include <utility>
+
 namespace voss::controller {
 
 ArcPIDControllerBuilder::ArcPIDControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : ctrl(l) {
+    : ctrl(std::move(l)) {
 }
 
 ArcPIDControllerBuilder ArcPIDControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
-    ArcPIDControllerBuilder builder(l);
+    ArcPIDControllerBuilder builder(std::move(l));
     return builder;
 }
 
