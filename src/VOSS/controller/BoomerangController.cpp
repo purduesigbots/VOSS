@@ -13,22 +13,31 @@ BoomerangController::BoomerangController(
 chassis::ChassisCommand BoomerangController::get_command(bool reverse,
                                                          bool thru) {
     // TODO: finish
-
     Point current_pos = this->l->get_position();
     double k = this->min_vel / 100;
     Point virtualTarget = {target.x + k * cos(voss::to_radians(target.theta)),
                            target.y + k * sin(voss::to_radians(target.theta))};
-    double dx = virtualTarget.x - current_pos.x;
-    double dy = virtualTarget.y - current_pos.y;
-    double distance_error = sqrt(dx * dx + dy * dy);
-    double at = voss::to_radians(target.theta);
-    this->carrotPoint = {virtualTarget.x - distance_error * cos(at) * lead_pct,
-                         virtualTarget.y - distance_error * sin(at) * lead_pct,
+    double dx, dy, distance_error, at;
+    int dir = reverse ? -1 : 1;
+    Pose trueTarget;
+    if(thru) {
+        dx = virtualTarget.x - current_pos.x;
+        dy = virtualTarget.y - current_pos.y;
+        trueTarget = {virtualTarget.x, virtualTarget.y , target.theta};
+    } else {
+        dx = target.x - current_pos.x;
+        dy = target.y - current_pos.y;
+        trueTarget = this->target;
+    };
+    distance_error = sqrt(dx * dx + dy * dy);
+    at = voss::to_radians(target.theta);
+
+    this->carrotPoint = {trueTarget.x - distance_error * cos(at) * lead_pct,
+                         trueTarget.y - distance_error * sin(at) * lead_pct,
                          target.theta};
     counter += 10;
-    int dir = reverse ? -1 : 1;
 
-    double current_angle = this->l->get_orientation_rad();
+    double current_angle = this->l->get_orientation_rad() + (reverse ? M_PI : 0);
     bool chainedExecutable = false;
     bool noPose = this->target.theta == 361;
     double angle_error;
@@ -36,23 +45,22 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
 
     angle_error = atan2(dy, dx) - current_angle;
 
-    if (reverse) {
-        angle_error = atan2(-dy, -dx) - current_angle;
-    }
-
     angle_error = voss::norm_delta(angle_error);
 
     double lin_speed;
 
-    if (thru &&
+    if (/*thru &&
         current_pos.y + this->min_error >=
-            (-1.0 / m) * (current_pos.x + min_error - virtualTarget.x) + virtualTarget.y
-        /*thru && (current_pos.y - virtualTarget.y) *
-                cos(voss::to_radians(target.theta) + M_PI_2) <
+            (-1.0 / m) * (current_pos.x + min_error - virtualTarget.x) +
+        virtualTarget.y*/
+        thru &&
+        (current_pos.y - virtualTarget.y) *
+                cos(voss::to_radians(target.theta) - M_PI_2) <
             (current_pos.x - virtualTarget.x) *
-                sin(voss::to_radians(target.theta) + M_PI_2) &&
+                sin(voss::to_radians(target.theta) - M_PI_2) &&
         (pow((current_pos.y - virtualTarget.y), 2) +
-         pow((current_pos.x - virtualTarget.x), 2)) < pow(10, 2)*/) {
+         pow((current_pos.x - virtualTarget.x), 2)) <
+            pow(this->min_error * 2, 2)) {
         chainedExecutable = true;
     }
 
@@ -82,10 +90,11 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
         return chassis::ChassisCommand{chassis::Stop{}};
     }
 
-    lin_speed = dir * linear_pid(distance_error);
+    lin_speed = linear_pid(distance_error);
     if (thru) {
-        lin_speed = fmax(lin_speed, this->min_vel);
+        lin_speed = copysign(fmax(fabs(lin_speed), this->min_vel), lin_speed);
     }
+    lin_speed *= dir;
 
     double ang_speed;
     if (distance_error < min_error && !thru) {
@@ -120,9 +129,8 @@ chassis::ChassisCommand BoomerangController::get_command(bool reverse,
     }
 
     if (chainedExecutable) {
-        return chassis::ChassisCommand{chassis::Chained{
-            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
-            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+        return chassis::ChassisCommand{
+            chassis::Chained{lin_speed + ang_speed, lin_speed - ang_speed}};
     }
 
     return chassis::ChassisCommand{
@@ -165,7 +173,6 @@ void BoomerangController::reset() {
     this->total_ang_err = 0;
     this->can_reverse = false;
     this->counter = 0;
-    this->min_vel = 0;
 }
 
 } // namespace voss::controller
