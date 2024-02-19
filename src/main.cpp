@@ -110,17 +110,21 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 180});
-//            chassis.move(voss::Pose{24, 24, 90}, &boomerang, 100.0, voss::Flags::THRU);
-//            master.rumble(".");
-//            chassis.move(voss::Pose{48, 5, 290}, &boomerang, 70.0, voss::Flags::THRU);
-//            master.rumble(".");
-//            chassis.move(voss::Pose{64, 24, 90}, &boomerang, 70.0);
-//            master.rumble(".");
-            chassis.move(voss::Pose{48, 25, 10}, boomerang, 70.0, voss::Flags::REVERSE | voss::Flags::THRU);
-//            chassis.move(voss::Pose{48, 25, 10}, &boomerang, 70.0, voss::Flags::THRU);
+            //            chassis.move(voss::Pose{24, 24, 90}, &boomerang,
+            //            100.0, voss::Flags::THRU); master.rumble(".");
+            //            chassis.move(voss::Pose{48, 5, 290}, &boomerang, 70.0,
+            //            voss::Flags::THRU); master.rumble(".");
+            //            chassis.move(voss::Pose{64, 24, 90},
+            //            &boomerang, 70.0); master.rumble(".");
+            chassis.move(voss::Pose{48, 25, 10}, boomerang, 70.0,
+                         voss::Flags::REVERSE | voss::Flags::THRU);
+            //            chassis.move(voss::Pose{48, 25, 10}, &boomerang, 70.0,
+            //            voss::Flags::THRU);
             master.rumble(".");
-            chassis.move(voss::Pose{60, -5, 270}, boomerang, 100.0, voss::Flags::REVERSE);
-//            chassis.move(voss::Pose{60, 0, 270}, &boomerang, 70.0);
+            chassis.move(voss::Pose{60, -5, 270}, boomerang, 100.0,
+                         voss::Flags::REVERSE);
+            //            chassis.move(voss::Pose{60, 0, 270},
+            //            &boomerang, 70.0);
         }
 
         pros::lcd::clear_line(1);
