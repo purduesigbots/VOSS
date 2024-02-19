@@ -14,6 +14,7 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags) {
     int t = 0;
     pros::Task running_t([&, controller]() {
+        ec->reset();
         controller->reset();
         // Loops until movement is complete or robot is disabled
         while (!this->execute(
@@ -45,6 +46,7 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags) {
     int t = 0;
     pros::Task running_t([&, controller]() {
+        ec->reset();
         controller->reset();
         // Loops until movement is complete or robot is disabled
         while (!this->execute(
@@ -99,7 +101,6 @@ void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags) {
     // this->m.take();
 
-    ec->reset();
     controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
 
     this->move_task(controller, ec, max, flags);
@@ -118,7 +119,6 @@ void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags) {
     // this->m.take();
 
-    ec->reset();
     controller->set_target({0, 0, 0}, false, ec);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
@@ -138,7 +138,6 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                               ec_ptr ec, double max, voss::Flags flags) {
     // this->m.take();
 
-    ec->reset();
     controller->set_target({target.x, target.y, 361},
                            flags & voss::Flags::RELATIVE, ec);
 
