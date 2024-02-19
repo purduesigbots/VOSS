@@ -6,12 +6,14 @@ SwingController::SwingController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(l){};
 
-chassis::ChassisCommand SwingController::get_command(bool reverse, bool thru) {
-    return chassis::ChassisCommand{chassis::Stop{}};
+chassis::DiffChassisCommand SwingController::get_command(bool reverse,
+                                                         bool thru) {
+    return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
-                                                             bool thru) {
+chassis::DiffChassisCommand
+SwingController::get_angular_command(bool reverse, bool thru,
+                                     voss::AngularDirection direction) {
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -27,6 +29,20 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
 
     angular_error = voss::norm_delta(angular_error);
 
+    if (fabs(angular_error) < voss::to_radians(5)) {
+        turn_overshoot = true;
+    }
+
+    if (!turn_overshoot) {
+        if (direction == voss::AngularDirection::COUNTERCLOCKWISE &&
+            angular_error < 0) {
+            angular_error += 2 * M_PI;
+        } else if (direction == voss::AngularDirection::CLOCKWISE &&
+                   angular_error > 0) {
+            angular_error -= 2 * M_PI;
+        }
+    }
+
     if (fabs(angular_error) < angular_exit_error) {
         close += 10;
     } else {
@@ -34,7 +50,7 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -44,31 +60,35 @@ chassis::ChassisCommand SwingController::get_angular_command(bool reverse,
     }
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     double ang_speed = angular_pid(angular_error);
-    chassis::ChassisCommand command;
+    chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
-        can_reverse = true;
+        can_reverse = !can_reverse;
     }
 
     if (!this->can_reverse) {
-        if (reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+        if (!reverse) {
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     } else {
-        if (!reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+        if (reverse) {
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     }
 
@@ -94,5 +114,6 @@ void SwingController::reset() {
     this->total_ang_err = 0;
     this->counter = 0;
     this->can_reverse = false;
+    this->turn_overshoot = false;
 }
 }; // namespace voss::controller

@@ -70,8 +70,8 @@ BoomerangControllerBuilder::with_min_vel_for_thru(double min_vel) {
     return *this;
 }
 
-BoomerangController BoomerangControllerBuilder::build() {
-    return this->ctrl;
+std::shared_ptr<BoomerangController> BoomerangControllerBuilder::build() {
+    return std::make_shared<BoomerangController>(this->ctrl);
 }
 
 } // namespace voss::controller

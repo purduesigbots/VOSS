@@ -64,8 +64,8 @@ PIDControllerBuilder::with_min_vel_for_thru(double min_vel) {
     return *this;
 }
 
-PIDController PIDControllerBuilder::build() {
-    return this->ctrl;
+std::shared_ptr<PIDController> PIDControllerBuilder::build() {
+    return std::make_shared<PIDController>(this->ctrl);
 }
 
 } // namespace voss::controller

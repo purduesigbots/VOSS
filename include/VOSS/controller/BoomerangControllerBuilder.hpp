@@ -25,7 +25,7 @@ class BoomerangControllerBuilder {
     BoomerangControllerBuilder& with_settle_time(double time);
     BoomerangControllerBuilder& with_min_vel_for_thru(double min_vel);
 
-    BoomerangController build();
+    std::shared_ptr<BoomerangController> build();
 };
 
 } // namespace voss::controller

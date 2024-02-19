@@ -24,8 +24,7 @@ double DiffChassis::slew(double target, bool is_left) {
 
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller::AbstractController& default_controller,
-                         double slew_step)
+                         controller_ptr default_controller, double slew_step)
     : AbstractChassis(default_controller) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
@@ -47,7 +46,7 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
     this->right_motors->move_voltage(120.0 * right);
 }
 
-bool DiffChassis::execute(ChassisCommand cmd, double max) {
+bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
     return std::visit(
         overload{
             [this](Stop&) -> bool {
@@ -56,7 +55,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
                 return true;
             },
-            [this, max](Voltages& v) -> bool {
+            [this, max](diff_commands::Voltages& v) -> bool {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v_max > max) {
                     v.left = v.left * max / v_max;
@@ -73,7 +72,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
                 return false;
             },
-            [this, max](Chained& v) {
+            [this, max](diff_commands::Chained& v) -> bool {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v_max > max) {
                     v.left = v.left * max / v_max;
@@ -90,7 +89,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
 
                 return true;
             },
-            [this, max](Swing& v) {
+            [this, max](diff_commands::Swing& v) {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v.right == 0) {
                     this->right_motors->set_brake_mode(pros::MotorBrake::hold);

@@ -25,7 +25,7 @@ class PIDControllerBuilder {
     PIDControllerBuilder& with_settle_time(double time);
     PIDControllerBuilder& with_min_vel_for_thru(double min_vel);
 
-    PIDController build();
+    std::shared_ptr<PIDController> build();
 };
 
 } // namespace voss::controller

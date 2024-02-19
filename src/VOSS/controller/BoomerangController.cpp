@@ -10,8 +10,8 @@ BoomerangController::BoomerangController(
     : AbstractController(l) {
 }
 
-chassis::ChassisCommand BoomerangController::get_command(bool reverse,
-                                                         bool thru) {
+chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
+                                                             bool thru) {
     // TODO: finish
     Point current_pos = this->l->get_position();
     double k = this->min_vel / 100;
