@@ -94,8 +94,8 @@ void opcontrol() {
 
     auto ec = std::make_shared<voss::controller::TimeOutExitCondition>(100);
 
-    auto chassis = voss::chassis::DiffChassis({-1, 2, -5, 11}, {-7, 8, -9, 10},
-                                              pid, ec, 8);
+    voss::chassis::DiffChassis chassis({-1, 2, -5, 11}, {-7, 8, -9, 10}, pid,
+                                       ec, 8);
 
     auto [leftM, rightM] = chassis.getMotors();
 

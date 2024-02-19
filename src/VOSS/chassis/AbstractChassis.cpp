@@ -110,6 +110,7 @@ void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags, double exitTime) {
     // this->m.take();
 
+    ec->reset();
     controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
 
     this->move_task(controller, ec, max, flags, exitTime);
@@ -129,6 +130,7 @@ void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags, double exitTime) {
     // this->m.take();
 
+    ec->reset();
     controller->set_target({0, 0, 0}, false, ec);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
@@ -150,6 +152,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                               double exitTime) {
     // this->m.take();
 
+    ec->reset();
     controller->set_target({target.x, target.y, 361},
                            flags & voss::Flags::RELATIVE, ec);
 

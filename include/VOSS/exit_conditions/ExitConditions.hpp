@@ -28,6 +28,8 @@ class ExitConditions : public AbstractExitCondition {
     bool all_met(voss::Pose current_pose);
 
     std::shared_ptr<ExitConditions> build();
+
+    void reset();
 };
 
 } // namespace voss::controller

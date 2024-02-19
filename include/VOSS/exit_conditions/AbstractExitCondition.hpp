@@ -12,6 +12,7 @@ class AbstractExitCondition {
   public:
     virtual bool is_met(Pose current_pose) = 0;
     void set_target(Pose target);
+    void reset();
 };
 
 } // namespace voss::controller

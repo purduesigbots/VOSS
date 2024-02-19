@@ -8,12 +8,11 @@ TimeOutExitCondition::TimeOutExitCondition(int timeout) : timeout(timeout) {
 
 bool TimeOutExitCondition::is_met(Pose current_pose) {
     this->current_time += 10;
-    if (current_time >= this->timeout) {
-        this->current_time = 0;
-        return true;
-    } else {
-        return false;
-    }
+    return this->current_time >= this->timeout;
+}
+
+void TimeOutExitCondition::reset() {
+    this->current_time = 0;
 }
 
 } // namespace voss::controller

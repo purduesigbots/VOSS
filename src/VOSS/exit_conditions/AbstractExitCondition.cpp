@@ -6,4 +6,7 @@ void AbstractExitCondition::set_target(Pose target) {
     this->target_pose = target;
 }
 
+void AbstractExitCondition::reset() {
+}
+
 } // namespace voss::controller

@@ -1,4 +1,5 @@
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
 #include <cmath>
 
@@ -16,8 +17,6 @@ bool SettleExitCondition::is_met(Pose current_pose) {
             prev_pose = current_pose;
         }
     } else {
-        this->current_time = 0;
-        this->prev_pose = Pose{0, 0, 0};
         return true;
     }
     return false;
@@ -27,6 +26,11 @@ SettleExitCondition::SettleExitCondition(Pose target_pose, int settle_time,
                                          double tolerance)
     : settle_time(settle_time), tolerance(tolerance) {
     this->target_pose = target_pose;
+    this->current_time = 0;
+    this->prev_pose = Pose{0, 0, 0};
+}
+
+void SettleExitCondition::reset() {
     this->current_time = 0;
     this->prev_pose = Pose{0, 0, 0};
 }

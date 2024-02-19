@@ -1,9 +1,8 @@
-#include "ExitConditions.hpp"
-#include "AbstractExitCondition.hpp"
-#include "SettleExitCondition.hpp"
-#include "TimeOutExitCondition.hpp"
-#include "ToleranceAngularExitCondition.hpp"
-#include "ToleranceLinearExitCondition.hpp"
+#include "VOSS/exit_conditions/ExitConditions.hpp"
+#include "VOSS/exit_conditions/SettleExitCondition.hpp"
+#include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
 #include <memory>
 
@@ -82,6 +81,12 @@ bool ExitConditions::all_met(voss::Pose current_pose) {
 
 std::shared_ptr<ExitConditions> ExitConditions::build() {
     return std::make_shared<ExitConditions>(*this);
+}
+
+void ExitConditions::reset() {
+    for (auto ec : this->conditions) {
+        ec->reset();
+    }
 }
 
 } // namespace voss::controller
