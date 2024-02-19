@@ -98,8 +98,8 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
     }
     if (chainedExecutable) {
         return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
-            dir * 100 - ang_speed,
-            dir * 100.0 + ang_speed}};
+            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
+            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
     }
 
     return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{

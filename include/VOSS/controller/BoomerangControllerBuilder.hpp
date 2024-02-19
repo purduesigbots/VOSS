@@ -18,12 +18,12 @@ class BoomerangControllerBuilder {
                                                       double kD);
     BoomerangControllerBuilder& with_angular_constants(double kP, double kI,
                                                        double kD);
-    BoomerangControllerBuilder& with_tracking_kp(double kP);
     BoomerangControllerBuilder& with_exit_error(double error);
     BoomerangControllerBuilder& with_angular_exit_error(double error);
     BoomerangControllerBuilder& with_min_error(double error);
     BoomerangControllerBuilder& with_lead_pct(double lead_pct);
     BoomerangControllerBuilder& with_settle_time(double time);
+    BoomerangControllerBuilder& with_min_vel_for_thru(double min_vel);
 
     std::shared_ptr<BoomerangController> build();
 };
