@@ -10,34 +10,38 @@ AbstractChassis::AbstractChassis(controller_ptr default_controller) {
 
 void AbstractChassis::move_task(controller_ptr controller, double max,
                                 voss::Flags flags, double exitTime) {
-    int t = 0;
-    pros::Task running_t([&, controller]() {
+//    int t = 0;
+    pros::Task running_t([&, controller, flags, max]() {
+        this->m.take();
+        printf("mutex take\n");
         controller->reset();
-        while (
-            !this->execute(controller->get_command(flags & voss::Flags::REVERSE,
-                                                   flags & voss::Flags::THRU),
-                           max)) {
+        while (!this->execute(controller->get_command(flags & voss::Flags::REVERSE,
+                                                      flags & voss::Flags::THRU),
+                              max)) {
+            printf("in loop\n");
             if (pros::competition::is_disabled()) {
-                return;
-            }
-            if (t > exitTime) {
+                printf("exit bcuz of competition status\n");
                 return;
             }
 
-            t += 10;
+//            if (t > exitTime) {
+//                printf("exit bcuz of time\n");
+//                return;
+//            }
+//            t += 10;
             pros::delay(10);
         }
-        // this->m.give();
-    });
 
+        printf("mutex give\n");
+    });
+    this->m.give();
     if (flags & voss::Flags::ASYNC) {
+        pros::delay(10);
+        printf("exit\n");
         return;
     }
 
     running_t.join();
-
-    // this->m.take();
-    // this->m.give();
 }
 
 void AbstractChassis::turn_task(controller_ptr controller, double max,
@@ -45,29 +49,35 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
                                 voss::AngularDirection direction,
                                 double exitTime) {
     int t = 0;
-    pros::Task running_t([&, controller]() {
+    pros::Task running_t([&, controller, flags, direction, max]() {
+        this->m.take();
+        printf("mutex take\n");
         controller->reset();
         while (!this->execute(controller->get_angular_command(
-                                  flags & voss::Flags::REVERSE,
-                                  flags & voss::Flags::THRU, direction),
-                              max)) {
+                                 flags & voss::Flags::REVERSE,
+                                 flags & voss::Flags::THRU, direction),
+                             max)) {
+            printf("in loop\n");
             if (pros::competition::is_disabled()) {
                 return;
             }
 
-            if (t > exitTime) {
-                return;
-            }
+//            if (t > exitTime) {
+//                return;
+//            }
+
 
             t += 10;
             pros::delay(10);
         }
-    });
 
+        printf("mutex give\n");
+    });
+    this->m.give();
     if (flags & voss::Flags::ASYNC) {
+        printf("exit\n");
         return;
     }
-
     running_t.join();
 }
 
@@ -92,7 +102,7 @@ void AbstractChassis::move(Pose target, controller_ptr controller, double max,
     // this->m.take();
 
     controller->set_target(target, flags & voss::Flags::RELATIVE);
-
+    printf("im here\n");
     this->move_task(controller, max, flags, exitTime);
 }
 

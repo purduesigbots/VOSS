@@ -52,7 +52,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
             [this](Stop&) -> bool {
                 this->left_motors->move_voltage(0);
                 this->right_motors->move_voltage(0);
-
+                printf("Sending command(true): exit");
                 return true;
             },
             [this, max](diff_commands::Voltages& v) -> bool {
@@ -62,6 +62,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                     v.right = v.right * max / v_max;
                 }
 
+
                 v.left = slew(v.left, true);
                 v.right = slew(v.right, false);
 
@@ -69,7 +70,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                 this->right_motors->move_voltage(120 * v.right);
 
                 this->prev_voltages = v;
-
+                printf("Sending command(false): %lf, %lf\n", v.left, v.right);
                 return false;
             },
             [this, max](diff_commands::Chained& v) -> bool {
