@@ -12,7 +12,6 @@ BoomerangController::BoomerangController(
 
 chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
                                                              bool thru) {
-    // TODO: finish
     Point current_pos = this->l->get_position();
     double k = this->min_vel / 100;
     Point virtualTarget = {target.x + k * cos(voss::to_radians(target.theta)),
@@ -73,7 +72,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     if (fabs(distance_error - prev_lin_err) < 0.1 &&
@@ -87,7 +86,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     prev_angle = current_angle;
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     lin_speed = linear_pid(distance_error);
@@ -129,17 +128,17 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     }
 
     if (chainedExecutable) {
-        return chassis::ChassisCommand{
-            chassis::Chained{lin_speed + ang_speed, lin_speed - ang_speed}};
+        return chassis::DiffChassisCommand{
+            chassis::diff_commands::Chained{lin_speed + ang_speed, lin_speed - ang_speed}};
     }
 
-    return chassis::ChassisCommand{
-        chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+    return chassis::DiffChassisCommand{
+        chassis::diff_commands::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::ChassisCommand BoomerangController::get_angular_command(bool reverse,
-                                                                 bool thru) {
-    return chassis::ChassisCommand{chassis::Stop{}};
+chassis::DiffChassisCommand BoomerangController::get_angular_command(bool reverse,
+                                                                 bool thru, voss::AngularDirection direction) {
+    return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
 double BoomerangController::linear_pid(double error) {

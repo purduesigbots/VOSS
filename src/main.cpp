@@ -116,10 +116,10 @@ void opcontrol() {
 //            master.rumble(".");
 //            chassis.move(voss::Pose{64, 24, 90}, &boomerang, 70.0);
 //            master.rumble(".");
-            chassis.move(voss::Pose{48, 25, 10}, &boomerang, 70.0, voss::Flags::REVERSE | voss::Flags::THRU);
+            chassis.move(voss::Pose{48, 25, 10}, boomerang, 70.0, voss::Flags::REVERSE | voss::Flags::THRU);
 //            chassis.move(voss::Pose{48, 25, 10}, &boomerang, 70.0, voss::Flags::THRU);
             master.rumble(".");
-            chassis.move(voss::Pose{60, -5, 270}, &boomerang, 100.0, voss::Flags::REVERSE);
+            chassis.move(voss::Pose{60, -5, 270}, boomerang, 100.0, voss::Flags::REVERSE);
 //            chassis.move(voss::Pose{60, 0, 270}, &boomerang, 70.0);
         }
 

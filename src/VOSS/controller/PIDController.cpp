@@ -97,7 +97,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
         ang_speed = angular_pid(angle_error);
     }
     if (chainedExecutable) {
-        return chassis::ChassisCommand{chassis::Chained{
+        return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
             dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
             dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
     }
