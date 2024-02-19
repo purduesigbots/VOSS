@@ -64,12 +64,6 @@ BoomerangControllerBuilder::with_lead_pct(double lead_pct) {
     return *this;
 }
 
-BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_settle_time(double time) {
-    this->ctrl.child->settle_time = (time > 0) ? time : 250;
-    return *this;
-}
-
 std::shared_ptr<BoomerangController> BoomerangControllerBuilder::build() {
     return std::make_shared<BoomerangController>(this->ctrl);
 }

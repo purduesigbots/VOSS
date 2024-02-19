@@ -24,10 +24,10 @@ class AbstractChassis {
     ec_ptr default_ec;
 
     void move_task(controller_ptr controller, ec_ptr ec, double max,
-                   voss::Flags flags, double exitTime);
+                   voss::Flags flags);
 
     void turn_task(controller_ptr controller, ec_ptr ec, double max,
-                   voss::Flags flags, double exitTime);
+                   voss::Flags flags);
 
   public:
     AbstractChassis(controller_ptr default_controller, ec_ptr ec);
@@ -38,36 +38,30 @@ class AbstractChassis {
     virtual bool execute(ChassisCommand cmd, double max) = 0;
 
     void move(Point target, controller_ptr controller, ec_ptr ec,
-              double max = 100.0, voss::Flags flags = voss::Flags::NONE,
-              double exitTime = 22500);
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE);
     void move(Pose target, controller_ptr controller, ec_ptr ec,
-              double max = 100.0, voss::Flags flags = voss::Flags::NONE,
-              double exitTime = 22500);
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE);
     void move(Point target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
     void move(Pose target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
     void move(Point target, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
     void move(Pose target, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
 
     void turn(double target, controller_ptr controller, ec_ptr ec,
-              double max = 100.0, voss::Flags flags = voss::Flags::NONE,
-              double exitTime = 22500);
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE);
     void turn(double target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
     void turn(double target, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+              voss::Flags flags = voss::Flags::NONE);
     void turn_to(Point target, controller_ptr controller, ec_ptr ec,
-                 double max = 100.0, voss::Flags flags = voss::Flags::NONE,
-                 double exitTime = 22500);
+                 double max = 100.0, voss::Flags flags = voss::Flags::NONE);
     void turn_to(Point target, controller_ptr controller, double max = 100.0,
-                 voss::Flags flags = voss::Flags::NONE,
-                 double exitTime = 22500);
+                 voss::Flags flags = voss::Flags::NONE);
     void turn_to(Point target, double max = 100.0,
-                 voss::Flags flags = voss::Flags::NONE,
-                 double exitTime = 22500);
+                 voss::Flags flags = voss::Flags::NONE);
 };
 
 } // namespace voss::chassis

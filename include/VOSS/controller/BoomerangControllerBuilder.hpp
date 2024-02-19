@@ -23,7 +23,6 @@ class BoomerangControllerBuilder {
     BoomerangControllerBuilder& with_angular_exit_error(double error);
     BoomerangControllerBuilder& with_min_error(double error);
     BoomerangControllerBuilder& with_lead_pct(double lead_pct);
-    BoomerangControllerBuilder& with_settle_time(double time);
 
     std::shared_ptr<BoomerangController> build();
 };

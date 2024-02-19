@@ -39,12 +39,6 @@ ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_min_error(double error) {
     return *this;
 }
 
-ArcPIDControllerBuilder&
-ArcPIDControllerBuilder::with_settle_time(double settle_time) {
-    this->ctrl.settle_time = settle_time;
-    return *this;
-}
-
 ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_slew(double slew) {
     this->ctrl.slew = slew;
     return *this;

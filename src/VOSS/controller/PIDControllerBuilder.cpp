@@ -53,11 +53,6 @@ PIDControllerBuilder& PIDControllerBuilder::with_min_error(double error) {
     return *this;
 }
 
-PIDControllerBuilder& PIDControllerBuilder::with_settle_time(double time) {
-    this->ctrl.settle_time = (time > 0) ? time : 250;
-    return *this;
-}
-
 std::shared_ptr<PIDController> PIDControllerBuilder::build() {
     return std::make_shared<PIDController>(this->ctrl);
 }

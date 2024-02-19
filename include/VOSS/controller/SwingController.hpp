@@ -9,7 +9,6 @@ class SwingController : public AbstractController {
   protected:
     double angular_kP, angular_kI, angular_kD;
     double angular_exit_error;
-    double settle_time;
     bool can_reverse;
 
     double close;

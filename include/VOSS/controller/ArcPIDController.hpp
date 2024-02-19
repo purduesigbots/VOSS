@@ -3,7 +3,6 @@
 #include "VOSS/controller/AbstractController.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
-
 namespace voss::controller {
 
 class ArcPIDController : public AbstractController {
@@ -13,7 +12,6 @@ class ArcPIDController : public AbstractController {
     double exit_error;
     double min_error;
     double can_reverse;
-    double settle_time;
     double prev_t;
     double slew;
     double prev_lin_speed;

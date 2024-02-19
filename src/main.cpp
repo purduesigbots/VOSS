@@ -83,13 +83,11 @@ void opcontrol() {
                    .with_exit_error(1)
                    .with_angular_exit_error(2)
                    .with_min_error(5)
-                   .with_settle_time(200)
                    .build();
 
     auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
                      .with_angular_constants(170, 0, 700)
                      .with_angular_exit_error(0.5)
-                     .with_settle_time(200)
                      .build();
 
     auto ec = std::make_shared<voss::controller::TimeOutExitCondition>(100);

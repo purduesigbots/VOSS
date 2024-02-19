@@ -22,7 +22,6 @@ class PIDControllerBuilder {
     PIDControllerBuilder& with_exit_error(double error);
     PIDControllerBuilder& with_angular_exit_error(double error);
     PIDControllerBuilder& with_min_error(double error);
-    PIDControllerBuilder& with_settle_time(double time);
 
     std::shared_ptr<PIDController> build();
 };
