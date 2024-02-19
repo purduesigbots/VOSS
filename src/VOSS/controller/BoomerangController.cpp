@@ -19,10 +19,10 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     double dx, dy, distance_error, at;
     int dir = reverse ? -1 : 1;
     Pose trueTarget;
-    if(thru) {
+    if (thru) {
         dx = virtualTarget.x - current_pos.x;
         dy = virtualTarget.y - current_pos.y;
-        trueTarget = {virtualTarget.x, virtualTarget.y , target.theta};
+        trueTarget = {virtualTarget.x, virtualTarget.y, target.theta};
     } else {
         dx = target.x - current_pos.x;
         dy = target.y - current_pos.y;
@@ -36,7 +36,8 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
                          target.theta};
     counter += 10;
 
-    double current_angle = this->l->get_orientation_rad() + (reverse ? M_PI : 0);
+    double current_angle =
+        this->l->get_orientation_rad() + (reverse ? M_PI : 0);
     bool chainedExecutable = false;
     bool noPose = this->target.theta == 361;
     double angle_error;
@@ -128,16 +129,17 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     }
 
     if (chainedExecutable) {
-        return chassis::DiffChassisCommand{
-            chassis::diff_commands::Chained{lin_speed + ang_speed, lin_speed - ang_speed}};
+        return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
+            lin_speed + ang_speed, lin_speed - ang_speed}};
     }
 
-    return chassis::DiffChassisCommand{
-        chassis::diff_commands::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+    return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
+        lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::DiffChassisCommand BoomerangController::get_angular_command(bool reverse,
-                                                                 bool thru, voss::AngularDirection direction) {
+chassis::DiffChassisCommand
+BoomerangController::get_angular_command(bool reverse, bool thru,
+                                         voss::AngularDirection direction) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
