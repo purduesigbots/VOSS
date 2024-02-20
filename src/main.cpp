@@ -1,5 +1,35 @@
 #include "main.h"
 #include "VOSS/api.hpp"
+#include "VOSS/controller/BoomerangControllerBuilder.hpp"
+#include "VOSS/controller/PIDControllerBuilder.hpp"
+#include "VOSS/controller/SwingControllerBuilder.hpp"
+#include "VOSS/localizer/ADILocalizerBuilder.hpp"
+#include "VOSS/utils/flags.hpp"
+
+#define LEFT_MOTORS                                                            \
+    { 11, -12, -1, 2, -16 }
+#define RIGHT_MOTORS                                                           \
+    { -20, 19, 6, 8, -18 }
+
+auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+                .with_left_motors(LEFT_MOTORS)
+                .with_right_motors(RIGHT_MOTORS)
+                .with_left_right_tpi(17)
+                .with_imu(10)
+                .build();
+
+auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+               .with_linear_constants(5, 0, 12)
+               .with_angular_constants(170, 0.05, 700)
+               .with_tracking_kp(60)
+               .with_exit_error(1)
+               .with_angular_exit_error(2)
+               .with_min_error(5)
+               .with_settle_time(200)
+               .build();
+
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 8);
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -8,6 +38,7 @@
  */
 void initialize() {
     pros::lcd::initialize();
+    odom->begin_localization();
 }
 
 /**
@@ -42,6 +73,18 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+    // auto odom = voss::localizer::ADILocalizerBuilder::new_builder().build();
+    // auto pid =
+    // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    //                .with_lead_pct(60)
+    //                .build();
+
+    // // auto pid2 =
+    // // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    // //                 .with_lead_pct(65)
+    // //                 .build();
+
+    // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
 }
 
 /**

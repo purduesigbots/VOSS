@@ -1,15 +1,24 @@
 #include "VOSS/controller/ArcPIDControllerBuilder.hpp"
+#include "ArcPIDController.hpp"
 
 namespace voss::controller {
 
 ArcPIDControllerBuilder::ArcPIDControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : ctrl(l) {
+
+    this->ctrl.p = nullptr;
 }
 
 ArcPIDControllerBuilder ArcPIDControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
     ArcPIDControllerBuilder builder(l);
+    return builder;
+}
+
+ArcPIDControllerBuilder ArcPIDControllerBuilder::from(ArcPIDController arc) {
+    ArcPIDControllerBuilder builder(arc.l);
+    builder.ctrl = arc;
     return builder;
 }
 

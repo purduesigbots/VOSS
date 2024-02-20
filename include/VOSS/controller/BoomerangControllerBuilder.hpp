@@ -14,6 +14,8 @@ class BoomerangControllerBuilder {
     static BoomerangControllerBuilder
     new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
+    static BoomerangControllerBuilder from(BoomerangController bmr);
+
     BoomerangControllerBuilder& with_linear_constants(double kP, double kI,
                                                       double kD);
     BoomerangControllerBuilder& with_angular_constants(double kP, double kI,

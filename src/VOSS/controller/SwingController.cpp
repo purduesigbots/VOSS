@@ -1,4 +1,5 @@
 #include "VOSS/controller/SwingController.hpp"
+#include "SwingControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
@@ -116,4 +117,38 @@ void SwingController::reset() {
     this->can_reverse = false;
     this->turn_overshoot = false;
 }
+
+std::shared_ptr<SwingController>
+SwingController::modify_angular_constants(double kP, double kI, double kD) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_angular_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<SwingController>
+SwingController::modify_angular_exit_error(double exit_error) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_angular_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<SwingController>
+SwingController::modify_settle_time(double settle_time) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_settle_time(settle_time)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
 }; // namespace voss::controller

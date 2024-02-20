@@ -10,6 +10,7 @@ namespace voss::controller {
 
 class BoomerangController : public AbstractController {
   protected:
+    std::shared_ptr<BoomerangController> p;
     double lead_pct;
     Pose carrotPoint;
 
@@ -41,7 +42,18 @@ class BoomerangController : public AbstractController {
     double linear_pid(double error);
     double angular_pid(double error);
 
-    void reset();
+    void reset() override;
+
+    std::shared_ptr<BoomerangController>
+    modify_linear_constants(double kP, double kI, double kD);
+    std::shared_ptr<BoomerangController>
+    modify_angular_constants(double kP, double kI, double kD);
+    std::shared_ptr<BoomerangController> modify_exit_error(double error);
+    std::shared_ptr<BoomerangController>
+    modify_angular_exit_error(double error);
+    std::shared_ptr<BoomerangController> modify_min_error(double error);
+    std::shared_ptr<BoomerangController> modify_lead_pct(double lead_pct);
+    std::shared_ptr<BoomerangController> modify_settle_time(double time);
 
     friend class BoomerangControllerBuilder;
 };

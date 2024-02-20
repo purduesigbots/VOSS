@@ -14,6 +14,8 @@ class PIDControllerBuilder {
     static PIDControllerBuilder
     new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
 
+    static PIDControllerBuilder from(PIDController pid);
+
     PIDControllerBuilder& with_linear_constants(double kP, double kI,
                                                 double kD);
     PIDControllerBuilder& with_angular_constants(double kP, double kI,

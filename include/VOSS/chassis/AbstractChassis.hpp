@@ -21,7 +21,6 @@ class AbstractChassis {
     bool task_running = false;
     pros::motor_brake_mode_e brakeMode;
 
-
     void move_task(controller_ptr controller, double max, voss::Flags flags,
                    double exitTime);
 
