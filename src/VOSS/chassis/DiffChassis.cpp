@@ -62,7 +62,6 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                     v.right = v.right * max / v_max;
                 }
 
-
                 v.left = slew(v.left, true);
                 v.right = slew(v.right, false);
 
