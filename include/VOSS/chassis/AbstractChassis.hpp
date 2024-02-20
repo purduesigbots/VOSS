@@ -19,6 +19,7 @@ class AbstractChassis {
   protected:
     pros::Mutex m;
     controller_ptr default_controller;
+    pros::motor_brake_mode_e brakeMode;
 
     void move_task(controller_ptr controller, double max, voss::Flags flags,
                    double exitTime);
@@ -33,6 +34,7 @@ class AbstractChassis {
     virtual void arcade(double forward_speed, double turn_speed) = 0;
 
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
+    virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
     void move(Point target, controller_ptr controller, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
