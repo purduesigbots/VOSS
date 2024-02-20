@@ -24,12 +24,13 @@ double DiffChassis::slew(double target, bool is_left) {
 
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller_ptr default_controller, double slew_step)
+                         controller_ptr default_controller, double slew_step, pros::motor_brake_mode_e brakeMode)
     : AbstractChassis(default_controller) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 
     this->slew_step = slew_step > 0 ? slew_step : 200;
+    this->brakeMode = brakeMode;
     this->prev_voltages = {0, 0};
 }
 
@@ -46,12 +47,19 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
     this->right_motors->move_voltage(120.0 * right);
 }
 
+void DiffChassis::set_brake_mode(pros::motor_brake_mode_e mode) {
+    this->brakeMode = mode;
+    this->left_motors->set_brake_mode(mode);
+    this->right_motors->set_brake_mode(mode);
+}
+
 bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
     return std::visit(
         overload{
             [this](Stop&) -> bool {
-                this->left_motors->move_voltage(0);
-                this->right_motors->move_voltage(0);
+                this->set_brake_mode(this->brakeMode);
+                this->left_motors->brake();
+                this->right_motors->brake();
 
                 return true;
             },
