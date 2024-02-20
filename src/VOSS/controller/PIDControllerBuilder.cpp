@@ -66,6 +66,12 @@ PIDControllerBuilder& PIDControllerBuilder::with_settle_time(double time) {
     return *this;
 }
 
+PIDControllerBuilder&
+PIDControllerBuilder::with_min_vel_for_thru(double min_vel) {
+    this->ctrl.min_vel = min_vel;
+    return *this;
+}
+
 std::shared_ptr<PIDController> PIDControllerBuilder::build() {
     return std::make_shared<PIDController>(this->ctrl);
 }
