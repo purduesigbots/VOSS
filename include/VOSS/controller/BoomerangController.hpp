@@ -42,13 +42,12 @@ class BoomerangController : public AbstractController {
     double linear_pid(double error);
     double angular_pid(double error);
 
-    void reset();
+    void reset() override;
 
     std::shared_ptr<BoomerangController>
     modify_linear_constants(double kP, double kI, double kD);
     std::shared_ptr<BoomerangController>
     modify_angular_constants(double kP, double kI, double kD);
-    std::shared_ptr<BoomerangController> modify_tracking_kp(double kP);
     std::shared_ptr<BoomerangController> modify_exit_error(double error);
     std::shared_ptr<BoomerangController>
     modify_angular_exit_error(double error);

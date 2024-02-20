@@ -201,16 +201,6 @@ BoomerangController::modify_angular_constants(double kP, double kI, double kD) {
 }
 
 std::shared_ptr<BoomerangController>
-BoomerangController::modify_tracking_kp(double kP) {
-    auto pid_mod =
-        BoomerangControllerBuilder::from(*this).with_tracking_kp(kP).build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
-std::shared_ptr<BoomerangController>
 BoomerangController::modify_exit_error(double exit_error) {
     auto pid_mod = BoomerangControllerBuilder::from(*this)
                        .with_exit_error(exit_error)
