@@ -61,7 +61,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                 this->set_brake_mode(this->brakeMode);
                 this->left_motors->brake();
                 this->right_motors->brake();
-
+              
                 return true;
             },
             [this, max](diff_commands::Voltages& v) -> bool {
