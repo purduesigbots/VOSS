@@ -15,10 +15,10 @@ namespace voss::chassis {
 using controller_ptr = std::shared_ptr<controller::AbstractController>;
 
 class AbstractChassis {
-
   protected:
-    pros::Mutex m;
     controller_ptr default_controller;
+    std::unique_ptr<pros::Task> task = nullptr;
+    bool task_running = false;
 
     void move_task(controller_ptr controller, double max, voss::Flags flags,
                    double exitTime);
