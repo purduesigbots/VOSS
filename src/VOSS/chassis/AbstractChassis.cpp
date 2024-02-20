@@ -132,7 +132,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
     this->turn_task(controller, max, flags, direction, exitTime);
 }
 
-void AbstractChassis::follow(const std::vector<Point> & path, controller_ptr controller, double max, voss::Flags flags,
+void AbstractChassis::follow(std::vector<Point> path, controller_ptr controller, double max, voss::Flags flags,
                              double exitTime) {
                               controller->set_target_path(path, flags & voss::Flags::RELATIVE);
     this->move_task(controller, max, flags, exitTime);

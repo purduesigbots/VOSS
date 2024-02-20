@@ -4,30 +4,111 @@
 
 #include "VOSS/controller/PPController.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
+#include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 PPController::PPController(
     std::shared_ptr<voss::localizer::AbstractLocalizer> l)
     : AbstractController(l) {
-    child = std::make_shared<PIDController>(l);
-    //        this->child->reset();
+    this->arrived = false;
 }
 
 chassis::DiffChassisCommand PPController::get_command(bool reverse, bool thru) {
-    voss::Point p = this->l->get_position();
+    this->counter += 10;
+    voss::Point currentPose = this->l->get_position();
+    double heading = this->l->get_orientation_rad();
     double overallLinearError =
-        voss::Point::getDistance(p, *this->target_path.end());
+        voss::Point::getDistance(currentPose, this->target_path.back());
     int minIndex = this->closest();
+    bool chainedExecutable = false;
+    printf("im here\n");
 
+    int dir = reverse ? -1 : 1;
+    printf("%b", !this->arrived && minIndex < this->target_path.size() - 1);
     if (!this->arrived && minIndex < this->target_path.size() - 1) {
-        voss::Point lookAheadPt = this->absToLocal((this->getLookAheadPoint(
-            std::max(std::min(lookAheadDist, overallLinearError), 5.0))));
-        voss::Pose lookAheadPose = {
-            lookAheadPt.x, lookAheadPt.y,
-            361}; // 361 is a flag to indicate that the theta is not set
-        this->child->set_target(lookAheadPose, false);
+
+        double toNextPointError = voss::Point::getDistance(
+            currentPose, this->target_path.at(minIndex));
+        voss::Point lookAheadPt =
+            absToLocal({currentPose.x, currentPose.y, heading},
+                       (this->getLookAheadPoint(std::max(
+                           std::min(lookAheadDist, overallLinearError), 5.0))));
+
+        double linearError = lookAheadPt.y / this->lookAheadDist;
+        double angularError = lookAheadPt.x / this->lookAheadDist;
+        printf("look ahead pt: x: %.2f, y: %.2f\n", lookAheadPt.x, lookAheadPt.y);
+
+        double angularOut = this->angular_pid(angularError);
+        double linearOut;
+        double m =
+            fabs((currentPose.y - target.y) / (currentPose.x - target.x));
+
+        if (thru &&
+            currentPose.y + this->min_error >=
+                (-1.0 / m) * (currentPose.x + min_error -
+                              this->target_path.back().x) +
+                    this->target_path.back().y &&
+            minIndex >= this->target_path.size() - 2) {
+            chainedExecutable = true;
+        }
+
+        if (total_lin_err <= exit_error) {
+            if (thru) {
+                chainedExecutable = true;
+            } else {
+                total_lin_err = 0;
+                close += 10;
+            }
+        } else {
+            close = 0;
+        }
+
+        if (close > settle_time) {
+            return chassis::DiffChassisCommand{chassis::Stop{}};
+        }
+
+        if (this->counter > 400) {
+            if ((fabs(overallLinearError - this->prevOverallLinearError) <
+                     0.1 &&
+                 fabs(angularError - this->prev_ang_err) <
+                     voss::to_radians(0.1)) ||
+                (toNextPointError - this->prevToNextPointError > 3 &&
+                 this->prevIndex == minIndex)) {
+                this->close_2 += 10;
+            } else {
+                this->close_2 = 0;
+            }
+        }
+
+        if (this->close_2 > this->settle_time * 2) {
+            this->arrived = true;
+            return chassis::DiffChassisCommand{chassis::Stop{}};
+        }
+
+        linearOut = linear_pid(linearError);
+        if (minIndex != this->target_path.size() - 1 && thru) {
+            linearOut =
+                copysign(fmax(fabs(linearOut), this->min_speed), linearOut);
+        }
+        linearOut *= dir;
+
+        linearOut *= cos(angularError);
+
+        this->prevOverallLinearError = overallLinearError;
+        this->prevToNextPointError = toNextPointError;
+        this->prevIndex = minIndex;
+
+        if (chainedExecutable) {
+            return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
+                linearOut + angularOut, linearOut - angularOut}};
+        }
+
+        return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
+            linearOut - angularOut, linearOut + angularOut}};
     }
-    return this->child->get_command(reverse, true);
+
+    this->arrived = true;
+    return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
 chassis::DiffChassisCommand
@@ -59,14 +140,13 @@ int PPController::closest() {
     return minIndex;
 }
 
-voss::Point PPController::absToLocal(voss::Point pt) {
-    voss::Pose currentPos = this->l->get_pose();
-    double dx = pt.x - currentPos.x;
-    double dy = pt.y - currentPos.y;
+voss::Point PPController::absToLocal(voss::Pose currentPose, voss::Point pt) {
+    double dx = pt.x - currentPose.x;
+    double dy = pt.y - currentPose.y;
 
     // apply rotation matrix
-    double x = dy * cos(currentPos.theta) - dx * sin(currentPos.theta);
-    double y = dy * sin(currentPos.theta) + dx * cos(currentPos.theta);
+    double x = dy * cos(currentPose.theta) - dx * sin(currentPose.theta);
+    double y = dy * sin(currentPose.theta) + dx * cos(currentPose.theta);
 
     return {x, y};
 }
@@ -79,7 +159,7 @@ voss::Point PPController::getLookAheadPoint(double lookAheadDist) {
     double dy = path[path.size() - 1].y - robot.y;
     double dToEnd = sqrt(dx * dx + dy * dy);
     if (dToEnd < lookAheadDist) {
-        return path[path.size() - 1];
+        return path.at(path.size() - 1);
     }
 
     voss::Point lookAheadPt(0, 0);
@@ -129,12 +209,40 @@ voss::Point PPController::getLookAheadPoint(double lookAheadDist) {
         }
     }
 
-    lookAheadPt = path[this->closest()];
+    lookAheadPt = path.at(this->closest());
     return lookAheadPt;
 }
 
+double PPController::linear_pid(double error) {
+    total_lin_err += error;
+
+    double speed = linear_kP * error + linear_kD * (error - prev_lin_err) +
+                   linear_kI * total_lin_err;
+
+    this->prev_lin_err = error;
+
+    return speed;
+}
+
+double PPController::angular_pid(double error) {
+    total_ang_err += error;
+
+    double speed = angular_kP * error + angular_kD * (error - prev_ang_err) +
+                   angular_kI * total_ang_err;
+
+    this->prev_ang_err = error;
+
+    return speed;
+}
+
 void PPController::reset() {
-    this->child->reset();
+    this->prev_lin_err = 0;
+    this->total_lin_err = 0;
+    this->prev_ang_err = 0;
+    this->total_ang_err = 0;
+    this->can_reverse = false;
+    this->counter = 0;
+    this->turn_overshoot = false;
     this->arrived = false;
 }
 

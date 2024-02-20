@@ -1,6 +1,5 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/utils/Pose.hpp"
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -62,11 +61,11 @@ void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 
     auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
-                    .with_left_motors({-2, -3, -12, 1, 11})
-                    .with_right_motors({-7, -20, 6, 5, 19})
+                    .with_left_motors({11, -12, -1, 2, -16})
+                    .with_right_motors({-20, 19, 6, 8, -18})
                     .with_left_right_tpi(17.5) // 19.5
                     .with_track_width(11)      // 3.558
-                    .with_imu(13)
+                    .with_imu(10)
                     .build();
 
     odom->begin_localization();
@@ -99,16 +98,16 @@ void opcontrol() {
 
     auto pp = voss::controller::PPControllerBuilder::new_builder(odom)
                   .with_lookahead_distance(10)
-                  .with_linear_constants(10, 0.01, 52)
-                  .with_angular_constants(240, 0.05, 2400)
+                  .with_linear_constants(50, 0, 55)
+                  .with_angular_constants(120, 0, 1600)
                   .with_exit_error(1.0)
                   .with_angular_exit_error(2.0)
                   .with_min_error(5)
                   .with_settle_time(200)
                   .build();
 
-    voss::chassis::DiffChassis chassis({-2, -3, -12, 1, 11},
-                                       {-7, -20, 6, 5, 19}, pid, 8);
+    voss::chassis::DiffChassis chassis({11, -12, -1, 2, -16},
+                                       {-20, 19, 6, 8, -18}, pid, 8);
 
     auto [leftM, rightM] = chassis.getMotors();
 
@@ -121,21 +120,17 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose(voss::Pose{0.0, 0.0, 0});
-            chassis.turn(270, 100, voss::Flags::NONE,
-                         voss::AngularDirection::COUNTERCLOCKWISE);
-            chassis.turn(0);
-            chassis.turn(-270, swing, 100, voss::Flags::NONE,
-                         voss::AngularDirection::CLOCKWISE);
+            chassis.move({20, 0, 0});
         }
 
         if (master.get_digital_new_press(DIGITAL_X)) {
-          auto path = std::vector<voss::Point> {
-            {0, 48},
-            {0, 48},
-            {24, 60},
-          };
-          odom->set_pose(voss::Pose{0, 0, 90});
-          chassis.follow(path, pp, 100, voss::Flags::NONE);
+            auto path = std::vector<voss::Point>{
+                {0, 48},
+                {0, 48},
+                {24, 60},
+            };
+            odom->set_pose(voss::Pose{0, 0, 90});
+            chassis.follow(path, pp, 100, voss::Flags::NONE);
         }
 
         pros::lcd::clear_line(1);

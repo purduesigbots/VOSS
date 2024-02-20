@@ -62,7 +62,7 @@ class AbstractChassis {
             voss::AngularDirection direction = voss::AngularDirection::AUTO,
             double exitTime = 22500);
 
-    void follow(const std::vector<Point> & path, controller_ptr controller, double max, voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+    void follow(std::vector<Point> path, controller_ptr controller, double max, voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
 };
 
 } // namespace voss::chassis

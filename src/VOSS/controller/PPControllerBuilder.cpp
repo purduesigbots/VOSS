@@ -17,38 +17,38 @@ PPControllerBuilder PPControllerBuilder::new_builder(
 
 PPControllerBuilder&
 PPControllerBuilder::with_linear_constants(double kP, double kI, double kD) {
-    this->ctrl.child->linear_kP = kP;
-    this->ctrl.child->linear_kI = kI;
-    this->ctrl.child->linear_kD = kD;
+    this->ctrl.linear_kP = kP;
+    this->ctrl.linear_kI = kI;
+    this->ctrl.linear_kD = kD;
     return *this;
 }
 
 PPControllerBuilder&
 PPControllerBuilder::with_angular_constants(double kP, double kI, double kD) {
-    this->ctrl.child->angular_kP = kP;
-    this->ctrl.child->angular_kI = kI;
-    this->ctrl.child->angular_kD = kD;
+    this->ctrl.angular_kP = kP;
+    this->ctrl.angular_kI = kI;
+    this->ctrl.angular_kD = kD;
     return *this;
 }
 
 PPControllerBuilder& PPControllerBuilder::with_tracking_kp(double kP) {
-    this->ctrl.child->tracking_kP = kP;
+    this->ctrl.tracking_kP = kP;
     return *this;
 }
 
 PPControllerBuilder& PPControllerBuilder::with_exit_error(double error) {
-    this->ctrl.child->exit_error = error;
+    this->ctrl.exit_error = error;
     return *this;
 }
 
 PPControllerBuilder&
 PPControllerBuilder::with_angular_exit_error(double error) {
-    this->ctrl.child->angular_exit_error = voss::to_radians(error);
+    this->ctrl.angular_exit_error = voss::to_radians(error);
     return *this;
 }
 
 PPControllerBuilder& PPControllerBuilder::with_min_error(double error) {
-    this->ctrl.child->min_error = error;
+    this->ctrl.min_error = error;
     return *this;
 }
 
@@ -59,7 +59,7 @@ PPControllerBuilder::with_lookahead_distance(double lookaheadDist) {
 }
 
 PPControllerBuilder& PPControllerBuilder::with_settle_time(double time) {
-    this->ctrl.child->settle_time = (time > 0) ? time : 250;
+    this->ctrl.settle_time = (time > 0) ? time : 250;
     return *this;
 }
 

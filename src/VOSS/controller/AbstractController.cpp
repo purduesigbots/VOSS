@@ -32,9 +32,11 @@ void AbstractController::set_angular_target(double angular_target,
     }
 }
 
-void AbstractController::set_target_path(const std::vector<Point> &path,
+void AbstractController::set_target_path(std::vector<Point> path,
                                          bool relative) {
+    printf("Im in set target path\n");
     if (path.empty()) {
+        printf("path is empty\n");
         return;
     }
 
@@ -50,6 +52,11 @@ void AbstractController::set_target_path(const std::vector<Point> &path,
         this->target_path = new_path;
     } else {
         this->target_path = path;
+    }
+
+    printf("finish setting target path\n");
+    for(Point p : this->target_path){
+        printf("X: %.2f, Y: %.2f\n", p.x, p.y);
     }
 }
 
