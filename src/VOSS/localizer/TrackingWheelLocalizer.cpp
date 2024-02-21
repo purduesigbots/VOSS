@@ -43,7 +43,11 @@ void TrackingWheelLocalizer::update() {
 
     if (delta_angle) {
         double i = sin(delta_angle / 2.0) * 2.0;
-        local_x = (delta_right / delta_angle - left_right_dist) * i;
+        if (right_tracking_wheel) {
+            local_x = (delta_right / delta_angle - left_right_dist) * i;
+        } else if (left_tracking_wheel) {
+            local_x = (delta_left / delta_angle + left_right_dist) * i;
+        }
         local_y = (delta_middle / delta_angle + middle_dist) * i;
     } else {
         local_x = delta_right;
@@ -75,6 +79,7 @@ void TrackingWheelLocalizer::calibrate() {
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
+    this->prev_pose = this->pose;
     if (this->imu) {
         this->imu->set_rotation(-pose.theta);
     }

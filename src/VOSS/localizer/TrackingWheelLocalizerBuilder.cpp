@@ -75,8 +75,12 @@ TrackingWheelLocalizerBuilder& TrackingWheelLocalizerBuilder::with_middle_motor(
 }
 
 TrackingWheelLocalizerBuilder& TrackingWheelLocalizerBuilder::with_left_right_tpi(double tpi) {
-    left_tracking_wheel->set_tpi(tpi);
-    right_tracking_wheel->set_tpi(tpi);
+    if (left_tracking_wheel) {
+        left_tracking_wheel->set_tpi(tpi);
+    }
+    if (right_tracking_wheel) {
+        right_tracking_wheel->set_tpi(tpi);
+    }
     return *this;
 }
 
