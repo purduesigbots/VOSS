@@ -2,7 +2,8 @@
 
 namespace voss::localizer {
 
-RotationTrackingWheel::RotationTrackingWheel(int port) : AbstractTrackingWheel() {
+RotationTrackingWheel::RotationTrackingWheel(int port)
+    : AbstractTrackingWheel() {
     this->encoder = std::make_unique<pros::v5::Rotation>(port);
 }
 
@@ -14,4 +15,4 @@ void RotationTrackingWheel::reset() {
     this->encoder->reset_position();
 }
 
-}
+} // namespace voss::localizer

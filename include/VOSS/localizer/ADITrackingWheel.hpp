@@ -1,20 +1,22 @@
 #pragma once
 
-#include "VOSS/localizer/AbstractTrackingWheel.hpp"
 #include "pros/adi.hpp"
+#include "VOSS/localizer/AbstractTrackingWheel.hpp"
 #include <memory>
 
 namespace voss::localizer {
 
 class ADITrackingWheel : public AbstractTrackingWheel {
-private:
+  private:
     std::unique_ptr<pros::adi::Encoder> encoder;
-protected:
+
+  protected:
     double get_raw_position() override;
-public:
+
+  public:
     ADITrackingWheel(int adi_port);
     ADITrackingWheel(int smart_port, int adi_port);
     void reset() override;
 };
 
-}
+} // namespace voss::localizer

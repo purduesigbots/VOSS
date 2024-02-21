@@ -3,11 +3,16 @@
 
 namespace voss::localizer {
 
-TrackingWheelLocalizer::TrackingWheelLocalizer(std::unique_ptr<AbstractTrackingWheel> left, std::unique_ptr<AbstractTrackingWheel> right,
-    std::unique_ptr<AbstractTrackingWheel> middle, std::unique_ptr<pros::IMU> imu, double left_right_dist, double middle_dist)
-    : AbstractLocalizer(), left_tracking_wheel(std::move(left)), right_tracking_wheel(std::move(right)), middle_tracking_wheel(std::move(middle)),
-    imu(std::move(imu)), left_right_dist(left_right_dist), middle_dist(middle_dist), prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0) {
-
+TrackingWheelLocalizer::TrackingWheelLocalizer(
+    std::unique_ptr<AbstractTrackingWheel> left,
+    std::unique_ptr<AbstractTrackingWheel> right,
+    std::unique_ptr<AbstractTrackingWheel> middle,
+    std::unique_ptr<pros::IMU> imu, double left_right_dist, double middle_dist)
+    : AbstractLocalizer(), left_tracking_wheel(std::move(left)),
+      right_tracking_wheel(std::move(right)),
+      middle_tracking_wheel(std::move(middle)), imu(std::move(imu)),
+      left_right_dist(left_right_dist), middle_dist(middle_dist),
+      prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0) {
 }
 
 void TrackingWheelLocalizer::update() {
@@ -20,10 +25,12 @@ void TrackingWheelLocalizer::update() {
         delta_left = left_tracking_wheel->get_dist_travelled() - prev_left_pos;
     }
     if (right_tracking_wheel) {
-        delta_right = right_tracking_wheel->get_dist_travelled() - prev_right_pos;
+        delta_right =
+            right_tracking_wheel->get_dist_travelled() - prev_right_pos;
     }
     if (middle_tracking_wheel) {
-        delta_middle = middle_tracking_wheel->get_dist_travelled() - prev_middle_pos;
+        delta_middle =
+            middle_tracking_wheel->get_dist_travelled() - prev_middle_pos;
     }
     if (imu) {
         pose.theta = -to_radians(imu->get_rotation());
@@ -85,4 +92,4 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
     }
 }
 
-}
+} // namespace voss::localizer

@@ -14,4 +14,4 @@ void IMETrackingWheel::reset() {
     this->encoder->tare_position();
 }
 
-}
+} // namespace voss::localizer

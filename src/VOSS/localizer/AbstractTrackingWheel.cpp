@@ -3,7 +3,6 @@
 namespace voss::localizer {
 
 AbstractTrackingWheel::AbstractTrackingWheel() {
-
 }
 
 double AbstractTrackingWheel::get_dist_travelled() {
@@ -14,4 +13,4 @@ void AbstractTrackingWheel::set_tpi(double new_tpi) {
     this->tpi = new_tpi;
 }
 
-}
+} // namespace voss::localizer
