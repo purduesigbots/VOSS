@@ -1,8 +1,8 @@
 #include "VOSS/controller/SwingController.hpp"
 
-#include <utility>
 #include "SwingControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
+#include <utility>
 
 namespace voss::controller {
 SwingController::SwingController(
@@ -17,6 +17,14 @@ chassis::DiffChassisCommand SwingController::get_command(bool reverse,
 chassis::DiffChassisCommand
 SwingController::get_angular_command(bool reverse, bool thru,
                                      voss::AngularDirection direction) {
+    // Runs in background of Swing Turn commands
+    // ArcTan is used to find the angle between the robot and the target
+    // position One size of the drive is locked in place while the other side
+    // moves. This is determined by which side has less required movement
+    // Reverse flag flips the direction the moving side
+    // Power appled to motors based on proportion of the error and the weight of
+    // the constant Exit conditions are when the robot has settled for a
+    // designated time duration or accurate to a specified tolerance
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -100,6 +108,8 @@ SwingController::get_angular_command(bool reverse, bool thru,
     return command;
 }
 
+// What is calculating the required motor power for the turn
+// Returns value for motor power with type double
 double SwingController::angular_pid(double error) {
     total_ang_err += error;
 
@@ -111,6 +121,7 @@ double SwingController::angular_pid(double error) {
     return speed;
 }
 
+// Resets all the variables used in the swing controller
 void SwingController::reset() {
     this->prev_ang_err = 0;
     this->prev_ang_speed = 0;

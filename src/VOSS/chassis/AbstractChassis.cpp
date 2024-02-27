@@ -28,6 +28,7 @@ void AbstractChassis::move_task(controller_ptr controller, double max,
             this->task_running = false;
         });
 
+    // Early exit for async movement
     if (flags & voss::Flags::ASYNC) {
         return;
     }
@@ -57,12 +58,14 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
             this->task_running = false;
         });
 
+    // Early exit for async movement
     if (flags & voss::Flags::ASYNC) {
         return;
     }
     this->task->join();
 }
 
+// Overloaded constructors move functions to allow for different parameters
 void AbstractChassis::move(Point target, double max, voss::Flags flags,
                            double exitTime) {
     this->move(target, this->default_controller, max, flags, exitTime);

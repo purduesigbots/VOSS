@@ -9,6 +9,8 @@ AbstractController::AbstractController(
     this->l = l;
 }
 
+// Set desired postion with x, y, and heading
+// Relative target position WIP
 void AbstractController::set_target(Pose target, bool relative) {
     if (relative) {
         Point p = l->get_position();         // robot position
@@ -21,6 +23,7 @@ void AbstractController::set_target(Pose target, bool relative) {
     }
 }
 
+// Set desired orientation
 void AbstractController::set_angular_target(double angular_target,
                                             bool relative) {
     angular_target = voss::to_radians(angular_target);

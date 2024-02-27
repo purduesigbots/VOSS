@@ -59,6 +59,7 @@ IMELocalizerBuilder& IMELocalizerBuilder::with_imu(int imu_port) {
     return *this;
 }
 
+// Check to see if the attempted object to be build will be a valid build
 std::shared_ptr<IMELocalizer> IMELocalizerBuilder::build() {
 
     std::unordered_set<unsigned char> valid_representations = {

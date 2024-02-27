@@ -1,9 +1,9 @@
 #include "VOSS/controller/PIDControllerBuilder.hpp"
 
-#include <utility>
 #include "VOSS/controller/PIDController.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/angle.hpp"
+#include <utility>
 
 namespace voss::controller {
 

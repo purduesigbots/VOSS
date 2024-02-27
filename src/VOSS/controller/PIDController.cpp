@@ -3,8 +3,8 @@
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
-#include <utility>
 #include <memory>
+#include <utility>
 
 namespace voss::controller {
 
@@ -15,6 +15,14 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
 
 chassis::DiffChassisCommand PIDController::get_command(bool reverse,
                                                        bool thru) {
+    // Runs in background of move commands
+    // distance formula to find the distance between the robot and the target
+    // position distance error is distance ArcTan is used to find the angle
+    // between the robot and the target position This difference is the angle
+    // error Power applied to the motors based on type of movement and error
+    // Dependant on the weight of the constants and the errors
+    // Controller exits when robot settled for a designated time duration or
+    // accurate to a specified tolerance
     counter += 10;
     int dir = reverse ? -1 : 1;
     Point current_pos = this->l->get_position();
@@ -99,6 +107,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
 
         ang_speed = angular_pid(angle_error);
     }
+    // Runs at the end of a through movement
     if (chainedExecutable) {
         return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
             dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
@@ -112,6 +121,12 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
 chassis::DiffChassisCommand
 PIDController::get_angular_command(bool reverse, bool thru,
                                    voss::AngularDirection direction) {
+    // Runs in the background of turn commands
+    // Error is the difference between the target angle and the current angle
+    // ArcTan is used to find the angle between the robot and the target
+    // position Output is proportional to the error and the weight of the
+    // constant Controller exits when robot settled for a designated time
+    // duration or accurate to a specified tolerance
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
@@ -164,7 +179,8 @@ PIDController::get_angular_command(bool reverse, bool thru,
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
-
+// What is calculating the required motor power for a linear movement
+// Returns value for motor power with type double
 double PIDController::linear_pid(double error) {
     total_lin_err += error;
 
@@ -175,7 +191,8 @@ double PIDController::linear_pid(double error) {
 
     return speed;
 }
-
+// What is calculating the required motor power for a turn
+// Returns value for motor power with type double
 double PIDController::angular_pid(double error) {
     total_ang_err += error;
 
@@ -187,6 +204,7 @@ double PIDController::angular_pid(double error) {
     return speed;
 }
 
+// Function to reset every variable used in the PID controller
 void PIDController::reset() {
     this->prev_lin_err = 0;
     this->total_lin_err = 0;
