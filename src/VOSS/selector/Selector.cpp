@@ -10,13 +10,13 @@ lv_obj_t* redBtnm;
 lv_obj_t* blueBtnm;
 lv_obj_t* skillsBtnm;
 
-//Add the list of autonomous routines buttons here
+// Add the list of autonomous routines buttons here
 int auton;
 const char* btnmMap[11] = {"", "", "", "", "", "", "", "", "", "", ""};
 const char* skillsMap[] = {"Skills", ""};
 
-//Rendering the buttons for the autonomous routines
-//Add logic that if the button is pressed, that autonomous routine is selected
+// Rendering the buttons for the autonomous routines
+// Add logic that if the button is pressed, that autonomous routine is selected
 void render() {
     lv_btnmatrix_clear_btn_ctrl_all(redBtnm, LV_BTNMATRIX_CTRL_CHECKED);
     lv_btnmatrix_clear_btn_ctrl_all(blueBtnm, LV_BTNMATRIX_CTRL_CHECKED);
@@ -32,8 +32,7 @@ void render() {
     }
 }
 
-
-//Initializing the autonomous selector screen
+// Initializing the autonomous selector screen
 void init(int default_auton, const char** autons) {
 
     int ptr = 0;
@@ -127,7 +126,8 @@ void init(int default_auton, const char** autons) {
     // Release mutex
     auton_mtx.give();
 }
-//What is envoked to get the value of the selected autonomous routine so it can be used in the main.cpp file
+// What is envoked to get the value of the selected autonomous routine so it can
+// be used in the main.cpp file
 int get_auton() {
     auton_mtx.take();
     int ret = auton;
