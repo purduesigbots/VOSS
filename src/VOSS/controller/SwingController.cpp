@@ -1,16 +1,20 @@
 #include "VOSS/controller/SwingController.hpp"
+
+#include <utility>
+#include "SwingControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 
 namespace voss::controller {
 SwingController::SwingController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(l){};
+    : AbstractController(std::move(l)){};
 
-chassis::ChassisCommand SwingController::get_command(bool reverse, bool thru) {
-    return chassis::ChassisCommand{chassis::Stop{}};
+chassis::DiffChassisCommand SwingController::get_command(bool reverse,
+                                                         bool thru) {
+    return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-chassis::ChassisCommand
+chassis::DiffChassisCommand
 SwingController::get_angular_command(bool reverse, bool thru,
                                      voss::AngularDirection direction) {
     //Runs in background of Swing Turn commands
@@ -55,7 +59,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -65,31 +69,35 @@ SwingController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     double ang_speed = angular_pid(angular_error);
-    chassis::ChassisCommand command;
+    chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
         can_reverse = !can_reverse;
     }
 
     if (!this->can_reverse) {
-        if (reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+        if (!reverse) {
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     } else {
-        if (!reverse) {
-            command = std::signbit(ang_speed) ? chassis::Swing{-ang_speed, 0}
-                                              : chassis::Swing{0, ang_speed};
+        if (reverse) {
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{-ang_speed, 0}
+                          : chassis::diff_commands::Swing{0, ang_speed};
         } else {
-            command = std::signbit(ang_speed) ? chassis::Swing{0, ang_speed}
-                                              : chassis::Swing{-ang_speed, 0};
+            command = std::signbit(ang_speed)
+                          ? chassis::diff_commands::Swing{0, ang_speed}
+                          : chassis::diff_commands::Swing{-ang_speed, 0};
         }
     }
 
@@ -121,4 +129,38 @@ void SwingController::reset() {
     this->can_reverse = false;
     this->turn_overshoot = false;
 }
+
+std::shared_ptr<SwingController>
+SwingController::modify_angular_constants(double kP, double kI, double kD) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_angular_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<SwingController>
+SwingController::modify_angular_exit_error(double exit_error) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_angular_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<SwingController>
+SwingController::modify_settle_time(double settle_time) {
+    auto pid_mod = SwingControllerBuilder::from(*this)
+                       .with_settle_time(settle_time)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
 }; // namespace voss::controller

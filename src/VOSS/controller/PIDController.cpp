@@ -1,16 +1,20 @@
 #include "VOSS/controller/PIDController.hpp"
+#include "PIDControllerBuilder.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <utility>
+#include <memory>
 
 namespace voss::controller {
 
 PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0),
+    : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0),
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 
-chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
+chassis::DiffChassisCommand PIDController::get_command(bool reverse,
+                                                       bool thru) {
     //Runs in background of move commands
     //distance formula to find the distance between the robot and the target position
     //distance error is distance
@@ -54,7 +58,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     if (fabs(distance_error - prev_lin_err) < 0.1 &&
@@ -71,7 +75,7 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
     prev_angle = current_angle;
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
     lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
@@ -105,16 +109,16 @@ chassis::ChassisCommand PIDController::get_command(bool reverse, bool thru) {
     }
     //Runs at the end of a through movement
     if (chainedExecutable) {
-        return chassis::ChassisCommand{
-            chassis::Chained{dir * 100.0 - ang_speed, dir * 100.0 + ang_speed}};
+        return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
+            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
+            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
     }
 
-    return chassis::ChassisCommand{
-        chassis::Voltages{lin_speed - ang_speed, lin_speed + ang_speed}};
+    return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
+        lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-
-chassis::ChassisCommand
+chassis::DiffChassisCommand
 PIDController::get_angular_command(bool reverse, bool thru,
                                    voss::AngularDirection direction) {
     //Runs in the background of turn commands
@@ -158,7 +162,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close > settle_time) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
@@ -168,10 +172,11 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     if (close_2 > settle_time * 2) {
-        return chassis::ChassisCommand{chassis::Stop{}};
+        return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     double ang_speed = angular_pid(angular_error);
-    return chassis::ChassisCommand{chassis::Voltages{-ang_speed, ang_speed}};
+    return chassis::DiffChassisCommand{
+        chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
 //What is calculating the required motor power for a linear movement
 //Returns value for motor power with type double
@@ -207,6 +212,78 @@ void PIDController::reset() {
     this->can_reverse = false;
     this->counter = 0;
     this->turn_overshoot = false;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_linear_constants(double kP, double kI, double kD) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_linear_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_angular_constants(double kP, double kI, double kD) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_angular_constants(kP, kI, kD)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController> PIDController::modify_tracking_kp(double kP) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_tracking_kp(kP).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_exit_error(double exit_error) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_exit_error(exit_error).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_angular_exit_error(double exit_error) {
+    auto pid_mod = PIDControllerBuilder::from(*this)
+                       .with_angular_exit_error(exit_error)
+                       .build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_min_error(double min_error) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_min_error(min_error).build();
+
+    this->p = pid_mod;
+
+    return this->p;
+}
+
+std::shared_ptr<PIDController>
+PIDController::modify_settle_time(double settle_time) {
+    auto pid_mod =
+        PIDControllerBuilder::from(*this).with_settle_time(settle_time).build();
+
+    this->p = pid_mod;
+
+    return this->p;
 }
 
 } // namespace voss::controller

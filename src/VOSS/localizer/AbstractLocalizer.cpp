@@ -1,4 +1,5 @@
 #include "VOSS/localizer/AbstractLocalizer.hpp"
+#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::localizer {
@@ -28,7 +29,7 @@ void AbstractLocalizer::begin_localization() {
 //These last few functions allows the user to set and get values of the robot's pose while keeing the values safe with mutex
 void AbstractLocalizer::set_pose(Pose pose) {
     std::unique_lock<pros::Mutex> lock(this->mtx);
-    this->pose = pose;
+    this->pose = {pose.x, pose.y, to_radians(pose.theta)};
 }
 
 Pose AbstractLocalizer::get_pose() {

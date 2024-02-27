@@ -26,12 +26,14 @@ double DiffChassis::slew(double target, bool is_left) {
 //Overloaded constructor for creating differential chassis with different controller layouts
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller_ptr default_controller, double slew_step)
+                         controller_ptr default_controller, double slew_step,
+                         pros::motor_brake_mode_e brakeMode)
     : AbstractChassis(default_controller) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 
     this->slew_step = slew_step > 0 ? slew_step : 200;
+    this->brakeMode = brakeMode;
     this->prev_voltages = {0, 0};
 }
 
@@ -48,17 +50,24 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
     this->right_motors->move_voltage(120.0 * right);
 }
 
+void DiffChassis::set_brake_mode(pros::motor_brake_mode_e mode) {
+    this->brakeMode = mode;
+    this->left_motors->set_brake_mode(mode);
+    this->right_motors->set_brake_mode(mode);
+}
+
 //Evoke the chassis to move according to how it was set up using the constructor, returns true if movement is complete
-bool DiffChassis::execute(ChassisCommand cmd, double max) {
+bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
     return std::visit(
         overload{
             [this](Stop&) -> bool {
-                this->left_motors->move_voltage(0);
-                this->right_motors->move_voltage(0);
+                this->set_brake_mode(this->brakeMode);
+                this->left_motors->brake();
+                this->right_motors->brake();
 
                 return true;
             },
-            [this, max](Voltages& v) -> bool {
+            [this, max](diff_commands::Voltages& v) -> bool {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v_max > max) {
                     v.left = v.left * max / v_max;
@@ -76,7 +85,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
                 return false;
             },
             //Logic allowing for individual movements within a chain of movements to be registered at completed even though robot may still be moving
-            [this, max](Chained& v) {
+            [this, max](diff_commands::Chained& v) -> bool {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v_max > max) {
                     v.left = v.left * max / v_max;
@@ -94,7 +103,7 @@ bool DiffChassis::execute(ChassisCommand cmd, double max) {
                 return true;
             },
             //Logic to brake one side of the drive alloing for a turn around the side of the robot and returning true when the turn is finished
-            [this, max](Swing& v) {
+            [this, max](diff_commands::Swing& v) {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v.right == 0) {
                     this->right_motors->set_brake_mode(pros::MotorBrake::hold);

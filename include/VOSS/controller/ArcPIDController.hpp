@@ -1,11 +1,13 @@
 #pragma once
 
 #include "VOSS/controller/AbstractController.hpp"
+#include <memory>
 
 namespace voss::controller {
 
 class ArcPIDController : public AbstractController {
   protected:
+    std::shared_ptr<ArcPIDController> p;
     double linear_kP, linear_kI, linear_kD;
     double track_width;
     double exit_error;
@@ -25,12 +27,20 @@ class ArcPIDController : public AbstractController {
 
     double linear_pid(double error);
 
-    chassis::ChassisCommand get_command(bool reverse, bool thru) override;
-    chassis::ChassisCommand
+    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction) override;
 
     void reset() override;
+
+    std::shared_ptr<ArcPIDController>
+    modify_linear_constants(double kP, double kI, double kD);
+    std::shared_ptr<ArcPIDController> modify_track_width(double track_width);
+    std::shared_ptr<ArcPIDController> modify_exit_error(double error);
+    std::shared_ptr<ArcPIDController> modify_min_error(double error);
+    std::shared_ptr<ArcPIDController> modify_settle_time(double time);
+    std::shared_ptr<ArcPIDController> modify_slew(double slew);
 
     friend class ArcPIDControllerBuilder;
 };

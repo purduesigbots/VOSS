@@ -16,8 +16,9 @@ class AbstractController {
   public:
     AbstractController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    virtual chassis::ChassisCommand get_command(bool reverse, bool thru) = 0;
-    virtual chassis::ChassisCommand
+    virtual chassis::DiffChassisCommand get_command(bool reverse,
+                                                    bool thru) = 0;
+    virtual chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction) = 0;
 
