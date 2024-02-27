@@ -1,4 +1,6 @@
 #include "VOSS/controller/PIDControllerBuilder.hpp"
+
+#include <utility>
 #include "VOSS/controller/PIDController.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/angle.hpp"
@@ -7,14 +9,14 @@ namespace voss::controller {
 
 PIDControllerBuilder::PIDControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : ctrl(l) {
+    : ctrl(std::move(l)) {
 
     this->ctrl.p = nullptr;
 }
 
 PIDControllerBuilder PIDControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
-    PIDControllerBuilder builder(l);
+    PIDControllerBuilder builder(std::move(l));
     return builder;
 }
 

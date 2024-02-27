@@ -3,12 +3,13 @@
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <utility>
 #include <memory>
 
 namespace voss::controller {
 
 PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0),
+    : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0),
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 

@@ -2,12 +2,13 @@
 #include "ArcPIDControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <utility>
 
 namespace voss::controller {
 
 ArcPIDController::ArcPIDController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(l), prev_lin_err(0.0), total_lin_err(0.0) {
+    : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0) {
 }
 
 chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
