@@ -1,5 +1,35 @@
 #include "main.h"
 #include "VOSS/api.hpp"
+#include "VOSS/controller/BoomerangControllerBuilder.hpp"
+#include "VOSS/controller/PIDControllerBuilder.hpp"
+#include "VOSS/controller/SwingControllerBuilder.hpp"
+#include "VOSS/localizer/ADILocalizerBuilder.hpp"
+#include "VOSS/utils/flags.hpp"
+
+#define LEFT_MOTORS                                                            \
+    { 11, -12, -1, 2, -16 }
+#define RIGHT_MOTORS                                                           \
+    { -20, 19, 6, 8, -18 }
+
+auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+                .with_left_motors(LEFT_MOTORS)
+                .with_right_motors(RIGHT_MOTORS)
+                .with_left_right_tpi(17)
+                .with_imu(10)
+                .build();
+
+auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+               .with_linear_constants(5, 0, 12)
+               .with_angular_constants(170, 0.05, 700)
+               .with_tracking_kp(60)
+               .with_exit_error(1)
+               .with_angular_exit_error(2)
+               .with_min_error(5)
+               .with_settle_time(200)
+               .build();
+
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 8);
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -8,6 +38,7 @@
  */
 void initialize() {
     pros::lcd::initialize();
+    odom->begin_localization();
 }
 
 /**
@@ -42,6 +73,18 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+    // auto odom = voss::localizer::ADILocalizerBuilder::new_builder().build();
+    // auto pid =
+    // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    //                .with_lead_pct(60)
+    //                .build();
+
+    // // auto pid2 =
+    // // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    // //                 .with_lead_pct(65)
+    // //                 .build();
+
+    // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
 }
 
 /**
@@ -88,6 +131,7 @@ void opcontrol() {
             .with_angular_exit_error(1.0)
             .with_min_error(5)
             .with_settle_time(200)
+            .with_min_vel_for_thru(50)
             .build();
 
     auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
@@ -102,19 +146,28 @@ void opcontrol() {
     auto [leftM, rightM] = chassis.getMotors();
 
     while (true) {
-
         voss::Pose p = odom->get_pose();
 
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose(voss::Pose{0.0, 0.0, 0});
-            chassis.turn(270, 100, voss::Flags::NONE,
-                         voss::AngularDirection::COUNTERCLOCKWISE);
-            chassis.turn(0);
-            chassis.turn(-270, swing, 100, voss::Flags::NONE,
-                         voss::AngularDirection::CLOCKWISE);
+            odom->set_pose(voss::Pose{0.0, 0.0, 180});
+            //            chassis.move(voss::Pose{24, 24, 90}, &boomerang,
+            //            100.0, voss::Flags::THRU); master.rumble(".");
+            //            chassis.move(voss::Pose{48, 5, 290}, &boomerang, 70.0,
+            //            voss::Flags::THRU); master.rumble(".");
+            //            chassis.move(voss::Pose{64, 24, 90},
+            //            &boomerang, 70.0); master.rumble(".");
+            chassis.move(voss::Pose{48, 25, 10}, boomerang, 70.0,
+                         voss::Flags::REVERSE | voss::Flags::THRU);
+            //            chassis.move(voss::Pose{48, 25, 10}, &boomerang, 70.0,
+            //            voss::Flags::THRU);
+            master.rumble(".");
+            chassis.move(voss::Pose{60, -5, 270}, boomerang, 100.0,
+                         voss::Flags::REVERSE);
+            //            chassis.move(voss::Pose{60, 0, 270},
+            //            &boomerang, 70.0);
         }
 
         pros::lcd::clear_line(1);

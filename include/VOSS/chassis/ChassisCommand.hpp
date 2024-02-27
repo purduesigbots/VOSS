@@ -34,9 +34,7 @@ using DiffChassisCommand =
                  diff_commands::Swing>;
 using HoloChassisCommand = std::variant<Stop, holo_commands::Voltages>;
 
-template <class... Ts> struct overload : Ts... {
-    using Ts::operator()...;
-};
+template <class... Ts> struct overload : Ts... { using Ts::operator()...; };
 template <class... Ts> overload(Ts...) -> overload<Ts...>;
 
 } // namespace voss::chassis
