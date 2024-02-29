@@ -153,5 +153,8 @@ void ADILocalizer::set_pose(Pose pose) {
         this->imu->set_rotation(-pose.theta);
     }
 }
+void ADILocalizer::set_pose(double x, double y, double theta) {
+    this->set_pose({x, y, theta});
+}
 
 } // namespace voss::localizer

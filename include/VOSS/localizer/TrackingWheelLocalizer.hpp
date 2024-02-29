@@ -26,7 +26,8 @@ class TrackingWheelLocalizer : public AbstractLocalizer {
                            double left_right_dist, double middle_dist);
     void update() override;
     void calibrate() override;
-    void set_pose(Pose pose);
+    void set_pose(Pose pose) override;
+    void set_pose(double x, double y, double theta) override;
 
     friend class TrackingWheelLocalizerBuilder;
 };

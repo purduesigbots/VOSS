@@ -33,10 +33,11 @@ class ADILocalizer : public AbstractLocalizer {
     double get_middle_encoder_value();
     double get_imu_value();
 
-    void update();
-    void calibrate();
+    void update() override;
+    void calibrate() override;
 
-    void set_pose(Pose pose);
+    void set_pose(Pose pose) override;
+    void set_pose(double x, double y, double theta) override;
 };
 
 } // namespace voss::localizer
