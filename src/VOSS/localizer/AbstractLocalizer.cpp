@@ -48,7 +48,6 @@ double AbstractLocalizer::get_x() {
     return ret;
 }
 
-
 double AbstractLocalizer::get_y() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
     double ret = this->pose.y;
