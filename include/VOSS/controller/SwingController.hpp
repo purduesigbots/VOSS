@@ -17,6 +17,7 @@ class SwingController : public AbstractController {
     double close_2;
     int counter;
     bool turn_overshoot;
+    double min_vel;
 
     double prev_ang_err, total_ang_err;
     double prev_ang_speed;

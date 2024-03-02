@@ -78,7 +78,11 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
-    lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
+    lin_speed = linear_pid(distance_error);
+    if (thru) {
+        lin_speed = copysign(fmax(fabs(lin_speed), this->min_vel), lin_speed);
+    }
+    lin_speed *= dir;
 
     double ang_speed;
     if (distance_error < min_error) {
@@ -110,8 +114,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
     // Runs at the end of a through movement
     if (chainedExecutable) {
         return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
-            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
-            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+            lin_speed - ang_speed, lin_speed + ang_speed}};
     }
 
     return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
@@ -145,7 +148,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
 
     if (fabs(angular_error) < voss::to_radians(5)) {
         turn_overshoot = true;
-        if(thru) {
+        if (thru) {
             chainedExecutable = true;
         }
     }
@@ -179,10 +182,15 @@ PIDController::get_angular_command(bool reverse, bool thru,
     if (close_2 > settle_time * 2) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
+
     double ang_speed = angular_pid(angular_error);
-    if(chainedExecutable) {
+    if (thru) {
+        ang_speed = copysign(fmax(fabs(ang_speed), this->min_vel), ang_speed);
+    }
+
+    if (chainedExecutable) {
         return chassis::DiffChassisCommand{
-            chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
+            chassis::diff_commands::Chained{-ang_speed, ang_speed}};
     }
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{-ang_speed, ang_speed}};

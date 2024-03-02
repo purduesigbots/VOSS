@@ -61,8 +61,15 @@ ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_slew(double slew) {
     return *this;
 }
 
+ArcPIDControllerBuilder&
+ArcPIDControllerBuilder::with_min_vel_for_thru(double min_vel) {
+    this->ctrl.min_vel = min_vel;
+    return *this;
+}
+
 std::shared_ptr<ArcPIDController> ArcPIDControllerBuilder::build() {
     return std::make_shared<ArcPIDController>(this->ctrl);
 }
+
 
 } // namespace voss::controller

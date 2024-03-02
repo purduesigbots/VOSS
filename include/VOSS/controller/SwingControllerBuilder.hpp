@@ -22,6 +22,7 @@ class SwingControllerBuilder {
                                                    double kD);
     SwingControllerBuilder& with_angular_exit_error(double error);
     SwingControllerBuilder& with_settle_time(double time);
+    SwingControllerBuilder& with_min_vel_for_thru(double min_vel);
     //    SwingControllerBuilder& with_slew(double slew);
 
     std::shared_ptr<SwingController> build();
