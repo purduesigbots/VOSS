@@ -20,6 +20,7 @@ class SwingController : public AbstractController {
 
     double prev_ang_err, total_ang_err;
     double prev_ang_speed;
+    chassis::DiffChassisCommand checkDirection(bool reverse, bool can_reverse, double ang_speed);
 
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);

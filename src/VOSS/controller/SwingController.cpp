@@ -26,6 +26,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
     // the constant Exit conditions are when the robot has settled for a
     // designated time duration or accurate to a specified tolerance
     counter += 10;
+    bool chainedExecutable = false;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
     if (this->target.theta == 361) {
@@ -42,6 +43,9 @@ SwingController::get_angular_command(bool reverse, bool thru,
 
     if (fabs(angular_error) < voss::to_radians(5)) {
         turn_overshoot = true;
+        if (thru) {
+            chainedExecutable = true;
+        }
     }
 
     if (!turn_overshoot) {
@@ -74,38 +78,79 @@ SwingController::get_angular_command(bool reverse, bool thru,
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
-    double ang_speed = angular_pid(angular_error);
+    double ang_speed = thru ? 100.0 : angular_pid(angular_error);
     chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
         can_reverse = !can_reverse;
     }
-
-    if (!this->can_reverse) {
-        if (!reverse) {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{-ang_speed, 0}
-                          : chassis::diff_commands::Swing{0, ang_speed};
-        } else {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{0, ang_speed}
-                          : chassis::diff_commands::Swing{-ang_speed, 0};
-        }
-    } else {
-        if (reverse) {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{-ang_speed, 0}
-                          : chassis::diff_commands::Swing{0, ang_speed};
-        } else {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{0, ang_speed}
-                          : chassis::diff_commands::Swing{-ang_speed, 0};
-        }
-    }
+    //    if (chainedExecutable) {
+    //        if (!this->can_reverse) {
+    //            if (!reverse) {
+    //                return std::signbit(ang_speed)
+    //                              ?
+    //                              chassis::diff_commands::Chained{-ang_speed,
+    //                              0} : chassis::diff_commands::Chained{0,
+    //                              ang_speed};
+    //            }
+    //            return std::signbit(ang_speed)
+    //                       ? chassis::diff_commands::Chained{0, ang_speed}
+    //                       : chassis::diff_commands::Chained{-ang_speed, 0};
+    //        } else {
+    //            if (reverse) {
+    //                return std::signbit(ang_speed)
+    //                              ?
+    //                              chassis::diff_commands::Chained{-ang_speed,
+    //                              0} : chassis::diff_commands::Chained{0,
+    //                              ang_speed};
+    //            }
+    //            return std::signbit(ang_speed)
+    //                       ? chassis::diff_commands::Chained{0, ang_speed}
+    //                       : chassis::diff_commands::Chained{-ang_speed, 0};
+    //        }
+    //    } else {
+    //        if (!this->can_reverse) {
+    //            if (!reverse) {
+    //                return std::signbit(ang_speed)
+    //                           ? chassis::diff_commands::Swing{-ang_speed, 0}
+    //                           : chassis::diff_commands::Swing{0, ang_speed};
+    //            }
+    //            return std::signbit(ang_speed)
+    //                       ? chassis::diff_commands::Swing{0, ang_speed}
+    //                       : chassis::diff_commands::Swing{-ang_speed, 0};
+    //        } else {
+    //            if (reverse) {
+    //                return std::signbit(ang_speed)
+    //                           ? chassis::diff_commands::Swing{-ang_speed, 0}
+    //                           : chassis::diff_commands::Swing{0, ang_speed};
+    //            }
+    //            return std::signbit(ang_speed)
+    //                       ? chassis::diff_commands::Swing{0, ang_speed}
+    //                       : chassis::diff_commands::Swing{-ang_speed, 0};
+    //        }
+    //    };
 
     prev_ang_speed = ang_speed;
+    if (chainedExecutable) {
+        if (this->can_reverse ^ reverse) { // same sign
+            return std::signbit(ang_speed)//1
+                       ? chassis::diff_commands::Chained{-ang_speed, 0}
+                       : chassis::diff_commands::Chained{0, ang_speed};
+        }
+        return std::signbit(ang_speed)//2
+                   ? chassis::diff_commands::Chained{0, ang_speed}
+                   : chassis::diff_commands::Chained{-ang_speed, 0};
 
-    return command;
+    } else {
+        if (this->can_reverse ^ reverse) { // same sign
+            return std::signbit(ang_speed)//3
+                       ? chassis::diff_commands::Swing{-ang_speed, 0}
+                       : chassis::diff_commands::Swing{0, ang_speed};
+        }
+        return std::signbit(ang_speed)//4
+                   ? chassis::diff_commands::Swing{0, ang_speed}
+                   : chassis::diff_commands::Swing{-ang_speed, 0};
+    }
 }
 
 // What is calculating the required motor power for the turn

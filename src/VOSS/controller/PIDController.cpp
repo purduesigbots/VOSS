@@ -128,6 +128,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     // constant Controller exits when robot settled for a designated time
     // duration or accurate to a specified tolerance
     counter += 10;
+    bool chainedExecutable = false;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
     if (this->target.theta == 361) {
@@ -144,6 +145,9 @@ PIDController::get_angular_command(bool reverse, bool thru,
 
     if (fabs(angular_error) < voss::to_radians(5)) {
         turn_overshoot = true;
+        if(thru) {
+            chainedExecutable = true;
+        }
     }
 
     if (!turn_overshoot) {
@@ -176,6 +180,10 @@ PIDController::get_angular_command(bool reverse, bool thru,
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
     double ang_speed = angular_pid(angular_error);
+    if(chainedExecutable) {
+        return chassis::DiffChassisCommand{
+            chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
+    }
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
