@@ -28,6 +28,7 @@ class ArcPIDControllerBuilder {
     ArcPIDControllerBuilder& with_min_error(double error);
     ArcPIDControllerBuilder& with_settle_time(double time);
     ArcPIDControllerBuilder& with_slew(double slew);
+    ArcPIDControllerBuilder& with_min_vel_for_thru(double min_vel);
 
     std::shared_ptr<ArcPIDController> build();
 };

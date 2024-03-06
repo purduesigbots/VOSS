@@ -46,6 +46,12 @@ SwingControllerBuilder& SwingControllerBuilder::with_settle_time(double time) {
     return *this;
 }
 
+SwingControllerBuilder&
+SwingControllerBuilder::with_min_vel_for_thru(double min_vel) {
+    this->ctrl.min_vel = min_vel;
+    return *this;
+}
+
 std::shared_ptr<SwingController> SwingControllerBuilder::build() {
     return std::make_shared<SwingController>(this->ctrl);
 }

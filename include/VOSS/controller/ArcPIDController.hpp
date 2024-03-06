@@ -17,6 +17,7 @@ class ArcPIDController : public AbstractController {
     double prev_t;
     double slew;
     double prev_lin_speed;
+    double min_vel;
 
     double close;
 

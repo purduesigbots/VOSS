@@ -15,6 +15,7 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
                                                           bool thru) {
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
+    bool chainedExecutable = false;
 
     // x: current_x, y: current_y
     // x': target_x, y': target_y
@@ -49,6 +50,9 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
 
     if (distance_error <= exit_error ||
         (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
+        if(thru) {
+            chainedExecutable = true;
+        }
         this->close += 10;
     } else {
         this->close = 0;
@@ -61,6 +65,9 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
     double lin_speed = thru ? 100.0 : this->linear_pid(distance_error);
 
     if (distance_error < this->min_error) {
+        if(thru) {
+            chainedExecutable = true;
+        }
         this->can_reverse = true;
         lin_speed *= cos(angle_error);
         // return
@@ -88,6 +95,9 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
     }
     prev_t = t;
     prev_lin_speed = lin_speed;
+    if(chainedExecutable){
+        return chassis::DiffChassisCommand{chassis::diff_commands::Chained{left_speed, right_speed}};
+    }
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{left_speed, right_speed}};
 }

@@ -49,15 +49,14 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
         (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
         if (thru) {
             chainedExecutable = true;
-        } else {
-            total_lin_err = 0;
-            close += 10;
         }
+        total_lin_err = 0;
+        close += 10;
     } else {
         close = 0;
     }
 
-    if (close > settle_time) {
+    if (close > settle_time && !thru) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
@@ -74,11 +73,15 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
 
     prev_angle = current_angle;
 
-    if (close_2 > settle_time * 2) {
+    if (close_2 > settle_time * 2 && !thru) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
-    lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
+    lin_speed = linear_pid(distance_error);
+    if (thru) {
+        lin_speed = copysign(fmax(fabs(lin_speed), this->min_vel), lin_speed);
+    }
+    lin_speed *= dir;
 
     double ang_speed;
     if (distance_error < min_error) {
@@ -110,8 +113,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
     // Runs at the end of a through movement
     if (chainedExecutable) {
         return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
-            dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
-            dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+            lin_speed - ang_speed, lin_speed + ang_speed}};
     }
 
     return chassis::DiffChassisCommand{chassis::diff_commands::Voltages{
@@ -128,6 +130,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     // constant Controller exits when robot settled for a designated time
     // duration or accurate to a specified tolerance
     counter += 10;
+    bool chainedExecutable = false;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
     if (this->target.theta == 361) {
@@ -144,6 +147,9 @@ PIDController::get_angular_command(bool reverse, bool thru,
 
     if (fabs(angular_error) < voss::to_radians(5)) {
         turn_overshoot = true;
+        if (thru) {
+            chainedExecutable = true;
+        }
     }
 
     if (!turn_overshoot) {
@@ -157,25 +163,38 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     if (fabs(angular_error) < angular_exit_error) {
+        if (thru) {
+            chainedExecutable = true;
+        }
         close += 10;
     } else {
         close = 0;
     }
 
-    if (close > settle_time) {
+    if (close > settle_time && !thru) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
+
     if (fabs(angular_error - prev_ang_err) < voss::to_radians(0.1) &&
         counter > 400) {
+        if (thru) {
+            chainedExecutable = true;
+        }
         close_2 += 10;
     } else {
         close_2 = 0;
     }
 
-    if (close_2 > settle_time * 2) {
+    if (close_2 > settle_time * 2 && !thru) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
+
     double ang_speed = angular_pid(angular_error);
+
+    if (chainedExecutable) {
+        return chassis::DiffChassisCommand{
+            chassis::diff_commands::Chained{-ang_speed, ang_speed}};
+    }
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
