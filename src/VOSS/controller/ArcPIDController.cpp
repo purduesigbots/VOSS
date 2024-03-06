@@ -93,6 +93,9 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
         left_speed = lin_speed;
         right_speed = lin_speed;
     }
+
+
+
     prev_t = t;
     prev_lin_speed = lin_speed;
     if(chainedExecutable){
