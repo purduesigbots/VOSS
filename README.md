@@ -42,6 +42,7 @@ void initialize() {
     
 }
 '''
+
 ###Creating a PID controller
 * We will set up a PID controller for chassis movements in global scope
 * 'Linear error' = Linear distance from desired position to current position
@@ -80,6 +81,7 @@ void initialize() {
     
 }
 '''
+
 ###Creating the chassis object
 * We will be creating a differential drive chassis in global scope
 1. 'Call' voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
@@ -90,6 +92,7 @@ void initialize() {
     
 }
 '''
+
 ###Starting the odometry localization
 * We will be starting odomentry localization in the initalize scope 
 1. 'Call' odom->begin_localization()
@@ -98,6 +101,7 @@ void initialize() {
     odom->begin_localization();    
 }
 '''
+
 ###Tuning localizer and controller
 * We will be tuning the TPI (ticks per inch) of the localizer
     1. Move the robot forard a measured ammount
@@ -132,6 +136,7 @@ void opcontrol() {
     }
 }
 '''
+
 ###Autonomus Movement
 *There are two types of basic movment calls which you can use to write an automous
 1. Move
@@ -152,6 +157,7 @@ void autonomous(){
     chassis.move({1.0, 1.0}, 100, voss::Flags::RELATIVE);
     chassis.move({1.0, 1.0}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC);
 }
+
 2. Turn
     * Parameters
     1. 'Desired angle'
