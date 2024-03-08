@@ -1,4 +1,4 @@
-#Pros With VOSS
+# Pros With VOSS
 
 ### Introduction
 VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonomous code for VEX robots a piece of cake.
@@ -14,13 +14,13 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 
 5. Put `#include "VOSS/api.h"` in your main.h
 
-##Quick start guide
-###Robot definitions
+## Quick start guide
+### Robot definitions
 * 'LEFT_MOTORS' = list of motors on the left side of the drive
 * 'RIGHT_MOTORS' = list of motors on the right side of the drive
 * 'IMU_PORT' = the smart port number in which your imu is plugged into
 
-###Creating a localizer
+### Creating a localizer
 * We will set up a IME localizer in global scope
 1. 'Call' auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
 2. Setup inputs to localizer
@@ -43,7 +43,7 @@ void initialize() {
 }
 ```
 
-###Creating a PID controller
+### Creating a PID controller
 * We will set up a PID controller for chassis movements in global scope
 * 'Linear error' = Linear distance from desired position to current position
 * 'Angular error' = Angular distance from desired position to current position
@@ -82,7 +82,7 @@ void initialize() {
 }
 ```
 
-###Creating the chassis object
+### Creating the chassis object
 * We will be creating a differential drive chassis in global scope
 1. 'Call' voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
 ```cpp
@@ -93,7 +93,7 @@ void initialize() {
 }
 ```
 
-###Starting the odometry localization
+### Starting the odometry localization
 * We will be starting odomentry localization in the initalize scope 
 1. 'Call' odom->begin_localization()
 ```cpp
@@ -102,7 +102,7 @@ void initialize() {
 }
 ```
 
-###Tuning localizer and controller
+### Tuning localizer and controller
 * We will be tuning the TPI (ticks per inch) of the localizer
     1. Move the robot forard a measured ammount
     2. Read the odometry value
@@ -121,7 +121,7 @@ void initialize() {
 * For more information on PID and Odometry check out the SIGBots Wiki at https://wiki.purduesigbots.com/
 * Another great intro to PID article can be found at http://georgegillard.com/documents/2-introduction-to-pid-controllers
 
-###Driver Control
+### Driver Control
 * We will be setting up tank control scheme for the drive in the opcontrol scope
 1. Define the controller
     * 'Call' pros::Controller master(pros::E_CONTROLLER_MASTER)
@@ -137,8 +137,8 @@ void opcontrol() {
 }
 ```
 
-###Autonomus Movement
-*There are two types of basic movment calls which you can use to write an automous
+### Autonomus Movement
+* There are two types of basic movment calls which you can use to write an automous
 1. Move
     * Parameters
         1. 'Desired pose' = {x, y}
