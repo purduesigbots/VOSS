@@ -1,4 +1,4 @@
-# Pros With VOSS
+# PROS With VOSS
 
 ### Introduction
 VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonomous code for VEX robots a piece of cake.
