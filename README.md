@@ -84,9 +84,9 @@ void initialize() {
 
 ### Creating the chassis object
 * We will be creating a differential drive chassis in global scope
-1. `Call` voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
+1. `Call` voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, slew rate, brake mode)
 ```cpp
-voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT);
+voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 8, pros::E_MOTOR_BRAKE_BRAKE);
 
 void initialize() {
     
@@ -152,10 +152,10 @@ void opcontrol() {
     * `Call` chassis.move(Parameters)
 ```cpp
 void autonomous(){
-    chassis.move({1.0, 1.0});
-    chassis.move({1.0, 1.0}, 100);
-    chassis.move({1.0, 1.0}, 100, voss::Flags::RELATIVE);
-    chassis.move({1.0, 1.0}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC);
+    chassis.move(voss::Point{1.0, 1.0});
+    chassis.move(voss::Point{1.0, 1.0}, 100);
+    chassis.move(voss::Point{1.0, 1.0}, 100, voss::Flags::RELATIVE);
+    chassis.move(voss::Point{1.0, 1.0}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC);
 }
 ```
 
@@ -178,6 +178,6 @@ void autonomous(){
     chassis.turn(90);
     chassis.turn(90, 100);
     chassis.turn(90, 100, voss::Flags::RELATIVE);
-    chassis.turn(90, 100, voss::Flags::THRU | voss:Flags::ASYNC);
-    chassis.turn(90, 100, voss::Flags::THRU | voss:Flags::ASYNC, voss::AngularDirection::CW);
+    chassis.turn(90, 100, voss::Flags::THRU | voss::Flags::ASYNC);
+    chassis.turn(90, 100, voss::Flags::THRU | voss::Flags::ASYNC, voss::AngularDirection::CW);
 }
