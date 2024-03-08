@@ -29,7 +29,7 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
     * 'IMU' = .with_imu(IMU_PORT)
     * 'Left right TPi' is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with .with_left_right_tip(TIP value)
 3. 'Call it to build' --> .build()
-'''cpp
+```cpp
 auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
                     .with_left_motors({-1, -2, -3})
                     .with_right_motors({4, 5, 6})
@@ -41,7 +41,7 @@ auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
 void initialize() {
     
 }
-'''
+```
 
 ###Creating a PID controller
 * We will set up a PID controller for chassis movements in global scope
@@ -67,7 +67,7 @@ void initialize() {
     * 'Minimum exit error' = .with_min_error(5)
     * 'Settle time' = .with_settle_time(200)
 4. 'Call it to build' --> .build()
-'''cpp
+```cpp
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
                    .with_linear_constants(0.1, 0.1, 0.1)
                    .with_angular_constants(0.1, 0.1, 0.1)
@@ -80,27 +80,27 @@ auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
 void initialize() {
     
 }
-'''
+```
 
 ###Creating the chassis object
 * We will be creating a differential drive chassis in global scope
 1. 'Call' voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
-'''cpp
+```cpp
 voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT);
 
 void initialize() {
     
 }
-'''
+```
 
 ###Starting the odometry localization
 * We will be starting odomentry localization in the initalize scope 
 1. 'Call' odom->begin_localization()
-'''cpp
+```cpp
 void initialize() {
     odom->begin_localization();    
 }
-'''
+```
 
 ###Tuning localizer and controller
 * We will be tuning the TPI (ticks per inch) of the localizer
@@ -127,7 +127,7 @@ void initialize() {
     * 'Call' pros::Controller master(pros::E_CONTROLLER_MASTER)
 2. Inside the while loop set the movement
     * 'Call' chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y))
-'''cpp
+```cpp
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 
@@ -135,7 +135,7 @@ void opcontrol() {
         chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
     }
 }
-'''
+```
 
 ###Autonomus Movement
 *There are two types of basic movment calls which you can use to write an automous
@@ -150,7 +150,7 @@ void opcontrol() {
             * 'Relative' = not absolute coordinate system
             * 'NONE' = defualt
     * 'Call' chassis.move(Parameters)
-'''cpp
+```cpp
 void autonomous(){
     chassis.move({1.0, 1.0});
     chassis.move({1.0, 1.0}, 100);
@@ -172,7 +172,7 @@ void autonomous(){
         * 'COUNTERCLOCKWISE' or 'CCW'
         * 'CLOCKWISE' or 'CW'
     * 'Call' chassis.turn(parameters)
-'''cpp
+```cpp
 void autonomous(){
     chassis.turn(90);
     chassis.turn(90, 100);
