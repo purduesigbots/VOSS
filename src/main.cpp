@@ -57,7 +57,6 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 0,
                                           pros::E_MOTOR_BRAKE_COAST);
 
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -141,7 +140,7 @@ void opcontrol() {
             odom->set_pose({0.0, 0.0, 90});
             chassis.move({0, 48});
             chassis.turn_to({0, 0});
-//            chassis.turn(270);
+            //            chassis.turn(270);
             chassis.move({10, 10, 250}, boomerang, 50);
             odom->set_pose({20, 10});
             pros::delay(2000);

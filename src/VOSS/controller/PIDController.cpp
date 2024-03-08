@@ -89,7 +89,8 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
                            // spinning
         } else {
             // turn to face the finale pose angle if executing a pose movement
-            double poseError = (target.theta.value() * M_PI / 180) - current_angle;
+            double poseError =
+                (target.theta.value() * M_PI / 180) - current_angle;
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
             ang_speed = angular_pid(poseError);
