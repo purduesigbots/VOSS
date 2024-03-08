@@ -4,7 +4,6 @@
 
 namespace voss {
 
-
 struct AtomicPose;
 struct Pose {
     double x;
@@ -33,7 +32,5 @@ struct AtomicPose {
         theta = pose.theta.load();
     }
 };
-
-
 
 } // namespace voss
