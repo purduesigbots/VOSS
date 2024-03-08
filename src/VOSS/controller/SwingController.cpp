@@ -28,7 +28,7 @@ SwingController::get_angular_command(bool reverse, bool thru,
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
-    if (this->target.theta == 361) {
+    if (!this->target.theta.has_value()) {
         Point current_pos = this->l->get_position();
         double dx = this->target.x - current_pos.x;
         double dy = this->target.y - current_pos.y;

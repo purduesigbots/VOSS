@@ -14,10 +14,14 @@ AbstractController::AbstractController(
 void AbstractController::set_target(Pose target, bool relative) {
     if (relative) {
         Point p = l->get_position();         // robot position
-        double h = l->get_orientation_rad(); // robot heading in radians
+        double h = l->get_orientation_deg(); // robot heading in radians
         double x_new = p.x + target.x * cos(h) - target.y * sin(h);
         double y_new = p.y + target.x * sin(h) + target.y * cos(h);
-        this->target = Pose{x_new, y_new, 361};
+        if(target.theta.has_value()) {
+            this->target = Pose{x_new, y_new, target.theta.value() + h};
+        } else {
+            this->target = Pose{x_new, y_new, std::nullopt};
+        }
     } else {
         this->target = target;
     }

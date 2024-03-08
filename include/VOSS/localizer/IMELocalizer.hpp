@@ -12,7 +12,7 @@ class IMELocalizer : public AbstractLocalizer {
 
   private:
     double prev_left_pos, prev_right_pos, prev_middle_pos;
-    Pose prev_pose;
+    AtomicPose prev_pose;
 
     double left_right_tpi, middle_tpi;
     double track_width;

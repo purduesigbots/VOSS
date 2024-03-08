@@ -7,7 +7,7 @@ namespace voss::localizer {
 // Creating the localiozer object with a starting pose of x = 0, y = 0, and
 // heading = 0
 AbstractLocalizer::AbstractLocalizer() {
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = AtomicPose{0.0, 0.0, 0.0};
 }
 
 // Starting the localization task
@@ -29,12 +29,20 @@ void AbstractLocalizer::begin_localization() {
 // pose while keeing the values safe with mutex
 void AbstractLocalizer::set_pose(Pose pose) {
     std::unique_lock<pros::Mutex> lock(this->mtx);
-    this->pose = {pose.x, pose.y, to_radians(pose.theta)};
+    if (pose.theta.has_value()) {
+        this->pose =
+            AtomicPose{pose.x, pose.y, voss::to_radians(pose.theta.value())};
+    } else {
+        double h = this->pose.theta;
+        this->pose = AtomicPose{pose.x, pose.y, h};
+    }
 }
 
 Pose AbstractLocalizer::get_pose() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
-    Pose ret = this->pose;
+    Pose ret = {this->pose.x.load(), this->pose.y.load(),
+                this->pose.theta.load()};
+
     return ret;
 }
 

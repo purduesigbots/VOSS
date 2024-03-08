@@ -14,10 +14,16 @@ BoomerangController::BoomerangController(
 
 chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
                                                              bool thru) {
+
+    if(!target.theta.has_value()) {
+        return chassis::DiffChassisCommand{chassis::Stop{}};
+    }
+
+
     Point current_pos = this->l->get_position();
     double k = this->min_vel / 100;
-    Point virtualTarget = {target.x + k * cos(voss::to_radians(target.theta)),
-                           target.y + k * sin(voss::to_radians(target.theta))};
+    Point virtualTarget = {target.x + k * cos(voss::to_radians(target.theta.value())),
+                           target.y + k * sin(voss::to_radians(target.theta.value()))};
     double dx, dy, distance_error, at;
     int dir = reverse ? -1 : 1;
     Pose trueTarget;
@@ -31,7 +37,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
         trueTarget = this->target;
     };
     distance_error = sqrt(dx * dx + dy * dy);
-    at = voss::to_radians(target.theta);
+    at = voss::to_radians(target.theta.value());
 
     this->carrotPoint = {trueTarget.x - distance_error * cos(at) * lead_pct,
                          trueTarget.y - distance_error * sin(at) * lead_pct,
@@ -41,7 +47,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
     double current_angle =
         this->l->get_orientation_rad() + (reverse ? M_PI : 0);
     bool chainedExecutable = false;
-    bool noPose = this->target.theta == 361;
+    bool noPose = !this->target.theta.has_value();
     double angle_error;
     double m = fabs((current_pos.y - target.y) / (current_pos.x - target.x));
 
@@ -57,9 +63,9 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
         virtualTarget.y*/
         thru &&
         (current_pos.y - virtualTarget.y) *
-                cos(voss::to_radians(target.theta) - M_PI_2) <
+                cos(voss::to_radians(target.theta.value()) - M_PI_2) <
             (current_pos.x - virtualTarget.x) *
-                sin(voss::to_radians(target.theta) - M_PI_2) &&
+                sin(voss::to_radians(target.theta.value()) - M_PI_2) &&
         (pow((current_pos.y - virtualTarget.y), 2) +
          pow((current_pos.x - virtualTarget.x), 2)) <
             pow(this->min_error * 2, 2)) {
@@ -107,7 +113,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
                            // spinning
         } else {
             // turn to face the finale pose angle if executing a pose movement
-            double poseError = (target.theta * M_PI / 180) - current_angle;
+            double poseError = (target.theta.value() * M_PI / 180) - current_angle;
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
             ang_speed = angular_pid(poseError);

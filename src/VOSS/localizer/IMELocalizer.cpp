@@ -95,7 +95,7 @@ void IMELocalizer::calibrate() {
     if (horizontal_motors) {
         horizontal_motors->tare_position();
     }
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = voss::AtomicPose{0.0, 0.0, 0.0};
 }
 // Calculates the current position of the robot
 // Uses the change in value of the encoders to calculate the change in position
@@ -154,8 +154,8 @@ void IMELocalizer::update() {
 
 void IMELocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
-    if (this->imu) {
-        this->imu->set_rotation(-pose.theta);
+    if (this->imu && pose.theta.has_value()) {
+        this->imu->set_rotation(-pose.theta.value());
     }
 }
 

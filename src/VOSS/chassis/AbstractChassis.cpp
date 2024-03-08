@@ -65,22 +65,12 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
     this->task->join();
 }
 
-// Overloaded constructors move functions to allow for different parameters
-void AbstractChassis::move(Point target, double max, voss::Flags flags,
-                           double exitTime) {
-    this->move(target, this->default_controller, max, flags, exitTime);
-}
 
 void AbstractChassis::move(Pose target, double max, voss::Flags flags,
                            double exitTime) {
     this->move(target, this->default_controller, max, flags, exitTime);
 }
 
-void AbstractChassis::move(Point target, controller_ptr controller, double max,
-                           voss::Flags flags, double exitTime) {
-    Pose pose_target = Pose{target.x, target.y, 361};
-    this->move(pose_target, std::move(controller), max, flags, exitTime);
-}
 
 void AbstractChassis::move(Pose target, controller_ptr controller, double max,
                            voss::Flags flags, double exitTime) {
@@ -129,7 +119,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
     }
     this->task_running = true;
 
-    controller->set_target({target.x, target.y, 361},
+    controller->set_target({target.x, target.y, std::nullopt},
                            flags & voss::Flags::RELATIVE);
 
     this->turn_task(std::move(controller), max, flags, direction, exitTime);
