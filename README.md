@@ -16,19 +16,19 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 
 ## Quick start guide
 ### Robot definitions
-* 'LEFT_MOTORS' = list of motors on the left side of the drive
-* 'RIGHT_MOTORS' = list of motors on the right side of the drive
-* 'IMU_PORT' = the smart port number in which your imu is plugged into
+* `LEFT_MOTORS` = list of motors on the left side of the drive
+* `RIGHT_MOTORS` = list of motors on the right side of the drive
+* `IMU_PORT` = the smart port number in which your imu is plugged into
 
 ### Creating a localizer
 * We will set up a IME localizer in global scope
-1. 'Call' auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+1. `Call` auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
 2. Setup inputs to localizer
-    * 'Left encoders' = .with_left_motors(LEFT_MOTORS)
-    * 'Right encoders' = .with_right_motors(RIGHT_Motors)
-    * 'IMU' = .with_imu(IMU_PORT)
-    * 'Left right TPi' is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with .with_left_right_tip(TIP value)
-3. 'Call it to build' --> .build()
+    * `Left encoders` = .with_left_motors(LEFT_MOTORS)
+    * `Right encoders` = .with_right_motors(RIGHT_Motors)
+    * `IMU` = .with_imu(IMU_PORT)
+    * `Left right TPi` is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with .with_left_right_tip(TIP value)
+3. `Call it to build` --> .build()
 ```cpp
 auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
                     .with_left_motors({-1, -2, -3})
@@ -45,28 +45,28 @@ void initialize() {
 
 ### Creating a PID controller
 * We will set up a PID controller for chassis movements in global scope
-* 'Linear error' = Linear distance from desired position to current position
-* 'Angular error' = Angular distance from desired position to current position
+* `Linear error` = Linear distance from desired position to current position
+* `Angular error` = Angular distance from desired position to current position
 1. Required constants and their meaning
-    * 'Linear proportional constant' = Weight of how much linear error affects motor power (Speeds up the robot movements)
-    * 'Linear derivative constant' = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
-    * 'Linear integral constant' = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
-    * 'Linear exit error' = Allowed linear distance from point in inches for the robot to exit the movement 
-    * 'Angular proportional constant' = Weight of how much Angular error affects motor power (Speeds up the robot movements)
-    * 'Angular derivative constant' = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
-    * 'Angular integral constant' = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
-    * 'Angular exit error' = Allowed Angular distance from point in degrees for the robot to exit the movement
-    * 'Minimum error' = linear distance allowed from desired position in inches where the robot will check if it has stopped moving
-    * 'Settle time' = defined time in miliseconds which the robot has not move in order to exit the movement when the desired point has not been reached
-2. 'Call' auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+    * `Linear proportional constant` = Weight of how much linear error affects motor power (Speeds up the robot movements)
+    * `Linear derivative constant` = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
+    * `Linear integral constant` = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
+    * `Linear exit error` = Allowed linear distance from point in inches for the robot to exit the movement 
+    * `Angular proportional constant` = Weight of how much Angular error affects motor power (Speeds up the robot movements)
+    * `Angular derivative constant` = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
+    * `Angular integral constant` = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
+    * `Angular exit error` = Allowed Angular distance from point in degrees for the robot to exit the movement
+    * `Minimum error` = linear distance allowed from desired position in inches where the robot will check if it has stopped moving
+    * `Settle time` = defined time in miliseconds which the robot has not move in order to exit the movement when the desired point has not been reached
+2. `Call` auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
 3. Set up inputs to pid controller
-    * 'Linear proportional, derivative, and integral constant (in this order)' = .with_linear_constants(0.0, 0.0, 0.0)
-    * 'Angular proportional, derivative, and integral constant (in this order)' = .with_angular_constants(0.0, 0.0, 0.0)
-    * 'Linear exit error' = .with_exit_error(1.0)
-    * 'Angular exit error' = .with_angular_exit_error(1.0)
-    * 'Minimum exit error' = .with_min_error(5)
-    * 'Settle time' = .with_settle_time(200)
-4. 'Call it to build' --> .build()
+    * `Linear proportional, derivative, and integral constant (in this order)` = .with_linear_constants(0.0, 0.0, 0.0)
+    * `Angular proportional, derivative, and integral constant (in this order)` = .with_angular_constants(0.0, 0.0, 0.0)
+    * `Linear exit error` = .with_exit_error(1.0)
+    * `Angular exit error` = .with_angular_exit_error(1.0)
+    * `Minimum exit error` = .with_min_error(5)
+    * `Settle time` = .with_settle_time(200)
+4. `Call it to build` --> .build()
 ```cpp
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
                    .with_linear_constants(0.1, 0.1, 0.1)
@@ -84,7 +84,7 @@ void initialize() {
 
 ### Creating the chassis object
 * We will be creating a differential drive chassis in global scope
-1. 'Call' voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
+1. `Call` voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT)
 ```cpp
 voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, IMU_PORT);
 
@@ -95,7 +95,7 @@ void initialize() {
 
 ### Starting the odometry localization
 * We will be starting odomentry localization in the initalize scope 
-1. 'Call' odom->begin_localization()
+1. `Call` odom->begin_localization()
 ```cpp
 void initialize() {
     odom->begin_localization();    
@@ -124,9 +124,9 @@ void initialize() {
 ### Driver Control
 * We will be setting up tank control scheme for the drive in the opcontrol scope
 1. Define the controller
-    * 'Call' pros::Controller master(pros::E_CONTROLLER_MASTER)
+    * `Call` pros::Controller master(pros::E_CONTROLLER_MASTER)
 2. Inside the while loop set the movement
-    * 'Call' chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y))
+    * `Call` chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y))
 ```cpp
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -141,15 +141,15 @@ void opcontrol() {
 * There are two types of basic movment calls which you can use to write an automous
 1. Move
     * Parameters
-        1. 'Desired pose' = {x, y}
-        2. 'Speed' = 0 - 100
-        3. 'Flags' = options of movements
-            * 'THRU' = No PID
-            * 'Async' = Next lines of code start executing even before movement is finished
-            * 'REVERSE' = Robot moves backwards
-            * 'Relative' = not absolute coordinate system
-            * 'NONE' = defualt
-    * 'Call' chassis.move(Parameters)
+        1. `Desired pose` = {x, y}
+        2. `Speed` = 0 - 100
+        3. `Flags` = options of movements
+            * `THRU` = No PID
+            * `Async` = Next lines of code start executing even before movement is finished
+            * `REVERSE` = Robot moves backwards
+            * `Relative` = not absolute coordinate system
+            * `NONE` = defualt
+    * `Call` chassis.move(Parameters)
 ```cpp
 void autonomous(){
     chassis.move({1.0, 1.0});
@@ -161,18 +161,18 @@ void autonomous(){
 
 2. Turn
     * Parameters
-    1. 'Desired angle'
-    2. 'Desired speed'
-    3. 'Flags' = options of movements
-        * 'THUR' = No PID
-        * 'ASYNC' = Next lines of code start executing even before movement is finished
-        * 'RELATIVE' = not absolute coordinate system
-        * 'NONE' = default
-    4. 'Angular Direction' = direction of turn
-        * 'AUTO' = default
-        * 'COUNTERCLOCKWISE' or 'CCW'
-        * 'CLOCKWISE' or 'CW'
-    * 'Call' chassis.turn(parameters)
+    1. `Desired angle`
+    2. `Desired speed`
+    3. `Flags` = options of movements
+        * `THUR` = No PID
+        * `ASYNC` = Next lines of code start executing even before movement is finished
+        * `RELATIVE` = not absolute coordinate system
+        * `NONE` = default
+    4. `Angular Direction` = direction of turn
+        * `AUTO` = default
+        * `COUNTERCLOCKWISE` or `CCW`
+        * `CLOCKWISE` or `CW`
+    * `Call` chassis.turn(parameters)
 ```cpp
 void autonomous(){
     chassis.turn(90);
