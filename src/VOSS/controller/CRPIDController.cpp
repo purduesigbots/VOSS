@@ -32,11 +32,11 @@ chassis::DiffChassisCommand CRPIDController::get_command(bool reverse, bool thru
 
     double phi_error;
     if (fabs(alpha) < fabs(beta) || use_alpha) {
-        //use_alpha = true;
+        use_alpha = true;
         if (counter % 100 == 0) {
             printf("use alpha\n");
         }
-        phi_error = voss::norm_delta(phi - current_angle - alpha);
+        phi_error = voss::norm_delta(phi - current_angle + alpha);
     } else {
         if (counter % 100 == 0) {
             printf("use beta\n");
@@ -52,7 +52,7 @@ chassis::DiffChassisCommand CRPIDController::get_command(bool reverse, bool thru
         }
         can_reverse = true;
         lin_speed *= cos(phi_error);
-        //phi_error = voss::norm_delta(target_angle - current_angle);
+        phi_error = voss::norm_delta(target_angle - current_angle);
     } else if (fabs(phi_error) > M_PI_2 && this->can_reverse) {
         phi_error = voss::norm_delta(phi_error + M_PI);
         lin_speed = -lin_speed;
