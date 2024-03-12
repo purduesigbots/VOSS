@@ -65,6 +65,20 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
     this->task->join();
 }
 
+
+void AbstractChassis::move(double distance, double max,
+                                    voss::Flags flags, double exitTime) {
+    this->move({distance, 0, 0}, this->default_controller, max,
+               flags | voss::Flags::RELATIVE, exitTime);
+}
+
+void AbstractChassis::move(double distance, controller_ptr controller,
+                                    double max, voss::Flags flags,
+                                    double exitTime) {
+    this->move({distance, 0, 0}, std::move(controller), max,
+               flags | voss::Flags::RELATIVE, exitTime);
+}
+
 void AbstractChassis::move(Pose target, double max, voss::Flags flags,
                            double exitTime) {
     this->move(target, this->default_controller, max, flags, exitTime);
