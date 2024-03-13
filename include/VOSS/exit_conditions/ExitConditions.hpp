@@ -17,8 +17,8 @@ class ExitConditions : public AbstractExitCondition {
   public:
     static ExitConditions new_conditions();
 
-    ExitConditions& set_target(voss::Pose new_target);
-    ExitConditions& add_settle(int settle_time, double tolerance);
+    void set_target(voss::Pose new_target) override;
+    ExitConditions& add_settle(int settle_time, double tolerance, int initial_delay);
     ExitConditions& add_timeout(int timeout);
     ExitConditions& add_angular_tolerance(double tolerance);
     ExitConditions& add_linear_tolerance(double tolerance);
@@ -29,7 +29,7 @@ class ExitConditions : public AbstractExitCondition {
 
     std::shared_ptr<ExitConditions> build();
 
-    void reset();
+    void reset() override;
 };
 
 } // namespace voss::controller

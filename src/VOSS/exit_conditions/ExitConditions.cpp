@@ -17,18 +17,16 @@ ExitConditions ExitConditions::new_conditions() {
     return ec;
 }
 
-ExitConditions& ExitConditions::set_target(voss::Pose new_target) {
+void ExitConditions::set_target(voss::Pose new_target) {
     this->target_pose = new_target;
 
     for (auto ec : this->conditions) {
         ec->set_target(this->target_pose);
     }
-
-    return *this;
 }
 
-ExitConditions& ExitConditions::add_settle(int settle_time, double tolerance) {
-    SettleExitCondition ec(this->target_pose, settle_time, tolerance);
+ExitConditions& ExitConditions::add_settle(int settle_time, double tolerance, int initial_delay) {
+    SettleExitCondition ec(this->target_pose, settle_time, tolerance, initial_delay);
     this->conditions.push_back(std::make_shared<SettleExitCondition>(ec));
     return *this;
 }

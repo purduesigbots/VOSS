@@ -48,12 +48,12 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .build();
 
 auto ec = voss::controller::ExitConditions::new_conditions()
-                .add_settle(500, 0.5)
+                .add_settle(400, 0.5, 400)
                 .add_angular_tolerance(2.0)
                 .add_linear_tolerance(1.0)
                 .add_timeout(22500);
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, std::make_shared<voss::controller::AbstractExitCondition>(ec),
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, std::make_shared<voss::controller::ExitConditions>(ec),
                                           pros::E_MOTOR_BRAKE_COAST);
 
 /**

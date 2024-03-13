@@ -3,6 +3,8 @@
 #include "pros/rtos.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
+#include <cmath>
+
 namespace voss::chassis {
 
 AbstractChassis::AbstractChassis(controller_ptr default_controller, ec_ptr ec) {
@@ -15,6 +17,7 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec, double max
 
     this->task =
         std::make_unique<pros::Task>([&, controller, ec, flags, max]() {
+            ec->reset();
             controller->reset();
             while (!this->execute(
                 controller->get_command(flags & voss::Flags::REVERSE,
@@ -44,6 +47,7 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec, double max
 
     this->task = std::make_unique<pros::Task>(
         [&, controller, ec, flags, direction, max]() {
+            ec->reset();
             controller->reset();
             while (!this->execute(controller->get_angular_command(
                                       flags & voss::Flags::REVERSE,
@@ -102,7 +106,7 @@ void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec, 
     }
     this->task_running = true;
 
-    controller->set_target({0, 0, 0}, false, ec);
+    controller->set_target({NAN, NAN, target}, flags & voss::Flags::RELATIVE, ec);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
     this->turn_task(std::move(controller), std::move(ec), max, flags, direction);

@@ -13,6 +13,6 @@ class TimeOutExitCondition : public AbstractExitCondition {
   public:
     TimeOutExitCondition(int timeout);
     bool is_met(Pose current_pose);
-    void reset();
+    void reset() override;
 };
 } // namespace voss::controller
