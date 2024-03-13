@@ -35,6 +35,8 @@ DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
 
     this->slew_step = slew_step > 0 ? slew_step : 200;
     this->brakeMode = brakeMode;
+    this->left_motors->set_brake_mode(this->brakeMode);
+    this->right_motors->set_brake_mode(this->brakeMode);
     this->prev_voltages = {0, 0};
 }
 
