@@ -4,10 +4,11 @@
 
 namespace voss {
 
+struct AtomicPose;
 struct Pose {
     double x;
     double y;
-    double theta;
+    std::optional<double> theta = std::nullopt;
 };
 
 struct AtomicPose {
@@ -18,7 +19,17 @@ struct AtomicPose {
     void operator=(const Pose& pose) {
         x = pose.x;
         y = pose.y;
-        theta = pose.theta;
+        if (pose.theta.has_value()) {
+            theta = pose.theta.value();
+        } else {
+            theta = NAN;
+        }
+    }
+
+    void operator=(const AtomicPose& pose) {
+        x = pose.x.load();
+        y = pose.y.load();
+        theta = pose.theta.load();
     }
 };
 

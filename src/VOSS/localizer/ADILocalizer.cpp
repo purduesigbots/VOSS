@@ -86,7 +86,7 @@ void ADILocalizer::calibrate() {
             pros::delay(10);
         }
     }
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = voss::AtomicPose{0.0, 0.0, 0.0};
 }
 
 // Calculates the current position of the robot
@@ -149,8 +149,8 @@ void ADILocalizer::update() {
 
 void ADILocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
-    if (this->imu) {
-        this->imu->set_rotation(-pose.theta);
+    if (this->imu && pose.theta.has_value()) {
+        this->imu->set_rotation(-pose.theta.value());
     }
 }
 

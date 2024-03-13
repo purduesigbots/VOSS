@@ -36,12 +36,9 @@ class AbstractChassis {
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
-    void move(Point target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
     void move(Pose target, controller_ptr controller, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
-    void move(Point target, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
+
     void move(Pose target, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE, double exitTime = 22500);
 

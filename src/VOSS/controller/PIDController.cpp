@@ -28,7 +28,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
     bool chainedExecutable = false;
-    bool noPose = this->target.theta == 361;
+    bool noPose = !this->target.theta.has_value();
 
     double dx = target.x - current_pos.x;
     double dy = target.y - current_pos.y;
@@ -89,7 +89,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
                            // spinning
         } else {
             // turn to face the finale pose angle if executing a pose movement
-            double poseError = (target.theta * M_PI / 180) - current_angle;
+            double poseError = target.theta.value() - current_angle;
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
             ang_speed = angular_pid(poseError);
@@ -130,7 +130,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     counter += 10;
     double current_angle = this->l->get_orientation_rad();
     double target_angle = 0;
-    if (this->target.theta == 361) {
+    if (!this->target.theta.has_value()) {
         Point current_pos = this->l->get_position();
         double dx = this->target.x - current_pos.x;
         double dy = this->target.y - current_pos.y;

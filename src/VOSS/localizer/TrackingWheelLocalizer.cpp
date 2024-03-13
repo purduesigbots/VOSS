@@ -81,14 +81,14 @@ void TrackingWheelLocalizer::calibrate() {
     if (imu) {
         imu->reset(true);
     }
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = AtomicPose{0.0, 0.0, 0.0};
 }
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
     this->prev_pose = this->pose;
-    if (this->imu) {
-        this->imu->set_rotation(-pose.theta);
+    if (this->imu && pose.theta.has_value()) {
+        this->imu->set_rotation(-pose.theta.value());
     }
 }
 
