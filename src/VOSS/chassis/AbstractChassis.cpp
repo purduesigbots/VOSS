@@ -5,19 +5,20 @@
 
 namespace voss::chassis {
 
-AbstractChassis::AbstractChassis(controller_ptr default_controller) {
+AbstractChassis::AbstractChassis(controller_ptr default_controller, ec_ptr ec) {
     this->default_controller = std::move(default_controller);
+    this->default_ec = std::move(ec);
 }
 
-void AbstractChassis::move_task(controller_ptr controller, double max,
-                                voss::Flags flags, double exitTime) {
+void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec, double max,
+                                voss::Flags flags) {
 
     this->task =
-        std::make_unique<pros::Task>([&, controller, flags, max, exitTime]() {
+        std::make_unique<pros::Task>([&, controller, ec, flags, max]() {
             controller->reset();
             while (!this->execute(
                 controller->get_command(flags & voss::Flags::REVERSE,
-                                        flags & voss::Flags::THRU),
+                                        flags & voss::Flags::THRU, ec),
                 max)) {
                 if (pros::competition::is_disabled()) {
                     this->task_running = false;
@@ -37,17 +38,16 @@ void AbstractChassis::move_task(controller_ptr controller, double max,
     this->task->join();
 }
 
-void AbstractChassis::turn_task(controller_ptr controller, double max,
+void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec, double max,
                                 voss::Flags flags,
-                                voss::AngularDirection direction,
-                                double exitTime) {
+                                voss::AngularDirection direction) {
 
     this->task = std::make_unique<pros::Task>(
-        [&, controller, flags, direction, max, exitTime]() {
+        [&, controller, ec, flags, direction, max]() {
             controller->reset();
             while (!this->execute(controller->get_angular_command(
                                       flags & voss::Flags::REVERSE,
-                                      flags & voss::Flags::THRU, direction),
+                                      flags & voss::Flags::THRU, direction, ec),
                                   max)) {
                 if (pros::competition::is_disabled()) {
                     this->task_running = false;
@@ -66,31 +66,37 @@ void AbstractChassis::turn_task(controller_ptr controller, double max,
     this->task->join();
 }
 
-void AbstractChassis::move(Pose target, double max, voss::Flags flags,
-                           double exitTime) {
-    this->move(target, this->default_controller, max, flags, exitTime);
+void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
+    this->move(target, this->default_controller, this->default_ec, max, flags);
 }
 
-void AbstractChassis::move(Pose target, controller_ptr controller, double max,
-                           voss::Flags flags, double exitTime) {
+void AbstractChassis::move(Pose target, controller_ptr controller, double max, voss::Flags flags) {
+    this->move(target, std::move(controller), this->default_ec, max, flags);
+}
+
+void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec, double max,
+                           voss::Flags flags) {
     while (this->task_running) {
         pros::delay(10);
     }
     this->task_running = true;
-    controller->set_target(target, flags & voss::Flags::RELATIVE);
+    controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
 
-    this->move_task(std::move(controller), max, flags, exitTime);
+    this->move_task(std::move(controller), std::move(ec), max, flags);
 }
 
 void AbstractChassis::turn(double target, double max, voss::Flags flags,
-                           voss::AngularDirection direction, double exitTime) {
-    this->turn(target, this->default_controller, max, flags, direction,
-               exitTime);
+                           voss::AngularDirection direction) {
+    this->turn(target, this->default_controller, this->default_ec, max, flags, direction);
 }
 
 void AbstractChassis::turn(double target, controller_ptr controller, double max,
-                           voss::Flags flags, voss::AngularDirection direction,
-                           double exitTime) {
+                            voss::Flags flags, voss::AngularDirection direction) {
+    this->turn(target, std::move(controller), this->default_ec, max, flags, direction);
+}
+
+void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec, double max,
+                           voss::Flags flags, voss::AngularDirection direction) {
     while (this->task_running) {
         pros::delay(10);
     }
@@ -99,29 +105,30 @@ void AbstractChassis::turn(double target, controller_ptr controller, double max,
     controller->set_target({0, 0, 0}, false, ec);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
-    this->turn_task(std::move(controller), max, flags, direction, exitTime);
+    this->turn_task(std::move(controller), std::move(ec), max, flags, direction);
 }
 
 void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
-                              voss::AngularDirection direction,
-                              double exitTime) {
-    this->turn_to(target, this->default_controller, max, flags, direction,
-                  exitTime);
+                              voss::AngularDirection direction) {
+    this->turn_to(target, this->default_controller, this->default_ec, max, flags, direction);
 }
 
-void AbstractChassis::turn_to(Point target, controller_ptr controller,
+void AbstractChassis::turn_to(Point target, controller_ptr controller, double max, voss::Flags flags, voss::AngularDirection direction) {
+    this->turn_to(target, std::move(controller), this->default_ec, max, flags, direction);
+}
+
+void AbstractChassis::turn_to(Point target, controller_ptr controller, ec_ptr ec,
                               double max, voss::Flags flags,
-                              voss::AngularDirection direction,
-                              double exitTime) {
+                              voss::AngularDirection direction) {
     while (this->task_running) {
         pros::delay(10);
     }
     this->task_running = true;
 
     controller->set_target({target.x, target.y, std::nullopt},
-                           flags & voss::Flags::RELATIVE);
+                           flags & voss::Flags::RELATIVE, ec);
 
-    this->turn_task(std::move(controller), max, flags, direction, exitTime);
+    this->turn_task(std::move(controller), std::move(ec), max, flags, direction);
 }
 
 } // namespace voss::chassis

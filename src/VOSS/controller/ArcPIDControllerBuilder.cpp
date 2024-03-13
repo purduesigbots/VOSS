@@ -39,12 +39,6 @@ ArcPIDControllerBuilder::with_track_width(double track_width) {
     return *this;
 }
 
-ArcPIDControllerBuilder&
-ArcPIDControllerBuilder::with_exit_error(double error) {
-    this->ctrl.exit_error = error;
-    return *this;
-}
-
 ArcPIDControllerBuilder& ArcPIDControllerBuilder::with_min_error(double error) {
     this->ctrl.min_error = error;
     return *this;

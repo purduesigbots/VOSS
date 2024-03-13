@@ -13,7 +13,7 @@ BoomerangController::BoomerangController(
 }
 
 chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
-                                                             bool thru) {
+                                                             bool thru, std::shared_ptr<AbstractExitCondition> ec) {
 
     if (!target.theta.has_value()) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
@@ -147,7 +147,7 @@ chassis::DiffChassisCommand BoomerangController::get_command(bool reverse,
 
 chassis::DiffChassisCommand
 BoomerangController::get_angular_command(bool reverse, bool thru,
-                                         voss::AngularDirection direction) {
+                                         voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 

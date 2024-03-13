@@ -13,7 +13,7 @@ AbstractController::AbstractController(
 
 // Set desired postion with x, y, and heading
 // Relative target position WIP
-void AbstractController::set_target(Pose target, bool relative) {
+void AbstractController::set_target(Pose target, bool relative, std::shared_ptr<AbstractExitCondition> ec) {
     if (target.theta.has_value()) {
         target.theta = voss::to_radians(*target.theta);
     }

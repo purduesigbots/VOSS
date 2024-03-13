@@ -20,8 +20,6 @@ class SwingControllerBuilder {
 
     SwingControllerBuilder& with_angular_constants(double kP, double kI,
                                                    double kD);
-    SwingControllerBuilder& with_angular_exit_error(double error);
-    //    SwingControllerBuilder& with_slew(double slew);
 
     std::shared_ptr<SwingController> build();
 };

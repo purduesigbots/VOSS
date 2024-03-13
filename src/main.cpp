@@ -22,10 +22,7 @@ auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
                .with_linear_constants(20, 0.02, 169)
                .with_angular_constants(250, 0.05, 2435)
-               .with_exit_error(1.0)
-               .with_angular_exit_error(2.0)
                .with_min_error(5)
-               .with_settle_time(200)
                .with_min_vel_for_thru(100)
                .build();
 
@@ -42,19 +39,21 @@ auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
 
 auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
                  .with_angular_constants(250, 0.05, 2435)
-                 .with_angular_exit_error(0.5)
-                 .with_settle_time(200)
                  .build();
 
 auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .with_track_width(14)
                .with_linear_constants(20, 0.02, 169)
-               .with_exit_error(1.0)
                .with_min_error(5)
-               .with_settle_time(200)
                .build();
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 0,
+auto ec = voss::controller::ExitConditions::new_conditions()
+                .add_settle(500, 0.5)
+                .add_angular_tolerance(2.0)
+                .add_linear_tolerance(1.0)
+                .add_timeout(22500);
+
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, std::make_shared<voss::controller::AbstractExitCondition>(ec),
                                           pros::E_MOTOR_BRAKE_COAST);
 
 /**
