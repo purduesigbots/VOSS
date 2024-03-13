@@ -1,12 +1,62 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
-#include "VOSS/exit_conditions/ExitConditions.hpp"
-#include "VOSS/exit_conditions/SettleExitCondition.hpp"
-#include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
-#include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
-#include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
-#include <memory>
+#include "VOSS/controller/BoomerangControllerBuilder.hpp"
+#include "VOSS/controller/PIDControllerBuilder.hpp"
+#include "VOSS/controller/SwingControllerBuilder.hpp"
+#include "VOSS/localizer/ADILocalizerBuilder.hpp"
+#include "VOSS/utils/flags.hpp"
+
+#define LEFT_MOTORS                                                            \
+    { -4, -1, -21, 8, 13 }
+#define RIGHT_MOTORS                                                           \
+    { 10, 3, 9, -7, -15 }
+
+auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+                .with_track_width(11)
+                .with_left_right_tpi(18.43)
+                .with_imu(16)
+                .with_right_motors(LEFT_MOTORS)
+                .with_left_motors(RIGHT_MOTORS)
+                .build();
+
+auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+               .with_linear_constants(20, 0.02, 169)
+               .with_angular_constants(250, 0.05, 2435)
+               .with_exit_error(1.0)
+               .with_angular_exit_error(2.0)
+               .with_min_error(5)
+               .with_settle_time(200)
+               .with_min_vel_for_thru(100)
+               .build();
+
+auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
+                     .with_linear_constants(20, 0.02, 169)
+                     .with_angular_constants(250, 0.05, 2435)
+                     .with_exit_error(1.0)
+                     .with_lead_pct(0.5)
+                     .with_angular_exit_error(1.0)
+                     .with_min_error(5)
+                     .with_min_vel_for_thru(70)
+                     .with_settle_time(200)
+                     .build();
+
+auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
+                 .with_angular_constants(250, 0.05, 2435)
+                 .with_angular_exit_error(0.5)
+                 .with_settle_time(200)
+                 .build();
+
+auto arc = voss::controller::ArcPIDControllerBuilder(odom)
+               .with_track_width(14)
+               .with_linear_constants(20, 0.02, 169)
+               .with_exit_error(1.0)
+               .with_min_error(5)
+               .with_settle_time(200)
+               .build();
+
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 0,
+                                          pros::E_MOTOR_BRAKE_COAST);
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -15,6 +65,7 @@
  */
 void initialize() {
     pros::lcd::initialize();
+    odom->begin_localization();
 }
 
 /**
@@ -49,6 +100,18 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
+    // auto odom = voss::localizer::ADILocalizerBuilder::new_builder().build();
+    // auto pid =
+    // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    //                .with_lead_pct(60)
+    //                .build();
+
+    // // auto pid2 =
+    // // voss::controller::BoomerangControllerBuilder::new_builder(odom)
+    // //                 .with_lead_pct(65)
+    // //                 .build();
+
+    // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
 }
 
 /**
@@ -67,49 +130,20 @@ void autonomous() {
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-    auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
-                    .with_left_motors({-1, 2, -5, 11})
-                    .with_right_motors({-7, 8, -9, 10})
-                    .with_track_width(11.23)
-                    .with_left_right_tpi(13.749)
-                    .build();
-
-    odom->begin_localization();
-
-    auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-                   .with_linear_constants(5, 0, 12)
-                   .with_angular_constants(170, 0.05, 700)
-                   .with_tracking_kp(60)
-                   .with_exit_error(1)
-                   .with_angular_exit_error(2)
-                   .with_min_error(5)
-                   .build();
-
-    auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                     .with_angular_constants(170, 0, 700)
-                     .with_angular_exit_error(0.5)
-                     .build();
-
-    auto ec = std::make_shared<voss::controller::TimeOutExitCondition>(100);
-
-    voss::chassis::DiffChassis chassis({-1, 2, -5, 11}, {-7, 8, -9, 10}, pid,
-                                       ec, 8);
-
-    auto [leftM, rightM] = chassis.getMotors();
-
     while (true) {
-
         voss::Pose p = odom->get_pose();
 
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            using namespace voss::controller;
-            odom->set_pose({0, 0, 0});
-            const int TEST_NO = 1;
-
-            chassis.move(voss::Point{48, 0}, pid, ec);
+            odom->set_pose({0.0, 0.0, 90});
+            chassis.move({0, 48});
+            chassis.turn_to({0, 0});
+            //            chassis.turn(270);
+            chassis.move({10, 10, 250}, boomerang, 50);
+            odom->set_pose({20, 10});
+            pros::delay(2000);
         }
 
         pros::lcd::clear_line(1);

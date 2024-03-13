@@ -1,18 +1,28 @@
 #include "VOSS/controller/SwingControllerBuilder.hpp"
+
 #include "VOSS/controller/SwingController.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/angle.hpp"
+#include <utility>
 
 namespace voss::controller {
 
 SwingControllerBuilder::SwingControllerBuilder(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : ctrl(l) {
+    : ctrl(std::move(l)) {
+
+    this->ctrl.p = nullptr;
 }
 
 SwingControllerBuilder SwingControllerBuilder::new_builder(
     std::shared_ptr<localizer::AbstractLocalizer> l) {
-    SwingControllerBuilder builder(l);
+    SwingControllerBuilder builder(std::move(l));
+    return builder;
+}
+
+SwingControllerBuilder SwingControllerBuilder::from(SwingController swc) {
+    SwingControllerBuilder builder(swc.l);
+    builder.ctrl = swc;
     return builder;
 }
 
@@ -28,6 +38,11 @@ SwingControllerBuilder::with_angular_constants(double kP, double kI,
 SwingControllerBuilder&
 SwingControllerBuilder::with_angular_exit_error(double error) {
     this->ctrl.angular_exit_error = voss::to_radians(error);
+    return *this;
+}
+
+SwingControllerBuilder& SwingControllerBuilder::with_settle_time(double time) {
+    this->ctrl.settle_time = (time > 0) ? time : 250;
     return *this;
 }
 

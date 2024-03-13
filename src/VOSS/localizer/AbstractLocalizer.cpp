@@ -1,18 +1,18 @@
 #include "VOSS/localizer/AbstractLocalizer.hpp"
+#include "VOSS/utils/angle.hpp"
 #include <cmath>
 
 namespace voss::localizer {
 
-
-//Creating the localiozer object with a starting pose of x = 0, y = 0, and heading = 0
+// Creating the localiozer object with a starting pose of x = 0, y = 0, and
+// heading = 0
 AbstractLocalizer::AbstractLocalizer() {
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = AtomicPose{0.0, 0.0, 0.0};
 }
 
-
-//Starting the localization task
-//Once started it don't stop until program is stopped or data abort
-//Uses mutex to keep values protected
+// Starting the localization task
+// Once started it don't stop until program is stopped or data abort
+// Uses mutex to keep values protected
 void AbstractLocalizer::begin_localization() {
     pros::Task localization_task([this]() {
         this->calibrate();
@@ -25,15 +25,24 @@ void AbstractLocalizer::begin_localization() {
         }
     });
 }
-//These last few functions allows the user to set and get values of the robot's pose while keeing the values safe with mutex
+// These last few functions allows the user to set and get values of the robot's
+// pose while keeing the values safe with mutex
 void AbstractLocalizer::set_pose(Pose pose) {
     std::unique_lock<pros::Mutex> lock(this->mtx);
-    this->pose = pose;
+    if (pose.theta.has_value()) {
+        this->pose =
+            AtomicPose{pose.x, pose.y, voss::to_radians(pose.theta.value())};
+    } else {
+        double h = this->pose.theta;
+        this->pose = AtomicPose{pose.x, pose.y, h};
+    }
 }
 
 Pose AbstractLocalizer::get_pose() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
-    Pose ret = this->pose;
+    Pose ret = {this->pose.x.load(), this->pose.y.load(),
+                this->pose.theta.load()};
+
     return ret;
 }
 

@@ -7,7 +7,7 @@
 
 namespace voss::localizer {
 
-//Creating a localizer object with varibale option based on adi imput sensors
+// Creating a localizer object with varibale option based on adi imput sensors
 ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
                            double mid_tpi, double track_width,
                            double middle_dist, int imu_port)
@@ -86,13 +86,14 @@ void ADILocalizer::calibrate() {
             pros::delay(10);
         }
     }
-    this->pose = {0.0, 0.0, 0.0};
+    this->pose = voss::AtomicPose{0.0, 0.0, 0.0};
 }
 
-//Calculates the current position of the robot
-//Uses the change in value of the encoders to calculate the change in position
-//If no imu is present, the robot's heading is calculated using the difference in the left and right encoder values
-//Angle is the differnce between the robot heading and the global angle
+// Calculates the current position of the robot
+// Uses the change in value of the encoders to calculate the change in position
+// If no imu is present, the robot's heading is calculated using the difference
+// in the left and right encoder values Angle is the differnce between the robot
+// heading and the global angle
 void ADILocalizer::update() {
     double left_pos = get_left_encoder_value();
     double right_pos = get_right_encoder_value();
@@ -148,8 +149,8 @@ void ADILocalizer::update() {
 
 void ADILocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
-    if (this->imu) {
-        this->imu->set_rotation(-pose.theta);
+    if (this->imu && pose.theta.has_value()) {
+        this->imu->set_rotation(-pose.theta.value());
     }
 }
 

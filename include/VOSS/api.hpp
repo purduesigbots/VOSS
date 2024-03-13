@@ -29,6 +29,8 @@
 #include "localizer/GPSLocalizer.hpp"
 #include "localizer/IMELocalizer.hpp"
 #include "localizer/IMELocalizerBuilder.hpp"
+#include "localizer/TrackingWheelLocalizer.hpp"
+#include "localizer/TrackingWheelLocalizerBuilder.hpp"
 
 #include "selector/Selector.hpp"
 
