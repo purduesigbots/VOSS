@@ -1,0 +1,13 @@
+#pragma once
+#include <functional>
+#include "../utils/Pose.hpp"
+#include "AbstractExitCondition.hpp"
+namespace voss::controller {
+class CustomExitCondition : public AbstractExitCondition {
+  private:
+    std::function<bool()> callback;
+  public:
+    CustomExitCondition(std::function<bool()> callback);
+    bool is_met(Pose current_pose) override;
+};
+} // namespace voss::controller

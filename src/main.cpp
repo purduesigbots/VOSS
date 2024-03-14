@@ -48,13 +48,18 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .build();
 
 auto ec = voss::controller::ExitConditions::new_conditions()
-                .add_settle(400, 0.5, 400)
-                .add_angular_tolerance(2.0)
-                .add_linear_tolerance(1.0)
-                .add_timeout(22500);
+              .add_settle(400, 0.5, 400)
+              .add_angular_tolerance(2.0)
+              .add_linear_tolerance(1.0)
+              .add_timeout(22500)
+              .build();
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, std::make_shared<voss::controller::ExitConditions>(ec),
-                                          pros::E_MOTOR_BRAKE_COAST);
+auto chassis = voss::chassis::DiffChassis(
+    LEFT_MOTORS, RIGHT_MOTORS, pid,
+    ec,
+    pros::E_MOTOR_BRAKE_COAST);
+
+pros::IMU imu(16);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -128,7 +133,6 @@ void autonomous() {
  */
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
-
     while (true) {
         voss::Pose p = odom->get_pose();
 
@@ -136,12 +140,14 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
+            pros::delay(5000);
             odom->set_pose({0.0, 0.0, 90});
-            chassis.move({0, 48});
-            chassis.turn_to({0, 0});
-            //            chassis.turn(270);
-            chassis.move({10, 10, 250}, boomerang, 50);
-            odom->set_pose({20, 10});
+            //            chassis.move({0, 48}, pid, ec, 100, 100);
+            chassis.move({0, 36}, pid, ec->exit_if([=]() { return fabs(imu.get_pitch()) > 10 ; }));
+            master.rumble("-");
+            chassis.move({0, -30}, pid, ec->exit_if([&]() {
+                       return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+                   }));
             pros::delay(2000);
         }
 

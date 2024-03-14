@@ -3,6 +3,7 @@
 #include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
+#include "VOSS/exit_conditions/CustomExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
 #include <memory>
 
@@ -49,6 +50,12 @@ ExitConditions& ExitConditions::add_linear_tolerance(double tolerance) {
     this->conditions.push_back(
         std::make_shared<ToleranceLinearExitCondition>(ec));
     return *this;
+}
+
+std::shared_ptr<ExitConditions> ExitConditions::exit_if(std::function<bool()> callback) {
+    std::shared_ptr<ExitConditions> ec_mod = std::make_shared<ExitConditions>(*this);
+    ec_mod->conditions.push_back(std::make_shared<CustomExitCondition>(callback));
+    return ec_mod;
 }
 
 ExitConditions&
