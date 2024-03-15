@@ -70,6 +70,12 @@ ExitConditions& ExitConditions::add_thru_smoothness(double smoothness) {
     return *this;
 }
 
+ExitConditions&
+ExitConditions::add_custom_condition(std::function<bool()> callback) {
+    this->conditions.push_back(std::make_shared<CustomExitCondition>(callback));
+    return *this;
+}
+
 std::shared_ptr<ExitConditions>
 ExitConditions::exit_if(std::function<bool()> callback) {
     std::shared_ptr<ExitConditions> ec_mod =
