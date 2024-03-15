@@ -10,7 +10,7 @@ class ToleranceAngularExitCondition : public AbstractExitCondition {
     double tolerance;
 
   public:
-    ToleranceAngularExitCondition(Pose target_pose, double tolerance);
-    bool is_met(Pose current_pose);
+    ToleranceAngularExitCondition(double tolerance);
+    bool is_met(Pose current_pose, bool thru) override;
 };
 } // namespace voss::controller

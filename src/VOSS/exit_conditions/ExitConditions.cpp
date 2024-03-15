@@ -1,9 +1,11 @@
 #include "VOSS/exit_conditions/ExitConditions.hpp"
+#include "ToleranceExitCondition.hpp"
+#include "VOSS/exit_conditions/CustomExitCondition.hpp"
+#include "VOSS/exit_conditions/PrepLineExitCondition.hpp"
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
 #include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
-#include "VOSS/exit_conditions/CustomExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
 #include <memory>
 
@@ -26,35 +28,54 @@ void ExitConditions::set_target(voss::Pose new_target) {
     }
 }
 
-ExitConditions& ExitConditions::add_settle(int settle_time, double tolerance, int initial_delay) {
-    SettleExitCondition ec(this->target_pose, settle_time, tolerance, initial_delay);
+ExitConditions& ExitConditions::add_settle(int settle_time, double tolerance,
+                                           int initial_delay) {
+    SettleExitCondition ec(settle_time, tolerance, initial_delay);
     this->conditions.push_back(std::make_shared<SettleExitCondition>(ec));
     return *this;
 }
 
 ExitConditions& ExitConditions::add_timeout(int timeout) {
-    TimeOutExitCondition ec(timeout);
-    this->conditions.push_back(std::make_shared<TimeOutExitCondition>(ec));
+    this->conditions.push_back(std::make_shared<TimeOutExitCondition>(timeout));
     return *this;
 }
 
-ExitConditions& ExitConditions::add_angular_tolerance(double tolerance) {
-    ToleranceAngularExitCondition ec(this->target_pose, tolerance);
+ExitConditions&
+ExitConditions::add_angular_tolerance(double angular_tolerance) {
     this->conditions.push_back(
-        std::make_shared<ToleranceAngularExitCondition>(ec));
+        std::make_shared<ToleranceAngularExitCondition>(angular_tolerance));
     return *this;
 }
 
-ExitConditions& ExitConditions::add_linear_tolerance(double tolerance) {
-    ToleranceLinearExitCondition ec(this->target_pose, tolerance);
+ExitConditions& ExitConditions::add_linear_tolerance(double linear_tolerance) {
     this->conditions.push_back(
-        std::make_shared<ToleranceLinearExitCondition>(ec));
+        std::make_shared<ToleranceAngularExitCondition>(linear_tolerance));
     return *this;
 }
 
-std::shared_ptr<ExitConditions> ExitConditions::exit_if(std::function<bool()> callback) {
-    std::shared_ptr<ExitConditions> ec_mod = std::make_shared<ExitConditions>(*this);
-    ec_mod->conditions.push_back(std::make_shared<CustomExitCondition>(callback));
+ExitConditions&
+ExitConditions::add_linear_and_angular_tolerance(double linear_tolerance,
+                                                 double angular_tolerance) {
+    auto ec = std::make_shared<ToleranceExitCondition>();
+    ec->add_lin_exit(linear_tolerance);
+    ec->add_ang_exit(angular_tolerance);
+    this->conditions.push_back(
+        std::dynamic_pointer_cast<AbstractExitCondition>(ec));
+    return *this;
+}
+
+ExitConditions& ExitConditions::add_thru_smoothness(double smoothness) {
+    this->conditions.push_back(
+        std::make_shared<PrepLineExitCondition>(smoothness));
+    return *this;
+}
+
+std::shared_ptr<ExitConditions>
+ExitConditions::exit_if(std::function<bool()> callback) {
+    std::shared_ptr<ExitConditions> ec_mod =
+        std::make_shared<ExitConditions>(*this);
+    ec_mod->conditions.push_back(
+        std::make_shared<CustomExitCondition>(callback));
     return ec_mod;
 }
 
@@ -64,9 +85,9 @@ ExitConditions::add_condition(std::shared_ptr<AbstractExitCondition> ec) {
     return *this;
 }
 
-bool ExitConditions::is_met(voss::Pose current_pose) {
+bool ExitConditions::is_met(voss::Pose current_pose, bool thru) {
     for (auto ec : this->conditions) {
-        if (ec->is_met(current_pose)) {
+        if (ec->is_met(current_pose, thru)) {
             return true;
         }
     }
@@ -74,9 +95,9 @@ bool ExitConditions::is_met(voss::Pose current_pose) {
     return false;
 }
 
-bool ExitConditions::all_met(voss::Pose current_pose) {
+bool ExitConditions::all_met(voss::Pose current_pose, bool thru) {
     for (auto ec : this->conditions) {
-        if (!ec->is_met(current_pose)) {
+        if (!ec->is_met(current_pose, thru)) {
             return false;
         }
     }

@@ -77,7 +77,7 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
     }
     prev_t = t;
     prev_lin_speed = lin_speed;
-    if (ec->is_met(this->l->get_pose())) {
+    if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{left_speed, right_speed}};
         } else {

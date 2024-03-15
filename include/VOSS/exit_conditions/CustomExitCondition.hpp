@@ -8,6 +8,6 @@ class CustomExitCondition : public AbstractExitCondition {
     std::function<bool()> callback;
   public:
     CustomExitCondition(std::function<bool()> callback);
-    bool is_met(Pose current_pose) override;
+    bool is_met(Pose current_pose, bool thru) override;
 };
 } // namespace voss::controller

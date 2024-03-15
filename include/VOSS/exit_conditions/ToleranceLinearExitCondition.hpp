@@ -10,8 +10,8 @@ class ToleranceLinearExitCondition : public AbstractExitCondition {
     double tolerance;
 
   public:
-    ToleranceLinearExitCondition(Pose target_pose, double tolerance);
-    bool is_met(Pose current_pose);
+    ToleranceLinearExitCondition(double tolerance);
+    bool is_met(Pose current_pose, bool thru) override;
 };
 
 } // namespace voss::controller

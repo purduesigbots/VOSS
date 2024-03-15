@@ -4,13 +4,10 @@
 
 namespace voss::controller {
 
-ToleranceAngularExitCondition::ToleranceAngularExitCondition(Pose target_pose,
-                                                             double tolerance)
-    : tolerance(tolerance) {
-    this->target_pose = target_pose;
-}
+ToleranceAngularExitCondition::ToleranceAngularExitCondition(double tolerance)
+    : tolerance(tolerance) {}
 
-bool ToleranceAngularExitCondition::is_met(Pose current_pose) {
+bool ToleranceAngularExitCondition::is_met(Pose current_pose, bool thru) {
     // if there is no target angle, return false so the other conditions run.
     if (!this->target_pose.theta.has_value()) {
         return false;

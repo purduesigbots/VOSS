@@ -9,14 +9,15 @@ SwingController::SwingController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
     : AbstractController(std::move(l)){};
 
-chassis::DiffChassisCommand SwingController::get_command(bool reverse,
-                                                         bool thru, std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand
+SwingController::get_command(bool reverse, bool thru,
+                             std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-chassis::DiffChassisCommand
-SwingController::get_angular_command(bool reverse, bool thru,
-                                     voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand SwingController::get_angular_command(
+    bool reverse, bool thru, voss::AngularDirection direction,
+    std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in background of Swing Turn commands
     // ArcTan is used to find the angle between the robot and the target
     // position One size of the drive is locked in place while the other side
@@ -38,8 +39,11 @@ SwingController::get_angular_command(bool reverse, bool thru,
     double angular_error = target_angle - current_angle;
 
     angular_error = voss::norm_delta(angular_error);
-
+    bool chainedExecutable = false;
     if (fabs(angular_error) < voss::to_radians(5)) {
+        if(thru) {
+            chainedExecutable = true;
+        }
         turn_overshoot = true;
     }
 
@@ -53,10 +57,6 @@ SwingController::get_angular_command(bool reverse, bool thru,
         }
     }
 
-    if (ec->is_met(this->l->get_pose())) {
-        return chassis::Stop{};
-    }
-
     double ang_speed = angular_pid(angular_error);
     chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
@@ -64,31 +64,32 @@ SwingController::get_angular_command(bool reverse, bool thru,
         can_reverse = !can_reverse;
     }
 
-    if (!this->can_reverse) {
-        if (!reverse) {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{-ang_speed, 0}
-                          : chassis::diff_commands::Swing{0, ang_speed};
-        } else {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{0, ang_speed}
-                          : chassis::diff_commands::Swing{-ang_speed, 0};
-        }
-    } else {
-        if (reverse) {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{-ang_speed, 0}
-                          : chassis::diff_commands::Swing{0, ang_speed};
-        } else {
-            command = std::signbit(ang_speed)
-                          ? chassis::diff_commands::Swing{0, ang_speed}
-                          : chassis::diff_commands::Swing{-ang_speed, 0};
-        }
-    }
-
     prev_ang_speed = ang_speed;
 
-    return command;
+
+    if (ec->is_met(this->l->get_pose(), thru) || chainedExecutable) { //exit or thru
+        if (thru) {
+            if (this->can_reverse ^ !reverse) { // same sign
+                return std::signbit(ang_speed) // 1
+                           ? chassis::diff_commands::Chained{-ang_speed, 0}
+                           : chassis::diff_commands::Chained{0, ang_speed};
+            }
+            return std::signbit(ang_speed) // 2
+                       ? chassis::diff_commands::Chained{0, ang_speed}
+                       : chassis::diff_commands::Chained{-ang_speed, 0};
+        }
+        return chassis::Stop{};
+    }
+
+
+    if (this->can_reverse ^ !reverse) { // same sign
+        return std::signbit(ang_speed) // 3
+                   ? chassis::diff_commands::Swing{-ang_speed, 0}
+                   : chassis::diff_commands::Swing{0, ang_speed};
+    }
+    return std::signbit(ang_speed) // 4
+               ? chassis::diff_commands::Swing{0, ang_speed}
+               : chassis::diff_commands::Swing{-ang_speed, 0};
 }
 
 // What is calculating the required motor power for the turn

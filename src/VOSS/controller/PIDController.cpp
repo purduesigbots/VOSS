@@ -13,8 +13,9 @@ PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
       prev_ang_err(0.0), total_ang_err(0.0) {
 }
 
-chassis::DiffChassisCommand PIDController::get_command(bool reverse,
-                                                       bool thru, std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand
+PIDController::get_command(bool reverse, bool thru,
+                           std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in background of move commands
     // distance formula to find the distance between the robot and the target
     // position distance error is distance ArcTan is used to find the angle
@@ -72,7 +73,7 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
         ang_speed = angular_pid(angle_error);
     }
     // Runs at the end of a through movement
-    if (ec->is_met(this->l->get_pose())) {
+    if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
                 dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
@@ -88,7 +89,8 @@ chassis::DiffChassisCommand PIDController::get_command(bool reverse,
 
 chassis::DiffChassisCommand
 PIDController::get_angular_command(bool reverse, bool thru,
-                                   voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) {
+                                   voss::AngularDirection direction,
+                                   std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in the background of turn commands
     // Error is the difference between the target angle and the current angle
     // ArcTan is used to find the angle between the robot and the target
@@ -106,10 +108,13 @@ PIDController::get_angular_command(bool reverse, bool thru,
         target_angle = this->angular_target;
     }
     double angular_error = target_angle - current_angle;
-
+    bool chainedExecutable = false;
     angular_error = voss::norm_delta(angular_error);
 
     if (fabs(angular_error) < voss::to_radians(5)) {
+        if(thru) {
+            chainedExecutable = true;
+        }
         turn_overshoot = true;
     }
 
@@ -124,7 +129,11 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     double ang_speed = angular_pid(angular_error);
-    if (ec->is_met(this->l->get_pose())) {
+    if (ec->is_met(this->l->get_pose(), thru) || chainedExecutable) {
+        if (thru) {
+            return chassis::DiffChassisCommand{
+                chassis::diff_commands::Chained{-ang_speed, ang_speed}};
+        }
         return chassis::Stop{};
     }
     return chassis::DiffChassisCommand{
