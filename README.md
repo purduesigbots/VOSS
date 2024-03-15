@@ -164,9 +164,10 @@ void autonomous(){
     1. **Desired angle**
     2. **Desired speed**
     3. **Flags** = options of movements
-        * **THUR** = No PID
+        * **THUR** = Enable motion chaining
         * **ASYNC** = Next lines of code start executing even before movement is finished
         * **RELATIVE** = not absolute coordinate system
+        * **REVERSE** = Go backward
         * **NONE** = default
     4. **Angular Direction** = direction of turn
         * **AUTO** = default
