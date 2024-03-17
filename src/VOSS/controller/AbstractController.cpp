@@ -46,4 +46,10 @@ void AbstractController::set_angular_target(double angular_target,
     }
 }
 
+void AbstractController::set_target_path(
+    std::vector<Point> path, bool relative) {
+    this->target_path = path;
+}
+
 } // namespace voss::controller
+

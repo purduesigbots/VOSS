@@ -11,6 +11,7 @@ class AbstractController {
 
   protected:
     std::shared_ptr<localizer::AbstractLocalizer> l;
+    std::vector<Point> target_path;
     Pose target;
     double angular_target;
 
@@ -24,6 +25,8 @@ class AbstractController {
                         voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) = 0;
 
     virtual void reset() = 0;
+
+    void set_target_path(std::vector<Point> path, bool relative);
 
     void set_target(Pose target, bool relative,
                     std::shared_ptr<AbstractExitCondition> ec);
