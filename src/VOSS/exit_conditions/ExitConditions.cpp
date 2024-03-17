@@ -1,9 +1,9 @@
 #include "VOSS/exit_conditions/ExitConditions.hpp"
-#include "ToleranceExitCondition.hpp"
 #include "VOSS/exit_conditions/CustomExitCondition.hpp"
 #include "VOSS/exit_conditions/PrepLineExitCondition.hpp"
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
 #include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
@@ -49,7 +49,7 @@ ExitConditions::add_angular_tolerance(double angular_tolerance) {
 
 ExitConditions& ExitConditions::add_linear_tolerance(double linear_tolerance) {
     this->conditions.push_back(
-        std::make_shared<ToleranceAngularExitCondition>(linear_tolerance));
+        std::make_shared<ToleranceLinearExitCondition>(linear_tolerance));
     return *this;
 }
 
