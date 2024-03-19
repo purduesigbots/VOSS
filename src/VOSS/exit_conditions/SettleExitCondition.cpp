@@ -32,7 +32,7 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
             prev_pose = current_pose;
         }
     } else {
-        printf("settle condition met\n");
+        // printf("settle condition met\n");
         return true;
     }
     return false;
