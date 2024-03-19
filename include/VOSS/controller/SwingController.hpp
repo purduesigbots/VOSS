@@ -18,10 +18,13 @@ class SwingController : public AbstractController {
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::DiffChassisCommand get_command(bool reverse, bool thru, std::shared_ptr<AbstractExitCondition> ec) override;
+    chassis::DiffChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) override;
+                        voss::AngularDirection direction,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     double angular_pid(double error);
 

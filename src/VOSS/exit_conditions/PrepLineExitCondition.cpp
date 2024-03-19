@@ -35,8 +35,7 @@ bool PrepLineExitCondition::is_met(voss::Pose pose, bool thru) {
             //                target_pose.x) +
             //                    target_pose.y;
             double d = voss::Point::getDistance(
-                {this->target_pose.x, this->target_pose.y},
-                {pose.x, pose.y});
+                {this->target_pose.x, this->target_pose.y}, {pose.x, pose.y});
             bool exit = d < this->thru_smoothness;
             if (exit) {
                 printf("Prep line cond met 2\n");

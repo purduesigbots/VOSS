@@ -41,7 +41,7 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
     angular_error = voss::norm_delta(angular_error);
     bool chainedExecutable = false;
     if (fabs(angular_error) < voss::to_radians(5)) {
-        if(thru) {
+        if (thru) {
             chainedExecutable = true;
         }
         turn_overshoot = true;
@@ -66,11 +66,11 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
 
     prev_ang_speed = ang_speed;
 
-
-    if (ec->is_met(this->l->get_pose(), thru) || chainedExecutable) { //exit or thru
+    if (ec->is_met(this->l->get_pose(), thru) ||
+        chainedExecutable) { // exit or thru
         if (thru) {
             if (this->can_reverse ^ !reverse) { // same sign
-                return std::signbit(ang_speed) // 1
+                return std::signbit(ang_speed)  // 1
                            ? chassis::diff_commands::Chained{-ang_speed, 0}
                            : chassis::diff_commands::Chained{0, ang_speed};
             }
@@ -81,9 +81,8 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
         return chassis::Stop{};
     }
 
-
     if (this->can_reverse ^ !reverse) { // same sign
-        return std::signbit(ang_speed) // 3
+        return std::signbit(ang_speed)  // 3
                    ? chassis::diff_commands::Swing{-ang_speed, 0}
                    : chassis::diff_commands::Swing{0, ang_speed};
     }

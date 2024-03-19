@@ -10,11 +10,12 @@ ToleranceLinearExitCondition::ToleranceLinearExitCondition(double tolerance)
 }
 
 bool ToleranceLinearExitCondition::is_met(Pose current_pose, bool thru) {
-//    printf("current pose: %f %f\n", current_pose.x, current_pose.y);
-//    printf("target pose: %f %f\n", target_pose.x, target_pose.y);
-    double d = voss::Point::getDistance({this->target_pose.x, this->target_pose.y}, {current_pose.x, current_pose.y});
-    bool met =
-        d < this->tolerance;
+    //    printf("current pose: %f %f\n", current_pose.x, current_pose.y);
+    //    printf("target pose: %f %f\n", target_pose.x, target_pose.y);
+    double d =
+        voss::Point::getDistance({this->target_pose.x, this->target_pose.y},
+                                 {current_pose.x, current_pose.y});
+    bool met = d < this->tolerance;
     return met;
 }
 

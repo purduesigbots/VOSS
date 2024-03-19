@@ -25,10 +25,13 @@ class ArcPIDController : public AbstractController {
 
     double linear_pid(double error);
 
-    chassis::DiffChassisCommand get_command(bool reverse, bool thru, std::shared_ptr<AbstractExitCondition> ec) override;
+    chassis::DiffChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) override;
+                        voss::AngularDirection direction,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     void reset() override;
 

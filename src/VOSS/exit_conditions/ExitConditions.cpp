@@ -3,8 +3,8 @@
 #include "VOSS/exit_conditions/PrepLineExitCondition.hpp"
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
 #include "VOSS/exit_conditions/TimeOutExitCondition.hpp"
-#include "VOSS/exit_conditions/ToleranceExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceAngularExitCondition.hpp"
+#include "VOSS/exit_conditions/ToleranceExitCondition.hpp"
 #include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
 #include "VOSS/utils/Pose.hpp"
 #include <memory>
@@ -40,9 +40,8 @@ ExitConditions& ExitConditions::add_timeout(int timeout) {
     return *this;
 }
 
-ExitConditions&
-ExitConditions::add_tolerance(double linear_tolerance,
-                                                 double angular_tolerance) {
+ExitConditions& ExitConditions::add_tolerance(double linear_tolerance,
+                                              double angular_tolerance) {
     auto ec = std::make_shared<ToleranceExitCondition>();
     ec->add_lin_exit(linear_tolerance);
     ec->add_ang_exit(angular_tolerance);

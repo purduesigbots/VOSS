@@ -1,7 +1,7 @@
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
-#include "VOSS/utils/Pose.hpp"
 #include "VOSS/utils/angle.hpp"
+#include "VOSS/utils/Pose.hpp"
 #include <cmath>
 #include <cstdio>
 
@@ -14,17 +14,18 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
     if (this->current_time < this->settle_time) {
         if (std::abs(current_pose.x - this->prev_pose.x) < this->tolerance &&
             std::abs(current_pose.y - this->prev_pose.y) < this->tolerance) {
-            if(current_pose.theta.has_value()) {
-                if(std::abs(current_pose.theta.value() - this->prev_pose.theta.value()) <
+            if (current_pose.theta.has_value()) {
+                if (std::abs(current_pose.theta.value() -
+                             this->prev_pose.theta.value()) <
                     voss::to_radians(this->tolerance)) {
                     this->current_time += 10;
                 }
             }
 
-//            if(thru) {
-//                printf("settle condition met\n");
-//                return true;
-//            }
+            //            if(thru) {
+            //                printf("settle condition met\n");
+            //                return true;
+            //            }
 
         } else {
             current_time = 0;
@@ -37,9 +38,10 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
     return false;
 }
 
-SettleExitCondition::SettleExitCondition(int settle_time,
-                                         double tolerance, int initial_delay)
-    : settle_time(settle_time), tolerance(tolerance), initial_delay(initial_delay) {
+SettleExitCondition::SettleExitCondition(int settle_time, double tolerance,
+                                         int initial_delay)
+    : settle_time(settle_time), tolerance(tolerance),
+      initial_delay(initial_delay) {
     this->current_time = 0;
     this->initial_time = 0;
     this->prev_pose = Pose{0, 0, 0};

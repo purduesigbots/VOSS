@@ -112,7 +112,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     angular_error = voss::norm_delta(angular_error);
 
     if (fabs(angular_error) < voss::to_radians(5)) {
-        if(thru) {
+        if (thru) {
             chainedExecutable = true;
         }
         turn_overshoot = true;

@@ -53,14 +53,12 @@ auto ec = voss::controller::ExitConditions::new_conditions()
               .add_tolerance(1.0, 2.0)
               .add_timeout(22500)
               .add_thru_smoothness(4)
-              .build() -> exit_if([](){
+              .build() -> exit_if([]() {
                   return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
               });
 
-auto chassis = voss::chassis::DiffChassis(
-    LEFT_MOTORS, RIGHT_MOTORS, pid,
-    ec,
-    pros::E_MOTOR_BRAKE_COAST);
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec,
+                                          pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
 
@@ -144,7 +142,8 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 270});
-            chassis.move({24, 24, 45}, boomerang, 100, voss::Flags::THRU | voss::Flags::REVERSE);
+            chassis.move({24, 24, 45}, boomerang, 100,
+                         voss::Flags::THRU | voss::Flags::REVERSE);
             printf("1.\n");
             master.rumble("--");
             chassis.turn(90, 100, voss::Flags::THRU);
@@ -153,14 +152,14 @@ void opcontrol() {
             chassis.move({-10, 60, 180}, boomerang, 100, voss::Flags::THRU);
             printf("3.\n");
             master.rumble("--");
-            chassis.turn(270, swing, 100, voss::Flags::REVERSE | voss::Flags::THRU);
+            chassis.turn(270, swing, 100,
+                         voss::Flags::REVERSE | voss::Flags::THRU);
             printf("4.\n");
             master.rumble("--");
             chassis.move({10, 30}, 100, voss::Flags::THRU);
             printf("5.\n");
             master.rumble("--");
             chassis.turn(0);
-
         }
 
         pros::lcd::clear_line(1);

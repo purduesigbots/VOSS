@@ -11,8 +11,9 @@ ArcPIDController::ArcPIDController(
     : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0) {
 }
 
-chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
-                                                          bool thru, std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand
+ArcPIDController::get_command(bool reverse, bool thru,
+                              std::shared_ptr<AbstractExitCondition> ec) {
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
 
@@ -79,7 +80,8 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
     prev_lin_speed = lin_speed;
     if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
-            return chassis::DiffChassisCommand{chassis::diff_commands::Chained{left_speed, right_speed}};
+            return chassis::DiffChassisCommand{
+                chassis::diff_commands::Chained{left_speed, right_speed}};
         } else {
             return chassis::Stop{};
         }
@@ -88,9 +90,9 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
         chassis::diff_commands::Voltages{left_speed, right_speed}};
 }
 
-chassis::DiffChassisCommand
-ArcPIDController::get_angular_command(bool reverse, bool thru,
-                                      voss::AngularDirection direction, std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand ArcPIDController::get_angular_command(
+    bool reverse, bool thru, voss::AngularDirection direction,
+    std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
