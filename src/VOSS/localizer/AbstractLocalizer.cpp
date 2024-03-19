@@ -46,7 +46,6 @@ Pose AbstractLocalizer::get_pose() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
     Pose ret = {this->pose.x.load(), this->pose.y.load(),
                 this->pose.theta.load()};
-
     return ret;
 }
 

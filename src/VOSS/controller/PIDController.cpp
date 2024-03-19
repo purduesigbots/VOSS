@@ -55,6 +55,7 @@ PIDController::get_command(bool reverse, bool thru,
         } else {
             // turn to face the finale pose angle if executing a pose movement
             double poseError = target.theta.value() - current_angle;
+
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
             ang_speed = angular_pid(poseError);
