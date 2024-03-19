@@ -41,20 +41,7 @@ ExitConditions& ExitConditions::add_timeout(int timeout) {
 }
 
 ExitConditions&
-ExitConditions::add_angular_tolerance(double angular_tolerance) {
-    this->conditions.push_back(
-        std::make_shared<ToleranceAngularExitCondition>(angular_tolerance));
-    return *this;
-}
-
-ExitConditions& ExitConditions::add_linear_tolerance(double linear_tolerance) {
-    this->conditions.push_back(
-        std::make_shared<ToleranceLinearExitCondition>(linear_tolerance));
-    return *this;
-}
-
-ExitConditions&
-ExitConditions::add_linear_and_angular_tolerance(double linear_tolerance,
+ExitConditions::add_tolerance(double linear_tolerance,
                                                  double angular_tolerance) {
     auto ec = std::make_shared<ToleranceExitCondition>();
     ec->add_lin_exit(linear_tolerance);

@@ -50,7 +50,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
               .add_settle(400, 0.5, 400)
-              .add_linear_and_angular_tolerance(1.0, 2.0)
+              .add_tolerance(1.0, 2.0)
               .add_timeout(22500)
               .add_thru_smoothness(4)
               .build() -> exit_if([](){

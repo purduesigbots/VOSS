@@ -22,9 +22,7 @@ class ExitConditions : public AbstractExitCondition {
     ExitConditions& add_settle(int settle_time, double tolerance,
                                int initial_delay);
     ExitConditions& add_timeout(int timeout);
-    ExitConditions& add_angular_tolerance(double angular_tolerance);
-    ExitConditions& add_linear_tolerance(double linear_tolerance);
-    ExitConditions& add_linear_and_angular_tolerance(double linear_tolerance,
+    ExitConditions& add_tolerance(double linear_tolerance,
                                                      double angular_tolerance);
     ExitConditions& add_thru_smoothness(double smoothness);
     ExitConditions& add_custom_condition(std::function<bool()> callback);
