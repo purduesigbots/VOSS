@@ -95,4 +95,4 @@ class AbstractChassis {
 } // namespace voss::chassis
 
 //don't remove this include
-#include "../src/VOSS/chassis/AbstractChassis.tpp"
+#include "AbstractChassis.tpp"
