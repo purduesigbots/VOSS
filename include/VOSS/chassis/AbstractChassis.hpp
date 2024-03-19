@@ -5,6 +5,7 @@
 
 #include "ChassisCommand.hpp"
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/controller/ControllerTypeTrait.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
 #include "VOSS/utils/flags.hpp"
@@ -16,6 +17,14 @@ namespace voss::chassis {
 using controller_ptr = std::shared_ptr<controller::AbstractController>;
 using ec_ptr = std::shared_ptr<controller::AbstractExitCondition>;
 
+//the warning is normal it will not affect compilation
+template <typename T>
+concept Is_Controller =
+    requires {
+        std::is_base_of<voss::controller::AbstractController, T>();
+    };
+
+//the warning is normal it will not affect compilation
 class AbstractChassis {
   protected:
     controller_ptr default_controller;
@@ -24,10 +33,11 @@ class AbstractChassis {
     bool task_running = false;
     pros::motor_brake_mode_e brakeMode;
 
-    void move_task(controller_ptr controller, ec_ptr ec, double max, voss::Flags flags);
+    void move_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags);
 
-    void turn_task(controller_ptr controller, ec_ptr ec, double max, voss::Flags flags,
-                   voss::AngularDirection direction);
+    void turn_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags, voss::AngularDirection direction);
 
   public:
     AbstractChassis(controller_ptr default_controller, ec_ptr ec);
@@ -38,20 +48,23 @@ class AbstractChassis {
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
-    void move(Pose target, controller_ptr controller, ec_ptr ec, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE);
+    template <Is_Controller T>
+    void move(Pose target, std::shared_ptr<T> controller, double max, Flags flags);
 
-    void move(Pose target, controller_ptr controller, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE);
+    template <Is_Controller T>
+    void move(Pose target, std::shared_ptr<T> controller, ec_ptr ec,
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE);
 
     void move(Pose target, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE);
 
-    void turn(double target, controller_ptr controller, ec_ptr ec, double max = 100.0,
-              voss::Flags flags = voss::Flags::NONE,
+    template <Is_Controller T>
+    void turn(double target, std::shared_ptr<T> controller, ec_ptr ec,
+              double max = 100.0, voss::Flags flags = voss::Flags::NONE,
               voss::AngularDirection direction = voss::AngularDirection::AUTO);
 
-    void turn(double target, controller_ptr controller, double max = 100.0,
+    template <Is_Controller T>
+    void turn(double target, std::shared_ptr<T> controller, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE,
               voss::AngularDirection direction = voss::AngularDirection::AUTO);
 
@@ -59,13 +72,15 @@ class AbstractChassis {
               voss::Flags flags = voss::Flags::NONE,
               voss::AngularDirection direction = voss::AngularDirection::AUTO);
 
+    template <Is_Controller T>
     void
-    turn_to(Point target, controller_ptr controller, ec_ptr ec, double max = 100.0,
-            voss::Flags flags = voss::Flags::NONE,
+    turn_to(Point target, std::shared_ptr<T> controller, ec_ptr ec,
+            double max = 100.0, voss::Flags flags = voss::Flags::NONE,
             voss::AngularDirection direction = voss::AngularDirection::AUTO);
 
+    template <Is_Controller T>
     void
-    turn_to(Point target, controller_ptr controller, double max = 100.0,
+    turn_to(Point target, std::shared_ptr<T> controller, double max = 100.0,
             voss::Flags flags = voss::Flags::NONE,
             voss::AngularDirection direction = voss::AngularDirection::AUTO);
 
@@ -73,6 +88,10 @@ class AbstractChassis {
     turn_to(Point target, double max = 100.0,
             voss::Flags flags = voss::Flags::NONE,
             voss::AngularDirection direction = voss::AngularDirection::AUTO);
+
+
 };
 
 } // namespace voss::chassis
+
+#include "AbstractChassis.tpp"

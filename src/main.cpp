@@ -144,16 +144,16 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 270});
-            chassis.move({24, 24, 45}, boomerang, 100, voss::Flags::THRU | voss::Flags::REVERSE);
-            printf("1.\n");
-            master.rumble("--");
-            chassis.turn(90, 100, voss::Flags::THRU);
-            printf("2.\n");
-            master.rumble("--");
+
+
             chassis.move({-10, 60, 180}, boomerang, 100, voss::Flags::THRU);
-            printf("3.\n");
-            master.rumble("--");
             chassis.turn(270, swing, 100, voss::Flags::REVERSE | voss::Flags::THRU);
+            //trigger compile time error
+//            chassis.move({24, 24, 45}, swing, 100, voss::Flags::THRU | voss::Flags::REVERSE);
+//            chassis.turn(90, boomerang, 100, voss::Flags::THRU);
+
+
+
             printf("4.\n");
             master.rumble("--");
             chassis.move({10, 30}, 100, voss::Flags::THRU);

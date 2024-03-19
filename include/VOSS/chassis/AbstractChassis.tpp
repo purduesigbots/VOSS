@@ -1,6 +1,7 @@
-#include "VOSS/chassis/AbstractChassis.hpp"
+#pragma once
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
+#include "VOSS/chassis/AbstractChassis.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
 #include <cmath>
@@ -12,8 +13,8 @@ AbstractChassis::AbstractChassis(controller_ptr default_controller, ec_ptr ec) {
     this->default_ec = std::move(ec);
 }
 
-void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec, double max,
-                                voss::Flags flags) {
+void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
+                                double max, voss::Flags flags) {
 
     this->task =
         std::make_unique<pros::Task>([&, controller, ec, flags, max]() {
@@ -41,8 +42,8 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec, double max
     this->task->join();
 }
 
-void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec, double max,
-                                voss::Flags flags,
+void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
+                                double max, voss::Flags flags,
                                 voss::AngularDirection direction) {
 
     this->task = std::make_unique<pros::Task>(
@@ -74,12 +75,19 @@ void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
     this->move(target, this->default_controller, this->default_ec, max, flags);
 }
 
-void AbstractChassis::move(Pose target, controller_ptr controller, double max, voss::Flags flags) {
+template <Is_Controller T>
+void AbstractChassis::move(Pose target, std::shared_ptr<T> controller,
+                           double max, Flags flags) {
+    static_assert(voss::controller::can_move<T>(),
+                  "\nThe controller passed in cannot move!");
     this->move(target, std::move(controller), this->default_ec, max, flags);
 }
 
-void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec, double max,
-                           voss::Flags flags) {
+template <Is_Controller T>
+void AbstractChassis::move(Pose target, std::shared_ptr<T> controller,
+                           ec_ptr ec, double max, voss::Flags flags) {
+    static_assert(voss::controller::can_move<T>(),
+                  "\nThe controller passed in cannot move!");
     while (this->task_running) {
         pros::delay(10);
     }
@@ -91,39 +99,61 @@ void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec, do
 
 void AbstractChassis::turn(double target, double max, voss::Flags flags,
                            voss::AngularDirection direction) {
-    this->turn(target, this->default_controller, this->default_ec, max, flags, direction);
+    this->turn(target, this->default_controller, this->default_ec, max, flags,
+               direction);
 }
 
-void AbstractChassis::turn(double target, controller_ptr controller, double max,
-                            voss::Flags flags, voss::AngularDirection direction) {
-    this->turn(target, std::move(controller), this->default_ec, max, flags, direction);
+template <Is_Controller T>
+void AbstractChassis::turn(double target, std::shared_ptr<T> controller,
+                           double max, voss::Flags flags,
+                           voss::AngularDirection direction) {
+    static_assert(voss::controller::can_turn<T>(),
+                  "\nThe controller passed in cannot turn!");
+    this->turn(target, std::move(controller), this->default_ec, max, flags,
+               direction);
 }
 
-void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec, double max,
-                           voss::Flags flags, voss::AngularDirection direction) {
+template <Is_Controller T>
+void AbstractChassis::turn(double target, std::shared_ptr<T> controller,
+                           ec_ptr ec, double max, voss::Flags flags,
+                           voss::AngularDirection direction) {
+    static_assert(voss::controller::can_turn<T>(),
+                  "\nThe controller passed in cannot turn!");
     while (this->task_running) {
         pros::delay(10);
     }
     this->task_running = true;
 
-    controller->set_target({NAN, NAN, target}, flags & voss::Flags::RELATIVE, ec);
+    controller->set_target({NAN, NAN, target}, flags & voss::Flags::RELATIVE,
+                           ec);
     controller->set_angular_target(target, flags & voss::Flags::RELATIVE);
 
-    this->turn_task(std::move(controller), std::move(ec), max, flags, direction);
+    this->turn_task(std::move(controller), std::move(ec), max, flags,
+                    direction);
 }
 
 void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
                               voss::AngularDirection direction) {
-    this->turn_to(target, this->default_controller, this->default_ec, max, flags, direction);
+    this->turn_to(target, this->default_controller, this->default_ec, max,
+                  flags, direction);
 }
 
-void AbstractChassis::turn_to(Point target, controller_ptr controller, double max, voss::Flags flags, voss::AngularDirection direction) {
-    this->turn_to(target, std::move(controller), this->default_ec, max, flags, direction);
-}
-
-void AbstractChassis::turn_to(Point target, controller_ptr controller, ec_ptr ec,
+template <Is_Controller T>
+void AbstractChassis::turn_to(Point target, std::shared_ptr<T> controller,
                               double max, voss::Flags flags,
                               voss::AngularDirection direction) {
+    static_assert(voss::controller::can_turn<T>(),
+                  "\nThe controller passed in cannot turn!");
+    this->turn_to(target, std::move(controller), this->default_ec, max, flags,
+                  direction);
+}
+
+template <Is_Controller T>
+void AbstractChassis::turn_to(Point target, std::shared_ptr<T> controller,
+                              ec_ptr ec, double max, voss::Flags flags,
+                              voss::AngularDirection direction) {
+    static_assert(voss::controller::can_turn<T>(),
+                  "\nThe controller passed in cannot turn!");
     while (this->task_running) {
         pros::delay(10);
     }
@@ -132,7 +162,8 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller, ec_ptr ec
     controller->set_target({target.x, target.y, std::nullopt},
                            flags & voss::Flags::RELATIVE, ec);
 
-    this->turn_task(std::move(controller), std::move(ec), max, flags, direction);
+    this->turn_task(std::move(controller), std::move(ec), max, flags,
+                    direction);
 }
 
 } // namespace voss::chassis
