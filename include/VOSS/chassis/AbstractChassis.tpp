@@ -1,8 +1,8 @@
 #pragma once
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
-#include "VOSS/chassis/AbstractChassis.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
+#include "AbstractChassis.hpp"
 
 #include <cmath>
 
