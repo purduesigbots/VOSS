@@ -47,24 +47,8 @@ PIDControllerBuilder& PIDControllerBuilder::with_tracking_kp(double kP) {
     return *this;
 }
 
-PIDControllerBuilder& PIDControllerBuilder::with_exit_error(double error) {
-    this->ctrl.exit_error = error;
-    return *this;
-}
-
-PIDControllerBuilder&
-PIDControllerBuilder::with_angular_exit_error(double error) {
-    this->ctrl.angular_exit_error = voss::to_radians(error);
-    return *this;
-}
-
 PIDControllerBuilder& PIDControllerBuilder::with_min_error(double error) {
     this->ctrl.min_error = error;
-    return *this;
-}
-
-PIDControllerBuilder& PIDControllerBuilder::with_settle_time(double time) {
-    this->ctrl.settle_time = (time > 0) ? time : 250;
     return *this;
 }
 

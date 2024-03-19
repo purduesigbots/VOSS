@@ -16,6 +16,13 @@
 #include "controller/SwingController.hpp"
 #include "controller/SwingControllerBuilder.hpp"
 
+#include "exit_conditions/AbstractExitCondition.hpp"
+#include "exit_conditions/ExitConditions.hpp"
+#include "exit_conditions/SettleExitCondition.hpp"
+#include "exit_conditions/TimeOutExitCondition.hpp"
+#include "exit_conditions/ToleranceAngularExitCondition.hpp"
+#include "exit_conditions/ToleranceLinearExitCondition.hpp"
+
 #include "localizer/AbstractLocalizer.hpp"
 #include "localizer/ADILocalizer.hpp"
 #include "localizer/ADILocalizerBuilder.hpp"

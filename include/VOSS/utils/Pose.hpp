@@ -1,6 +1,8 @@
 #pragma once
 
 #include <atomic>
+#include <cmath>
+#include <optional>
 
 namespace voss {
 

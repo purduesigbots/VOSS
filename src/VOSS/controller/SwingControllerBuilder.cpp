@@ -35,17 +35,6 @@ SwingControllerBuilder::with_angular_constants(double kP, double kI,
     return *this;
 }
 
-SwingControllerBuilder&
-SwingControllerBuilder::with_angular_exit_error(double error) {
-    this->ctrl.angular_exit_error = voss::to_radians(error);
-    return *this;
-}
-
-SwingControllerBuilder& SwingControllerBuilder::with_settle_time(double time) {
-    this->ctrl.settle_time = (time > 0) ? time : 250;
-    return *this;
-}
-
 std::shared_ptr<SwingController> SwingControllerBuilder::build() {
     return std::make_shared<SwingController>(this->ctrl);
 }
