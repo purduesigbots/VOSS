@@ -41,13 +41,15 @@ class AbstractChassis {
 
 
     void move(double distance, double max = 100.0,
-                       voss::Flags flags = voss::Flags::NONE,
-                       double exitTime = 22500);
+                       voss::Flags flags = voss::Flags::NONE);
 
     void move(double distance, controller_ptr controller,
                        double max = 100.0,
-                       voss::Flags flags = voss::Flags::NONE,
-                       double exitTime = 22500);
+                       voss::Flags flags = voss::Flags::NONE);
+
+    void move(double distance, controller_ptr controller, ec_ptr ec,
+              double max = 100.0,
+              voss::Flags flags = voss::Flags::NONE);
 
     void move(Pose target, controller_ptr controller, ec_ptr ec,
               double max = 100.0, voss::Flags flags = voss::Flags::NONE);

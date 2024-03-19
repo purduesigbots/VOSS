@@ -70,23 +70,22 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
     this->task->join();
 }
 
-void AbstractChassis::move(double distance, double max,
-                                    voss::Flags flags, double exitTime) {
-    this->move({distance, 0, 0}, this->default_controller, max,
-               flags | voss::Flags::RELATIVE, exitTime);
+void AbstractChassis::move(double distance, double max, voss::Flags flags) {
+    this->move({distance, 0}, this->default_controller, this->default_ec,
+               max, flags | voss::Flags::RELATIVE);
 }
 
 void AbstractChassis::move(double distance, controller_ptr controller,
-                                    double max, voss::Flags flags,
-                                    double exitTime) {
-    this->move({distance, 0, 0}, std::move(controller), max,
-               flags | voss::Flags::RELATIVE, exitTime);
+                           double max, voss::Flags flags) {
+    this->move({distance, 0}, std::move(controller), this->default_ec, max,
+               flags | voss::Flags::RELATIVE);
 }
 
-  
-void AbstractChassis::move(Pose target, double max, voss::Flags flags,
-                           double exitTime) {
-    this->move(target, this->default_controller, max, flags, exitTime);
+void AbstractChassis::move(double distance, controller_ptr controller,
+                           ec_ptr ec, double max, voss::Flags flags) {
+    this->move({distance, 0}, std::move(controller), std::move(ec), max,
+               flags | Flags::RELATIVE);
+}
 
 void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
     this->move(target, this->default_controller, this->default_ec, max, flags);
