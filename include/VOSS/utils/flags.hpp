@@ -22,5 +22,11 @@ auto inline operator&(Flags flag1, Flags flag2) {
                              static_cast<uint8_t>(flag2));
 }
 
-enum class AngularDirection { AUTO, COUNTERCLOCKWISE, CCW = COUNTERCLOCKWISE, CLOCKWISE, CW = CLOCKWISE};
+enum class AngularDirection {
+    AUTO,
+    COUNTERCLOCKWISE,
+    CCW = COUNTERCLOCKWISE,
+    CLOCKWISE,
+    CW = CLOCKWISE
+};
 } // namespace voss

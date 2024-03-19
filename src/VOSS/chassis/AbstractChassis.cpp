@@ -71,8 +71,8 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
 }
 
 void AbstractChassis::move(double distance, double max, voss::Flags flags) {
-    this->move({distance, 0}, this->default_controller, this->default_ec,
-               max, flags | voss::Flags::RELATIVE);
+    this->move({distance, 0}, this->default_controller, this->default_ec, max,
+               flags | voss::Flags::RELATIVE);
 }
 
 void AbstractChassis::move(double distance, controller_ptr controller,
