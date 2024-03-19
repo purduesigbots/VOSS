@@ -9,13 +9,7 @@ class SwingController : public AbstractController {
   protected:
     std::shared_ptr<SwingController> p;
     double angular_kP, angular_kI, angular_kD;
-    double angular_exit_error;
-    double settle_time;
     bool can_reverse;
-
-    double close;
-    double close_2;
-    int counter;
     bool turn_overshoot;
 
     double prev_ang_err, total_ang_err;
@@ -24,10 +18,13 @@ class SwingController : public AbstractController {
   public:
     SwingController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction) override;
+                        voss::AngularDirection direction,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     double angular_pid(double error);
 
