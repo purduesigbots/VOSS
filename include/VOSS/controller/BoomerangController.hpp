@@ -3,6 +3,7 @@
 #include "AbstractController.hpp"
 #include "PIDController.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/flags.hpp"
 
@@ -34,10 +35,13 @@ class BoomerangController : public AbstractController {
   public:
     BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
-    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction) override;
+                        voss::AngularDirection direction,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     double linear_pid(double error);
     double angular_pid(double error);

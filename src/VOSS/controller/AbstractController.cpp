@@ -1,6 +1,8 @@
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
+#include <memory>
 
 namespace voss::controller {
 
@@ -11,7 +13,8 @@ AbstractController::AbstractController(
 
 // Set desired postion with x, y, and heading
 // Relative target position WIP
-void AbstractController::set_target(Pose target, bool relative) {
+void AbstractController::set_target(Pose target, bool relative,
+                                    std::shared_ptr<AbstractExitCondition> ec) {
     if (target.theta.has_value()) {
         target.theta = voss::to_radians(*target.theta);
     }
@@ -28,6 +31,8 @@ void AbstractController::set_target(Pose target, bool relative) {
     } else {
         this->target = target;
     }
+
+    ec->set_target(this->target);
 }
 
 // Set desired orientation

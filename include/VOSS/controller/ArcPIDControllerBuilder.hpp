@@ -24,9 +24,7 @@ class ArcPIDControllerBuilder {
      * than the real one.
      */
     ArcPIDControllerBuilder& with_track_width(double track_width);
-    ArcPIDControllerBuilder& with_exit_error(double error);
     ArcPIDControllerBuilder& with_min_error(double error);
-    ArcPIDControllerBuilder& with_settle_time(double time);
     ArcPIDControllerBuilder& with_slew(double slew);
 
     std::shared_ptr<ArcPIDController> build();

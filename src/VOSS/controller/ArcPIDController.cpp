@@ -11,8 +11,9 @@ ArcPIDController::ArcPIDController(
     : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0) {
 }
 
-chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
-                                                          bool thru) {
+chassis::DiffChassisCommand
+ArcPIDController::get_command(bool reverse, bool thru,
+                              std::shared_ptr<AbstractExitCondition> ec) {
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
 
@@ -47,17 +48,6 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
 
     angle_error = voss::norm_delta(angle_error);
 
-    if (distance_error <= exit_error ||
-        (distance_error < min_error && fabs(cos(angle_error)) <= 0.1)) {
-        this->close += 10;
-    } else {
-        this->close = 0;
-    }
-
-    if (close >= settle_time) {
-        return chassis::DiffChassisCommand{chassis::Stop{}};
-    }
-
     double lin_speed = thru ? 100.0 : this->linear_pid(distance_error);
 
     if (distance_error < this->min_error) {
@@ -88,13 +78,21 @@ chassis::DiffChassisCommand ArcPIDController::get_command(bool reverse,
     }
     prev_t = t;
     prev_lin_speed = lin_speed;
+    if (ec->is_met(this->l->get_pose(), thru)) {
+        if (thru) {
+            return chassis::DiffChassisCommand{
+                chassis::diff_commands::Chained{left_speed, right_speed}};
+        } else {
+            return chassis::Stop{};
+        }
+    }
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{left_speed, right_speed}};
 }
 
-chassis::DiffChassisCommand
-ArcPIDController::get_angular_command(bool reverse, bool thru,
-                                      voss::AngularDirection direction) {
+chassis::DiffChassisCommand ArcPIDController::get_angular_command(
+    bool reverse, bool thru, voss::AngularDirection direction,
+    std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
@@ -138,31 +136,9 @@ ArcPIDController::modify_track_width(double track_width) {
 }
 
 std::shared_ptr<ArcPIDController>
-ArcPIDController::modify_exit_error(double exit_error) {
-    auto pid_mod = ArcPIDControllerBuilder::from(*this)
-                       .with_exit_error(exit_error)
-                       .build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
-std::shared_ptr<ArcPIDController>
 ArcPIDController::modify_min_error(double min_error) {
     auto pid_mod =
         ArcPIDControllerBuilder::from(*this).with_min_error(min_error).build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
-std::shared_ptr<ArcPIDController>
-ArcPIDController::modify_settle_time(double settle_time) {
-    auto pid_mod = ArcPIDControllerBuilder::from(*this)
-                       .with_settle_time(settle_time)
-                       .build();
 
     this->p = pid_mod;
 

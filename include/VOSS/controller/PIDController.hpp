@@ -12,16 +12,9 @@ class PIDController : public AbstractController {
     double linear_kP, linear_kI, linear_kD;
     double angular_kP, angular_kI, angular_kD;
     double tracking_kP;
-    double exit_error;
-    double angular_exit_error;
     double min_error;
     bool can_reverse;
-    double settle_time;
 
-    double close;
-    double close_2;
-    int counter;
-    double prev_angle;
     double min_vel;
     bool turn_overshoot;
 
@@ -33,10 +26,13 @@ class PIDController : public AbstractController {
     double linear_pid(double error);
     double angular_pid(double error);
 
-    chassis::DiffChassisCommand get_command(bool reverse, bool thru) override;
+    chassis::DiffChassisCommand
+    get_command(bool reverse, bool thru,
+                std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
     get_angular_command(bool reverse, bool thru,
-                        voss::AngularDirection direction) override;
+                        voss::AngularDirection direction,
+                        std::shared_ptr<AbstractExitCondition> ec) override;
 
     void reset() override;
 

@@ -22,10 +22,7 @@ auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
                .with_linear_constants(20, 0.02, 169)
                .with_angular_constants(250, 0.05, 2435)
-               .with_exit_error(1.0)
-               .with_angular_exit_error(2.0)
                .with_min_error(5)
-               .with_settle_time(200)
                .with_min_vel_for_thru(100)
                .build();
 
@@ -42,20 +39,28 @@ auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
 
 auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
                  .with_angular_constants(250, 0.05, 2435)
-                 .with_angular_exit_error(0.5)
-                 .with_settle_time(200)
                  .build();
 
 auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .with_track_width(14)
                .with_linear_constants(20, 0.02, 169)
-               .with_exit_error(1.0)
                .with_min_error(5)
-               .with_settle_time(200)
                .build();
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 0,
+pros::Controller master(pros::E_CONTROLLER_MASTER);
+auto ec = voss::controller::ExitConditions::new_conditions()
+              .add_settle(400, 0.5, 400)
+              .add_tolerance(1.0, 2.0)
+              .add_timeout(22500)
+              .add_thru_smoothness(4)
+              .build() -> exit_if([]() {
+                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+              });
+
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec,
                                           pros::E_MOTOR_BRAKE_COAST);
+
+pros::IMU imu(16);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -128,7 +133,6 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    pros::Controller master(pros::E_CONTROLLER_MASTER);
 
     while (true) {
         voss::Pose p = odom->get_pose();
@@ -137,13 +141,25 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move({0, 48});
-            chassis.turn_to({0, 0});
-            //            chassis.turn(270);
-            chassis.move({10, 10, 250}, boomerang, 50);
-            odom->set_pose({20, 10});
-            pros::delay(2000);
+            odom->set_pose({0.0, 0.0, 270});
+            chassis.move({24, 24, 45}, boomerang, 100,
+                         voss::Flags::THRU | voss::Flags::REVERSE);
+            printf("1.\n");
+            master.rumble("--");
+            chassis.turn(90, 100, voss::Flags::THRU);
+            printf("2.\n");
+            master.rumble("--");
+            chassis.move({-10, 60, 180}, boomerang, 100, voss::Flags::THRU);
+            printf("3.\n");
+            master.rumble("--");
+            chassis.turn(270, swing, 100,
+                         voss::Flags::REVERSE | voss::Flags::THRU);
+            printf("4.\n");
+            master.rumble("--");
+            chassis.move({10, 30}, 100, voss::Flags::THRU);
+            printf("5.\n");
+            master.rumble("--");
+            chassis.turn(0);
         }
 
         pros::lcd::clear_line(1);
