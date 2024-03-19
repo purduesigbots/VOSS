@@ -92,4 +92,8 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
     }
 }
 
+void TrackingWheelLocalizer::set_pose(double x, double y, double theta) {
+    this->set_pose({x, y, theta});
+}
+
 } // namespace voss::localizer

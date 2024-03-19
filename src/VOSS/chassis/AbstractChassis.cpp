@@ -79,6 +79,7 @@ void AbstractChassis::move(double distance, controller_ptr controller,
                flags | voss::Flags::RELATIVE, exitTime);
 }
 
+  
 void AbstractChassis::move(Pose target, double max, voss::Flags flags,
                            double exitTime) {
     this->move(target, this->default_controller, max, flags, exitTime);

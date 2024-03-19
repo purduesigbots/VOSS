@@ -26,7 +26,7 @@ void AbstractLocalizer::begin_localization() {
     });
 }
 // These last few functions allows the user to set and get values of the robot's
-// pose while keeing the values safe with mutex
+// pose while keeping the values safe with mutex
 void AbstractLocalizer::set_pose(Pose pose) {
     std::unique_lock<pros::Mutex> lock(this->mtx);
     if (pose.theta.has_value()) {
@@ -38,11 +38,26 @@ void AbstractLocalizer::set_pose(Pose pose) {
     }
 }
 
+void AbstractLocalizer::set_pose(double x, double y, double theta) {
+    this->set_pose({x, y, theta});
+}
+
 Pose AbstractLocalizer::get_pose() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
     Pose ret = {this->pose.x.load(), this->pose.y.load(),
                 this->pose.theta.load()};
+    return ret;
+}
 
+double AbstractLocalizer::get_x() {
+    std::unique_lock<pros::Mutex> lock(this->mtx);
+    double ret = this->pose.x;
+    return ret;
+}
+
+double AbstractLocalizer::get_y() {
+    std::unique_lock<pros::Mutex> lock(this->mtx);
+    double ret = this->pose.y;
     return ret;
 }
 

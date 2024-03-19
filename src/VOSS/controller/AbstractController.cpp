@@ -12,6 +12,9 @@ AbstractController::AbstractController(
 // Set desired postion with x, y, and heading
 // Relative target position WIP
 void AbstractController::set_target(Pose target, bool relative) {
+    if (target.theta.has_value()) {
+        target.theta = voss::to_radians(*target.theta);
+    }
     if (relative) {
         Point p = l->get_position();         // robot position
         double h = l->get_orientation_deg(); // robot heading in radians

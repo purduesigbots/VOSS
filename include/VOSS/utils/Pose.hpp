@@ -8,7 +8,7 @@ struct AtomicPose;
 struct Pose {
     double x;
     double y;
-    std::optional<double> theta;
+    std::optional<double> theta = std::nullopt;
 };
 
 struct AtomicPose {
