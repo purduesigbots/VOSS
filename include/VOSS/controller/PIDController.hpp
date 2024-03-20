@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/utils/PID.hpp"
 #include <memory>
 
 namespace voss::controller {
@@ -9,8 +10,7 @@ class PIDController : public AbstractController {
   protected:
     std::shared_ptr<PIDController> p;
 
-    double linear_kP, linear_kI, linear_kD;
-    double angular_kP, angular_kI, angular_kD;
+    utils::PID linear_pid, angular_pid;
     double tracking_kP;
     double min_error;
     bool can_reverse;
@@ -18,13 +18,8 @@ class PIDController : public AbstractController {
     double min_vel;
     bool turn_overshoot;
 
-    double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
-
   public:
     PIDController(std::shared_ptr<localizer::AbstractLocalizer> l);
-
-    double linear_pid(double error);
-    double angular_pid(double error);
 
     chassis::DiffChassisCommand
     get_command(bool reverse, bool thru,

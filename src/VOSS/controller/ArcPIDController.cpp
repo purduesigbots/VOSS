@@ -8,7 +8,7 @@ namespace voss::controller {
 
 ArcPIDController::ArcPIDController(
     std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0) {
+    : AbstractController(std::move(l)) {
 }
 
 chassis::DiffChassisCommand
@@ -48,7 +48,7 @@ ArcPIDController::get_command(bool reverse, bool thru,
 
     angle_error = voss::norm_delta(angle_error);
 
-    double lin_speed = thru ? 100.0 : this->linear_pid(distance_error);
+    double lin_speed = thru ? 100.0 : this->linear_pid.update(distance_error);
 
     if (distance_error < this->min_error) {
         this->can_reverse = true;
@@ -96,20 +96,8 @@ chassis::DiffChassisCommand ArcPIDController::get_angular_command(
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-double ArcPIDController::linear_pid(double error) {
-    this->total_lin_err += error;
-
-    double speed = linear_kP * error + linear_kD * (error - prev_lin_err) +
-                   linear_kI * total_lin_err;
-
-    this->prev_lin_err = error;
-
-    return speed;
-}
-
 void ArcPIDController::reset() {
-    this->prev_lin_err = 0.0;
-    this->total_lin_err = 0.0;
+    this->linear_pid.reset();
     this->prev_lin_speed = 0.0;
 }
 

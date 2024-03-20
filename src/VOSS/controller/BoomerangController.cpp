@@ -44,7 +44,7 @@ BoomerangController::get_command(bool reverse, bool thru,
 
     angle_error = voss::norm_delta(angle_error);
 
-    double lin_speed = linear_pid(distance_error);
+    double lin_speed = linear_pid.update(distance_error);
     if (thru) {
         lin_speed = copysign(fmax(fabs(lin_speed), this->min_vel), lin_speed);
     }
@@ -63,7 +63,7 @@ BoomerangController::get_command(bool reverse, bool thru,
 
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
-            ang_speed = angular_pid(poseError);
+            ang_speed = angular_pid.update(poseError);
         }
 
         // reduce the linear speed if the bot is tangent to the target
@@ -75,7 +75,7 @@ BoomerangController::get_command(bool reverse, bool thru,
             lin_speed = -lin_speed;
         }
 
-        ang_speed = angular_pid(angle_error);
+        ang_speed = angular_pid.update(angle_error);
     }
 
     lin_speed *= cos(angle_error);
@@ -100,35 +100,9 @@ chassis::DiffChassisCommand BoomerangController::get_angular_command(
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
-double BoomerangController::linear_pid(double error) {
-    total_lin_err += error;
-
-    this->vel = error - prev_ang_err;
-
-    double speed = linear_kP * error + linear_kD * (error - prev_lin_err) +
-                   linear_kI * total_lin_err;
-
-    this->prev_lin_err = error;
-
-    return speed;
-}
-
-double BoomerangController::angular_pid(double error) {
-    total_ang_err += error;
-
-    double speed = angular_kP * error + angular_kD * (error - prev_ang_err) +
-                   angular_kI * total_ang_err;
-
-    this->prev_ang_err = error;
-
-    return speed;
-}
-
 void BoomerangController::reset() {
-    this->prev_lin_err = 0;
-    this->total_lin_err = 0;
-    this->prev_ang_err = 0;
-    this->total_ang_err = 0;
+    this->linear_pid.reset();
+    this->angular_pid.reset();
     this->can_reverse = false;
     this->counter = 0;
 }

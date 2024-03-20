@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/utils/PID.hpp"
 #include <memory>
 
 namespace voss::controller {
@@ -8,7 +9,7 @@ namespace voss::controller {
 class ArcPIDController : public AbstractController {
   protected:
     std::shared_ptr<ArcPIDController> p;
-    double linear_kP, linear_kI, linear_kD;
+    utils::PID linear_pid;
     double track_width;
     double min_error;
     double can_reverse;
@@ -22,8 +23,6 @@ class ArcPIDController : public AbstractController {
 
   public:
     ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l);
-
-    double linear_pid(double error);
 
     chassis::DiffChassisCommand
     get_command(bool reverse, bool thru,
