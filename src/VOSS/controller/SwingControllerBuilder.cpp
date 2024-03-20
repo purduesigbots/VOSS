@@ -29,9 +29,7 @@ SwingControllerBuilder SwingControllerBuilder::from(SwingController swc) {
 SwingControllerBuilder&
 SwingControllerBuilder::with_angular_constants(double kP, double kI,
                                                double kD) {
-    this->ctrl.angular_kP = kP;
-    this->ctrl.angular_kI = kI;
-    this->ctrl.angular_kD = kD;
+    this->ctrl.angular_pid.set_constants(kP, kI, kD);
     return *this;
 }
 

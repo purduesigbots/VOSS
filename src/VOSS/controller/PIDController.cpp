@@ -9,8 +9,7 @@
 namespace voss::controller {
 
 PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)), prev_lin_err(0.0), total_lin_err(0.0),
-      prev_ang_err(0.0), total_ang_err(0.0) {
+    : AbstractController(std::move(l)) {
 }
 
 chassis::DiffChassisCommand
@@ -43,7 +42,7 @@ PIDController::get_command(bool reverse, bool thru,
 
     angle_error = voss::norm_delta(angle_error);
 
-    double lin_speed = (thru ? 100.0 : (linear_pid(distance_error))) * dir;
+    double lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
 
     double ang_speed;
     if (distance_error < min_error) {
@@ -57,7 +56,7 @@ PIDController::get_command(bool reverse, bool thru,
             double poseError = target.theta.value() - current_angle;
             while (fabs(poseError) > M_PI)
                 poseError -= 2 * M_PI * poseError / fabs(poseError);
-            ang_speed = angular_pid(poseError);
+            ang_speed = angular_pid.update(poseError);
         }
 
         // reduce the linear speed if the bot is tangent to the target
@@ -70,7 +69,7 @@ PIDController::get_command(bool reverse, bool thru,
             lin_speed = -lin_speed;
         }
 
-        ang_speed = angular_pid(angle_error);
+        ang_speed = angular_pid.update(angle_error);
     }
     // Runs at the end of a through movement
     if (ec->is_met(this->l->get_pose(), thru)) {
@@ -128,7 +127,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
         }
     }
 
-    double ang_speed = angular_pid(angular_error);
+    double ang_speed = angular_pid.update(angular_error);
     if (ec->is_met(this->l->get_pose(), thru) || chainedExecutable) {
         if (thru) {
             return chassis::DiffChassisCommand{
@@ -139,37 +138,11 @@ PIDController::get_angular_command(bool reverse, bool thru,
     return chassis::DiffChassisCommand{
         chassis::diff_commands::Voltages{-ang_speed, ang_speed}};
 }
-// What is calculating the required motor power for a linear movement
-// Returns value for motor power with type double
-double PIDController::linear_pid(double error) {
-    total_lin_err += error;
-
-    double speed = linear_kP * error + linear_kD * (error - prev_lin_err) +
-                   linear_kI * total_lin_err;
-
-    this->prev_lin_err = error;
-
-    return speed;
-}
-// What is calculating the required motor power for a turn
-// Returns value for motor power with type double
-double PIDController::angular_pid(double error) {
-    total_ang_err += error;
-
-    double speed = angular_kP * error + angular_kD * (error - prev_ang_err) +
-                   angular_kI * total_ang_err;
-
-    this->prev_ang_err = error;
-
-    return speed;
-}
 
 // Function to reset every variable used in the PID controller
 void PIDController::reset() {
-    this->prev_lin_err = 0;
-    this->total_lin_err = 0;
-    this->prev_ang_err = 0;
-    this->total_ang_err = 0;
+    this->linear_pid.reset();
+    this->angular_pid.reset();
     this->can_reverse = false;
     this->turn_overshoot = false;
 }

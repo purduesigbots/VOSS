@@ -160,6 +160,7 @@ void opcontrol() {
             printf("5.\n");
             master.rumble("--");
             chassis.turn(0);
+            printf("end\n");
         }
 
         pros::lcd::clear_line(1);

@@ -11,6 +11,7 @@ class ToleranceExitCondition : public AbstractExitCondition {
     std::shared_ptr<ToleranceLinearExitCondition> lin_exit = nullptr;
 
   public:
+    void set_target(voss::Pose target) override;
     bool is_met(Pose pose, bool thru) override;
     void add_ang_exit(double angular_tolerance);
     void add_lin_exit(double linear_tolerance);

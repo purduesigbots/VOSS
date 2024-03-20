@@ -2,17 +2,17 @@
 
 #include "PIDController.hpp"
 #include "VOSS/controller/AbstractController.hpp"
+#include "VOSS/utils/PID.hpp"
 #include <memory>
 
 namespace voss::controller {
 class SwingController : public AbstractController {
   protected:
     std::shared_ptr<SwingController> p;
-    double angular_kP, angular_kI, angular_kD;
+    utils::PID angular_pid;
     bool can_reverse;
     bool turn_overshoot;
 
-    double prev_ang_err, total_ang_err;
     double prev_ang_speed;
 
   public:
@@ -25,8 +25,6 @@ class SwingController : public AbstractController {
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
-
-    double angular_pid(double error);
 
     void reset() override;
 

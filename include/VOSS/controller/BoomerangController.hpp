@@ -6,6 +6,7 @@
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/flags.hpp"
+#include "VOSS/utils/PID.hpp"
 
 namespace voss::controller {
 
@@ -15,8 +16,7 @@ class BoomerangController : public AbstractController {
     double lead_pct;
     Pose carrotPoint;
 
-    double linear_kP, linear_kI, linear_kD;
-    double angular_kP, angular_kI, angular_kD;
+    utils::PID linear_pid, angular_pid;
     double vel;
     double exit_error;
     double angular_exit_error;
@@ -30,8 +30,6 @@ class BoomerangController : public AbstractController {
     double prev_angle;
     double min_vel;
 
-    double prev_lin_err, total_lin_err, prev_ang_err, total_ang_err;
-
   public:
     BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l);
 
@@ -42,9 +40,6 @@ class BoomerangController : public AbstractController {
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
-
-    double linear_pid(double error);
-    double angular_pid(double error);
 
     void reset() override;
 

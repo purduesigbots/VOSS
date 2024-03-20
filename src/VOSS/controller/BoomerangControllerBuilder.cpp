@@ -29,18 +29,14 @@ BoomerangControllerBuilder::from(BoomerangController bmr) {
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_linear_constants(double kP, double kI,
                                                   double kD) {
-    this->ctrl.linear_kP = kP;
-    this->ctrl.linear_kI = kI;
-    this->ctrl.linear_kD = kD;
+    this->ctrl.linear_pid.set_constants(kP, kI, kD);
     return *this;
 }
 
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_angular_constants(double kP, double kI,
                                                    double kD) {
-    this->ctrl.angular_kP = kP;
-    this->ctrl.angular_kI = kI;
-    this->ctrl.angular_kD = kD;
+    this->ctrl.angular_pid.set_constants(kP, kI, kD);
     return *this;
 }
 

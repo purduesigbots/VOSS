@@ -57,7 +57,7 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
         }
     }
 
-    double ang_speed = angular_pid(angular_error);
+    double ang_speed = angular_pid.update(angular_error);
     chassis::DiffChassisCommand command;
     if (!((ang_speed >= 0.0) ^ (this->prev_ang_speed < 0.0)) &&
         this->prev_ang_speed != 0) {
@@ -91,24 +91,10 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
                : chassis::diff_commands::Swing{-ang_speed, 0};
 }
 
-// What is calculating the required motor power for the turn
-// Returns value for motor power with type double
-double SwingController::angular_pid(double error) {
-    total_ang_err += error;
-
-    double speed = angular_kP * error + angular_kD * (error - prev_ang_err) +
-                   angular_kI * total_ang_err;
-
-    this->prev_ang_err = error;
-
-    return speed;
-}
-
 // Resets all the variables used in the swing controller
 void SwingController::reset() {
-    this->prev_ang_err = 0;
+    this->angular_pid.reset();
     this->prev_ang_speed = 0;
-    this->total_ang_err = 0;
     this->can_reverse = false;
     this->turn_overshoot = false;
 }
