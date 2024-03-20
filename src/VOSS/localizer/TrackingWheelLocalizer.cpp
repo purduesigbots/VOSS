@@ -50,7 +50,9 @@ void TrackingWheelLocalizer::update() {
 
     if (delta_angle) {
         double i = sin(delta_angle / 2.0) * 2.0;
-        if (right_tracking_wheel) {
+        if (left_tracking_wheel && right_tracking_wheel) {
+            local_x = (delta_right + delta_left) / (2 * delta_angle) * i;
+        } else if (right_tracking_wheel) {
             local_x = (delta_right / delta_angle - left_right_dist) * i;
         } else if (left_tracking_wheel) {
             local_x = (delta_left / delta_angle + left_right_dist) * i;
