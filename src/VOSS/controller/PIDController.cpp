@@ -42,7 +42,8 @@ PIDController::get_command(bool reverse, bool thru,
 
     angle_error = voss::norm_delta(angle_error);
 
-    double lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
+    double lin_speed =
+        (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
 
     double ang_speed;
     if (distance_error < min_error) {

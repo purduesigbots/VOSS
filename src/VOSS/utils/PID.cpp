@@ -5,7 +5,8 @@ namespace voss::utils {
 PID::PID() : PID(0.0, 0.0, 0.0) {
 }
 
-PID::PID(double kP, double kI, double kD): kP(kP), kI(kI), kD(kD), prev_error(0.0), total_error(0.0) {
+PID::PID(double kP, double kI, double kD)
+    : kP(kP), kI(kI), kD(kD), prev_error(0.0), total_error(0.0) {
 }
 
 double PID::update(double error) {
@@ -29,4 +30,4 @@ void PID::set_constants(double kP, double kI, double kD) {
     this->kD = kD;
 }
 
-}
+} // namespace voss::utils

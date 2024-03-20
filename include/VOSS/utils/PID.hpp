@@ -3,10 +3,11 @@
 namespace voss::utils {
 
 class PID {
-private:
+  private:
     double kP, kI, kD;
     double prev_error, total_error;
-public:
+
+  public:
     PID();
     PID(double kP, double kI, double kD);
     double update(double error);
@@ -14,4 +15,4 @@ public:
     void set_constants(double kP, double kI, double kD);
 };
 
-}
+} // namespace voss::utils
