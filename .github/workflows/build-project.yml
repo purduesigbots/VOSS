@@ -8,7 +8,7 @@ on:
 
 jobs:
     build:
-        if: github.event.pull_request.requested_reviewers != '[]'
+        if: github.event.pull_request.requested_reviewers[0] != null
         runs-on: ubuntu-latest
         steps:
         -   name: Install ARM Toolchain

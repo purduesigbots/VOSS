@@ -5,7 +5,7 @@ on:
         types: [submitted]
 
 jobs:
-    build:
+    format:
         if: github.event.review.state == 'APPROVED'
         runs-on: ubuntu-latest
         steps:
