@@ -4,10 +4,11 @@ on:
     push:
         branches: [master]
     pull_request:
-        types: [review_requested, ready_for_review]
+        types: [review_requested, ready_for_review, synchronize]
 
 jobs:
     build:
+        if: github.event.pull_request.requested_reviewers != '[]'
         runs-on: ubuntu-latest
         steps:
         -   name: Install ARM Toolchain
