@@ -41,10 +41,11 @@ ExitConditions& ExitConditions::add_timeout(int timeout) {
 }
 
 ExitConditions& ExitConditions::add_tolerance(double linear_tolerance,
-                                              double angular_tolerance) {
+                                              double angular_tolerance,
+                                              double tolerance_time) {
     auto ec = std::make_shared<ToleranceExitCondition>();
-    ec->add_lin_exit(linear_tolerance);
-    ec->add_ang_exit(angular_tolerance);
+    ec->add_lin_exit(linear_tolerance, tolerance_time);
+    ec->add_ang_exit(angular_tolerance, tolerance_time);
     this->conditions.push_back(
         std::dynamic_pointer_cast<AbstractExitCondition>(ec));
     return *this;

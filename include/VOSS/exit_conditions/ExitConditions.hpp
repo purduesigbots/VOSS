@@ -23,7 +23,8 @@ class ExitConditions : public AbstractExitCondition {
                                int initial_delay);
     ExitConditions& add_timeout(int timeout);
     ExitConditions& add_tolerance(double linear_tolerance,
-                                  double angular_tolerance);
+                                  double angular_tolerance,
+                                  double tolerance_time);
     ExitConditions& add_thru_smoothness(double smoothness);
     ExitConditions& add_custom_condition(std::function<bool()> callback);
     ExitConditions& add_condition(std::shared_ptr<AbstractExitCondition> ec);

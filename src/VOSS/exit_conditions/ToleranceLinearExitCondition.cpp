@@ -5,8 +5,8 @@
 
 namespace voss::controller {
 
-ToleranceLinearExitCondition::ToleranceLinearExitCondition(double tolerance)
-    : tolerance(tolerance) {
+ToleranceLinearExitCondition::ToleranceLinearExitCondition(double tolerance, double tolerance_time)
+    : tolerance(tolerance), tolerance_time(tolerance_time) {
 }
 
 bool ToleranceLinearExitCondition::is_met(Pose current_pose, bool thru) {
@@ -15,8 +15,19 @@ bool ToleranceLinearExitCondition::is_met(Pose current_pose, bool thru) {
     double d =
         voss::Point::getDistance({this->target_pose.x, this->target_pose.y},
                                  {current_pose.x, current_pose.y});
-    bool met = d < this->tolerance;
-    return met;
+    if (d < this->tolerance) {
+        if (thru) {
+            return true;
+        }
+        current_time += 10;
+    } else {
+        current_time = 0;
+    }
+    return current_time > tolerance_time;
+}
+
+void ToleranceLinearExitCondition::reset() {
+    current_time = 0;
 }
 
 } // namespace voss::controller
