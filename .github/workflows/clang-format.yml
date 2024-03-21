@@ -1,18 +1,16 @@
 name: Clang Format
 
 on:
-    push:
-        branches:
-        -    'master'
-    pull_request:
-        types: [review_requested, ready_for_review]
+    pull_request_review:
+        types: [submitted]
 
 jobs:
     build:
+        if: github.event.review.state == 'APPROVED'
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout
-            uses: actions/checkout@v2
+            uses: actions/checkout@v4
             with:
                 repository: ${{ github.event.pull_request.head.repo.full_name }}
                 ref: ${{ github.event.pull_request.head.ref }}
