@@ -1,0 +1,29 @@
+name: Build Project
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        types: [review_requested, ready_for_review, synchronize]
+
+jobs:
+    build:
+        if: github.event.pull_request.requested_reviewers[0] != null
+        runs-on: ubuntu-latest
+        steps:
+        -   name: Install ARM Toolchain
+            uses: carlosperate/arm-none-eabi-gcc-action@v1.8.1
+            with:
+                release: "10.3-2021.10"
+        -   name: Setup Python
+            uses: actions/setup-python@v5
+            with:
+                python-version: 3.9
+        -   run: pip install pros-cli
+        -   name: Checkout
+            uses: actions/checkout@v4
+            with:
+                repository: ${{ github.event.pull_request.head.repo.full_name }}
+                ref: ${{ github.event.pull_request.head.ref }}
+        -   name: Build Project
+            run: pros make clean all
