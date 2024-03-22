@@ -42,9 +42,11 @@ auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
                  .build();
 
 auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(14)
+               .with_track_width(16)
                .with_linear_constants(20, 0.02, 169)
+               .with_angular_constants(250, 0.05, 2435)
                .with_min_error(5)
+               .with_slew(8)
                .build();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -141,26 +143,8 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 270});
-            chassis.move({24, 24, 45}, boomerang, 100,
-                         voss::Flags::THRU | voss::Flags::REVERSE);
-            printf("1.\n");
-            master.rumble("--");
-            chassis.turn(90, 100, voss::Flags::THRU);
-            printf("2.\n");
-            master.rumble("--");
-            chassis.move({-10, 60, 180}, boomerang, 100, voss::Flags::THRU);
-            printf("3.\n");
-            master.rumble("--");
-            chassis.turn(270, swing, 100,
-                         voss::Flags::REVERSE | voss::Flags::THRU);
-            printf("4.\n");
-            master.rumble("--");
-            chassis.move({10, 30}, 100, voss::Flags::THRU);
-            printf("5.\n");
-            master.rumble("--");
-            chassis.turn(0);
-            printf("end\n");
+            odom->set_pose({0.0, 0.0, 90});
+            chassis.move({-24, 24}, arc);
         }
 
         pros::lcd::clear_line(1);

@@ -10,9 +10,12 @@ class ArcPIDController : public AbstractController {
   protected:
     std::shared_ptr<ArcPIDController> p;
     utils::PID linear_pid;
+    utils::PID angular_pid;
     double track_width;
     double min_error;
     double can_reverse;
+    double arc_radius;
+    Point arc_center;
     double prev_t;
     double slew;
     double prev_lin_speed;

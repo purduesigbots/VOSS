@@ -7,6 +7,7 @@
 
 namespace voss::controller {
 bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
+    printf("initial %d current %d\n", initial_time, current_time);
     if (initial_time <= initial_delay) {
         initial_time += 10;
         return false;
@@ -19,14 +20,11 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
                              this->prev_pose.theta.value()) <
                     voss::to_radians(this->tolerance)) {
                     this->current_time += 10;
+                } else {
+                    current_time = 0;
+                    prev_pose = current_pose;
                 }
             }
-
-            //            if(thru) {
-            //                printf("settle condition met\n");
-            //                return true;
-            //            }
-
         } else {
             current_time = 0;
             prev_pose = current_pose;
