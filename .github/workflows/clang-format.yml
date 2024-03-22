@@ -1,13 +1,13 @@
 name: Clang Format
 
 on:
-    pull_request:
+    pull_request_review:
         types:
-            - closed
+            - submitted
 
 jobs:
     format:
-        if: github.event.pull_request.merged == true
+        if: github.event.review.state == 'APPROVED'
         runs-on: ubuntu-latest
         steps:
         -   name: Checkout
