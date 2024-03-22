@@ -11,12 +11,12 @@
 #define RIGHT_MOTORS                                                           \
     { 10, 3, 9, -7, -15 }
 
-auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
+auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
+                .with_right_motor(10)
+                .with_left_motor(-4)
                 .with_track_width(11)
                 .with_left_right_tpi(18.43)
                 .with_imu(16)
-                .with_right_motors(LEFT_MOTORS)
-                .with_left_motors(RIGHT_MOTORS)
                 .build();
 
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
@@ -50,7 +50,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
               .add_settle(400, 0.5, 400)
-              .add_tolerance(1.0, 2.0)
+              .add_tolerance(1.0, 2.0, 200)
               .add_timeout(22500)
               .add_thru_smoothness(4)
               .build() -> exit_if([]() {
