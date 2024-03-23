@@ -32,7 +32,8 @@ ArcPIDControllerBuilder::with_linear_constants(double kP, double kI,
 }
 
 ArcPIDControllerBuilder&
-ArcPIDControllerBuilder::with_angular_constants(double kP, double kI, double kD) {
+ArcPIDControllerBuilder::with_angular_constants(double kP, double kI,
+                                                double kD) {
     this->ctrl.angular_pid.set_constants(kP, kI, kD);
     return *this;
 }
