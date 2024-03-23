@@ -18,6 +18,7 @@ class ArcPIDControllerBuilder {
 
     ArcPIDControllerBuilder& with_linear_constants(double kP, double kI,
                                                    double kD);
+    ArcPIDControllerBuilder& with_angular_constants(double kP, double kI, double kD);
     /*
      * The track width is measured from your robot.
      * Due to turning scrub, you want to use a track width a few inches larger

@@ -39,11 +39,20 @@ ArcPIDController::get_command(bool reverse, bool thru,
         t = (c * e - f * b) / (a * e - d * b);
     }
 
+    if (std::isnan(arc_radius)) {
+        arc_radius = t;
+        arc_center = {
+            current_pos.x + t * a,
+            current_pos.y + t * d
+        };
+        //printf("arc center: %f %f\n", arc_center.x, arc_center.y);
+    }
+
     double distance_error = sqrt(b * b + e * e);
     double angle_error = atan2(b, -e) - current_angle;
 
     if (reverse) {
-        angle_error = atan2(-b, -e) - current_angle;
+        angle_error = atan2(-b, e) - current_angle;
     }
 
     angle_error = voss::norm_delta(angle_error);
@@ -67,11 +76,22 @@ ArcPIDController::get_command(bool reverse, bool thru,
     lin_speed *= reverse ? -1 : 1;
 
     double left_speed, right_speed;
-    if (t != 0.0) {
+    if (arc_radius != 0.0) {
         // left_speed = (t - track_width / 2) / t * lin_speed;
         // right_speed = (t + track_width / 2) / t * lin_speed;
-        left_speed = lin_speed * (2 - track_width / t) / 2;
-        right_speed = lin_speed * (2 + track_width / t) / 2;
+        left_speed = lin_speed * (2 - track_width / arc_radius) / 2;
+        right_speed = lin_speed * (2 + track_width / arc_radius) / 2;
+        double tangent = atan2(current_pos.y - arc_center.y, current_pos.x - arc_center.x);
+        if ((bool)(arc_radius > 0) != reverse) {
+            tangent += M_PI_2;
+        } else {
+            tangent -= M_PI_2;
+        }
+        //printf("current %f target %f\n", voss::to_degrees(current_angle), voss::to_degrees(tangent));
+        printf("x %f y %f\n", current_pos.x, current_pos.y);
+        double ang_speed = angular_pid.update(voss::norm_delta(tangent - current_angle));
+        left_speed -= ang_speed;
+        right_speed += ang_speed;
     } else {
         left_speed = lin_speed;
         right_speed = lin_speed;
@@ -98,7 +118,9 @@ chassis::DiffChassisCommand ArcPIDController::get_angular_command(
 
 void ArcPIDController::reset() {
     this->linear_pid.reset();
+    this->angular_pid.reset();
     this->prev_lin_speed = 0.0;
+    this->arc_radius = NAN;
 }
 
 std::shared_ptr<ArcPIDController>
