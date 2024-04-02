@@ -5,7 +5,8 @@
 
 namespace voss::controller {
 
-ToleranceLinearExitCondition::ToleranceLinearExitCondition(double tolerance, double tolerance_time)
+ToleranceLinearExitCondition::ToleranceLinearExitCondition(
+    double tolerance, double tolerance_time)
     : tolerance(tolerance), tolerance_time(tolerance_time) {
 }
 
