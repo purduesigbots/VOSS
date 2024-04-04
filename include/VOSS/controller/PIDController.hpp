@@ -11,7 +11,6 @@ class PIDController : public AbstractController {
     std::shared_ptr<PIDController> p;
 
     utils::PID linear_pid, angular_pid;
-    double tracking_kP;
     double min_error;
     bool can_reverse;
 
@@ -35,11 +34,7 @@ class PIDController : public AbstractController {
                                                            double kD);
     std::shared_ptr<PIDController>
     modify_angular_constants(double kP, double kI, double kD);
-    std::shared_ptr<PIDController> modify_tracking_kp(double kP);
-    std::shared_ptr<PIDController> modify_exit_error(double exit_error);
-    std::shared_ptr<PIDController> modify_angular_exit_error(double exit_error);
     std::shared_ptr<PIDController> modify_min_error(double min_error);
-    std::shared_ptr<PIDController> modify_settle_time(double settle_time);
 
     friend class PIDControllerBuilder;
     friend class BoomerangControllerBuilder;

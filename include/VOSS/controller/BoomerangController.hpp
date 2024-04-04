@@ -17,17 +17,9 @@ class BoomerangController : public AbstractController {
     Pose carrotPoint;
 
     utils::PID linear_pid, angular_pid;
-    double vel;
-    double exit_error;
-    double angular_exit_error;
     double min_error;
     bool can_reverse;
-    double settle_time;
 
-    double close;
-    double close_2;
-    int counter;
-    double prev_angle;
     double min_vel;
 
   public:
@@ -47,12 +39,8 @@ class BoomerangController : public AbstractController {
     modify_linear_constants(double kP, double kI, double kD);
     std::shared_ptr<BoomerangController>
     modify_angular_constants(double kP, double kI, double kD);
-    std::shared_ptr<BoomerangController> modify_exit_error(double error);
-    std::shared_ptr<BoomerangController>
-    modify_angular_exit_error(double error);
     std::shared_ptr<BoomerangController> modify_min_error(double error);
     std::shared_ptr<BoomerangController> modify_lead_pct(double lead_pct);
-    std::shared_ptr<BoomerangController> modify_settle_time(double time);
 
     friend class BoomerangControllerBuilder;
 };

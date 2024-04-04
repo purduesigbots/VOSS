@@ -40,33 +40,10 @@ BoomerangControllerBuilder::with_angular_constants(double kP, double kI,
     return *this;
 }
 
-BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_exit_error(double error) {
-    this->ctrl.exit_error = error;
-    return *this;
-}
-
-BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_angular_exit_error(double error) {
-    this->ctrl.angular_exit_error = voss::to_radians(error);
-    return *this;
-}
-
-BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_min_error(double error) {
-    this->ctrl.min_error = error;
-    return *this;
-}
 
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_lead_pct(double lead_pct) {
     this->ctrl.lead_pct = lead_pct;
-    return *this;
-}
-
-BoomerangControllerBuilder&
-BoomerangControllerBuilder::with_settle_time(double time) {
-    this->ctrl.settle_time = (time > 0) ? time : 250;
     return *this;
 }
 

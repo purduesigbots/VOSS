@@ -171,15 +171,6 @@ PIDController::modify_angular_constants(double kP, double kI, double kD) {
     return this->p;
 }
 
-std::shared_ptr<PIDController> PIDController::modify_tracking_kp(double kP) {
-    auto pid_mod =
-        PIDControllerBuilder::from(*this).with_tracking_kp(kP).build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
 std::shared_ptr<PIDController>
 PIDController::modify_min_error(double min_error) {
     auto pid_mod =
