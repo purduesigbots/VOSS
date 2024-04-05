@@ -38,10 +38,6 @@ PIDControllerBuilder::with_angular_constants(double kP, double kI, double kD) {
     return *this;
 }
 
-PIDControllerBuilder& PIDControllerBuilder::with_tracking_kp(double kP) {
-    this->ctrl.tracking_kP = kP;
-    return *this;
-}
 
 PIDControllerBuilder& PIDControllerBuilder::with_min_error(double error) {
     this->ctrl.min_error = error;

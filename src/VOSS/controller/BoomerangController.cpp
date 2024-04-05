@@ -104,7 +104,6 @@ void BoomerangController::reset() {
     this->linear_pid.reset();
     this->angular_pid.reset();
     this->can_reverse = false;
-    this->counter = 0;
 }
 
 std::shared_ptr<BoomerangController>
@@ -129,27 +128,6 @@ BoomerangController::modify_angular_constants(double kP, double kI, double kD) {
     return this->p;
 }
 
-std::shared_ptr<BoomerangController>
-BoomerangController::modify_exit_error(double exit_error) {
-    auto pid_mod = BoomerangControllerBuilder::from(*this)
-                       .with_exit_error(exit_error)
-                       .build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
-std::shared_ptr<BoomerangController>
-BoomerangController::modify_angular_exit_error(double exit_error) {
-    auto pid_mod = BoomerangControllerBuilder::from(*this)
-                       .with_angular_exit_error(exit_error)
-                       .build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
 
 std::shared_ptr<BoomerangController>
 BoomerangController::modify_min_error(double min_error) {
@@ -166,17 +144,6 @@ std::shared_ptr<BoomerangController>
 BoomerangController::modify_lead_pct(double lead_pct) {
     auto pid_mod =
         BoomerangControllerBuilder::from(*this).with_lead_pct(lead_pct).build();
-
-    this->p = pid_mod;
-
-    return this->p;
-}
-
-std::shared_ptr<BoomerangController>
-BoomerangController::modify_settle_time(double settle_time) {
-    auto pid_mod = BoomerangControllerBuilder::from(*this)
-                       .with_settle_time(settle_time)
-                       .build();
 
     this->p = pid_mod;
 

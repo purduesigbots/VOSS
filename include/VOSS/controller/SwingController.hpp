@@ -30,8 +30,6 @@ class SwingController : public AbstractController {
 
     std::shared_ptr<SwingController>
     modify_angular_constants(double kP, double kI, double kD);
-    std::shared_ptr<SwingController> modify_angular_exit_error(double error);
-    std::shared_ptr<SwingController> modify_settle_time(double time);
 
     friend class SwingControllerBuilder;
 };

@@ -29,12 +29,9 @@ auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
 auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
                      .with_linear_constants(20, 0.02, 169)
                      .with_angular_constants(250, 0.05, 2435)
-                     .with_exit_error(1.0)
                      .with_lead_pct(0.5)
-                     .with_angular_exit_error(1.0)
-                     .with_min_error(5)
                      .with_min_vel_for_thru(70)
-                     .with_settle_time(200)
+                     .with_min_error(5)
                      .build();
 
 auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
