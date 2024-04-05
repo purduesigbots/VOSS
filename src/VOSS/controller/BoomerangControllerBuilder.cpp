@@ -40,6 +40,12 @@ BoomerangControllerBuilder::with_angular_constants(double kP, double kI,
     return *this;
 }
 
+BoomerangControllerBuilder&
+BoomerangControllerBuilder::with_min_error(double error) {
+    this->ctrl.min_error = error;
+    return *this;
+}
+
 
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_lead_pct(double lead_pct) {

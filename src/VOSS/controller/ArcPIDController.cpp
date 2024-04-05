@@ -41,11 +41,8 @@ ArcPIDController::get_command(bool reverse, bool thru,
 
     if (std::isnan(arc_radius)) {
         arc_radius = t;
-        arc_center = {
-            current_pos.x + t * a,
-            current_pos.y + t * d
-        };
-        //printf("arc center: %f %f\n", arc_center.x, arc_center.y);
+        arc_center = {current_pos.x + t * a, current_pos.y + t * d};
+        // printf("arc center: %f %f\n", arc_center.x, arc_center.y);
     }
 
     double distance_error = sqrt(b * b + e * e);
@@ -81,15 +78,18 @@ ArcPIDController::get_command(bool reverse, bool thru,
         // right_speed = (t + track_width / 2) / t * lin_speed;
         left_speed = lin_speed * (2 - track_width / arc_radius) / 2;
         right_speed = lin_speed * (2 + track_width / arc_radius) / 2;
-        double tangent = atan2(current_pos.y - arc_center.y, current_pos.x - arc_center.x);
+        double tangent =
+            atan2(current_pos.y - arc_center.y, current_pos.x - arc_center.x);
         if ((bool)(arc_radius > 0) != reverse) {
             tangent += M_PI_2;
         } else {
             tangent -= M_PI_2;
         }
-        //printf("current %f target %f\n", voss::to_degrees(current_angle), voss::to_degrees(tangent));
+        // printf("current %f target %f\n", voss::to_degrees(current_angle),
+        // voss::to_degrees(tangent));
         printf("x %f y %f\n", current_pos.x, current_pos.y);
-        double ang_speed = angular_pid.update(voss::norm_delta(tangent - current_angle));
+        double ang_speed =
+            angular_pid.update(voss::norm_delta(tangent - current_angle));
         left_speed -= ang_speed;
         right_speed += ang_speed;
     } else {
