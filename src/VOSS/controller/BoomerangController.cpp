@@ -128,7 +128,6 @@ BoomerangController::modify_angular_constants(double kP, double kI, double kD) {
     return this->p;
 }
 
-
 std::shared_ptr<BoomerangController>
 BoomerangController::modify_min_error(double min_error) {
     auto pid_mod = BoomerangControllerBuilder::from(*this)

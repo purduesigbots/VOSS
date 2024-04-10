@@ -38,7 +38,6 @@ PIDControllerBuilder::with_angular_constants(double kP, double kI, double kD) {
     return *this;
 }
 
-
 PIDControllerBuilder& PIDControllerBuilder::with_min_error(double error) {
     this->ctrl.min_error = error;
     return *this;
