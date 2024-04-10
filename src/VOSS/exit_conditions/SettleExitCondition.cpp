@@ -1,4 +1,5 @@
 #include "VOSS/exit_conditions/SettleExitCondition.hpp"
+#include "VOSS/constants.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/Pose.hpp"
@@ -9,7 +10,7 @@ namespace voss::controller {
 bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
     printf("initial %d current %d\n", initial_time, current_time);
     if (initial_time <= initial_delay) {
-        initial_time += 10;
+        initial_time += constants::MOTOR_UPDATE_DELAY;
         return false;
     }
     if (this->current_time < this->settle_time) {
@@ -19,7 +20,7 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
                 if (std::abs(current_pose.theta.value() -
                              this->prev_pose.theta.value()) <
                     voss::to_radians(this->tolerance)) {
-                    this->current_time += 10;
+                    this->current_time += constants::MOTOR_UPDATE_DELAY;
                 } else {
                     current_time = 0;
                     prev_pose = current_pose;

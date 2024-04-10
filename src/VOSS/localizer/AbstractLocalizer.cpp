@@ -1,4 +1,5 @@
 #include "VOSS/localizer/AbstractLocalizer.hpp"
+#include "VOSS/constants.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 
@@ -21,7 +22,7 @@ void AbstractLocalizer::begin_localization() {
             this->update();
             lock.unlock();
 
-            pros::delay(10);
+            pros::delay(constants::SENSOR_UPDATE_DELAY);
         }
     });
 }

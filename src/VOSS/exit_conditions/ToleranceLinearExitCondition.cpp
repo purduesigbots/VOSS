@@ -1,4 +1,5 @@
 #include "VOSS/exit_conditions/ToleranceLinearExitCondition.hpp"
+#include "VOSS/constants.hpp"
 #include "VOSS/utils/Point.hpp"
 #include <cmath>
 #include <cstdio>
@@ -20,7 +21,7 @@ bool ToleranceLinearExitCondition::is_met(Pose current_pose, bool thru) {
         if (thru) {
             return true;
         }
-        current_time += 10;
+        current_time += constants::MOTOR_UPDATE_DELAY;
     } else {
         current_time = 0;
     }
