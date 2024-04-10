@@ -4,6 +4,7 @@
 #include "pros/adi.h"
 #include "pros/adi.hpp"
 #include "pros/motor_group.hpp"
+#include "VOSS/constants.hpp"
 
 #include <cmath>
 #include <memory>
@@ -83,7 +84,7 @@ void IMELocalizer::calibrate() {
     if (imu) {
         this->imu->reset();
         while (imu->is_calibrating()) {
-            pros::delay(10);
+            pros::delay(constants::SENSOR_UPDATE_DELAY);
         }
     }
     if (left_motors) {

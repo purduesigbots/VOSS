@@ -1,6 +1,7 @@
 #include "VOSS/chassis/AbstractChassis.hpp"
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
+#include "VOSS/constants.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
 #include <cmath>
@@ -28,7 +29,7 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                     return;
                 }
 
-                pros::delay(10);
+                pros::delay(constants::MOTOR_UPDATE_DELAY);
             }
             this->task_running = false;
         });
@@ -58,7 +59,7 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
                     return;
                 }
 
-                pros::delay(10);
+                pros::delay(constants::MOTOR_UPDATE_DELAY);
             }
             this->task_running = false;
         });
@@ -99,7 +100,7 @@ void AbstractChassis::move(Pose target, controller_ptr controller, double max,
 void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags) {
     while (this->task_running) {
-        pros::delay(10);
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
     this->task_running = true;
     controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
@@ -124,7 +125,7 @@ void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags,
                            voss::AngularDirection direction) {
     while (this->task_running) {
-        pros::delay(10);
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
     this->task_running = true;
 

@@ -46,7 +46,6 @@ BoomerangControllerBuilder::with_min_error(double error) {
     return *this;
 }
 
-
 BoomerangControllerBuilder&
 BoomerangControllerBuilder::with_lead_pct(double lead_pct) {
     this->ctrl.lead_pct = lead_pct;

@@ -1,6 +1,7 @@
 #include "VOSS/localizer/ADILocalizer.hpp"
 #include "ADILocalizer.hpp"
 #include "pros/adi.hpp"
+#include "VOSS/constants.hpp"
 
 #include <cmath>
 #include <memory>
@@ -83,7 +84,7 @@ void ADILocalizer::calibrate() {
     if (imu) {
         this->imu->reset();
         while (this->imu->is_calibrating()) {
-            pros::delay(10);
+            pros::delay(constants::SENSOR_UPDATE_DELAY);
         }
     }
     this->pose = voss::AtomicPose{0.0, 0.0, 0.0};

@@ -1,4 +1,5 @@
 #include "VOSS/localizer/TrackingWheelLocalizer.hpp"
+#include "VOSS/constants.hpp"
 #include "VOSS/utils/angle.hpp"
 
 namespace voss::localizer {
@@ -82,6 +83,9 @@ void TrackingWheelLocalizer::calibrate() {
     }
     if (imu) {
         imu->reset(true);
+        while (imu->is_calibrating()) {
+            pros::delay(constants::SENSOR_UPDATE_DELAY);
+        }
     }
     this->pose = AtomicPose{0.0, 0.0, 0.0};
 }
