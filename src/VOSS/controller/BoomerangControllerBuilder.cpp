@@ -21,7 +21,7 @@ BoomerangControllerBuilder BoomerangControllerBuilder::new_builder(
 
 BoomerangControllerBuilder
 BoomerangControllerBuilder::from(BoomerangController bmr) {
-    BoomerangControllerBuilder builder(bmr.l);
+    BoomerangControllerBuilder builder(nullptr);
     builder.ctrl = bmr;
     return builder;
 }

@@ -21,7 +21,7 @@ SwingControllerBuilder SwingControllerBuilder::new_builder(
 }
 
 SwingControllerBuilder SwingControllerBuilder::from(SwingController swc) {
-    SwingControllerBuilder builder(swc.l);
+    SwingControllerBuilder builder(nullptr);
     builder.ctrl = swc;
     return builder;
 }
