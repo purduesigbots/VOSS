@@ -38,7 +38,6 @@ BoomerangController::get_command(bool reverse, bool thru,
     double current_angle =
         this->l->get_orientation_rad() + (reverse ? M_PI : 0);
     bool chainedExecutable = false;
-    bool noPose = !this->target.theta.has_value();
     double angle_error;
     angle_error = atan2(dy, dx) - current_angle;
 
@@ -50,24 +49,19 @@ BoomerangController::get_command(bool reverse, bool thru,
     }
     lin_speed *= dir;
 
+    double pose_error = voss::norm_delta(target.theta.value() - current_angle);
+
     double ang_speed;
     if (distance_error < min_error) {
         this->can_reverse = true;
 
-        if (noPose) {
-            ang_speed = 0; // disable turning when close to the point to prevent
-                           // spinning
-        } else {
-            // turn to face the finale pose angle if executing a pose movement
-            double poseError = target.theta.value() - current_angle;
+        ang_speed = angular_pid.update(pose_error);
+    } else if (distance_error < 2 * min_error) {
+        double scale_factor = (distance_error - min_error) / min_error;
+        double scaled_angle_error = voss::norm_delta(
+            scale_factor * angle_error + (1 - scale_factor) * pose_error);
 
-            while (fabs(poseError) > M_PI)
-                poseError -= 2 * M_PI * poseError / fabs(poseError);
-            ang_speed = angular_pid.update(poseError);
-        }
-
-        // reduce the linear speed if the bot is tangent to the target
-
+        ang_speed = angular_pid.update(scaled_angle_error);
     } else {
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
@@ -79,6 +73,8 @@ BoomerangController::get_command(bool reverse, bool thru,
     }
 
     lin_speed *= cos(angle_error);
+
+    lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
 
     if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
