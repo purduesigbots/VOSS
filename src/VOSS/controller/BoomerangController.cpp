@@ -58,7 +58,8 @@ BoomerangController::get_command(bool reverse, bool thru,
         ang_speed = angular_pid.update(pose_error);
     } else if (distance_error < 2 * min_error) {
         double scale_factor = (distance_error - min_error) / min_error;
-        double scaled_angle_error = voss::norm_delta(scale_factor * angle_error + (1 - scale_factor) * pose_error);
+        double scaled_angle_error = voss::norm_delta(
+            scale_factor * angle_error + (1 - scale_factor) * pose_error);
 
         ang_speed = angular_pid.update(scaled_angle_error);
     } else {
