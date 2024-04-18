@@ -35,7 +35,7 @@ BoomerangController::get_command(bool reverse, bool thru,
                          target.theta};
     double current_angle =
         this->l->get_orientation_rad() + (reverse ? M_PI : 0);
-  
+
     double angle_error;
     angle_error = atan2(dy, dx) - current_angle;
 
