@@ -8,7 +8,7 @@
 
 namespace voss::controller {
 bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
-//    printf("initial %d current %d\n", initial_time, current_time);
+    // printf("initial %d current %d\n", initial_time, current_time);
     if (initial_time <= initial_delay) {
         initial_time += constants::MOTOR_UPDATE_DELAY;
         return false;

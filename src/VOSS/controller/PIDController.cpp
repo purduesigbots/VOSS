@@ -64,6 +64,10 @@ PIDController::get_command(bool reverse, bool thru,
         // reduce the linear speed if the bot is tangent to the target
         lin_speed *= cos(angle_error);
 
+    } else if (distance_error < 2 * min_error) {
+        // scale angular speed down to 0 as distance_error approaches min_error
+        ang_speed = angular_pid.update(angle_error);
+        ang_speed *= (distance_error - min_error) / min_error;
     } else {
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
@@ -73,6 +77,7 @@ PIDController::get_command(bool reverse, bool thru,
 
         ang_speed = angular_pid.update(angle_error);
     }
+    lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
     // Runs at the end of a through movement
     if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {

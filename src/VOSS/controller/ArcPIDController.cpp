@@ -87,7 +87,7 @@ ArcPIDController::get_command(bool reverse, bool thru,
         }
         // printf("current %f target %f\n", voss::to_degrees(current_angle),
         // voss::to_degrees(tangent));
-        printf("x %f y %f\n", current_pos.x, current_pos.y);
+        // printf("x %f y %f\n", current_pos.x, current_pos.y);
         double ang_speed =
             angular_pid.update(voss::norm_delta(tangent - current_angle));
         left_speed -= ang_speed;
