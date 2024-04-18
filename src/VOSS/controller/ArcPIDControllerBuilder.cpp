@@ -19,7 +19,7 @@ ArcPIDControllerBuilder ArcPIDControllerBuilder::new_builder(
 }
 
 ArcPIDControllerBuilder ArcPIDControllerBuilder::from(ArcPIDController arc) {
-    ArcPIDControllerBuilder builder(arc.l);
+    ArcPIDControllerBuilder builder(nullptr);
     builder.ctrl = arc;
     return builder;
 }

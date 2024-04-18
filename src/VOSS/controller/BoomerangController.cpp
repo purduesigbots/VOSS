@@ -21,9 +21,7 @@ BoomerangController::get_command(bool reverse, bool thru,
     }
 
     Point current_pos = this->l->get_position();
-    double k = this->min_vel / 100;
-    Point virtualTarget = {target.x + k * cos(target.theta.value()),
-                           target.y + k * sin(target.theta.value())};
+
     int dir = reverse ? -1 : 1;
     Pose trueTarget;
     double dx = target.x - current_pos.x;
@@ -37,7 +35,7 @@ BoomerangController::get_command(bool reverse, bool thru,
                          target.theta};
     double current_angle =
         this->l->get_orientation_rad() + (reverse ? M_PI : 0);
-    bool chainedExecutable = false;
+
     double angle_error;
     angle_error = atan2(dy, dx) - current_angle;
 

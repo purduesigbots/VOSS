@@ -21,7 +21,7 @@ PIDControllerBuilder PIDControllerBuilder::new_builder(
 }
 
 PIDControllerBuilder PIDControllerBuilder::from(PIDController pid) {
-    PIDControllerBuilder builder(pid.l);
+    PIDControllerBuilder builder(nullptr);
     builder.ctrl = pid;
     return builder;
 }
