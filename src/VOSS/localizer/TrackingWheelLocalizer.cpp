@@ -35,7 +35,7 @@ void TrackingWheelLocalizer::update() {
     }
     if (imu) {
         pose.theta = -to_radians(imu->get_rotation());
-        delta_angle = pose.theta - prev_pose.theta;
+        delta_angle = real_pose.theta - prev_pose.theta;
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
         pose.theta += delta_angle;
@@ -44,7 +44,7 @@ void TrackingWheelLocalizer::update() {
     prev_left_pos += delta_left;
     prev_right_pos += delta_right;
     prev_middle_pos += delta_middle;
-    prev_pose = pose;
+    prev_pose = real_pose;
 
     double local_x;
     double local_y;
@@ -69,10 +69,10 @@ void TrackingWheelLocalizer::update() {
     p += M_PI / 4;
 
     // convert to absolute displacement
-    this->pose.x += cos(p) * local_x - sin(p) * local_y;
-    this->pose.y += sin(p) * local_x + cos(p) * local_y;
-    this->pose.x += sin(p) * offset;
-    this->pose.y += cos(p) * offset;
+    this->real_pose.x += cos(p) * local_x - sin(p) * local_y;
+    this->real_pose.y += sin(p) * local_x + cos(p) * local_y;
+    this->pose.x = real_pose.x + cos(p) * offset;
+    this->pose.y = real_pose.y + sin(p) * offset;
 
 }
 

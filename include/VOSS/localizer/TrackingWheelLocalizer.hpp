@@ -12,6 +12,7 @@ class TrackingWheelLocalizer : public AbstractLocalizer {
   protected:
     std::atomic<double> prev_left_pos, prev_right_pos, prev_middle_pos;
     AtomicPose prev_pose;
+    AtomicPose real_pose;
 
     std::atomic<double> left_right_dist, middle_dist;
     std::unique_ptr<AbstractTrackingWheel> left_tracking_wheel,
