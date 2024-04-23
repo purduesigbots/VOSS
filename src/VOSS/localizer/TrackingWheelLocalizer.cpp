@@ -65,10 +65,15 @@ void TrackingWheelLocalizer::update() {
     }
 
     double p = this->pose.theta - delta_angle / 2.0; // global angle
+    
+    p += M_PI / 4;
 
     // convert to absolute displacement
     this->pose.x += cos(p) * local_x - sin(p) * local_y;
     this->pose.y += sin(p) * local_x + cos(p) * local_y;
+    this->pose.x += sin(p) * offset;
+    this->pose.y += cos(p) * offset;
+
 }
 
 void TrackingWheelLocalizer::calibrate() {
@@ -100,6 +105,10 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
 
 void TrackingWheelLocalizer::set_pose(double x, double y, double theta) {
     this->set_pose({x, y, theta});
+}
+
+void TrackingWheelLocalizer::set_offset(double a) {
+    this->offset = a;
 }
 
 } // namespace voss::localizer

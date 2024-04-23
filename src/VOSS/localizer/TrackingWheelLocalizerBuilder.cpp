@@ -127,6 +127,12 @@ TrackingWheelLocalizerBuilder::with_imu(int port) {
     return *this;
 }
 
+TrackingWheelLocalizerBuilder&
+TrackingWheelLocalizerBuilder::with_offset(int a) {
+    this->offset = a;
+    return *this;
+}
+
 std::shared_ptr<TrackingWheelLocalizer> TrackingWheelLocalizerBuilder::build() {
     return std::make_shared<TrackingWheelLocalizer>(
         std::move(left_tracking_wheel), std::move(right_tracking_wheel),
