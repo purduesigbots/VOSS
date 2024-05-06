@@ -1,14 +1,15 @@
-#include "VOSS/chassis/AbstractChassis.hpp"
-#include "pros/llemu.hpp"
-#include "pros/rtos.hpp"
-#include "VOSS/constants.hpp"
-#include "VOSS/exit_conditions/AbstractExitCondition.hpp"
+#pragma once
+#include "../utils/flags.hpp"
+#include "AbstractChassis.hpp"
 
 #include <cmath>
+#include <memory>
 
 namespace voss::chassis {
 
-AbstractChassis::AbstractChassis(controller_ptr default_controller, ec_ptr ec) {
+AbstractChassis::AbstractChassis(
+    std::shared_ptr<controller::PIDController> default_controller,
+    ec_ptr ec) {
     this->default_controller = std::move(default_controller);
     this->default_ec = std::move(ec);
 }
@@ -29,7 +30,7 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                     return;
                 }
 
-                pros::delay(constants::MOTOR_UPDATE_DELAY);
+                pros::delay(10);
             }
             this->task_running = false;
         });
@@ -59,7 +60,7 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
                     return;
                 }
 
-                pros::delay(constants::MOTOR_UPDATE_DELAY);
+                pros::delay(10);
             }
             this->task_running = false;
         });
@@ -71,36 +72,59 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
     this->task->join();
 }
 
-void AbstractChassis::move(double distance, double max, voss::Flags flags) {
-    this->move({distance, 0}, this->default_controller, this->default_ec, max,
+void AbstractChassis::move(double target, double max, voss::Flags flags) {
+    this->move({target, 0}, this->default_controller, this->default_ec, max,
                flags | voss::Flags::RELATIVE);
 }
 
-void AbstractChassis::move(double distance, controller_ptr controller,
+void AbstractChassis::move(double target, ec_ptr ec, double max,
+                           voss::Flags flags) {
+    this->move({target, 0}, this->default_controller, std::move(ec), max,
+               flags | voss::Flags::RELATIVE);
+}
+
+template <Is_Controller T>
+void AbstractChassis::move(double target, std::shared_ptr<T> controller,
                            double max, voss::Flags flags) {
-    this->move({distance, 0}, std::move(controller), this->default_ec, max,
+    static_assert(voss::controller::Is_linear_motion<T>(),
+                  "\nThe controller passed in cannot move!");
+    this->move({target, 0}, std::move(controller), this->default_ec, max,
                flags | voss::Flags::RELATIVE);
 }
 
-void AbstractChassis::move(double distance, controller_ptr controller,
+template <Is_Controller T>
+void AbstractChassis::move(double target, std::shared_ptr<T> controller,
                            ec_ptr ec, double max, voss::Flags flags) {
-    this->move({distance, 0}, std::move(controller), std::move(ec), max,
-               flags | Flags::RELATIVE);
+    static_assert(voss::controller::Is_linear_motion<T>(),
+                  "\nThe controller passed in cannot move!");
+    this->move({target, 0}, std::move(controller), std::move(ec), max,
+               flags | voss::Flags::RELATIVE);
 }
 
 void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
     this->move(target, this->default_controller, this->default_ec, max, flags);
 }
 
-void AbstractChassis::move(Pose target, controller_ptr controller, double max,
+void AbstractChassis::move(Pose target, ec_ptr ec, double max,
                            voss::Flags flags) {
+    this->move(target, this->default_controller, std::move(ec), max, flags);
+}
+
+template <Is_Controller T>
+void AbstractChassis::move(Pose target, std::shared_ptr<T> controller,
+                           double max, Flags flags) {
+    static_assert(voss::controller::Is_linear_motion<T>(),
+                  "\nThe controller passed in cannot move!");
     this->move(target, std::move(controller), this->default_ec, max, flags);
 }
 
-void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec,
-                           double max, voss::Flags flags) {
+template <Is_Controller T>
+void AbstractChassis::move(Pose target, std::shared_ptr<T> controller,
+                           ec_ptr ec, double max, voss::Flags flags) {
+    static_assert(voss::controller::Is_linear_motion<T>(),
+                  "\nThe controller passed in cannot move!");
     while (this->task_running) {
-        pros::delay(constants::MOTOR_UPDATE_DELAY);
+        pros::delay(10);
     }
     this->task_running = true;
     controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
@@ -114,18 +138,31 @@ void AbstractChassis::turn(double target, double max, voss::Flags flags,
                direction);
 }
 
-void AbstractChassis::turn(double target, controller_ptr controller, double max,
+void AbstractChassis::turn(double target, ec_ptr ec, double max,
                            voss::Flags flags,
                            voss::AngularDirection direction) {
+    this->turn(target, this->default_controller, std::move(ec), max, flags,
+               direction);
+}
+
+template <Is_Controller T>
+void AbstractChassis::turn(double target, std::shared_ptr<T> controller,
+                           double max, voss::Flags flags,
+                           voss::AngularDirection direction) {
+    static_assert(voss::controller::Is_angular_motion<T>(),
+                  "\nThe controller passed in cannot turn!");
     this->turn(target, std::move(controller), this->default_ec, max, flags,
                direction);
 }
 
-void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec,
-                           double max, voss::Flags flags,
+template <Is_Controller T>
+void AbstractChassis::turn(double target, std::shared_ptr<T> controller,
+                           ec_ptr ec, double max, voss::Flags flags,
                            voss::AngularDirection direction) {
+    static_assert(voss::controller::Is_angular_motion<T>(),
+                  "\nThe controller passed in cannot turn!");
     while (this->task_running) {
-        pros::delay(constants::MOTOR_UPDATE_DELAY);
+        pros::delay(10);
     }
     this->task_running = true;
 
@@ -143,16 +180,29 @@ void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
                   flags, direction);
 }
 
-void AbstractChassis::turn_to(Point target, controller_ptr controller,
+void AbstractChassis::turn_to(Point target, ec_ptr ec, double max,
+                              voss::Flags flags,
+                              voss::AngularDirection direction) {
+    this->turn_to(target, this->default_controller, std::move(ec), max, flags,
+                  direction);
+}
+
+template <Is_Controller T>
+void AbstractChassis::turn_to(Point target, std::shared_ptr<T> controller,
                               double max, voss::Flags flags,
                               voss::AngularDirection direction) {
+    static_assert(voss::controller::Is_angular_motion<T>(),
+                  "\nThe controller passed in cannot turn!");
     this->turn_to(target, std::move(controller), this->default_ec, max, flags,
                   direction);
 }
 
-void AbstractChassis::turn_to(Point target, controller_ptr controller,
+template <Is_Controller T>
+void AbstractChassis::turn_to(Point target, std::shared_ptr<T> controller,
                               ec_ptr ec, double max, voss::Flags flags,
                               voss::AngularDirection direction) {
+    static_assert(voss::controller::Is_angular_motion<T>(),
+                  "\nThe controller passed in cannot turn!");
     while (this->task_running) {
         pros::delay(10);
     }

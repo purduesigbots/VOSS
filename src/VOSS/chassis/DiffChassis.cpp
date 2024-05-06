@@ -27,7 +27,7 @@ double DiffChassis::slew(double target, bool is_left) {
 // controller layouts
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
                          std::initializer_list<int8_t> right_motors,
-                         controller_ptr default_controller, ec_ptr ec,
+                         std::shared_ptr<controller::PIDController> default_controller, ec_ptr ec,
                          double slew_step, pros::motor_brake_mode_e brakeMode)
     : AbstractChassis(default_controller, ec) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);

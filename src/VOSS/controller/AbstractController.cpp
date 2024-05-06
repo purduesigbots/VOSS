@@ -46,5 +46,9 @@ void AbstractController::set_angular_target(double angular_target,
         this->angular_target = voss::norm(angular_target);
     }
 }
+void AbstractController::set_target_path(std::vector<Pose>& path,
+                                         bool relative) {
+
+}
 
 } // namespace voss::controller

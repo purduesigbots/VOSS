@@ -142,6 +142,9 @@ void opcontrol() {
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 90});
             chassis.move({-24, 24}, arc);
+//            chassis.move({-24, 24}, swing);
+            chassis.turn(90, swing);
+//            chassis.turn(90, arc);
         }
 
         pros::lcd::clear_line(1);
