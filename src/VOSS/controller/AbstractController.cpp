@@ -46,9 +46,26 @@ void AbstractController::set_angular_target(double angular_target,
         this->angular_target = voss::norm(angular_target);
     }
 }
-void AbstractController::set_target_path(std::vector<Pose>& path,
+void AbstractController::set_target_path(const std::initializer_list<Pose> path,
                                          bool relative) {
+    [[unlikely]] if (relative) {
+        std::vector<Pose> relative_path;
+        Point p = l->get_position();         // robot position
+        double h = l->get_orientation_rad(); // robot heading in radians
+        for (const auto& pt : path) {
+            double x_new = p.x + target.x * cos(h) - target.y * sin(h);
+            double y_new = p.y + target.x * sin(h) + target.y * cos(h);
 
+            if (target.theta.has_value()) {
+                relative_path.push_back(Pose{x_new, y_new, target.theta.value() + h});
+            } else {
+                relative_path.push_back(Pose{x_new, y_new});
+            }
+        }
+        return;
+    } else {
+        this->target_path = std::vector<Pose>{path};
+    }
 }
 
 } // namespace voss::controller

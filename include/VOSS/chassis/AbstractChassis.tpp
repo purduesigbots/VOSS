@@ -8,8 +8,7 @@
 namespace voss::chassis {
 
 AbstractChassis::AbstractChassis(
-    std::shared_ptr<controller::PIDController> default_controller,
-    ec_ptr ec) {
+    std::shared_ptr<controller::PIDController> default_controller, ec_ptr ec) {
     this->default_controller = std::move(default_controller);
     this->default_ec = std::move(ec);
 }
@@ -213,6 +212,35 @@ void AbstractChassis::turn_to(Point target, std::shared_ptr<T> controller,
 
     this->turn_task(std::move(controller), std::move(ec), max, flags,
                     direction);
+}
+
+template <Is_Controller T>
+void AbstractChassis::follow(std::initializer_list<Pose> target_path,
+                             std::shared_ptr<T> controller, double max,
+                             voss::Flags flags) {
+    static_assert(voss::controller::Is_path_follow_motion<T>(),
+                  "\nThe controller passed in cannot follow path!");
+    this->follow(target_path, std::move(controller), this->default_ec, max,
+                 flags);
+}
+
+template <Is_Controller T>
+void AbstractChassis::follow(std::initializer_list<Pose> target_path,
+                             std::shared_ptr<T> controller, ec_ptr ec,
+                             double max, voss::Flags flags) {
+    static_assert(voss::controller::Is_path_follow_motion<T>(),
+                  "\nThe controller passed in cannot follow path!");
+
+    while (this->task_running) {
+        pros::delay(10);
+    }
+    this->task_running = true;
+    // set target
+    controller->set_target_path(target_path, voss::Flags::RELATIVE & flags);
+    controller->set_target(*target_path.end(), flags & voss::Flags::RELATIVE,
+                           ec);
+
+    this->move_task(std::move(controller), std::move(ec), max, flags);
 }
 
 } // namespace voss::chassis

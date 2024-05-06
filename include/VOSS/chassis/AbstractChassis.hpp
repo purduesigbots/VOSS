@@ -126,6 +126,19 @@ class AbstractChassis {
     turn_to(Point target, std::shared_ptr<T> controller, double max = 100.0,
             voss::Flags flags = voss::Flags::NONE,
             voss::AngularDirection direction = voss::AngularDirection::AUTO);
+
+    /**
+     * follow path
+     */
+    template <Is_Controller T>
+    void follow(std::initializer_list<Pose> target_path,
+                std::shared_ptr<T> controller, double max = 100.0,
+                voss::Flags flags = voss::Flags::NONE);
+
+    template <Is_Controller T>
+    void follow(std::initializer_list<Pose> target_path,
+                std::shared_ptr<T> controller, ec_ptr ec, double max = 100.0,
+                voss::Flags flags = voss::Flags::NONE);
 };
 
 } // namespace voss::chassis
