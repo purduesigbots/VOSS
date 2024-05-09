@@ -31,7 +31,8 @@ class AbstractController {
     void set_target(Pose target, bool relative,
                     std::shared_ptr<AbstractExitCondition> ec);
     void set_angular_target(double angle, bool relative);
-    void set_target_path(const std::initializer_list<Pose> path, bool relative);
+    void set_target_path(std::initializer_list<Pose> path, bool relative);
+    void set_target_path(std::vector<Pose> path, bool relative);
 };
 
 } // namespace voss::controller

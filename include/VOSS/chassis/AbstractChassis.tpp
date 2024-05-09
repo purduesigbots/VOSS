@@ -236,9 +236,44 @@ void AbstractChassis::follow(std::initializer_list<Pose> target_path,
     }
     this->task_running = true;
     // set target
-    controller->set_target_path(target_path, voss::Flags::RELATIVE & flags);
+    (std::shared_ptr<controller::AbstractController>(controller))
+        ->set_target_path(target_path, voss::Flags::RELATIVE & flags);
     controller->set_target(*target_path.end(), flags & voss::Flags::RELATIVE,
                            ec);
+
+    this->move_task(std::move(controller), std::move(ec), max, flags);
+}
+
+template <Is_Controller T>
+void AbstractChassis::follow(const asset& target_file,
+                             std::shared_ptr<T> controller, double max,
+                             voss::Flags flags) {
+    static_assert(voss::controller::Is_path_follow_motion<T>(),
+                  "\nThe controller passed in cannot follow path!");
+    this->follow(target_file, std::move(controller), this->default_ec, max, flags);
+}
+
+template <Is_Controller T>
+void AbstractChassis::follow(const asset& target_file,
+                             std::shared_ptr<T> controller, ec_ptr ec,
+                             double max, voss::Flags flags) {
+    static_assert(voss::controller::Is_path_follow_motion<T>(),
+                  "\nThe controller passed in cannot follow path!");
+
+    /**
+     * Decode .json or .txt file
+     */
+    auto target_path = voss::utils::decode_traj_txt(target_file);
+
+    while (this->task_running) {
+        pros::delay(10);
+    }
+    this->task_running = true;
+    // set target
+    (std::shared_ptr<controller::AbstractController>(controller))
+        ->set_target_path(target_path, voss::Flags::RELATIVE & flags);
+    (std::shared_ptr<controller::AbstractController>(controller))
+        ->set_target(*target_path.end(), flags & voss::Flags::RELATIVE, ec);
 
     this->move_task(std::move(controller), std::move(ec), max, flags);
 }

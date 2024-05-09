@@ -8,6 +8,7 @@
 #include "VOSS/controller/ControllerTypeTrait.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 
+#include "VOSS/utils/Asset.hpp"
 #include "VOSS/utils/flags.hpp"
 #include "VOSS/utils/Point.hpp"
 #include "VOSS/utils/Pose.hpp"
@@ -24,19 +25,6 @@ concept Is_Controller =
 
 // the warning is normal it will not affect compilation
 class AbstractChassis {
-  protected:
-    std::shared_ptr<controller::PIDController> default_controller;
-    ec_ptr default_ec;
-    std::unique_ptr<pros::Task> task = nullptr;
-    bool task_running = false;
-    pros::motor_brake_mode_e brakeMode;
-
-    void move_task(controller_ptr controller, ec_ptr ec, double max,
-                   voss::Flags flags);
-
-    void turn_task(controller_ptr controller, ec_ptr ec, double max,
-                   voss::Flags flags, voss::AngularDirection direction);
-
   public:
     AbstractChassis(
         std::shared_ptr<controller::PIDController> default_controller,
@@ -139,6 +127,31 @@ class AbstractChassis {
     void follow(std::initializer_list<Pose> target_path,
                 std::shared_ptr<T> controller, ec_ptr ec, double max = 100.0,
                 voss::Flags flags = voss::Flags::NONE);
+
+    /**
+     * follow path using assets
+     */
+    template <Is_Controller T>
+    void follow(const asset& target_file, std::shared_ptr<T> controller,
+                double max = 100.0, voss::Flags flags = voss::Flags::NONE);
+
+    template <Is_Controller T>
+    void follow(const asset& target_file, std::shared_ptr<T> controller,
+                ec_ptr ec, double max = 100.0,
+                voss::Flags flags = voss::Flags::NONE);
+
+  protected:
+    std::shared_ptr<controller::PIDController> default_controller;
+    ec_ptr default_ec;
+    std::unique_ptr<pros::Task> task = nullptr;
+    bool task_running = false;
+    pros::motor_brake_mode_e brakeMode;
+
+    void move_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags);
+
+    void turn_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags, voss::AngularDirection direction);
 };
 
 } // namespace voss::chassis
