@@ -11,7 +11,7 @@ class SplineSegment {
   public:
     SplineSegment(MotionState start, MotionState end);
 
-    double at(double t, int n);
+    MotionState at(double t);
 };
 
 }

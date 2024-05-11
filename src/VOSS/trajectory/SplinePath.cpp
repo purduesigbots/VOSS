@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <functional>
-#include "VOSS/utils/Integration.hpp"
 #include "VOSS/utils/Point.hpp"
 
 namespace voss::trajectory {
@@ -28,6 +27,15 @@ SplinePath::SplinePath(std::initializer_list<Pose> waypoints) {
         this->x_segments.push_back(SplineSegment(begin_x, end_x));
         this->y_segments.push_back(SplineSegment(begin_y, end_y));
     }
+
+    auto f = [this](double t) {
+        int index = t;
+        double dx = x_segments[index].at(t - index).vel;
+        double dy = y_segments[index].at(t - index).vel;
+        return voss::Point::getDistance({dx, dy}, {0, 0});
+    };
+
+    arc_length_reparam = voss::utils::IntegralScan(0.0, this->length(), 1E-6, f);
 }
 
 SplinePath::SplinePath(std::vector<Pose> waypoints) {
@@ -51,48 +59,45 @@ SplinePath::SplinePath(std::vector<Pose> waypoints) {
         this->x_segments.push_back(SplineSegment(begin_x, end_x));
         this->y_segments.push_back(SplineSegment(begin_y, end_y));
     }
+
+    auto f = [this](double t) {
+        int index = t;
+        double dx = x_segments[index].at(t - index).vel;
+        double dy = y_segments[index].at(t - index).vel;
+        return voss::Point::getDistance({dx, dy}, {0, 0});
+    };
+
+    arc_length_reparam = voss::utils::IntegralScan(0.0, this->length(), 1E-6, f);
 }
 
 double SplinePath::length() {
     return this->x_segments.size();
 }
 
-PoseWithCurvature SplinePath::at(double t) {
+PoseWithCurvature SplinePath::at(double distance) {
+    double t = arc_length_reparam.lookup_inverse(distance);
     int index = t;
-    double x = x_segments[index].at(t - index, 0);
-    double y = y_segments[index].at(t - index, 0);
-    double dx = x_segments[index].at(t - index, 1);
-    double dy = y_segments[index].at(t - index, 1);
-    double dx2 = x_segments[index].at(t - index, 2);
-    double dy2 = y_segments[index].at(t - index, 2);
+    MotionState x_state = x_segments[index].at(t - index);
+    MotionState y_state = y_segments[index].at(t - index);
 
     PoseWithCurvature result;
-    result.pose.x = x;
-    result.pose.y = y;
-    result.pose.theta = atan2(dy, dx);
-    double d1_d2_cross = dx * dy2 - dy * dx2;
-    double d1_norm = voss::Point::getDistance({dx, dy}, {0, 0});
+    result.pose.x = x_state.pos;
+    result.pose.y = y_state.pos;
+    result.pose.theta = atan2(y_state.vel, x_state.vel);
+    double d1_d2_cross = x_state.vel * y_state.acc - y_state.vel * x_state.acc;
+    double d1_norm = voss::Point::getDistance({x_state.vel, y_state.vel}, {0, 0});
     result.curvature = d1_d2_cross / (d1_norm * d1_norm * d1_norm);
     return result;
 }
 
 PathSample SplinePath::sample(double dist_resolution) {
-    auto f = [this](double t) {
-        int index = t;
-        double dx = x_segments[index].at(t - index, 1);
-        double dy = y_segments[index].at(t - index, 1);
-        return voss::Point::getDistance({dx, dy}, {0, 0});
-    };
-
-    voss::utils::IntegralScan scan(0.0, this->length(), 1E-6, f);
-
-    double arc_length = scan.end();
+    double arc_length = arc_length_reparam.end();
     int num_samples = std::max(1.0, ceil(arc_length / dist_resolution));
 
     PathSample result;
     for (int i = 0; i <= num_samples; i++) {
         double distance = arc_length / num_samples * i;
-        PoseWithCurvature pose = this->at(scan.lookup_inverse(distance));
+        PoseWithCurvature pose = this->at(distance);
         result.distances.push_back(distance);
         result.poses.push_back(pose);
     }

@@ -15,6 +15,7 @@ class IntegralScan {
 
   public:
     IntegralScan(double a, double b, double eps, std::function<double(double)> f);
+    IntegralScan() = default;
 
     double end();
 

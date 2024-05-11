@@ -11,21 +11,11 @@ SplineSegment::SplineSegment(MotionState start, MotionState end)
     f(start.pos) {
 }
 
-double SplineSegment::at(double t, int n) {
-    switch (n) {
-        case 0:
-            return ((((this->a * t + this->b) * t + this->c) * t + this->d) * t + this->e) * t + this->f;
-        case 1:
-            return (((5 * this->a * t + 4 * this->b) * t + 3 * this->c) * t + 2 * this->d) * t + this->e;
-        case 3:
-            return ((20 * this->a * t + 12 * this->b) * t + 6 * this->c) * t + 2 * this->d;
-        case 4:
-            return (60 * this->a * t + 24 * this->b) * t + 6 * this->c;
-        case 5:
-            return 120 * this->a;
-        default:
-            return 0;
-    }
+MotionState SplineSegment::at(double t) {
+    double pos = ((((this->a * t + this->b) * t + this->c) * t + this->d) * t + this->e) * t + this->f;
+    double vel = (((5 * this->a * t + 4 * this->b) * t + 3 * this->c) * t + 2 * this->d) * t + this->e;
+    double acc = ((20 * this->a * t + 12 * this->b) * t + 6 * this->c) * t + 2 * this->d;
+    return {pos, vel, acc};
 }
 
 }

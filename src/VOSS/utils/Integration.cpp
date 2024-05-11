@@ -1,5 +1,7 @@
 #include "VOSS/utils/Integration.hpp"
 
+#include "VOSS/utils/Algorithms.hpp"
+
 namespace voss::utils {
 
 IntegralScan::IntegralScan(double a, double b, double eps, std::function<double(double)> f) {
@@ -23,7 +25,7 @@ IntegralScan::IntegralScan(double a, double b, double eps, std::function<double(
 
     i *= eps / __DBL_EPSILON__;
 
-    values.push_back(0);
+    values.push_back(a);
     sums.push_back(0);
 
     helper(a, m, b, fa, fm, fb, f);
@@ -54,49 +56,45 @@ double IntegralScan::end() {
 }
 
 double IntegralScan::lookup(double query) {
-    int start = 0;
-    int end = values.size() - 1;
-
-    while (start <= end) {
-        int mid = (start + end) / 2;
-        double comp = this->values.at(mid);
-        if (query == comp) {
-            return this->sums.at(mid);
-        } else if (query < comp) {
-            end = mid - 1;
-        } else {
-            end = mid + 1;
-        }
+    if (query < values.front()) {
+        return sums.front();
+    }
+    if (query > values.back()) {
+        return sums.back();
     }
 
-    double sum_high = this->sums.at(end + 1);
-    double sum_low = this->sums.at(end);
-    double val_high = this->values.at(end + 1);
-    double val_low = this->values.at(end);
+    int index = insert_index(values, query);
+
+    if (values[index] == query) {
+        return sums[index];
+    }
+
+    double sum_high = this->sums.at(index);
+    double sum_low = this->sums.at(index - 1);
+    double val_high = this->values.at(index);
+    double val_low = this->values.at(index - 1);
 
     return sum_low + (query - val_low) * (sum_high - sum_low) / (val_high - val_low);
 }
 
 double IntegralScan::lookup_inverse(double query) {
-    int start = 0;
-    int end = sums.size() - 1;
-
-    while (start <= end) {
-        int mid = (start + end) / 2;
-        double comp = this->sums.at(mid);
-        if (query == comp) {
-            return this->values.at(mid);
-        } else if (query < comp) {
-            end = mid - 1;
-        } else {
-            end = mid + 1;
-        }
+    if (query < sums.front()) {
+        return values.front();
+    }
+    if (query > sums.back()) {
+        return values.back();
     }
 
-    double sum_high = this->sums.at(end + 1);
-    double sum_low = this->sums.at(end);
-    double val_high = this->values.at(end + 1);
-    double val_low = this->values.at(end);
+    int index = insert_index(sums, query);
+
+    if (sums[index] == query) {
+        return values[index];
+    }
+
+    double sum_high = this->sums.at(index);
+    double sum_low = this->sums.at(index - 1);
+    double val_high = this->values.at(index);
+    double val_low = this->values.at(index - 1);
 
     return val_low + (query - sum_low) * (val_high - val_low) / (sum_high - sum_low);
 }
