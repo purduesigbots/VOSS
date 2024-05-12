@@ -6,7 +6,9 @@
 
 namespace voss::controller {
 
-class ArcPIDController : public AbstractController {
+class ArcPIDController : public AbstractController, private std::enable_shared_from_this<ArcPIDController> {
+  private:
+
   protected:
     std::shared_ptr<ArcPIDController> p;
     utils::PID linear_pid;
@@ -17,15 +19,20 @@ class ArcPIDController : public AbstractController {
     double arc_radius;
     Point arc_center;
     double prev_t;
-    double slew;
-    double prev_lin_speed;
-
-    double close;
-
-    double prev_lin_err, total_lin_err;
 
   public:
-    ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l);
+    struct Arc_Construct_Params {
+        double lin_kp = 20;
+        double lin_ki = 0;
+        double lin_kd = 0;
+        double ang_kp = 250;
+        double ang_ki = 0;
+        double ang_kd = 0;
+        double track_width = 15;
+        double min_error = 5;
+    };
+
+    ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l, Arc_Construct_Params params);
 
     chassis::DiffChassisCommand
     get_command(bool reverse, bool thru,
@@ -34,6 +41,8 @@ class ArcPIDController : public AbstractController {
     get_angular_command(bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
+
+    std::shared_ptr<ArcPIDController> create();
 
     void reset() override;
 

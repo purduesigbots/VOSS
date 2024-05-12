@@ -1,8 +1,5 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/controller/BoomerangControllerBuilder.hpp"
-#include "VOSS/controller/PIDControllerBuilder.hpp"
-#include "VOSS/controller/SwingControllerBuilder.hpp"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
 
@@ -19,32 +16,13 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_imu(16)
                 .build();
 
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_min_vel_for_thru(100)
-               .build();
+auto pid = voss::controller::PIDController(odom, {}).create();
 
-auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
-                     .with_min_vel_for_thru(70)
-                     .with_min_error(5)
-                     .build();
+auto boomerang = voss::controller::BoomerangController(odom, {}).create();
 
-auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                 .with_angular_constants(250, 0.05, 2435)
-                 .build();
+auto swing = voss::controller::SwingController(odom, {.ang_kp = 200}).create();
 
-auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(16)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_slew(8)
-               .build();
+auto arc = voss::controller::ArcPIDController(odom, {.lin_kp = 1000, .ang_kp = 250, .track_width = 16}).create();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()

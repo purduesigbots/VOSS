@@ -8,13 +8,9 @@
 
 #include "controller/AbstractController.hpp"
 #include "controller/ArcPIDController.hpp"
-#include "controller/ArcPIDControllerBuilder.hpp"
 #include "controller/BoomerangController.hpp"
-#include "controller/BoomerangControllerBuilder.hpp"
 #include "controller/PIDController.hpp"
-#include "controller/PIDControllerBuilder.hpp"
 #include "controller/SwingController.hpp"
-#include "controller/SwingControllerBuilder.hpp"
 
 #include "exit_conditions/AbstractExitCondition.hpp"
 #include "exit_conditions/ExitConditions.hpp"

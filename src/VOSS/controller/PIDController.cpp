@@ -1,5 +1,4 @@
 #include "VOSS/controller/PIDController.hpp"
-#include "PIDControllerBuilder.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
@@ -8,8 +7,13 @@
 
 namespace voss::controller {
 
-PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)) {
+PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l,
+                             PID_Construct_Params params)
+    : AbstractController(std::move(l)),
+      std::enable_shared_from_this<PIDController>(),
+      linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
+      angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
+      min_error(params.min_error), min_vel(params.min_vel) {
 }
 
 chassis::DiffChassisCommand
@@ -156,34 +160,28 @@ void PIDController::reset() {
 
 std::shared_ptr<PIDController>
 PIDController::modify_linear_constants(double kP, double kI, double kD) {
-    auto pid_mod = PIDControllerBuilder::from(*this)
-                       .with_linear_constants(kP, kI, kD)
-                       .build();
-
-    this->p = pid_mod;
-
+    this->p = std::make_shared<PIDController>(PIDController(*this));
+    this->p->linear_pid.set_constants(kP, kI, kD);
     return this->p;
 }
 
 std::shared_ptr<PIDController>
 PIDController::modify_angular_constants(double kP, double kI, double kD) {
-    auto pid_mod = PIDControllerBuilder::from(*this)
-                       .with_angular_constants(kP, kI, kD)
-                       .build();
-
-    this->p = pid_mod;
-
+    this->p = std::make_shared<PIDController>(PIDController(*this));
+    this->p->angular_pid.set_constants(kP, kI, kD);
     return this->p;
 }
 
 std::shared_ptr<PIDController>
 PIDController::modify_min_error(double min_error) {
-    auto pid_mod =
-        PIDControllerBuilder::from(*this).with_min_error(min_error).build();
-
-    this->p = pid_mod;
+    this->p = std::make_shared<PIDController>(PIDController(*this));
+    this->p->min_error = min_error;
 
     return this->p;
+}
+
+std::shared_ptr<PIDController> PIDController::create() {
+    return this->shared_from_this();
 }
 
 } // namespace voss::controller

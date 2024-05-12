@@ -1,13 +1,15 @@
 #include "VOSS/controller/SwingController.hpp"
 
-#include "SwingControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <utility>
 
 namespace voss::controller {
 SwingController::SwingController(
-    std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)){};
+    std::shared_ptr<localizer::AbstractLocalizer> l,
+    SwingController_Construct_Params params)
+    : AbstractController(std::move(l)),
+      std::enable_shared_from_this<SwingController>(),
+      angular_pid(params.ang_kp, params.ang_ki, params.ang_kd){};
 
 chassis::DiffChassisCommand
 SwingController::get_command(bool reverse, bool thru,
@@ -101,13 +103,15 @@ void SwingController::reset() {
 
 std::shared_ptr<SwingController>
 SwingController::modify_angular_constants(double kP, double kI, double kD) {
-    auto pid_mod = SwingControllerBuilder::from(*this)
-                       .with_angular_constants(kP, kI, kD)
-                       .build();
+    this->p = std::make_shared<SwingController>(SwingController(*this));
 
-    this->p = pid_mod;
+    this->p->angular_pid.set_constants(kP, kI, kD);
 
     return this->p;
+}
+
+std::shared_ptr<SwingController> SwingController::create() {
+    return this->shared_from_this();
 }
 
 }; // namespace voss::controller
