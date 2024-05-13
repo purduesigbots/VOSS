@@ -38,7 +38,7 @@ double AbstractChassis::process_target_angle(double angle, bool relative) {
 void AbstractChassis::move_task(move_controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags) {
 
-    this->task = std::make_unique<pros::Task>([&, this, flags, max]() {
+    this->task = std::make_unique<pros::Task>([=, this]() {
         ec->reset();
         controller->reset();
         while (!this->execute(
@@ -69,7 +69,7 @@ void AbstractChassis::turn_task(turn_controller_ptr controller, ec_ptr ec,
                                 voss::AngularDirection direction) {
 
     this->task =
-        std::make_unique<pros::Task>([&, this, flags, direction, max]() {
+        std::make_unique<pros::Task>([=, this]() {
             ec->reset();
             controller->reset();
             while (!this->execute(controller->get_angular_command(
