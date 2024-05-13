@@ -6,9 +6,9 @@
 
 namespace voss::controller {
 
-class ArcPIDController : public AbstractController, private std::enable_shared_from_this<ArcPIDController> {
+class ArcPIDController : private std::enable_shared_from_this<ArcPIDController>,
+                         public virtual IsMoveController {
   private:
-
   protected:
     std::shared_ptr<ArcPIDController> p;
     utils::PID linear_pid;
@@ -32,17 +32,17 @@ class ArcPIDController : public AbstractController, private std::enable_shared_f
         double min_error = 5;
     };
 
-    ArcPIDController(std::shared_ptr<localizer::AbstractLocalizer> l, Arc_Construct_Params params);
+    ArcPIDController(Arc_Construct_Params params);
 
     chassis::DiffChassisCommand
-    get_command(bool reverse, bool thru,
+    get_command(Pose current_pose, bool reverse, bool thru,
                 std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
-    get_angular_command(bool reverse, bool thru,
+    get_angular_command(Pose current_pose, bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
 
-    std::shared_ptr<ArcPIDController> create();
+    std::shared_ptr<ArcPIDController> get_ptr();
 
     void reset() override;
 
@@ -50,9 +50,6 @@ class ArcPIDController : public AbstractController, private std::enable_shared_f
     modify_linear_constants(double kP, double kI, double kD);
     std::shared_ptr<ArcPIDController> modify_track_width(double track_width);
     std::shared_ptr<ArcPIDController> modify_min_error(double error);
-    std::shared_ptr<ArcPIDController> modify_slew(double slew);
-
-    friend class ArcPIDControllerBuilder;
 };
 
 } // namespace voss::controller

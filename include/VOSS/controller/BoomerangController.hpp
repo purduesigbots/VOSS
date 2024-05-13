@@ -11,8 +11,8 @@
 namespace voss::controller {
 
 class BoomerangController
-    : public AbstractController,
-      private std::enable_shared_from_this<BoomerangController> {
+    : private std::enable_shared_from_this<BoomerangController>,
+      public virtual IsMoveController {
   protected:
     std::shared_ptr<BoomerangController> p;
     double lead_pct;
@@ -37,17 +37,17 @@ class BoomerangController
         double min_vel = 100;
     };
 
-    BoomerangController(std::shared_ptr<localizer::AbstractLocalizer> l, Boomerang_Construct_Param params);
+    BoomerangController(Boomerang_Construct_Param params);
 
     chassis::DiffChassisCommand
-    get_command(bool reverse, bool thru,
+    get_command(Pose current_pose, bool reverse, bool thru,
                 std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
-    get_angular_command(bool reverse, bool thru,
+    get_angular_command(Pose current_pose, bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
 
-    std::shared_ptr<BoomerangController> create();
+    std::shared_ptr<BoomerangController> get_ptr();
 
     void reset() override;
 
@@ -57,8 +57,6 @@ class BoomerangController
     modify_angular_constants(double kP, double kI, double kD);
     std::shared_ptr<BoomerangController> modify_min_error(double error);
     std::shared_ptr<BoomerangController> modify_lead_pct(double lead_pct);
-
-    friend class BoomerangControllerBuilder;
 };
 
 } // namespace voss::controller

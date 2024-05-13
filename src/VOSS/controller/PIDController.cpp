@@ -7,17 +7,15 @@
 
 namespace voss::controller {
 
-PIDController::PIDController(std::shared_ptr<localizer::AbstractLocalizer> l,
-                             PID_Construct_Params params)
-    : AbstractController(std::move(l)),
-      std::enable_shared_from_this<PIDController>(),
+PIDController::PIDController(PID_Construct_Params params)
+    : std::enable_shared_from_this<PIDController>(),
       linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       min_error(params.min_error), min_vel(params.min_vel) {
 }
 
 chassis::DiffChassisCommand
-PIDController::get_command(bool reverse, bool thru,
+PIDController::get_command(Pose current_pose, bool reverse, bool thru,
                            std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in background of move commands
     // distance formula to find the distance between the robot and the target
@@ -28,8 +26,8 @@ PIDController::get_command(bool reverse, bool thru,
     // Controller exits when robot settled for a designated time duration or
     // accurate to a specified tolerance
     int dir = reverse ? -1 : 1;
-    Point current_pos = this->l->get_position();
-    double current_angle = this->l->get_orientation_rad();
+    Point current_pos = {current_pose.x, current_pose.y};
+    double current_angle = current_pose.theta.value();
     bool chainedExecutable = false;
     bool noPose = !this->target.theta.has_value();
 
@@ -83,7 +81,7 @@ PIDController::get_command(bool reverse, bool thru,
     }
     lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
     // Runs at the end of a through movement
-    if (ec->is_met(this->l->get_pose(), thru)) {
+    if (ec->is_met(current_pose, thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
                 dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
@@ -98,7 +96,7 @@ PIDController::get_command(bool reverse, bool thru,
 }
 
 chassis::DiffChassisCommand
-PIDController::get_angular_command(bool reverse, bool thru,
+PIDController::get_angular_command(Pose current_pose, bool reverse, bool thru,
                                    voss::AngularDirection direction,
                                    std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in the background of turn commands
@@ -107,10 +105,10 @@ PIDController::get_angular_command(bool reverse, bool thru,
     // position Output is proportional to the error and the weight of the
     // constant Controller exits when robot settled for a designated time
     // duration or accurate to a specified tolerance
-    double current_angle = this->l->get_orientation_rad();
+    double current_angle = current_pose.theta.value();
     double target_angle = 0;
     if (!this->target.theta.has_value()) {
-        Point current_pos = this->l->get_position();
+        Point current_pos = {current_pose.x, current_pose.y};
         double dx = this->target.x - current_pos.x;
         double dy = this->target.y - current_pos.y;
         target_angle = atan2(dy, dx);
@@ -139,7 +137,7 @@ PIDController::get_angular_command(bool reverse, bool thru,
     }
 
     double ang_speed = angular_pid.update(angular_error);
-    if (ec->is_met(this->l->get_pose(), thru) || chainedExecutable) {
+    if (ec->is_met(current_pose, thru) || chainedExecutable) {
         if (thru) {
             return chassis::DiffChassisCommand{
                 chassis::diff_commands::Chained{-ang_speed, ang_speed}};
@@ -180,7 +178,7 @@ PIDController::modify_min_error(double min_error) {
     return this->p;
 }
 
-std::shared_ptr<PIDController> PIDController::create() {
+std::shared_ptr<PIDController> PIDController::get_ptr() {
     return this->shared_from_this();
 }
 

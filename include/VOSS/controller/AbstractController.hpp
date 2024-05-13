@@ -10,26 +10,32 @@ namespace voss::controller {
 class AbstractController {
 
   protected:
-    std::shared_ptr<localizer::AbstractLocalizer> l;
+    AbstractController() = default;
+
     Pose target;
     double angular_target;
+    std::vector<Pose> target_path;
 
   public:
-    AbstractController(std::shared_ptr<localizer::AbstractLocalizer> l);
+
+    friend class AbstractExitCondition;
 
     virtual chassis::DiffChassisCommand
-    get_command(bool reverse, bool thru,
+    get_command(Pose current_pose, bool reverse, bool thru,
                 std::shared_ptr<AbstractExitCondition> ec) = 0;
     virtual chassis::DiffChassisCommand
-    get_angular_command(bool reverse, bool thru,
+    get_angular_command(Pose current_pose, bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) = 0;
 
     virtual void reset() = 0;
 
-    void set_target(Pose target, bool relative,
-                    std::shared_ptr<AbstractExitCondition> ec);
-    void set_angular_target(double angle, bool relative);
+    void set_target(const Pose& target);
+    void set_angular_target(double angle);
 };
+
+class IsMoveController : virtual public AbstractController {};
+class IsTurnController : virtual public AbstractController {};
+class IsPathFollowController : virtual public AbstractController {};
 
 } // namespace voss::controller

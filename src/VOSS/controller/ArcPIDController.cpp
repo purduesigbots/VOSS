@@ -5,21 +5,18 @@
 
 namespace voss::controller {
 
-ArcPIDController::ArcPIDController(
-    std::shared_ptr<localizer::AbstractLocalizer> l,
-    Arc_Construct_Params params)
-    : AbstractController(std::move(l)),
-      std::enable_shared_from_this<ArcPIDController>(),
+ArcPIDController::ArcPIDController(Arc_Construct_Params params)
+    : std::enable_shared_from_this<ArcPIDController>(),
       linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       track_width(params.track_width), min_error(params.min_error) {
 }
 
 chassis::DiffChassisCommand
-ArcPIDController::get_command(bool reverse, bool thru,
+ArcPIDController::get_command(Pose current_pose, bool reverse, bool thru,
                               std::shared_ptr<AbstractExitCondition> ec) {
-    Point current_pos = this->l->get_position();
-    double current_angle = this->l->get_orientation_rad();
+    Point current_pos = {current_pose.x, current_pose.y};
+    double current_angle = current_pose.theta.value();
 
     // x: current_x, y: current_y
     // x': target_x, y': target_y
@@ -98,7 +95,7 @@ ArcPIDController::get_command(bool reverse, bool thru,
         right_speed = lin_speed;
     }
     prev_t = t;
-    if (ec->is_met(this->l->get_pose(), thru)) {
+    if (ec->is_met(current_pose, thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{
                 chassis::diff_commands::Chained{left_speed, right_speed}};
@@ -111,7 +108,8 @@ ArcPIDController::get_command(bool reverse, bool thru,
 }
 
 chassis::DiffChassisCommand ArcPIDController::get_angular_command(
-    bool reverse, bool thru, voss::AngularDirection direction,
+    Pose current_pose, bool reverse, bool thru,
+    voss::AngularDirection direction,
     std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
@@ -145,7 +143,7 @@ ArcPIDController::modify_min_error(double min_error) {
     return this->p;
 }
 
-std::shared_ptr<ArcPIDController> ArcPIDController::create() {
+std::shared_ptr<ArcPIDController> ArcPIDController::get_ptr() {
     return this->shared_from_this();
 }
 
