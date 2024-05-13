@@ -43,6 +43,10 @@ void AbstractLocalizer::set_pose(double x, double y, double theta) {
     this->set_pose({x, y, theta});
 }
 
+/**
+ *
+ * @return x, y, and theta in radian
+ */
 Pose AbstractLocalizer::get_pose() {
     std::unique_lock<pros::Mutex> lock(this->mtx);
     Pose ret = {this->pose.x.load(), this->pose.y.load(),

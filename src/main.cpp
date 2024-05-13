@@ -16,13 +16,15 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_imu(16)
                 .build();
 
-auto pid = voss::controller::PIDController(odom, {}).create();
+auto pid = voss::controller::PIDController({}).get_ptr();
 
-auto boomerang = voss::controller::BoomerangController(odom, {}).create();
+auto boomerang = voss::controller::BoomerangController({}).get_ptr();
 
-auto swing = voss::controller::SwingController(odom, {.ang_kp = 200}).create();
+auto swing = voss::controller::SwingController({.ang_kp = 200}).get_ptr();
 
-auto arc = voss::controller::ArcPIDController(odom, {.lin_kp = 1000, .ang_kp = 250, .track_width = 16}).create();
+auto arc = voss::controller::ArcPIDController(
+               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
+               .get_ptr();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -34,8 +36,8 @@ auto ec = voss::controller::ExitConditions::new_conditions()
                   return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
               });
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec,
-                                          pros::E_MOTOR_BRAKE_COAST);
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, odom,
+                                          ec, pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
 
