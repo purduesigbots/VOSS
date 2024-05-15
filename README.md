@@ -4,9 +4,9 @@
 VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonomous code for VEX robots a piece of cake.
 
 ## Installing VOSS
-1. Download the most recent [template](https://github.com/purduesigbots/VOSS)
+1. Download the most recent [template](https://github.com/purduesigbots/VOSS/releases/tag/0.1.1)
 
-2. Run this command from terminal `pros c fetch VOSS@0.1.0.zip`
+2. Run this command from terminal `pros c fetch VOSS@0.1.1.zip`
 
 3.  `cd` into your pros project directory in your terminal
 
@@ -20,14 +20,31 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 * **RIGHT_MOTORS** = list of motors on the right side of the drive
 * **IMU_PORT** = the smart port number in which your imu is plugged into
 
+### Creating a exit conditions
+* We will set up a localizer in global scope
+1. Call `auto ec = auto ec = voss::controller::ExitConditions::new_conditions()`
+2. Setup conditions
+    * **velocity base exit** `.add_settle(int settle_time, double tolerance, int initial_delay)`
+    * **distance base exit** = `.add_tolerance(double linear_tolerance, double angular_tolerance, double tolerance_time)`
+    * **time base exit**(ms) = `.add_timeout(int time)`
+    * **motion chaining early exit**(smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
+3. Call it to build --> `.build()`
+```cpp
+auto ec = voss::controller::ExitConditions::new_conditions()
+              .add_settle(400, 0.5, 400)
+              .add_tolerance(1.0, 2.0, 200)
+              .add_timeout(22500)
+              .add_thru_smoothness(4)
+              .build();
+```
 ### Creating a localizer
-* We will set up a IME localizer in global scope
-1. Call `auto odom = voss::localizer::IMELocalizerBuilder::new_builder()`
+* We will set up a localizer in global scope
+1. Call `auto odom = voss::localizer::<localizer type builder>::new_builder()`. For example: `auto odom = voss::localizer::IMELocalizerBuilder::new_builder()`
 2. Setup inputs to localizer
     * **Left encoders** = `.with_left_motors(LEFT_MOTORS)`
     * **Right encoders** = `.with_right_motors(RIGHT_Motors)`
     * **IMU** = `.with_imu(IMU_PORT)`
-    * **Left right TPi** is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with `.with_left_right_tip`(TIP value)
+    * **Left right TPI** is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with `.with_left_right_tip`(TPI value)
 3. Call it to build --> `.build()`
 ```cpp
 auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
@@ -51,13 +68,10 @@ void initialize() {
     * **Linear proportional constant** = Weight of how much linear error affects motor power (Speeds up the robot movements)
     * **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
     * **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
-    * **Linear exit error** = Allowed linear distance from point in inches for the robot to exit the movement 
     * **Angular proportional constant** = Weight of how much Angular error affects motor power (Speeds up the robot movements)
     * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
     * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
-    * **Angular exit error** = Allowed Angular distance from point in degrees for the robot to exit the movement
     * **Minimum error** = linear distance allowed from desired position in inches where the robot will check if it has stopped moving
-    * **Settle time** = defined time in miliseconds which the robot has not move in order to exit the movement when the desired point has not been reached
 2. Call `auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)`
 3. Set up inputs to pid controller
     * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(0.0, 0.0, 0.0)`
@@ -71,10 +85,7 @@ void initialize() {
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
                    .with_linear_constants(0.1, 0.1, 0.1)
                    .with_angular_constants(0.1, 0.1, 0.1)
-                   .with_exit_error(1.0)
-                   .with_angular_exit_error(1.0)
                    .with_min_error(5)
-                   .with_settle_time(200)
                    .build();
                 
 void initialize() {
@@ -164,7 +175,7 @@ void autonomous(){
     1. **Desired angle**
     2. **Desired speed**
     3. **Flags** = options of movements
-        * **THUR** = Enable motion chaining
+        * **THRU** = Enable motion chaining
         * **ASYNC** = Next lines of code start executing even before movement is finished
         * **RELATIVE** = not absolute coordinate system
         * **REVERSE** = Go backward
