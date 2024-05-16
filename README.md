@@ -33,7 +33,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
 ```
 ### Creating a localizer
 * We will set up a localizer in global scope
-* You have three choices, IME(Internal motor encoder), ADI Encoders, or Smart Port Rotation sensors.
+* You have three choices, IME (Internal motor encoder), ADI Encoders, or Smart Port Rotation sensors.
 1. Call `auto odom = voss::localizer::voss::localizer::TrackingWheelLocalizerBuilder::new_builder()`
 2. Setup inputs to localizer
     * **Left** :
