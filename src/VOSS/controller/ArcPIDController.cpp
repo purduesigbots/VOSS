@@ -13,10 +13,10 @@ ArcPIDController::ArcPIDController(Arc_Construct_Params params)
 }
 
 chassis::DiffChassisCommand
-ArcPIDController::get_command(Pose current_pose, bool reverse, bool thru,
+ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                               std::shared_ptr<AbstractExitCondition> ec) {
-    Point current_pos = {current_pose.x, current_pose.y};
-    double current_angle = current_pose.theta.value();
+    Point current_pos = l->get_position();
+    double current_angle = l->get_orientation_rad();
 
     // x: current_x, y: current_y
     // x': target_x, y': target_y
@@ -95,7 +95,7 @@ ArcPIDController::get_command(Pose current_pose, bool reverse, bool thru,
         right_speed = lin_speed;
     }
     prev_t = t;
-    if (ec->is_met(current_pose, thru)) {
+    if (ec->is_met(l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{
                 chassis::diff_commands::Chained{left_speed, right_speed}};
@@ -108,7 +108,7 @@ ArcPIDController::get_command(Pose current_pose, bool reverse, bool thru,
 }
 
 chassis::DiffChassisCommand ArcPIDController::get_angular_command(
-    Pose current_pose, bool reverse, bool thru,
+    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
     voss::AngularDirection direction,
     std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};

@@ -15,14 +15,14 @@ BoomerangController::BoomerangController(Boomerang_Construct_Param params)
 }
 
 chassis::DiffChassisCommand
-BoomerangController::get_command(Pose current_pose, bool reverse, bool thru,
+BoomerangController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                                  std::shared_ptr<AbstractExitCondition> ec) {
 
     if (!target.theta.has_value()) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
-    Point current_pos = {current_pose.x, current_pose.y};
+    Point current_pos = l->get_position();
 
     int dir = reverse ? -1 : 1;
     Pose trueTarget;
@@ -35,7 +35,7 @@ BoomerangController::get_command(Pose current_pose, bool reverse, bool thru,
     this->carrotPoint = {this->target.x - distance_error * cos(at) * lead_pct,
                          this->target.y - distance_error * sin(at) * lead_pct,
                          target.theta};
-    double current_angle = current_pose.theta.value() + (reverse ? M_PI : 0);
+    double current_angle = l->get_orientation_rad() + (reverse ? M_PI : 0);
 
     double angle_error;
     angle_error = atan2(dy, dx) - current_angle;
@@ -75,7 +75,7 @@ BoomerangController::get_command(Pose current_pose, bool reverse, bool thru,
 
     lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
 
-    if (ec->is_met(current_pose, thru)) {
+    if (ec->is_met(l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
                 dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
@@ -90,7 +90,7 @@ BoomerangController::get_command(Pose current_pose, bool reverse, bool thru,
 }
 
 chassis::DiffChassisCommand BoomerangController::get_angular_command(
-    Pose current_pose, bool reverse, bool thru,
+    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
     voss::AngularDirection direction,
     std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};

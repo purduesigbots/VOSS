@@ -21,10 +21,10 @@ class AbstractController {
     friend class AbstractExitCondition;
 
     virtual chassis::DiffChassisCommand
-    get_command(Pose current_pose, bool reverse, bool thru,
+    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                 std::shared_ptr<AbstractExitCondition> ec) = 0;
     virtual chassis::DiffChassisCommand
-    get_angular_command(Pose current_pose, bool reverse, bool thru,
+    get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) = 0;
 

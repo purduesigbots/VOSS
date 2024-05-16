@@ -42,7 +42,7 @@ void AbstractChassis::move_task(move_controller_ptr controller, ec_ptr ec,
         ec->reset();
         controller->reset();
         while (!this->execute(
-            controller->get_command(this->l->get_pose(),
+            controller->get_command(this->l,
                                     flags & voss::Flags::REVERSE,
                                     flags & voss::Flags::THRU, ec),
             max)) {
@@ -73,7 +73,7 @@ void AbstractChassis::turn_task(turn_controller_ptr controller, ec_ptr ec,
             ec->reset();
             controller->reset();
             while (!this->execute(controller->get_angular_command(
-                                      this->l->get_pose(),
+                                      this->l,
                                       flags & voss::Flags::REVERSE,
                                       flags & voss::Flags::THRU, direction, ec),
                                   max)) {
