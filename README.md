@@ -6,7 +6,7 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 ## Installing VOSS
 1. Download the most recent [template](https://github.com/purduesigbots/VOSS/releases/tag/0.1.1)
 
-2. Run this command from terminal `pros c fetch VOSS@0.1.1.zip`
+2. Run this command from terminal `pros c fetch VOSS@0.1.2.zip`
 
 3.  `cd` into your pros project directory in your terminal
 
@@ -14,20 +14,14 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 
 5. Put `#include "VOSS/api.h"` in your main.h
 
-## Quick start guide
-### Robot definitions
-* **LEFT_MOTORS** = list of motors on the left side of the drive
-* **RIGHT_MOTORS** = list of motors on the right side of the drive
-* **IMU_PORT** = the smart port number in which your imu is plugged into
-
 ### Creating a exit conditions
 * We will set up a localizer in global scope
 1. Call `auto ec = auto ec = voss::controller::ExitConditions::new_conditions()`
 2. Setup conditions
-    * **velocity base exit** `.add_settle(int settle_time, double tolerance, int initial_delay)`
-    * **distance base exit** = `.add_tolerance(double linear_tolerance, double angular_tolerance, double tolerance_time)`
-    * **time base exit**(ms) = `.add_timeout(int time)`
-    * **motion chaining early exit**(smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
+    * **Velocity base exit** `.add_settle(int settle_time, double tolerance, int initial_delay)`
+    * **Distance base exit** = `.add_tolerance(double linear_tolerance, double angular_tolerance, double tolerance_time)`
+    * **Time base exit**(ms) = `.add_timeout(int time)`
+    * **Motion chaining early exit**(smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
 3. Call it to build --> `.build()`
 ```cpp
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -39,88 +33,61 @@ auto ec = voss::controller::ExitConditions::new_conditions()
 ```
 ### Creating a localizer
 * We will set up a localizer in global scope
-1. Call `auto odom = voss::localizer::<localizer type builder>::new_builder()`. For example: `auto odom = voss::localizer::IMELocalizerBuilder::new_builder()`
+* You have three choices, IME(Internal motor encoder), ADI Encoders, or Rotation sensors.
+1. Call `auto odom = voss::localizer::voss::localizer::TrackingWheelLocalizerBuilder::new_builder()`
 2. Setup inputs to localizer
-    * **Left encoders** = `.with_left_motors(LEFT_MOTORS)`
-    * **Right encoders** = `.with_right_motors(RIGHT_Motors)`
-    * **IMU** = `.with_imu(IMU_PORT)`
-    * **Left right TPI** is the ratio of rotations of the motor encoder to 1 inch of linear movement. It is called with `.with_left_right_tip`(TPI value)
+    * **Left** :
+      - `.with_left_encoder(int adi_port)`
+      - `.with_left_encoder(int smart_port, int adi_port)`
+      - `.with_left_rotation(int port)`
+      - `.with_left_motor(int port)`
+    * **Right** :
+      - `.with_right_encoder(int adi_port)`
+      - `.with_right_encoder(int smart_port, int adi_port)`
+      - `.with_right_rotation(int port)`
+      - `.with_right_motor(int port)`
+    * **IMU** :
+      - `.with_imu(int imu_port)`
+    * **Track width**
+      - `.with_track_width(double track_width_distance)`
+    * **Left right TPI**: the ratio of rotations of the motor encoder to 1 inch of linear movement.
+      - `.with_left_right_tip(double tpi_value)`
 3. Call it to build --> `.build()`
 ```cpp
-auto odom = voss::localizer::IMELocalizerBuilder::new_builder()
-                    .with_left_motors({-1, -2, -3})
-                    .with_right_motors({4, 5, 6})
-                    .with_left_right_tpi(20)
-                    .with_track_width(5)
-                    .with_imu(IMU_PORT)
-                    .build();
+auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
+                .with_right_motor(10)
+                .with_left_motor(-4)
+                .with_track_width(11)
+                .with_left_right_tpi(18.43)
+                .with_imu(16)
+                .build();
+
 
 void initialize() {
-    
+    pros::lcd::initialize();
+    odom->begin_localization(); //calibrate and begin localizing
 }
 ```
-
-### Creating a PID controller
-* We will set up a PID controller for chassis movements in global scope
-* **Linear error** = Linear distance from desired position to current position
-* **Angular error** = Angular distance from desired position to current position
-1. Required constants and their meaning
-    * **Linear proportional constant** = Weight of how much linear error affects motor power (Speeds up the robot movements)
-    * **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
-    * **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
-    * **Angular proportional constant** = Weight of how much Angular error affects motor power (Speeds up the robot movements)
-    * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
-    * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
-    * **Minimum error** = linear distance allowed from desired position in inches where the robot will check if it has stopped moving
-2. Call `auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)`
-3. Set up inputs to pid controller
-    * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(0.0, 0.0, 0.0)`
-    * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(0.0, 0.0, 0.0)`
-    * **Linear exit error** = `.with_exit_error(1.0)`
-    * **Angular exit error** = `.with_angular_exit_error(1.0)`
-    * **Minimum exit error** = `.with_min_error(5)`
-    * **Settle time** = `.with_settle_time(200)`
-4. Call it to build --> `.build()`
-```cpp
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-                   .with_linear_constants(0.1, 0.1, 0.1)
-                   .with_angular_constants(0.1, 0.1, 0.1)
-                   .with_min_error(5)
-                   .build();
-                
-void initialize() {
-    
-}
-```
-
-### Creating the chassis object
-* We will be creating a differential drive chassis in global scope
-1. Call `voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, slew rate, brake mode)`
-```cpp
-voss::chassis::DiffChassis chassis(LEFT_MOTORS, RIGHT_MOTORS, pid, 8, pros::E_MOTOR_BRAKE_BRAKE);
-
-void initialize() {
-    
-}
-```
-
-### Starting the odometry localization
-* We will be starting odomentry localization in the initalize scope 
-1. Call `odom->begin_localization()`
-```cpp
-void initialize() {
-    odom->begin_localization();    
-}
-```
-
-### Tuning localizer and controller
+### Tuning localizer
 * We will be tuning the TPI (ticks per inch) of the localizer
     1. Move the robot forard a measured ammount
     2. Read the odometry value
     3. Divide the amount you moved the robot by the measured movement value from the odometry
         * adjustment factor = robot actual move amount/odometry measured amount
     4. Set the new tpi value to the current tpi value multiplied by the value you got from step 3
-        * new tip = old tpi x adjustment factor 
+        * new tip = old tpi x adjustment factor
+
+### Before you start: Basic understand on PID
+* **Linear error** = Linear distance from desired position to current position
+* **Angular error** = Angular distance from desired position to current position
+    * **Linear proportional constant** = Weight of how much linear error affects motor power (Speeds up the robot movements)
+    * **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
+    * **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
+    * **Angular proportional constant** = Weight of how much Angular error affects motor power (Speeds up the robot movements)
+    * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
+    * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
+      
+### Tuning PID
 * We will be tuning the PID controller constants
     * This is a lot of guessing and making corrections based off of the behavior of the robot. This will change with any signifcant robot changes
     * Tune linear constants first
@@ -132,12 +99,108 @@ void initialize() {
 * For more information on PID and Odometry check out the SIGBots Wiki at https://wiki.purduesigbots.com/
 * Another great intro to PID article can be found at http://georgegillard.com/documents/2-introduction-to-pid-controllers
 
+### Creating a PID controller
+* We will set up a PID controller for chassis movements in global scope
+1. Call `auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)`
+2. Set up inputs to pid controller
+    * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(20, 0.02, 169)`
+    * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
+    * **Minimum exit error** = `.with_min_error(5)`
+    * **Minimun velocity for thru motion** = `.with_min_vel_for_thru(100)`
+3. Call it to build --> `.build()`
+```cpp
+auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+               .with_linear_constants(20, 0.02, 169)
+               .with_angular_constants(250, 0.05, 2435)
+               .with_min_error(5)
+               .with_min_vel_for_thru(100)
+               .build();    
+```
+
+### Creating a Boomerang controller
+* Boomerang controller demo on [Desmos](https://www.desmos.com/calculator/zl0pizecei?lang=zh-TW)
+* We will set up a Boomerang controller for chassis movements in global scope
+1. Call `auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)`
+2. Set up inputs to boomerang controller
+    * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(20, 0.02, 169)`
+    * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
+    * **Leading percentage**(not smaller than 0, and not greater than 1) = `.with_lead_pct(0.5)`
+    * **Minimum exit error** = `.with_min_error(5)`
+    * **Minimun velocity for thru motion** = `.with_min_vel_for_thru(100)`
+3. Call it to build --> `.build()`
+```cpp
+auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
+                     .with_linear_constants(20, 0.02, 169)
+                     .with_angular_constants(250, 0.05, 2435)
+                     .with_lead_pct(0.5)
+                     .with_min_vel_for_thru(70)
+                     .with_min_error(5)
+                     .build();
+```
+
+### Creating a Swing controller
+* We will set up a Swing controller for chassis movements in global scope
+1. Call `auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)`
+2. Set up inputs to swing controller
+    * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
+3. Call it to build --> `.build()`
+```cpp
+auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
+                 .with_angular_constants(250, 0.05, 2435)
+                 .build();
+```
+
+### Creating a Arc controller
+* We will set up a Arc controller for chassis movements in global scope
+* **Temporary avoid using this controller, because we are still trying to optimize it.**
+1. Call `voss::controller::ArcPIDControllerBuilder(odom)`
+2. Set up inputs to pid controller
+    * **Track width** = `.with_track_width(16)`
+    * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(20, 0.02, 169)`
+    * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
+    * **Leading percentage**(not smaller than 0, and not greater than 1) = `.with_lead_pct(0.5)`
+    * **Minimum exit error** = `.with_min_error(5)`
+    * **Slew rate(for limiting linear acceleration)** = `.with_slew(8)`
+4. Call it to build --> `.build()`
+```cpp
+auto arc = voss::controller::ArcPIDControllerBuilder(odom)
+               .with_track_width(16)
+               .with_linear_constants(20, 0.02, 169)
+               .with_angular_constants(250, 0.05, 2435)
+               .with_min_error(5)
+               .with_slew(8)
+               .build();
+```
+
+
+
+
+### Creating the chassis object
+* We will be creating a differential drive chassis in global scope
+* `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors,
+                         controller_ptr default_controller, ec_ptr ec,
+                         double slew_step, pros::motor_brake_mode_e brakeMode)`
+```cpp
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST); //use pid as default controller is suggested
+```
+
+### Starting the odometry localization
+* We will be starting odomentry localization in the initalize scope 
+1. Call `odom->begin_localization()`
+```cpp
+void initialize() {
+   odom->begin_localization(); //calibrate and begin localizing
+   pros::delay(3000); //don't move the robot for 3 seconds
+}
+```
+
 ### Driver Control
-* We will be setting up tank control scheme for the drive in the opcontrol scope
+* We will be setting up control scheme for the drive in the opcontrol scope
 1. Define the controller
     * Call `pros::Controller master(pros::E_CONTROLLER_MASTER)`
 2. Inside the while loop set the movement
-    * Call `chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y))`
+    * **Tank control** = `chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y))`
+    * **Arcade control** = `chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X))`
 ```cpp
 void opcontrol() {
     pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -149,47 +212,85 @@ void opcontrol() {
 ```
 
 ### Autonomus Movement
-* There are two types of basic movment calls which you can use to write an automous
+* There are two types of basic movment calls which you can use to write an autonomous
 1. Move
+    * Controllers
+      - PID Controller
+      - Boomerang Controller
+      - Arc Controller
     * Parameters
-        1. **Desired pose** = {x, y}
-        2. **Speed** = 0 - 100
-        3. **Flags** = options of movements
-            * **THRU** = No PID
-            * **Async** = Next lines of code start executing even before movement is finished
+        1. **Target** = Relative distance or {x, y} or {x, y, theta} (Remember for boomerang controller, you need to specify theta.)
+        2. **Controller** = PID/ Boomerang/ Arc
+        3. **Speed** = 0 - 100 (100 is default)
+        4. **Flags** = options of movements
+            * **THRU** = Enable motion chaining
+            * **ASYNC** = Next lines of code start executing even before movement is finished
             * **REVERSE** = Robot moves backwards
-            * **Relative** = not absolute coordinate system
-            * **NONE** = defualt
+            * **RELATIVE** = Not absolute coordinate system
+            * **NONE** = Defualt
     * Call `chassis.move(Parameters)`
 ```cpp
 void autonomous(){
-    chassis.move(voss::Point{1.0, 1.0});
-    chassis.move(voss::Point{1.0, 1.0}, 100);
-    chassis.move(voss::Point{1.0, 1.0}, 100, voss::Flags::RELATIVE);
-    chassis.move(voss::Point{1.0, 1.0}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC);
+   // using default controller:
+    chassis.move(10); //move forward 10
+    chassis.move(-10, 100, voss::Flags::REVERSE) //move backward 10
+    chassis.move(10, 70);
+    chassis.move(voss::Point{1.0, 1.0}, 70);
+    chassis.move(voss::Point{1.0, 1.0, 30}, 100, voss::Flags::RELATIVE);
+    chassis.move(voss::Point{1.0, 1.0}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC | voss::Flags::THRU);
+   // using boomerang controller:
+    chassis.move(voss::Point{1.0, 1.0, 90}, boomerang); 
+    chassis.move(voss::Point{1.0, 1.0, 20}, boomerang, 70);
+    chassis.move(voss::Point{1.0, 1.0, 30}, boomerang, 100, voss::Flags::RELATIVE);
+    chassis.move(voss::Point{1.0, 1.0, 10}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC | voss::Flags::THRU);
+   // using arc controller:
+    chassis.move(voss::Point{1.0, 1.0}, arc); 
+    chassis.move(voss::Point{1.0, 1.0}, arc, 70);
+    chassis.move(voss::Point{1.0, 1.0}, arc, 100, voss::Flags::RELATIVE);
+    chassis.move(voss::Point{1.0, 1.0}, arc, 100, voss::Flags::REVERSE | voss:Flags::ASYNC | voss::Flags::THRU);
 }
 ```
 
 2. Turn
+    * Controllers
+       - PID controller
+       - Swing controller
     * Parameters
-    1. **Desired angle**
-    2. **Desired speed**
-    3. **Flags** = options of movements
-        * **THRU** = Enable motion chaining
-        * **ASYNC** = Next lines of code start executing even before movement is finished
-        * **RELATIVE** = not absolute coordinate system
-        * **REVERSE** = Go backward
-        * **NONE** = default
-    4. **Angular Direction** = direction of turn
+    1. **Target** = angle or {x, y}
+    2. **Controller** = PID/ Swing
+    3. **Desired speed** = 0 - 100 (100 is default)
+    4. **Flags** = options of movements
+       * **THRU** = Enable motion chaining
+       * **ASYNC** = Next lines of code start executing even before movement is finished
+       * **REVERSE** = Robot moves backwards (for swing controller)
+       * **RELATIVE** = Not absolute coordinate system
+       * **NONE** = Defualt
+    5. **Angular Direction** = direction of turn
         * **AUTO** = default
         * **COUNTERCLOCKWISE** or **CCW**
         * **CLOCKWISE** or **CW**
-    * Call `chassis.turn(parameters)`
+    * Call `chassis.turn(parameters)` or `chassis.turn_to(parameters)`
 ```cpp
 void autonomous(){
+//using default controller:
     chassis.turn(90);
-    chassis.turn(90, 100);
+    chassis.turn_to({10, 10});
+    chassis.turn(90, 50);
+    chassis.turn_to({10, 10}, 40);
     chassis.turn(90, 100, voss::Flags::RELATIVE);
+    chassis.turn_to({10, 10}, 40, voss::Flags::RELATIVE);
     chassis.turn(90, 100, voss::Flags::THRU | voss::Flags::ASYNC);
-    chassis.turn(90, 100, voss::Flags::THRU | voss::Flags::ASYNC, voss::AngularDirection::CW);
+    chassis.turn(90, 100, voss::Flags::NONE, voss::AngularDirection::CW);
+    chassis.turn_to({10, 10}, 40, voss::Flags::RELATIVE | voss::Flags::THRU, voss::AngularDirection::CW);
+
+//using swing controller:
+    chassis.turn(90, swing);
+    chassis.turn_to({10, 10}, swing);
+    chassis.turn(90, swing, 50);
+    chassis.turn_to({10, 10}, swing, 40);
+    chassis.turn(90, 100, swing, voss::Flags::RELATIVE);
+    chassis.turn_to({10, 10}, swing, 40, voss::Flags::RELATIVE | voss::Flags::REVERSE);
+    chassis.turn(90, 100, swing, voss::Flags::NONE, voss::AngularDirection::CW);
+    chassis.turn_to({10, 10}, swing, 40, voss::Flags::RELATIVE | voss::Flags::THRU, voss::AngularDirection::CW);
 }
+```
