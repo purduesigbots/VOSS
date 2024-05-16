@@ -68,7 +68,7 @@ void initialize() {
     odom->begin_localization(); //calibrate and begin localizing
 }
 ```
-### Tuning localizer
+### Tuning a localizer
 * We will be tuning the TPI (ticks per inch) of the localizer
     1. Move the robot forard a measured ammount
     2. Read the odometry value
@@ -77,7 +77,7 @@ void initialize() {
     4. Set the new tpi value to the current tpi value multiplied by the value you got from step 3
         * new tip = old tpi x adjustment factor
 
-### Before you start: Basic understand on PID
+### The basics of PID (Proportional Integral Derivative controllers)
 * **Linear error** = Linear distance from desired position to current position (inches)
 * **Angular error** = Angular distance from desired position to current position (degrees)
 * **Linear proportional constant** = Weight of how much linear error affects motor power (speeds up the robot movements)
@@ -86,6 +86,7 @@ void initialize() {
 * **Angular proportional constant** = Weight of how much Angular error affects motor power (speeds up the robot movements)
 * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
 * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
+* **Output of the control loop** = The error * proportional constant + the change in error * derivative constant + the sum of error over the entire time * integral constant
 
       
 ### Creating a PID controller
@@ -160,6 +161,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .with_slew(8)
                .build();
 ```
+
 ## Tuning Controllers
 ### Tuning PID
 * We will be tuning the PID controller constants
@@ -175,18 +177,15 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 
 ### Tuning Other Controllers
 * Most of our controllers use PID but the logic of how it is applied is what makes the controller unique
-    * For linear and angular constants reference `Tuning PID` Above
+    * For linear and angular constants reference **Tuning PID** Above
     * For other parameters reference each controller's description
-
 
 ## Setting up and starting robot control
 ### Creating the chassis object
 * We will be creating a differential drive chassis in global scope
-* `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors,
-                         controller_ptr default_controller, ec_ptr ec,
-                         double slew_step, pros::motor_brake_mode_e brakeMode)`
+* Call `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors, controller_ptr default_controller, ec_ptr ec, double slew_step, pros::motor_brake_mode_e brakeMode)`
 ```cpp
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST); //use pid as default controller is suggested
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST); //we recommend using the default controller, pid
 ```
 
 ### Starting the odometry localization
@@ -212,6 +211,8 @@ void opcontrol() {
 
     while(true){
         chassis.tank(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_Y));
+        //or
+        chassis.arcade(master.get_analog(ANALOG_LEFT_Y), master.get_analog(ANALOG_RIGHT_X));
     }
 }
 ```
