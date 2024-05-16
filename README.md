@@ -4,7 +4,7 @@
 VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonomous code for VEX robots a piece of cake.
 
 ## Installing VOSS
-1. Download the most recent [template](https://github.com/purduesigbots/VOSS/releases/tag/0.1.1)
+1. Download the most recent [template](https://github.com/purduesigbots/VOSS/releases/tag/0.1.2)
 
 2. Run this command from terminal `pros c fetch VOSS@0.1.2.zip`
 
@@ -191,7 +191,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
     * Must be greater than 0
     * Must be less than 1
     * The larger the leading percentage, the further the robot will stray from a straight path to the point
-        * This allows for the robot to correct for large difference in staring and ending heading
+        * This allows for the robot to correct for large difference in starting and ending heading
         * This requires more space for the robot to move around
     * This value will vary based on the desired behavior of the robot, but to tune this start small and increase until desired results 
 * Slew rate
@@ -205,7 +205,8 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 * We will be creating a differential drive chassis in global scope
 * Call `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors, controller_ptr default_controller, ec_ptr ec, double slew_step, pros::motor_brake_mode_e brakeMode)`
 ```cpp
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST); //we recommend using the default controller, pid
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST);
+//we recommend using the pid controller as default controller
 ```
 
 ### Starting the odometry localization
@@ -245,7 +246,7 @@ void opcontrol() {
       - Boomerang Controller
       - Arc Controller **Please avoid using this controller, because we are still trying to optimize it.** 
     * Parameters
-        1. **Target** = Relative distance or {x, y} or {x, y, theta} (Remember for boomerang controller, you need to specify theta)
+        1. **Target** = Relative distance, {x, y}, or {x, y, theta} (Remember for boomerang controller, you need to specify theta)
         2. **Controller** = PID, Boomerang, or Arc
         3. **Speed** = 0 - 100 (100 is default)
         4. **Flags** = options of movements
@@ -268,7 +269,7 @@ void autonomous(){
     chassis.move(voss::Point{1.0, 1.0, 90}, boomerang); 
     chassis.move(voss::Point{1.0, 1.0, 20}, boomerang, 70);
     chassis.move(voss::Point{1.0, 1.0, 30}, boomerang, 100, voss::Flags::RELATIVE);
-    chassis.move(voss::Point{1.0, 1.0, 10}, 100, voss::Flags::REVERSE | voss:Flags::ASYNC | voss::Flags::THRU);
+    chassis.move(voss::Point{1.0, 1.0, 10}, boomerang, 100, voss::Flags::REVERSE | voss:Flags::ASYNC | voss::Flags::THRU);
    // using arc controller:
     chassis.move(voss::Point{1.0, 1.0}, arc); 
     chassis.move(voss::Point{1.0, 1.0}, arc, 70);
@@ -322,7 +323,7 @@ void autonomous(){
 ```
 ## Additional Resources
 
-By following the [In Depth Documentation](**Coming Soon!**), your team should be able to create a competitive program for your competition robot. For people who are interested in more advanced programming such as programming skills runs, there is a lot of potential customization with this library. The following resources may interest people who want to take their programming skills further:
+By following the In Depth Documentation(**Coming Soon!**), your team should be able to create a competitive program for your competition robot. For people who are interested in more advanced programming such as programming skills runs, there is a lot of potential customization with this library. The following resources may interest people who want to take their programming skills further:
 
 - [Take a C++ programming course.](https://www.codecademy.com/learn/learn-c-plus-plus)
 
