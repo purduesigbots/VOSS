@@ -9,10 +9,11 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 2. Run this command from terminal `pros c fetch VOSS@0.1.2.zip`
 
 3.  `cd` into your pros project directory in your terminal
+4.  run `pros c info-project`, your kernel version MUST be 4.0.7. If it is not, create a new 4.0.7 project by `cd` into the directory you want to make your project, and run `pros c n PROJECT_NAME -ea`. 
 
-4. Apply the library to the project `pros c apply VOSS`
+5. Apply the library to the project `pros c apply VOSS`
 
-5. Put `#include "VOSS/api.h"` in your main.h
+6. Put `#include "VOSS/api.h"` in your main.h
 
 ### Creating exit conditions
 * We will set up a exit conditions object in global scope
