@@ -14,14 +14,14 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 
 5. Put `#include "VOSS/api.h"` in your main.h
 
-### Creating a exit conditions
+### Creating exit conditions
 * We will set up a localizer in global scope
-1. Call `auto ec = auto ec = voss::controller::ExitConditions::new_conditions()`
+1. Call `auto ec = voss::controller::ExitConditions::new_conditions()`
 2. Setup conditions
     * **Velocity base exit** `.add_settle(int settle_time, double tolerance, int initial_delay)`
     * **Distance base exit** = `.add_tolerance(double linear_tolerance, double angular_tolerance, double tolerance_time)`
     * **Time base exit**(ms) = `.add_timeout(int time)`
-    * **Motion chaining early exit**(smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
+    * **Motion chaining early exit**(as smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
 3. Call it to build --> `.build()`
 ```cpp
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -33,7 +33,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
 ```
 ### Creating a localizer
 * We will set up a localizer in global scope
-* You have three choices, IME(Internal motor encoder), ADI Encoders, or Rotation sensors.
+* You have three choices, IME(Internal motor encoder), ADI Encoders, or Smart Port Rotation sensors.
 1. Call `auto odom = voss::localizer::voss::localizer::TrackingWheelLocalizerBuilder::new_builder()`
 2. Setup inputs to localizer
     * **Left** :
@@ -50,7 +50,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
       - `.with_imu(int imu_port)`
     * **Track width**
       - `.with_track_width(double track_width_distance)`
-    * **Left right TPI**: the ratio of rotations of the motor encoder to 1 inch of linear movement.
+    * **Left right TPI**: the ratio of encoder rotations to 1 inch of linear movement.
       - `.with_left_right_tip(double tpi_value)`
 3. Call it to build --> `.build()`
 ```cpp
@@ -78,8 +78,8 @@ void initialize() {
         * new tip = old tpi x adjustment factor
 
 ### Before you start: Basic understand on PID
-* **Linear error** = Linear distance from desired position to current position
-* **Angular error** = Angular distance from desired position to current position
+* **Linear error** = Linear distance from desired position to current position (Inches)
+* **Angular error** = Angular distance from desired position to current position (Degrees)
     * **Linear proportional constant** = Weight of how much linear error affects motor power (Speeds up the robot movements)
     * **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
     * **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
@@ -94,7 +94,7 @@ void initialize() {
         1. Start with the constants all being 0
         2. Increase the proportional constant until oscillations start (the amount you need to increase by and total amount will vary with each robot)
         3. Slowly increase the derivative constant until the robot is no longer overshooting its target and oscilations have stopped
-        4. If the robot is lowly compounding error over time, slowly increase the integral constant to reduce that error
+        4. If the robot is compounding error over time, slowly increase the integral constant to reduce that error
     * Tune the angular constants using steps 1-4 of tuning the linear constants
 * For more information on PID and Odometry check out the SIGBots Wiki at https://wiki.purduesigbots.com/
 * Another great intro to PID article can be found at http://georgegillard.com/documents/2-introduction-to-pid-controllers
@@ -124,7 +124,7 @@ auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
 2. Set up inputs to boomerang controller
     * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(20, 0.02, 169)`
     * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
-    * **Leading percentage**(not smaller than 0, and not greater than 1) = `.with_lead_pct(0.5)`
+    * **Leading percentage**(greater than 0, but less than 1) = `.with_lead_pct(0.5)`
     * **Minimum exit error** = `.with_min_error(5)`
     * **Minimun velocity for thru motion** = `.with_min_vel_for_thru(100)`
 3. Call it to build --> `.build()`
@@ -152,15 +152,15 @@ auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
 
 ### Creating a Arc controller
 * We will set up a Arc controller for chassis movements in global scope
-* **Temporary avoid using this controller, because we are still trying to optimize it.**
+* **Please avoid using this controller, because we are still trying to optimize it.**
 1. Call `voss::controller::ArcPIDControllerBuilder(odom)`
 2. Set up inputs to pid controller
     * **Track width** = `.with_track_width(16)`
     * **Linear proportional, derivative, and integral constant (in this order)** = `.with_linear_constants(20, 0.02, 169)`
     * **Angular proportional, derivative, and integral constant (in this order)** = `.with_angular_constants(250, 0.05, 2435)`
-    * **Leading percentage**(not smaller than 0, and not greater than 1) = `.with_lead_pct(0.5)`
+    * **Leading percentage** (greater than 0, but less than 1) = `.with_lead_pct(0.5)`
     * **Minimum exit error** = `.with_min_error(5)`
-    * **Slew rate(for limiting linear acceleration)** = `.with_slew(8)`
+    * **Slew rate(limits linear acceleration. Higher slew rate = higher acceleration)** = `.with_slew(8)`
 4. Call it to build --> `.build()`
 ```cpp
 auto arc = voss::controller::ArcPIDControllerBuilder(odom)
@@ -217,10 +217,10 @@ void opcontrol() {
     * Controllers
       - PID Controller
       - Boomerang Controller
-      - Arc Controller
+      - Arc Controller **Please avoid using this controller, because we are still trying to optimize it.** 
     * Parameters
-        1. **Target** = Relative distance or {x, y} or {x, y, theta} (Remember for boomerang controller, you need to specify theta.)
-        2. **Controller** = PID/ Boomerang/ Arc
+        1. **Target** = Relative distance or {x, y} or {x, y, theta} (Remember for boomerang controller, you need to specify theta)
+        2. **Controller** = PID, Boomerang, or Arc
         3. **Speed** = 0 - 100 (100 is default)
         4. **Flags** = options of movements
             * **THRU** = Enable motion chaining
@@ -257,7 +257,7 @@ void autonomous(){
        - Swing controller
     * Parameters
     1. **Target** = angle or {x, y}
-    2. **Controller** = PID/ Swing
+    2. **Controller** = PID or Swing
     3. **Desired speed** = 0 - 100 (100 is default)
     4. **Flags** = options of movements
        * **THRU** = Enable motion chaining
@@ -294,3 +294,16 @@ void autonomous(){
     chassis.turn_to({10, 10}, swing, 40, voss::Flags::RELATIVE | voss::Flags::THRU, voss::AngularDirection::CW);
 }
 ```
+## Additional Resources
+
+By following the [In Depth Documentation](**Coming Soon!**), your team should be able to create a competitive program for your competition robot. For people who are interested in more advanced programming such as programming skills runs, there is a lot of potential customization with this library. The following resources may interest people who want to take their programming skills further:
+
+- [Take a C++ programming course.](https://www.codecademy.com/learn/learn-c-plus-plus)
+
+- [Explore the PROS API](https://pros.cs.purdue.edu/v5/index.html)
+
+- [Learn PID](http://georgegillard.com/documents/2-introduction-to-pid-controllers)
+
+- [Read the Vex Forums a lot](http://vexforum.com)
+
+- [Get help from other teams on discord](https://discordapp.com/invite/9JDWW8e) 
