@@ -18,7 +18,7 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 * We will set up a localizer in global scope
 1. Call `auto ec = voss::controller::ExitConditions::new_conditions()`
 2. Setup conditions
-    * **Velocity base exit** `.add_settle(int settle_time, double tolerance, int initial_delay)`
+    * **Velocity base exit** = `.add_settle(int settle_time, double tolerance, int initial_delay)`
     * **Distance base exit** = `.add_tolerance(double linear_tolerance, double angular_tolerance, double tolerance_time)`
     * **Time base exit**(ms) = `.add_timeout(int time)`
     * **Motion chaining early exit**(as smoothness increase, accuracy decrease) = `.add_thru_smoothness(double thru_smoothness)`
