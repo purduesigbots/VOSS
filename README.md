@@ -86,7 +86,7 @@ void initialize() {
 * **Angular proportional constant** = Weight of how much Angular error affects motor power (speeds up the robot movements)
 * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
 * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
-* **Output of the control loop** = The error * proportional constant + the change in error * derivative constant + the sum of error over the entire time * integral constant
+* **Output of the control loop** = The error X proportional constant + the change in error X derivative constant + the sum of error over the entire time X integral constant
 
       
 ### Creating a PID controller
@@ -178,7 +178,27 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 ### Tuning Other Controllers
 * Most of our controllers use PID but the logic of how it is applied is what makes the controller unique
     * For linear and angular constants reference **Tuning PID** Above
-    * For other parameters reference each controller's description
+* Minimum exit error
+    * The Outer tolerance zone in which the robot slows down to the tolerance point
+        * In PID controller, once in this zone the robot stops correcting for heading
+        * In Boomerang controller, once it is in this zone the robot starts correcting for heading
+    * Increasing this value will increase the tolerance allowing for the robot to exit the movement easier, but will decrease the accuracy of the movement
+    * This value will vary for the types of movements your robot is going to make but should be as small as possible without the robot getting stuck in movements and with the robot being able to correct for heading. To tune this start with small value and increase until desired results
+* Minimun velocity for thru motion
+    * Sets the robot's velocity as it reaches the target poing and transitions between movements
+    * This value depends on the desired behavior for the robot
+* Leading percentage
+    * Must be greater than 0
+    * Must be less than 1
+    * The larger the leading percentage, the further the robot will stray from a straight path to the point
+        * This allows for the robot to correct for large difference in staring and ending heading
+        * This requires more space for the robot to move around
+    * This value will vary based on the desired behavior of the robot, but to tune this start small and increase until desired results 
+* Slew rate
+    * Limits linear acceleration
+    * Higher slew reate = higher acceleration
+    * This value will vary based on the desired behavior of the robot, but to tune this start small and increase until desired results
+* For other parameters reference each controller's description
 
 ## Setting up and starting robot control
 ### Creating the chassis object
