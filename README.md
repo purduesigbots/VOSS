@@ -15,7 +15,7 @@ VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonom
 5. Put `#include "VOSS/api.h"` in your main.h
 
 ### Creating exit conditions
-* We will set up a localizer in global scope
+* We will set up a exit conditions object in global scope
 1. Call `auto ec = voss::controller::ExitConditions::new_conditions()`
 2. Setup conditions
     * **Velocity base exit** = `.add_settle(int settle_time, double tolerance, int initial_delay)`
@@ -196,7 +196,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
     * This value will vary based on the desired behavior of the robot, but to tune this start small and increase until desired results 
 * Slew rate
     * Limits linear acceleration
-    * Higher slew reate = higher acceleration
+    * Higher slew rate = higher acceleration
     * This value will vary based on the desired behavior of the robot, but to tune this start small and increase until desired results
 * For other parameters reference each controller's description
 
