@@ -4,16 +4,14 @@
 VOSS is a [PROS](https://pros.cs.purdue.edu/) library that makes writing autonomous code for VEX robots a piece of cake.
 
 ## Installing VOSS
-1. Download the most recent [template](https://github.com/purduesigbots/VOSS/releases/tag/0.1.2)
+1. Open a PROS terminal via the VSCode extention and run `pros c add-depot VOSS https://pros.cs.purdue.edu/v5/_static/beta/voss-depot.json`
 
-2. Run this command from terminal `pros c fetch VOSS@0.1.2.zip`
+2.  `cd` into your pros project directory in your terminal
+3.  run `pros c info-project`, your kernel version MUST be 4.0.7. If it is not, create a new 4.0.7 project by `cd` into the directory you want to make your project, and run `pros c n PROJECT_NAME -ea`. 
 
-3.  `cd` into your pros project directory in your terminal
-4.  run `pros c info-project`, your kernel version MUST be 4.0.7. If it is not, create a new 4.0.7 project by `cd` into the directory you want to make your project, and run `pros c n PROJECT_NAME -ea`. 
+4. Apply the library to the project `pros c apply VOSS`
 
-5. Apply the library to the project `pros c apply VOSS`
-
-6. Put `#include "VOSS/api.h"` in your main.h
+5. Put `#include "VOSS/api.h"` in your main.h
 
 ### Creating exit conditions
 * We will set up a exit conditions object in global scope
