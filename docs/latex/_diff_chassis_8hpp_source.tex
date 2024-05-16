@@ -1,12 +1,12 @@
 \doxysection{Diff\+Chassis.\+hpp}
-\hypertarget{_diff_chassis_8hpp_source}{}\label{_diff_chassis_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp}}
+\hypertarget{_diff_chassis_8hpp_source}{}\label{_diff_chassis_8hpp_source}\index{DiffChassis.hpp@{DiffChassis.hpp}}
 \mbox{\hyperlink{_diff_chassis_8hpp}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ }
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00011\ }
 \DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_chassis_8hpp}{AbstractChassis.hpp}}"{}}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chassis_command_8hpp}{ChassisCommand.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}ChassisCommand.hpp"{}}}
 \DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}pros/motor\_group.hpp"{}}}
 \DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <initializer\_list>}}
 \DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <memory>}}
@@ -19,7 +19,7 @@
 \DoxyCodeLine{00023\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ left\_motors;}
 \DoxyCodeLine{00024\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ right\_motors;}
 \DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ slew\_step;}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1chassis_1_1diff__commands_1_1_voltages}{diff\_commands::Voltages}}\ prev\_voltages;}
+\DoxyCodeLine{00026\ \ \ \ \ diff\_commands::Voltages\ prev\_voltages;}
 \DoxyCodeLine{00027\ }
 \DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ slew(\textcolor{keywordtype}{double}\ target,\ \textcolor{keywordtype}{bool}\ is\_left);}
 \DoxyCodeLine{00029\ }

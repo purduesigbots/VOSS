@@ -2,18 +2,8 @@ var annotated_dup =
 [
     [ "voss", null, [
       [ "chassis", null, [
-        [ "diff_commands", null, [
-          [ "Chained", "structvoss_1_1chassis_1_1diff__commands_1_1_chained.html", null ],
-          [ "Swing", "structvoss_1_1chassis_1_1diff__commands_1_1_swing.html", null ],
-          [ "Voltages", "structvoss_1_1chassis_1_1diff__commands_1_1_voltages.html", null ]
-        ] ],
-        [ "holo_commands", null, [
-          [ "Voltages", "structvoss_1_1chassis_1_1holo__commands_1_1_voltages.html", null ]
-        ] ],
         [ "AbstractChassis", "classvoss_1_1chassis_1_1_abstract_chassis.html", null ],
-        [ "DiffChassis", "classvoss_1_1chassis_1_1_diff_chassis.html", null ],
-        [ "overload", "structvoss_1_1chassis_1_1overload.html", null ],
-        [ "Stop", "structvoss_1_1chassis_1_1_stop.html", null ]
+        [ "DiffChassis", "classvoss_1_1chassis_1_1_diff_chassis.html", null ]
       ] ],
       [ "controller", null, [
         [ "AbstractController", "classvoss_1_1controller_1_1_abstract_controller.html", null ],

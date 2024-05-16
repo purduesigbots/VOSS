@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VOSS: /Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp Source File</title>
+<title>VOSS: DiffChassis.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -103,7 +103,7 @@ $(function(){initNavTree('_diff_chassis_8hpp_source.html',''); initResizable(); 
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_abstract_chassis_8hpp.html">AbstractChassis.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_chassis_command_8hpp.html">ChassisCommand.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;ChassisCommand.hpp&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;pros/motor_group.hpp&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;initializer_list&gt;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
@@ -117,7 +117,7 @@ $(function(){initNavTree('_diff_chassis_8hpp_source.html',''); initResizable(); 
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    std::unique_ptr&lt;pros::MotorGroup&gt; left_motors;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    std::unique_ptr&lt;pros::MotorGroup&gt; right_motors;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">double</span> slew_step;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_struct" href="structvoss_1_1chassis_1_1diff__commands_1_1_voltages.html">diff_commands::Voltages</a> prev_voltages;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    diff_commands::Voltages prev_voltages;</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">double</span> slew(<span class="keywordtype">double</span> target, <span class="keywordtype">bool</span> is_left);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
@@ -149,10 +149,8 @@ $(function(){initNavTree('_diff_chassis_8hpp_source.html',''); initResizable(); 
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>} <span class="comment">// namespace voss::chassis</span></div>
 <div class="ttc" id="a_abstract_chassis_8hpp_html"><div class="ttname"><a href="_abstract_chassis_8hpp.html">AbstractChassis.hpp</a></div></div>
-<div class="ttc" id="a_chassis_command_8hpp_html"><div class="ttname"><a href="_chassis_command_8hpp.html">ChassisCommand.hpp</a></div></div>
 <div class="ttc" id="aclassvoss_1_1chassis_1_1_abstract_chassis_html"><div class="ttname"><a href="classvoss_1_1chassis_1_1_abstract_chassis.html">voss::chassis::AbstractChassis</a></div><div class="ttdef"><b>Definition</b> AbstractChassis.hpp:28</div></div>
 <div class="ttc" id="aclassvoss_1_1chassis_1_1_diff_chassis_html"><div class="ttname"><a href="classvoss_1_1chassis_1_1_diff_chassis.html">voss::chassis::DiffChassis</a></div><div class="ttdef"><b>Definition</b> DiffChassis.hpp:20</div></div>
-<div class="ttc" id="astructvoss_1_1chassis_1_1diff__commands_1_1_voltages_html"><div class="ttname"><a href="structvoss_1_1chassis_1_1diff__commands_1_1_voltages.html">voss::chassis::diff_commands::Voltages</a></div><div class="ttdef"><b>Definition</b> ChassisCommand.hpp:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
