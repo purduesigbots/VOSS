@@ -177,7 +177,7 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 
 ### Tuning Other Controllers
 * Most of our controllers use PID but the logic of how it is applied is what makes the controller unique
-    * For linear and angular constants reference **Tuning PID** Above
+    * For linear and angular constants reference **Tuning PID** above
 * Minimum exit error
     * The Outer tolerance zone in which the robot slows down to the tolerance point
         * In PID controller, once in this zone the robot stops correcting for heading
