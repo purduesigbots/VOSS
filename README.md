@@ -50,7 +50,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
       - `.with_imu(int imu_port)`
     * **Track width**
       - `.with_track_width(double track_width_distance)`
-    * **Left right TPI**: the ratio of encoder rotations to 1 inch of linear movement.
+    * **Left right TPI** (ratio of encoder rotations to 1 inch of linear movement)
       - `.with_left_right_tip(double tpi_value)`
 3. Call it to build --> `.build()`
 ```cpp
@@ -78,27 +78,16 @@ void initialize() {
         * new tip = old tpi x adjustment factor
 
 ### Before you start: Basic understand on PID
-* **Linear error** = Linear distance from desired position to current position (Inches)
-* **Angular error** = Angular distance from desired position to current position (Degrees)
-    * **Linear proportional constant** = Weight of how much linear error affects motor power (Speeds up the robot movements)
-    * **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
-    * **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
-    * **Angular proportional constant** = Weight of how much Angular error affects motor power (Speeds up the robot movements)
-    * **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
-    * **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
-      
-### Tuning PID
-* We will be tuning the PID controller constants
-    * This is a lot of guessing and making corrections based off of the behavior of the robot. This will change with any signifcant robot changes
-    * Tune linear constants first
-        1. Start with the constants all being 0
-        2. Increase the proportional constant until oscillations start (the amount you need to increase by and total amount will vary with each robot)
-        3. Slowly increase the derivative constant until the robot is no longer overshooting its target and oscilations have stopped
-        4. If the robot is compounding error over time, slowly increase the integral constant to reduce that error
-    * Tune the angular constants using steps 1-4 of tuning the linear constants
-* For more information on PID and Odometry check out the SIGBots Wiki at https://wiki.purduesigbots.com/
-* Another great intro to PID article can be found at http://georgegillard.com/documents/2-introduction-to-pid-controllers
+* **Linear error** = Linear distance from desired position to current position (inches)
+* **Angular error** = Angular distance from desired position to current position (degrees)
+* **Linear proportional constant** = Weight of how much linear error affects motor power (speeds up the robot movements)
+* **Linear derivative constant** = Weight of how much the change in linear error affects the motor power (increases the rate of acceleration and deceleration)
+* **Linear integral constant** = Weight of how much overall accumulated linear error affects the motor power (increase to improve slight long term error)
+* **Angular proportional constant** = Weight of how much Angular error affects motor power (speeds up the robot movements)
+* **Angular derivative constant** = Weight of how much the change in Angular error affects the motor power (increases the rate of acceleration and deceleration)
+* **Angular integral constant** = Weight of how much overall accumulated Angular error affects the motor power (increase to improve slight long term error)
 
+      
 ### Creating a PID controller
 * We will set up a PID controller for chassis movements in global scope
 1. Call `auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)`
@@ -171,10 +160,26 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
                .with_slew(8)
                .build();
 ```
+## Tuning Controllers
+### Tuning PID
+* We will be tuning the PID controller constants
+    * This is a lot of guessing and making corrections based off of the behavior of the robot. This will change with any signifcant robot changes
+    * Tune linear constants first
+        1. Start with the constants all being 0
+        2. Increase the proportional constant until oscillations start (the amount you need to increase by and total amount will vary with each robot)
+        3. Slowly increase the derivative constant until the robot is no longer overshooting its target and oscilations have stopped
+        4. If the robot is compounding error over time, slowly increase the integral constant to reduce that error
+    * Tune the angular constants using steps 1-4 of tuning the linear constants
+* For more information on PID and Odometry check out the SIGBots Wiki at https://wiki.purduesigbots.com/
+* Another great intro to PID article can be found at http://georgegillard.com/documents/2-introduction-to-pid-controllers
+
+### Tuning Other Controllers
+* Most of our controllers use PID but the logic of how it is applied is what makes the controller unique
+    * For linear and angular constants reference `Tuning PID` Above
+    * For other parameters reference each controller's description
 
 
-
-
+## Setting up and starting robot control
 ### Creating the chassis object
 * We will be creating a differential drive chassis in global scope
 * `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors,
@@ -210,7 +215,7 @@ void opcontrol() {
     }
 }
 ```
-
+## Autonomous Programming
 ### Autonomus Movement
 * There are two types of basic movment calls which you can use to write an autonomous
 1. Move
