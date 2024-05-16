@@ -1,0 +1,107 @@
+\doxysection{voss\+::localizer\+::ADILocalizer Class Reference}
+\hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer}{}\label{classvoss_1_1localizer_1_1_a_d_i_localizer}\index{voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}}
+Inheritance diagram for voss\+::localizer\+::ADILocalizer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1localizer_1_1_a_d_i_localizer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a5d37dba7120d9eddd45e2d3a3f579f19}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a5d37dba7120d9eddd45e2d3a3f579f19} 
+{\bfseries ADILocalizer} (int left, int right, int mid, double lr\+\_\+tpi, double mid\+\_\+tpi, double track\+\_\+width, double middle\+\_\+dist, int imu\+\_\+port)
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_aa318a90d1713add4c421f8233efd8c83}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_aa318a90d1713add4c421f8233efd8c83} 
+double {\bfseries get\+\_\+left\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a6bf6b3134681c76eefe7c402c73d61cd}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a6bf6b3134681c76eefe7c402c73d61cd} 
+double {\bfseries get\+\_\+right\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_af0a42bdcb55fc253441641642478e7da}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_af0a42bdcb55fc253441641642478e7da} 
+double {\bfseries get\+\_\+middle\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a5f05240037e66688d3ffafcc4999418b}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a5f05240037e66688d3ffafcc4999418b} 
+double {\bfseries get\+\_\+imu\+\_\+value} ()
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_a0ff9e7c700780572e8914d3609fa99bf}{update}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_a9a0c65f10b8aa21b8a2d5d9df72a42a3}{calibrate}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_a564b49f6926a502e4c8c229e0283dc4c}{set\+\_\+pose}} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} pose) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_a02029009ea60be1ac5fa2e7745415227}{set\+\_\+pose}} (double x, double y, double theta) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries begin\+\_\+localization} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries get\+\_\+pose} ()
+\item 
+double {\bfseries get\+\_\+x} ()
+\item 
+double {\bfseries get\+\_\+y} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+rad} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+deg} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_point}{Point}} {\bfseries get\+\_\+position} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+pros\+::\+Mutex {\bfseries mtx}
+\item 
+\mbox{\hyperlink{structvoss_1_1_atomic_pose}{Atomic\+Pose}} {\bfseries pose}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a9a0c65f10b8aa21b8a2d5d9df72a42a3}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a9a0c65f10b8aa21b8a2d5d9df72a42a3} 
+\index{voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}}
+\doxysubsubsection{\texorpdfstring{calibrate()}{calibrate()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+ADILocalizer\+::calibrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a02029009ea60be1ac5fa2e7745415227}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a02029009ea60be1ac5fa2e7745415227} 
+\index{voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+ADILocalizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{theta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a564b49f6926a502e4c8c229e0283dc4c}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a564b49f6926a502e4c8c229e0283dc4c} 
+\index{voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+ADILocalizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}}]{pose }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_a_d_i_localizer_a0ff9e7c700780572e8914d3609fa99bf}\label{classvoss_1_1localizer_1_1_a_d_i_localizer_a0ff9e7c700780572e8914d3609fa99bf} 
+\index{voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}!update@{update}}
+\index{update@{update}!voss::localizer::ADILocalizer@{voss::localizer::ADILocalizer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+ADILocalizer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/localizer/\mbox{\hyperlink{_a_d_i_localizer_8hpp}{ADILocalizer.\+hpp}}\end{DoxyCompactItemize}

@@ -1,3 +1,12 @@
+/**
+ * @file ChassisCommand.hpp
+ * @brief
+ * @version 0.1.2
+ * @date 2024-05-16
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
 #pragma once
 
 #include <variant>

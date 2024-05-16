@@ -1,0 +1,50 @@
+\doxysection{PIDController.\+hpp}
+\hypertarget{_p_i_d_controller_8hpp_source}{}\label{_p_i_d_controller_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp}}
+\mbox{\hyperlink{_p_i_d_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_controller_8hpp}{VOSS/controller/AbstractController.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_p_i_d_8hpp}{VOSS/utils/PID.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_p_i_d_controller}{PIDController}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{AbstractController}}\ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00020\ \ \ \ \ std::shared\_ptr<PIDController>\ p;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils::PID}}\ linear\_pid,\ angular\_pid;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_error;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ can\_reverse;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_vel;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ turn\_overshoot;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_p_i_d_controller}{PIDController}}(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00033\ \ \ \ \ get\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00035\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00036\ \ \ \ \ get\_angular\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ std::shared\_ptr<PIDController>\ modify\_linear\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00044\ \ \ \ \ std::shared\_ptr<PIDController>}
+\DoxyCodeLine{00045\ \ \ \ \ modify\_angular\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00046\ \ \ \ \ std::shared\_ptr<PIDController>\ modify\_min\_error(\textcolor{keywordtype}{double}\ min\_error);}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_p_i_d_controller_builder}{PIDControllerBuilder}};}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller_builder}{BoomerangControllerBuilder}};}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

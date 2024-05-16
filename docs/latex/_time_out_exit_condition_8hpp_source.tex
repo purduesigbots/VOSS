@@ -1,0 +1,25 @@
+\doxysection{Time\+Out\+Exit\+Condition.\+hpp}
+\hypertarget{_time_out_exit_condition_8hpp_source}{}\label{_time_out_exit_condition_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/TimeOutExitCondition.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/TimeOutExitCondition.hpp}}
+\mbox{\hyperlink{_time_out_exit_condition_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{VOSS/exit\_conditions/AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_time_out_exit_condition}{TimeOutExitCondition}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{AbstractExitCondition}}\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ timeout;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ current\_time;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_time_out_exit_condition}{TimeOutExitCondition}}(\textcolor{keywordtype}{int}\ timeout);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_met(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ current\_pose,\ \textcolor{keywordtype}{bool}\ thru)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

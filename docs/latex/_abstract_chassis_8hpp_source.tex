@@ -1,0 +1,95 @@
+\doxysection{Abstract\+Chassis.\+hpp}
+\hypertarget{_abstract_chassis_8hpp_source}{}\label{_abstract_chassis_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp}}
+\mbox{\hyperlink{_abstract_chassis_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}pros/misc.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}pros/motors.hpp"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chassis_command_8hpp}{ChassisCommand.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_controller_8hpp}{VOSS/controller/AbstractController.hpp}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{VOSS/exit\_conditions/AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{flags_8hpp}{VOSS/utils/flags.hpp}}"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_point_8hpp}{VOSS/utils/Point.hpp}}"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pose_8hpp}{VOSS/utils/Pose.hpp}}"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{namespace\ }voss::chassis\ \{}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{using\ }controller\_ptr\ =\ std::shared\_ptr<controller::AbstractController>;}
+\DoxyCodeLine{00026\ \textcolor{keyword}{using\ }ec\_ptr\ =\ std::shared\_ptr<controller::AbstractExitCondition>;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{AbstractChassis}}\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00030\ \ \ \ \ controller\_ptr\ default\_controller;}
+\DoxyCodeLine{00031\ \ \ \ \ ec\_ptr\ default\_ec;}
+\DoxyCodeLine{00032\ \ \ \ \ std::unique\_ptr<pros::Task>\ task\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{bool}\ task\_running\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00034\ \ \ \ \ pros::motor\_brake\_mode\_e\ brakeMode;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ move\_task(controller\_ptr\ controller,\ ec\_ptr\ ec,\ \textcolor{keywordtype}{double}\ max,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ turn\_task(controller\_ptr\ controller,\ ec\_ptr\ ec,\ \textcolor{keywordtype}{double}\ max,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags,\ voss::AngularDirection\ direction);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{AbstractChassis}}(controller\_ptr\ default\_controller,\ ec\_ptr\ ec);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ tank(\textcolor{keywordtype}{double}\ left\_speed,\ \textcolor{keywordtype}{double}\ right\_speed)\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ arcade(\textcolor{keywordtype}{double}\ forward\_speed,\ \textcolor{keywordtype}{double}\ turn\_speed)\ =\ 0;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ execute(DiffChassisCommand\ cmd,\ \textcolor{keywordtype}{double}\ max)\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ set\_brake\_mode(pros::motor\_brake\_mode\_e\ mode)\ =\ 0;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\textcolor{keywordtype}{double}\ distance,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\textcolor{keywordtype}{double}\ distance,\ controller\_ptr\ controller,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\textcolor{keywordtype}{double}\ distance,\ controller\_ptr\ controller,\ ec\_ptr\ ec,}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\ =\ 100.0,\ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ target,\ controller\_ptr\ controller,\ ec\_ptr\ ec,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\ =\ 100.0,\ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ target,\ controller\_ptr\ controller,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ move(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ target,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{void}\ turn(\textcolor{keywordtype}{double}\ target,\ controller\_ptr\ controller,\ ec\_ptr\ ec,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\ =\ 100.0,\ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{void}\ turn(\textcolor{keywordtype}{double}\ target,\ controller\_ptr\ controller,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ turn(\textcolor{keywordtype}{double}\ target,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00082\ \ \ \ \ turn\_to(\mbox{\hyperlink{structvoss_1_1_point}{Point}}\ target,\ controller\_ptr\ controller,\ ec\_ptr\ ec,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\ =\ 100.0,\ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00087\ \ \ \ \ turn\_to(\mbox{\hyperlink{structvoss_1_1_point}{Point}}\ target,\ controller\_ptr\ controller,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00092\ \ \ \ \ turn\_to(\mbox{\hyperlink{structvoss_1_1_point}{Point}}\ target,\ \textcolor{keywordtype}{double}\ max\ =\ 100.0,}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ voss::Flags\ flags\ =\ voss::Flags::NONE,}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction\ =\ voss::AngularDirection::AUTO);}
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \}\ \textcolor{comment}{//\ namespace\ voss::chassis}}
+
+\end{DoxyCode}

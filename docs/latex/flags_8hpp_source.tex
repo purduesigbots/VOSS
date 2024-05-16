@@ -1,0 +1,39 @@
+\doxysection{flags.\+hpp}
+\hypertarget{flags_8hpp_source}{}\label{flags_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp}}
+\mbox{\hyperlink{flags_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{enum\ class}\ Flags\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ NONE\ =\ 0b0000,}
+\DoxyCodeLine{00018\ \ \ \ \ ASYNC\ =\ 0b0001,}
+\DoxyCodeLine{00019\ \ \ \ \ REVERSE\ =\ 0b0010,}
+\DoxyCodeLine{00020\ \ \ \ \ RELATIVE\ =\ 0b0100,}
+\DoxyCodeLine{00021\ \ \ \ \ THRU\ =\ 0b1000}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{auto}\ \textcolor{keyword}{inline}\ operator|(Flags\ flag1,\ Flags\ flag2)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Flags\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(flag1)\ |}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(flag2));}
+\DoxyCodeLine{00027\ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{auto}\ \textcolor{keyword}{inline}\ operator\&(Flags\ flag1,\ Flags\ flag2)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{bool}\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(flag1)\ \&}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(flag2));}
+\DoxyCodeLine{00032\ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{enum\ class}\ AngularDirection\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ AUTO,}
+\DoxyCodeLine{00036\ \ \ \ \ COUNTERCLOCKWISE,}
+\DoxyCodeLine{00037\ \ \ \ \ CCW\ =\ COUNTERCLOCKWISE,}
+\DoxyCodeLine{00038\ \ \ \ \ CLOCKWISE,}
+\DoxyCodeLine{00039\ \ \ \ \ CW\ =\ CLOCKWISE}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ \}\ \textcolor{comment}{//\ namespace\ voss}}
+
+\end{DoxyCode}

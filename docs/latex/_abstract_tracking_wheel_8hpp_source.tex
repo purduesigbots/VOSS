@@ -1,0 +1,26 @@
+\doxysection{Abstract\+Tracking\+Wheel.\+hpp}
+\hypertarget{_abstract_tracking_wheel_8hpp_source}{}\label{_abstract_tracking_wheel_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractTrackingWheel.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractTrackingWheel.hpp}}
+\mbox{\hyperlink{_abstract_tracking_wheel_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{AbstractTrackingWheel}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{AbstractTrackingWheel}}();}
+\DoxyCodeLine{00019\ \ \ \ \ std::atomic<double>\ tpi;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{double}\ get\_raw\_position()\ =\ 0;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_dist\_travelled();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_tpi(\textcolor{keywordtype}{double}\ new\_tpi);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ reset()\ =\ 0;}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

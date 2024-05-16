@@ -1,0 +1,58 @@
+\doxysection{voss\+::localizer\+::Abstract\+Localizer Class Reference}
+\hypertarget{classvoss_1_1localizer_1_1_abstract_localizer}{}\label{classvoss_1_1localizer_1_1_abstract_localizer}\index{voss::localizer::AbstractLocalizer@{voss::localizer::AbstractLocalizer}}
+Inheritance diagram for voss\+::localizer\+::Abstract\+Localizer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.542700cm]{classvoss_1_1localizer_1_1_abstract_localizer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a84c1ef3f3676ab555863052dd71e2d90}\label{classvoss_1_1localizer_1_1_abstract_localizer_a84c1ef3f3676ab555863052dd71e2d90} 
+virtual void {\bfseries update} ()=0
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a201c328c567bed1e4ef8f8fe1b09a0ae}\label{classvoss_1_1localizer_1_1_abstract_localizer_a201c328c567bed1e4ef8f8fe1b09a0ae} 
+void {\bfseries begin\+\_\+localization} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_ac61c7033492bd42b89c9c8b5fcdf810a}\label{classvoss_1_1localizer_1_1_abstract_localizer_ac61c7033492bd42b89c9c8b5fcdf810a} 
+virtual void {\bfseries set\+\_\+pose} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} pose)
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a0a64e7f58c6c7508967d3724ef2ccc77}\label{classvoss_1_1localizer_1_1_abstract_localizer_a0a64e7f58c6c7508967d3724ef2ccc77} 
+virtual void {\bfseries set\+\_\+pose} (double x, double y, double theta)
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a5e430b850451087d5f4c29b79fb7c559}\label{classvoss_1_1localizer_1_1_abstract_localizer_a5e430b850451087d5f4c29b79fb7c559} 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries get\+\_\+pose} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a58db2565cc9fcaa351b024204a5f9439}\label{classvoss_1_1localizer_1_1_abstract_localizer_a58db2565cc9fcaa351b024204a5f9439} 
+double {\bfseries get\+\_\+x} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a025dfc27c76064c66dcf4121f9fc2460}\label{classvoss_1_1localizer_1_1_abstract_localizer_a025dfc27c76064c66dcf4121f9fc2460} 
+double {\bfseries get\+\_\+y} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_ab94cda3214b794c1357482a904bc6ee9}\label{classvoss_1_1localizer_1_1_abstract_localizer_ab94cda3214b794c1357482a904bc6ee9} 
+double {\bfseries get\+\_\+orientation\+\_\+rad} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a349a071acbafc8b302a7e935ee84a862}\label{classvoss_1_1localizer_1_1_abstract_localizer_a349a071acbafc8b302a7e935ee84a862} 
+double {\bfseries get\+\_\+orientation\+\_\+deg} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a425f697a442e5582f0db1188f057ab47}\label{classvoss_1_1localizer_1_1_abstract_localizer_a425f697a442e5582f0db1188f057ab47} 
+\mbox{\hyperlink{structvoss_1_1_point}{Point}} {\bfseries get\+\_\+position} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a3897273be48e242199726c440659c9ce}\label{classvoss_1_1localizer_1_1_abstract_localizer_a3897273be48e242199726c440659c9ce} 
+virtual void {\bfseries calibrate} ()=0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a2808c34bc2d36011761bb98dcb721c38}\label{classvoss_1_1localizer_1_1_abstract_localizer_a2808c34bc2d36011761bb98dcb721c38} 
+pros\+::\+Mutex {\bfseries mtx}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_abstract_localizer_a518a8dae8504ec23fbb1e1ef156c0ea7}\label{classvoss_1_1localizer_1_1_abstract_localizer_a518a8dae8504ec23fbb1e1ef156c0ea7} 
+\mbox{\hyperlink{structvoss_1_1_atomic_pose}{Atomic\+Pose}} {\bfseries pose}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/localizer/\mbox{\hyperlink{_abstract_localizer_8hpp}{Abstract\+Localizer.\+hpp}}\end{DoxyCompactItemize}

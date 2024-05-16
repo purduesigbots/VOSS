@@ -1,0 +1,53 @@
+\doxysection{IMELocalizer.\+hpp}
+\hypertarget{_i_m_e_localizer_8hpp_source}{}\label{_i_m_e_localizer_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizer.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizer.hpp}}
+\mbox{\hyperlink{_i_m_e_localizer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}pros/adi.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}pros/imu.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}pros/motor\_group.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_localizer_8hpp}{VOSS/localizer/AbstractLocalizer.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer}{IMELocalizer}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{AbstractLocalizer}}\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ prev\_left\_pos,\ prev\_right\_pos,\ prev\_middle\_pos;}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_atomic_pose}{AtomicPose}}\ prev\_pose;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{double}\ left\_right\_tpi,\ middle\_tpi;}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{double}\ track\_width;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ left\_right\_dist,\ middle\_dist;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ imu\_ports;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ left\_motors;}
+\DoxyCodeLine{00032\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ right\_motors;}
+\DoxyCodeLine{00033\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ horizontal\_motors;}
+\DoxyCodeLine{00034\ \ \ \ \ std::unique\_ptr<pros::IMU>\ imu;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer}{IMELocalizer}}(std::vector<int8\_t>\ left\_motors\_ports,}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<int8\_t>\ right\_motors\_ports,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<int8\_t>\ horizontal\_motors\_ports,\ \textcolor{keywordtype}{double}\ lr\_tpi,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ mid\_tpi,\ \textcolor{keywordtype}{double}\ track\_width,\ \textcolor{keywordtype}{double}\ middle\_dist,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ imu\_port);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_left\_encoder\_value();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_right\_encoder\_value();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_middle\_encoder\_value();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_imu\_value();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ update()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordtype}{void}\ calibrate()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_pose(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ pose)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_pose(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y,\ \textcolor{keywordtype}{double}\ theta)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

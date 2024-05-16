@@ -1,0 +1,46 @@
+\doxysection{voss\+::controller\+::Abstract\+Controller Class Reference}
+\hypertarget{classvoss_1_1controller_1_1_abstract_controller}{}\label{classvoss_1_1controller_1_1_abstract_controller}\index{voss::controller::AbstractController@{voss::controller::AbstractController}}
+Inheritance diagram for voss\+::controller\+::Abstract\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.206897cm]{classvoss_1_1controller_1_1_abstract_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a5f48c31d76ce171c5938068c4baae501}\label{classvoss_1_1controller_1_1_abstract_controller_a5f48c31d76ce171c5938068c4baae501} 
+{\bfseries Abstract\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a739a2e24836c7888c81a40fc47003ff6}\label{classvoss_1_1controller_1_1_abstract_controller_a739a2e24836c7888c81a40fc47003ff6} 
+virtual chassis\+::\+Diff\+Chassis\+Command {\bfseries get\+\_\+command} (bool reverse, bool thru, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)=0
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a691e9633a826c59559e6954733cb93da}\label{classvoss_1_1controller_1_1_abstract_controller_a691e9633a826c59559e6954733cb93da} 
+virtual chassis\+::\+Diff\+Chassis\+Command {\bfseries get\+\_\+angular\+\_\+command} (bool reverse, bool thru, voss\+::\+Angular\+Direction direction, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)=0
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a0b2f19c4ea3f498051a894cb491b57e3}\label{classvoss_1_1controller_1_1_abstract_controller_a0b2f19c4ea3f498051a894cb491b57e3} 
+virtual void {\bfseries reset} ()=0
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a9bc6503364b9e478ea39274853b107e3}\label{classvoss_1_1controller_1_1_abstract_controller_a9bc6503364b9e478ea39274853b107e3} 
+void {\bfseries set\+\_\+target} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, bool relative, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a9da5dcddccf8235872c7a92a6d84363d}\label{classvoss_1_1controller_1_1_abstract_controller_a9da5dcddccf8235872c7a92a6d84363d} 
+void {\bfseries set\+\_\+angular\+\_\+target} (double angle, bool relative)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_ad6948d441c91e949aab51a7f8b88c791}\label{classvoss_1_1controller_1_1_abstract_controller_ad6948d441c91e949aab51a7f8b88c791} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ {\bfseries l}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_a70ff0f2a397b25cbacefd4d56ffe57aa}\label{classvoss_1_1controller_1_1_abstract_controller_a70ff0f2a397b25cbacefd4d56ffe57aa} 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries target}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_abstract_controller_af026697c62845e91b79d40abcf689571}\label{classvoss_1_1controller_1_1_abstract_controller_af026697c62845e91b79d40abcf689571} 
+double {\bfseries angular\+\_\+target}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/controller/\mbox{\hyperlink{_abstract_controller_8hpp}{Abstract\+Controller.\+hpp}}\end{DoxyCompactItemize}

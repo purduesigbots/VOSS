@@ -1,0 +1,25 @@
+\doxysection{PID.\+hpp}
+\hypertarget{_p_i_d_8hpp_source}{}\label{_p_i_d_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp}}
+\mbox{\hyperlink{_p_i_d_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{namespace\ }voss::utils\ \{}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{PID}}\ \{}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{double}\ kP,\ kI,\ kD;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{double}\ prev\_error,\ total\_error;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{PID}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{PID}}(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ update(\textcolor{keywordtype}{double}\ error);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ reset();}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \}\ \textcolor{comment}{//\ namespace\ voss::utils}}
+
+\end{DoxyCode}

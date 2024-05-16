@@ -1,0 +1,103 @@
+\doxysection{voss\+::controller\+::Swing\+Controller Class Reference}
+\hypertarget{classvoss_1_1controller_1_1_swing_controller}{}\label{classvoss_1_1controller_1_1_swing_controller}\index{voss::controller::SwingController@{voss::controller::SwingController}}
+Inheritance diagram for voss\+::controller\+::Swing\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1controller_1_1_swing_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_ae9705ed7bc1058fa9c328ac32b6d3f04}\label{classvoss_1_1controller_1_1_swing_controller_ae9705ed7bc1058fa9c328ac32b6d3f04} 
+{\bfseries Swing\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller_a4e3afc3d89a1c9c63f429180f8085b17}{get\+\_\+command}} (bool reverse, bool thru, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller_a24a6a4aa8d2c825ad14c5868072427ce}{get\+\_\+angular\+\_\+command}} (bool reverse, bool thru, voss\+::\+Angular\+Direction direction, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller_a7747edcd5f792a9377ae837a54e6c1b1}{reset}} () override
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_acb52c2c405c9946d1abed5086c158e59}\label{classvoss_1_1controller_1_1_swing_controller_acb52c2c405c9946d1abed5086c158e59} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller}{Swing\+Controller}} $>$ {\bfseries modify\+\_\+angular\+\_\+constants} (double kP, double kI, double kD)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Abstract\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+void {\bfseries set\+\_\+target} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, bool relative, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)
+\item 
+void {\bfseries set\+\_\+angular\+\_\+target} (double angle, bool relative)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_ab467de2326570137c79eeaea551c7317}\label{classvoss_1_1controller_1_1_swing_controller_ab467de2326570137c79eeaea551c7317} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller}{Swing\+Controller}} $>$ {\bfseries p}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_ac211bdcd1a532e00f981d276e1a2232e}\label{classvoss_1_1controller_1_1_swing_controller_ac211bdcd1a532e00f981d276e1a2232e} 
+\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils\+::\+PID}} {\bfseries angular\+\_\+pid}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a63100d8652809fe2c3221fc573ab32ac}\label{classvoss_1_1controller_1_1_swing_controller_a63100d8652809fe2c3221fc573ab32ac} 
+bool {\bfseries can\+\_\+reverse}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a1c263318d867e6fdecb7b9b21f09cf11}\label{classvoss_1_1controller_1_1_swing_controller_a1c263318d867e6fdecb7b9b21f09cf11} 
+bool {\bfseries turn\+\_\+overshoot}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a08853dd20b317627221468f04d154a62}\label{classvoss_1_1controller_1_1_swing_controller_a08853dd20b317627221468f04d154a62} 
+double {\bfseries prev\+\_\+ang\+\_\+speed}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ {\bfseries l}
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries target}
+\item 
+double {\bfseries angular\+\_\+target}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a72b1013d99b825674c6be8c50a9edf51}\label{classvoss_1_1controller_1_1_swing_controller_a72b1013d99b825674c6be8c50a9edf51} 
+class {\bfseries Swing\+Controller\+Builder}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a24a6a4aa8d2c825ad14c5868072427ce}\label{classvoss_1_1controller_1_1_swing_controller_a24a6a4aa8d2c825ad14c5868072427ce} 
+\index{voss::controller::SwingController@{voss::controller::SwingController}!get\_angular\_command@{get\_angular\_command}}
+\index{get\_angular\_command@{get\_angular\_command}!voss::controller::SwingController@{voss::controller::SwingController}}
+\doxysubsubsection{\texorpdfstring{get\_angular\_command()}{get\_angular\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Swing\+Controller\+::get\+\_\+angular\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{voss\+::\+Angular\+Direction}]{direction,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a4e3afc3d89a1c9c63f429180f8085b17}\label{classvoss_1_1controller_1_1_swing_controller_a4e3afc3d89a1c9c63f429180f8085b17} 
+\index{voss::controller::SwingController@{voss::controller::SwingController}!get\_command@{get\_command}}
+\index{get\_command@{get\_command}!voss::controller::SwingController@{voss::controller::SwingController}}
+\doxysubsubsection{\texorpdfstring{get\_command()}{get\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Swing\+Controller\+::get\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_swing_controller_a7747edcd5f792a9377ae837a54e6c1b1}\label{classvoss_1_1controller_1_1_swing_controller_a7747edcd5f792a9377ae837a54e6c1b1} 
+\index{voss::controller::SwingController@{voss::controller::SwingController}!reset@{reset}}
+\index{reset@{reset}!voss::controller::SwingController@{voss::controller::SwingController}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void voss\+::controller\+::\+Swing\+Controller\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/controller/\mbox{\hyperlink{_swing_controller_8hpp}{Swing\+Controller.\+hpp}}\end{DoxyCompactItemize}

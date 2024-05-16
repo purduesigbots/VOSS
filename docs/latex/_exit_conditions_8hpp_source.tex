@@ -1,0 +1,49 @@
+\doxysection{Exit\+Conditions.\+hpp}
+\hypertarget{_exit_conditions_8hpp_source}{}\label{_exit_conditions_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/ExitConditions.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/ExitConditions.hpp}}
+\mbox{\hyperlink{_exit_conditions_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_tolerance_exit_condition_8hpp}{ToleranceExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pose_8hpp}{VOSS/utils/Pose.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{AbstractExitCondition}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ std::vector<std::shared\_ptr<controller::AbstractExitCondition>>\ conditions;}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\ new\_conditions();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_target(\mbox{\hyperlink{structvoss_1_1_pose}{voss::Pose}}\ new\_target)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_settle(\textcolor{keywordtype}{int}\ settle\_time,\ \textcolor{keywordtype}{double}\ tolerance,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ initial\_delay);}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_timeout(\textcolor{keywordtype}{int}\ timeout);}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_tolerance(\textcolor{keywordtype}{double}\ linear\_tolerance,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ angular\_tolerance,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tolerance\_time);}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_thru\_smoothness(\textcolor{keywordtype}{double}\ smoothness);}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_custom\_condition(std::function<\textcolor{keywordtype}{bool}()>\ callback);}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{ExitConditions}}\&\ add\_condition(std::shared\_ptr<AbstractExitCondition>\ ec);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ std::shared\_ptr<ExitConditions>\ exit\_if(std::function<\textcolor{keywordtype}{bool}()>\ callback);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_met(\mbox{\hyperlink{structvoss_1_1_pose}{voss::Pose}}\ current\_pose,\ \textcolor{keywordtype}{bool}\ thru);}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{bool}\ all\_met(\mbox{\hyperlink{structvoss_1_1_pose}{voss::Pose}}\ current\_pose,\ \textcolor{keywordtype}{bool}\ thru);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ std::shared\_ptr<ExitConditions>\ build();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

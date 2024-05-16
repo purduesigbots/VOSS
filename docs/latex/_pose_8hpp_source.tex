@@ -1,0 +1,45 @@
+\doxysection{Pose.\+hpp}
+\hypertarget{_pose_8hpp_source}{}\label{_pose_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp}}
+\mbox{\hyperlink{_pose_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }voss\ \{}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }AtomicPose;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{double}\ x;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ y;}
+\DoxyCodeLine{00022\ \ \ \ \ std::optional<double>\ theta\ =\ std::nullopt;}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structvoss_1_1_atomic_pose}{AtomicPose}}\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ std::atomic<double>\ x;}
+\DoxyCodeLine{00027\ \ \ \ \ std::atomic<double>\ y;}
+\DoxyCodeLine{00028\ \ \ \ \ std::atomic<double>\ theta;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\&\ pose)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ x\ =\ pose.x;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ y\ =\ pose.y;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pose.theta.has\_value())\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ theta\ =\ pose.theta.value();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ theta\ =\ NAN;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{structvoss_1_1_atomic_pose}{AtomicPose}}\&\ pose)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ x\ =\ pose.x.load();}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ y\ =\ pose.y.load();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ theta\ =\ pose.theta.load();}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \}\ \textcolor{comment}{//\ namespace\ voss}}
+
+\end{DoxyCode}

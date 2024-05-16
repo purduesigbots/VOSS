@@ -1,0 +1,107 @@
+\doxysection{voss\+::localizer\+::IMELocalizer Class Reference}
+\hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer}{}\label{classvoss_1_1localizer_1_1_i_m_e_localizer}\index{voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}}
+Inheritance diagram for voss\+::localizer\+::IMELocalizer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1localizer_1_1_i_m_e_localizer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a100fb3eabac1839a484d615a2c54e9dd}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a100fb3eabac1839a484d615a2c54e9dd} 
+{\bfseries IMELocalizer} (std\+::vector$<$ int8\+\_\+t $>$ left\+\_\+motors\+\_\+ports, std\+::vector$<$ int8\+\_\+t $>$ right\+\_\+motors\+\_\+ports, std\+::vector$<$ int8\+\_\+t $>$ horizontal\+\_\+motors\+\_\+ports, double lr\+\_\+tpi, double mid\+\_\+tpi, double track\+\_\+width, double middle\+\_\+dist, int imu\+\_\+port)
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a1034568bf711a0feba9bdf802b154d93}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a1034568bf711a0feba9bdf802b154d93} 
+double {\bfseries get\+\_\+left\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_af9c4752026c272cd8a55a6be8219cbd0}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_af9c4752026c272cd8a55a6be8219cbd0} 
+double {\bfseries get\+\_\+right\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a497e203cbea77a06aea69ae343ac7427}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a497e203cbea77a06aea69ae343ac7427} 
+double {\bfseries get\+\_\+middle\+\_\+encoder\+\_\+value} ()
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a5e413d98d920daa015a10355ec722155}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a5e413d98d920daa015a10355ec722155} 
+double {\bfseries get\+\_\+imu\+\_\+value} ()
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer_acc56dc44d83fd6732246828d09bd0809}{update}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer_a08e8d840fb84b64e547e2bd8ff3e8781}{calibrate}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer_a7dff1b0b39b20d18b41f3de7b7fb574f}{set\+\_\+pose}} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} pose) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_i_m_e_localizer_a3d35ca26c2500974ed5a40796ad9a7b9}{set\+\_\+pose}} (double x, double y, double theta) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries begin\+\_\+localization} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries get\+\_\+pose} ()
+\item 
+double {\bfseries get\+\_\+x} ()
+\item 
+double {\bfseries get\+\_\+y} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+rad} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+deg} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_point}{Point}} {\bfseries get\+\_\+position} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+pros\+::\+Mutex {\bfseries mtx}
+\item 
+\mbox{\hyperlink{structvoss_1_1_atomic_pose}{Atomic\+Pose}} {\bfseries pose}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a08e8d840fb84b64e547e2bd8ff3e8781}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a08e8d840fb84b64e547e2bd8ff3e8781} 
+\index{voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}}
+\doxysubsubsection{\texorpdfstring{calibrate()}{calibrate()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+IMELocalizer\+::calibrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a3d35ca26c2500974ed5a40796ad9a7b9}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a3d35ca26c2500974ed5a40796ad9a7b9} 
+\index{voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+IMELocalizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{theta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_a7dff1b0b39b20d18b41f3de7b7fb574f}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_a7dff1b0b39b20d18b41f3de7b7fb574f} 
+\index{voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+IMELocalizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}}]{pose }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_i_m_e_localizer_acc56dc44d83fd6732246828d09bd0809}\label{classvoss_1_1localizer_1_1_i_m_e_localizer_acc56dc44d83fd6732246828d09bd0809} 
+\index{voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}!update@{update}}
+\index{update@{update}!voss::localizer::IMELocalizer@{voss::localizer::IMELocalizer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+IMELocalizer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/localizer/\mbox{\hyperlink{_i_m_e_localizer_8hpp}{IMELocalizer.\+hpp}}\end{DoxyCompactItemize}

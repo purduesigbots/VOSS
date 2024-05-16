@@ -1,0 +1,40 @@
+\doxysection{Abstract\+Localizer.\+hpp}
+\hypertarget{_abstract_localizer_8hpp_source}{}\label{_abstract_localizer_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp}}
+\mbox{\hyperlink{_abstract_localizer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}pros/rtos.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_point_8hpp}{VOSS/utils/Point.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pose_8hpp}{VOSS/utils/Pose.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{AbstractLocalizer}}\ \{}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00021\ \ \ \ \ pros::Mutex\ mtx;}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_atomic_pose}{AtomicPose}}\ pose;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{AbstractLocalizer}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ update()\ =\ 0;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ begin\_localization();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ set\_pose(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ pose);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ set\_pose(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y,\ \textcolor{keywordtype}{double}\ theta);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ get\_pose();}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_x();}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_y();}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_orientation\_rad();}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_orientation\_deg();}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_point}{Point}}\ get\_position();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ calibrate()\ =\ 0;}
+\DoxyCodeLine{00040\ \};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

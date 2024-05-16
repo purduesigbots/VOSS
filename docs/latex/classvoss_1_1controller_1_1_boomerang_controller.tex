@@ -1,0 +1,121 @@
+\doxysection{voss\+::controller\+::Boomerang\+Controller Class Reference}
+\hypertarget{classvoss_1_1controller_1_1_boomerang_controller}{}\label{classvoss_1_1controller_1_1_boomerang_controller}\index{voss::controller::BoomerangController@{voss::controller::BoomerangController}}
+Inheritance diagram for voss\+::controller\+::Boomerang\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1controller_1_1_boomerang_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_ada5e5685ae3d58a46068acf10b0b2ca7}\label{classvoss_1_1controller_1_1_boomerang_controller_ada5e5685ae3d58a46068acf10b0b2ca7} 
+{\bfseries Boomerang\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller_ae94f01d925af48d375d00c2c9cd9d2fd}{get\+\_\+command}} (bool reverse, bool thru, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller_ac4f7771d4053800ce20ee6295f8bc00e}{get\+\_\+angular\+\_\+command}} (bool reverse, bool thru, voss\+::\+Angular\+Direction direction, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller_a6f672f8a4ca4a6624c7bfc9ddf413373}{reset}} () override
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a3fbcd08027a9c255530bc0bc432048dc}\label{classvoss_1_1controller_1_1_boomerang_controller_a3fbcd08027a9c255530bc0bc432048dc} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{Boomerang\+Controller}} $>$ {\bfseries modify\+\_\+linear\+\_\+constants} (double kP, double kI, double kD)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a08964f023a80f405328769e65c9c77f5}\label{classvoss_1_1controller_1_1_boomerang_controller_a08964f023a80f405328769e65c9c77f5} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{Boomerang\+Controller}} $>$ {\bfseries modify\+\_\+angular\+\_\+constants} (double kP, double kI, double kD)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_ab6e66fdd7779b62f4d1fec6110973306}\label{classvoss_1_1controller_1_1_boomerang_controller_ab6e66fdd7779b62f4d1fec6110973306} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{Boomerang\+Controller}} $>$ {\bfseries modify\+\_\+min\+\_\+error} (double error)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_aa90c3da4642cb15bc7fff6ded8754343}\label{classvoss_1_1controller_1_1_boomerang_controller_aa90c3da4642cb15bc7fff6ded8754343} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{Boomerang\+Controller}} $>$ {\bfseries modify\+\_\+lead\+\_\+pct} (double lead\+\_\+pct)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Abstract\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+void {\bfseries set\+\_\+target} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, bool relative, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)
+\item 
+void {\bfseries set\+\_\+angular\+\_\+target} (double angle, bool relative)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a42b73164a67554bf6702d70de03ab982}\label{classvoss_1_1controller_1_1_boomerang_controller_a42b73164a67554bf6702d70de03ab982} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{Boomerang\+Controller}} $>$ {\bfseries p}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a449da2094f9ffaf18e83ffa3dd6eb850}\label{classvoss_1_1controller_1_1_boomerang_controller_a449da2094f9ffaf18e83ffa3dd6eb850} 
+double {\bfseries lead\+\_\+pct}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a100ebdebc5efdca68bffe7da99140ca1}\label{classvoss_1_1controller_1_1_boomerang_controller_a100ebdebc5efdca68bffe7da99140ca1} 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries carrot\+Point}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a208b400db8436af728701f9a079d4e46}\label{classvoss_1_1controller_1_1_boomerang_controller_a208b400db8436af728701f9a079d4e46} 
+\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils\+::\+PID}} {\bfseries linear\+\_\+pid}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a442cbbabaca0f5a13619f872649300c3}\label{classvoss_1_1controller_1_1_boomerang_controller_a442cbbabaca0f5a13619f872649300c3} 
+\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils\+::\+PID}} {\bfseries angular\+\_\+pid}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a279147c85eb623ab6466ca287a27a49f}\label{classvoss_1_1controller_1_1_boomerang_controller_a279147c85eb623ab6466ca287a27a49f} 
+double {\bfseries min\+\_\+error}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a32f03192a0b42ae3298fb230b3617c61}\label{classvoss_1_1controller_1_1_boomerang_controller_a32f03192a0b42ae3298fb230b3617c61} 
+bool {\bfseries can\+\_\+reverse}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a92de1133895df17280c37d09474336a5}\label{classvoss_1_1controller_1_1_boomerang_controller_a92de1133895df17280c37d09474336a5} 
+double {\bfseries min\+\_\+vel}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ {\bfseries l}
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries target}
+\item 
+double {\bfseries angular\+\_\+target}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a9912ed2822aa9b1a4b79d6b43bfbb7e2}\label{classvoss_1_1controller_1_1_boomerang_controller_a9912ed2822aa9b1a4b79d6b43bfbb7e2} 
+class {\bfseries Boomerang\+Controller\+Builder}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_ac4f7771d4053800ce20ee6295f8bc00e}\label{classvoss_1_1controller_1_1_boomerang_controller_ac4f7771d4053800ce20ee6295f8bc00e} 
+\index{voss::controller::BoomerangController@{voss::controller::BoomerangController}!get\_angular\_command@{get\_angular\_command}}
+\index{get\_angular\_command@{get\_angular\_command}!voss::controller::BoomerangController@{voss::controller::BoomerangController}}
+\doxysubsubsection{\texorpdfstring{get\_angular\_command()}{get\_angular\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Boomerang\+Controller\+::get\+\_\+angular\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{voss\+::\+Angular\+Direction}]{direction,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_ae94f01d925af48d375d00c2c9cd9d2fd}\label{classvoss_1_1controller_1_1_boomerang_controller_ae94f01d925af48d375d00c2c9cd9d2fd} 
+\index{voss::controller::BoomerangController@{voss::controller::BoomerangController}!get\_command@{get\_command}}
+\index{get\_command@{get\_command}!voss::controller::BoomerangController@{voss::controller::BoomerangController}}
+\doxysubsubsection{\texorpdfstring{get\_command()}{get\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Boomerang\+Controller\+::get\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_boomerang_controller_a6f672f8a4ca4a6624c7bfc9ddf413373}\label{classvoss_1_1controller_1_1_boomerang_controller_a6f672f8a4ca4a6624c7bfc9ddf413373} 
+\index{voss::controller::BoomerangController@{voss::controller::BoomerangController}!reset@{reset}}
+\index{reset@{reset}!voss::controller::BoomerangController@{voss::controller::BoomerangController}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void voss\+::controller\+::\+Boomerang\+Controller\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/controller/\mbox{\hyperlink{_boomerang_controller_8hpp}{Boomerang\+Controller.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,42 @@
+\doxysection{Abstract\+Controller.\+hpp}
+\hypertarget{_abstract_controller_8hpp_source}{}\label{_abstract_controller_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp}}
+\mbox{\hyperlink{_abstract_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chassis_command_8hpp}{VOSS/chassis/ChassisCommand.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{VOSS/exit\_conditions/AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_localizer_8hpp}{VOSS/localizer/AbstractLocalizer.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{flags_8hpp}{VOSS/utils/flags.hpp}}"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{AbstractController}}\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00022\ \ \ \ \ std::shared\_ptr<localizer::AbstractLocalizer>\ l;}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ target;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{double}\ angular\_target;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{AbstractController}}(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{virtual}\ chassis::DiffChassisCommand}
+\DoxyCodeLine{00030\ \ \ \ \ get\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ chassis::DiffChassisCommand}
+\DoxyCodeLine{00033\ \ \ \ \ get\_angular\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ =\ 0;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ reset()\ =\ 0;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_target(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ target,\ \textcolor{keywordtype}{bool}\ relative,}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_angular\_target(\textcolor{keywordtype}{double}\ angle,\ \textcolor{keywordtype}{bool}\ relative);}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

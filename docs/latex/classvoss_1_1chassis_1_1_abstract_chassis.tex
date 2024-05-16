@@ -1,0 +1,94 @@
+\doxysection{voss\+::chassis\+::Abstract\+Chassis Class Reference}
+\hypertarget{classvoss_1_1chassis_1_1_abstract_chassis}{}\label{classvoss_1_1chassis_1_1_abstract_chassis}\index{voss::chassis::AbstractChassis@{voss::chassis::AbstractChassis}}
+Inheritance diagram for voss\+::chassis\+::Abstract\+Chassis\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1chassis_1_1_abstract_chassis}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_ad202a5d089ec6be9644e96df3f693d33}\label{classvoss_1_1chassis_1_1_abstract_chassis_ad202a5d089ec6be9644e96df3f693d33} 
+{\bfseries Abstract\+Chassis} (controller\+\_\+ptr default\+\_\+controller, ec\+\_\+ptr ec)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aaf2971bba7fe0c1b2d930d11b6f46826}\label{classvoss_1_1chassis_1_1_abstract_chassis_aaf2971bba7fe0c1b2d930d11b6f46826} 
+virtual void {\bfseries tank} (double left\+\_\+speed, double right\+\_\+speed)=0
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a5c344af4f597ff8589e08a58f6f8ae0c}\label{classvoss_1_1chassis_1_1_abstract_chassis_a5c344af4f597ff8589e08a58f6f8ae0c} 
+virtual void {\bfseries arcade} (double forward\+\_\+speed, double turn\+\_\+speed)=0
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_ae713bbc148f83e5a4a47995afc95da26}\label{classvoss_1_1chassis_1_1_abstract_chassis_ae713bbc148f83e5a4a47995afc95da26} 
+virtual bool {\bfseries execute} (Diff\+Chassis\+Command cmd, double max)=0
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_af71c71c045033f7820369096355c8f1a}\label{classvoss_1_1chassis_1_1_abstract_chassis_af71c71c045033f7820369096355c8f1a} 
+virtual void {\bfseries set\+\_\+brake\+\_\+mode} (pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e mode)=0
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a4cbbe4f0c5a0fca87c85786495894858}\label{classvoss_1_1chassis_1_1_abstract_chassis_a4cbbe4f0c5a0fca87c85786495894858} 
+void {\bfseries move} (double distance, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_ae34a5de8c8d3025f24b01601ced2fce2}\label{classvoss_1_1chassis_1_1_abstract_chassis_ae34a5de8c8d3025f24b01601ced2fce2} 
+void {\bfseries move} (double distance, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_ac388c1c005b11c668a196565387d9c3b}\label{classvoss_1_1chassis_1_1_abstract_chassis_ac388c1c005b11c668a196565387d9c3b} 
+void {\bfseries move} (double distance, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a3789aff0c626862cf6d0f7448968fc62}\label{classvoss_1_1chassis_1_1_abstract_chassis_a3789aff0c626862cf6d0f7448968fc62} 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aa921676307a3e621a0a53404f2a6315e}\label{classvoss_1_1chassis_1_1_abstract_chassis_aa921676307a3e621a0a53404f2a6315e} 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a8aa5f4723c4c89c66c52670182f784dd}\label{classvoss_1_1chassis_1_1_abstract_chassis_a8aa5f4723c4c89c66c52670182f784dd} 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aa30e86db8ee4f5f0d6bf2a648058fbb1}\label{classvoss_1_1chassis_1_1_abstract_chassis_aa30e86db8ee4f5f0d6bf2a648058fbb1} 
+void {\bfseries turn} (double target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aa0fc63f7bce8c0325ffc72827232f69a}\label{classvoss_1_1chassis_1_1_abstract_chassis_aa0fc63f7bce8c0325ffc72827232f69a} 
+void {\bfseries turn} (double target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a7bc8f3ad3b551f7c599b791544e6eb70}\label{classvoss_1_1chassis_1_1_abstract_chassis_a7bc8f3ad3b551f7c599b791544e6eb70} 
+void {\bfseries turn} (double target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a05fd095330fcf6629cdc008d1ac73f9f}\label{classvoss_1_1chassis_1_1_abstract_chassis_a05fd095330fcf6629cdc008d1ac73f9f} 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_ab91dfae37a766e3f34d1eeb27669cb9a}\label{classvoss_1_1chassis_1_1_abstract_chassis_ab91dfae37a766e3f34d1eeb27669cb9a} 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aef506fe71217c8282a62e8c5d57bad4f}\label{classvoss_1_1chassis_1_1_abstract_chassis_aef506fe71217c8282a62e8c5d57bad4f} 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_aa816ea07cfc6db8f7c63d7c9ae40b9c8}\label{classvoss_1_1chassis_1_1_abstract_chassis_aa816ea07cfc6db8f7c63d7c9ae40b9c8} 
+void {\bfseries move\+\_\+task} (controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max, voss\+::\+Flags flags)
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a429dbb1e6dc33c8977281cc9ad7adba2}\label{classvoss_1_1chassis_1_1_abstract_chassis_a429dbb1e6dc33c8977281cc9ad7adba2} 
+void {\bfseries turn\+\_\+task} (controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max, voss\+::\+Flags flags, voss\+::\+Angular\+Direction direction)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_adc91b88ada1d2667620264722bb08c3f}\label{classvoss_1_1chassis_1_1_abstract_chassis_adc91b88ada1d2667620264722bb08c3f} 
+controller\+\_\+ptr {\bfseries default\+\_\+controller}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a227c01ce1295d147456d60a4e76d8b02}\label{classvoss_1_1chassis_1_1_abstract_chassis_a227c01ce1295d147456d60a4e76d8b02} 
+ec\+\_\+ptr {\bfseries default\+\_\+ec}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a330d7d3482c39fd6fd4a1ee5f85a5f59}\label{classvoss_1_1chassis_1_1_abstract_chassis_a330d7d3482c39fd6fd4a1ee5f85a5f59} 
+std\+::unique\+\_\+ptr$<$ pros\+::\+Task $>$ {\bfseries task} = nullptr
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a987d904c8e0d852a56ff981bd773e330}\label{classvoss_1_1chassis_1_1_abstract_chassis_a987d904c8e0d852a56ff981bd773e330} 
+bool {\bfseries task\+\_\+running} = false
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_abstract_chassis_a93dabea6a6752f30838cdb4cf83e2d64}\label{classvoss_1_1chassis_1_1_abstract_chassis_a93dabea6a6752f30838cdb4cf83e2d64} 
+pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e {\bfseries brake\+Mode}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/chassis/\mbox{\hyperlink{_abstract_chassis_8hpp}{Abstract\+Chassis.\+hpp}}\end{DoxyCompactItemize}

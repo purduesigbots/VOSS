@@ -1,0 +1,53 @@
+\doxysection{Diff\+Chassis.\+hpp}
+\hypertarget{_diff_chassis_8hpp_source}{}\label{_diff_chassis_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp}}
+\mbox{\hyperlink{_diff_chassis_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_chassis_8hpp}{AbstractChassis.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chassis_command_8hpp}{ChassisCommand.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}pros/motor\_group.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <initializer\_list>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }voss::chassis\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis}{DiffChassis}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{AbstractChassis}}\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00023\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ left\_motors;}
+\DoxyCodeLine{00024\ \ \ \ \ std::unique\_ptr<pros::MotorGroup>\ right\_motors;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ slew\_step;}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1chassis_1_1diff__commands_1_1_voltages}{diff\_commands::Voltages}}\ prev\_voltages;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{double}\ slew(\textcolor{keywordtype}{double}\ target,\ \textcolor{keywordtype}{bool}\ is\_left);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis}{DiffChassis}}(std::initializer\_list<int8\_t>\ left\_motors,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::initializer\_list<int8\_t>\ right\_motors,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ controller\_ptr\ default\_controller,\ ec\_ptr\ ec,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ slew\_step\ =\ 8,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pros::motor\_brake\_mode\_e\ brakeMode\ =}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pros::motor\_brake\_mode\_e::E\_MOTOR\_BRAKE\_COAST);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ tank(\textcolor{keywordtype}{double}\ left\_speed,\ \textcolor{keywordtype}{double}\ right\_speed);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ arcade(\textcolor{keywordtype}{double}\ forward\_speed,\ \textcolor{keywordtype}{double}\ turn\_speed);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{bool}\ execute(DiffChassisCommand\ cmd,\ \textcolor{keywordtype}{double}\ max);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_brake\_mode(pros::motor\_brake\_mode\_e\ mode)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{auto}\ getMotors()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }ChassisMotorSet\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ pros::MotorGroup*\ left;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ pros::MotorGroup*\ right;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ChassisMotorSet\{this-\/>left\_motors.get(),}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>right\_motors.get()\};}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \}\ \textcolor{comment}{//\ namespace\ voss::chassis}}
+
+\end{DoxyCode}

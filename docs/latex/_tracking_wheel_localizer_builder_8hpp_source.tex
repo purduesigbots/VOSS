@@ -1,0 +1,52 @@
+\doxysection{Tracking\+Wheel\+Localizer\+Builder.\+hpp}
+\hypertarget{_tracking_wheel_localizer_builder_8hpp_source}{}\label{_tracking_wheel_localizer_builder_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp}}
+\mbox{\hyperlink{_tracking_wheel_localizer_builder_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_tracking_wheel_localizer_8hpp}{VOSS/localizer/TrackingWheelLocalizer.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{double}\ left\_right\_dist;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{double}\ middle\_dist;}
+\DoxyCodeLine{00020\ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ left\_tracking\_wheel;}
+\DoxyCodeLine{00021\ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ right\_tracking\_wheel;}
+\DoxyCodeLine{00022\ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ middle\_tracking\_wheel;}
+\DoxyCodeLine{00023\ \ \ \ \ std::unique\_ptr<pros::IMU>\ imu;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\ new\_builder();}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_left\_encoder(\textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_left\_encoder(\textcolor{keywordtype}{int}\ smart\_port,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_left\_rotation(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_left\_motor(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_right\_encoder(\textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_right\_encoder(\textcolor{keywordtype}{int}\ smart\_port,}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_right\_rotation(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_right\_motor(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_encoder(\textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_encoder(\textcolor{keywordtype}{int}\ smart\_port,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ adi\_port);}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_rotation(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_motor(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_left\_right\_tpi(\textcolor{keywordtype}{double}\ tpi);}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_tpi(\textcolor{keywordtype}{double}\ tpi);}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_track\_width(\textcolor{keywordtype}{double}\ track\_width);}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_middle\_dist(\textcolor{keywordtype}{double}\ middle\_dist);}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}}\&\ with\_imu(\textcolor{keywordtype}{int}\ port);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ std::shared\_ptr<TrackingWheelLocalizer>\ build();}
+\DoxyCodeLine{00052\ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

@@ -1,0 +1,139 @@
+\doxysection{voss\+::controller\+::Arc\+PIDController Class Reference}
+\hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller}{}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller}\index{voss::controller::ArcPIDController@{voss::controller::ArcPIDController}}
+Inheritance diagram for voss\+::controller\+::Arc\+PIDController\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1controller_1_1_arc_p_i_d_controller}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a171539ff6900104129ba446603c427a6}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a171539ff6900104129ba446603c427a6} 
+{\bfseries Arc\+PIDController} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_a8b7c149b90821676944da70a0dea6ee5}{get\+\_\+command}} (bool reverse, bool thru, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+chassis\+::\+Diff\+Chassis\+Command \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_a09fe8f71fce1dc8583616f726551e6de}{get\+\_\+angular\+\_\+command}} (bool reverse, bool thru, voss\+::\+Angular\+Direction direction, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_a0a420107573361625259cc4bd662a447}{reset}} () override
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_aed033edec0100bbf131b48c902905e83}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_aed033edec0100bbf131b48c902905e83} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{Arc\+PIDController}} $>$ {\bfseries modify\+\_\+linear\+\_\+constants} (double kP, double kI, double kD)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a69d2f4384b0e43edc754ea276e0cc6ee}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a69d2f4384b0e43edc754ea276e0cc6ee} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{Arc\+PIDController}} $>$ {\bfseries modify\+\_\+track\+\_\+width} (double track\+\_\+width)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a1506d81eac7bb66b0bc9afa06bffbb1c}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a1506d81eac7bb66b0bc9afa06bffbb1c} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{Arc\+PIDController}} $>$ {\bfseries modify\+\_\+min\+\_\+error} (double error)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a7d1cb54e395b718e816b69d50d03081f}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a7d1cb54e395b718e816b69d50d03081f} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{Arc\+PIDController}} $>$ {\bfseries modify\+\_\+slew} (double slew)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Abstract\+Controller} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ l)
+\item 
+void {\bfseries set\+\_\+target} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, bool relative, std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)
+\item 
+void {\bfseries set\+\_\+angular\+\_\+target} (double angle, bool relative)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a2d96300f11da6a0c6af0a0f6c000e503}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a2d96300f11da6a0c6af0a0f6c000e503} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{Arc\+PIDController}} $>$ {\bfseries p}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a639ae6bb37c32458c4c750eb652d4ebf}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a639ae6bb37c32458c4c750eb652d4ebf} 
+\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils\+::\+PID}} {\bfseries linear\+\_\+pid}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_ad08b45125149e3f7e597e11270d05a84}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_ad08b45125149e3f7e597e11270d05a84} 
+\mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils\+::\+PID}} {\bfseries angular\+\_\+pid}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_aca8e1cf93ec1eb82e57da4c20304efcf}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_aca8e1cf93ec1eb82e57da4c20304efcf} 
+double {\bfseries track\+\_\+width}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_abcebb2fa1aa95cadff718617ea389014}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_abcebb2fa1aa95cadff718617ea389014} 
+double {\bfseries min\+\_\+error}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a72a6ad2f4b54b293f4c91fa323a0ff19}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a72a6ad2f4b54b293f4c91fa323a0ff19} 
+double {\bfseries can\+\_\+reverse}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_ae8f01e228239351711d4f3beb03168e1}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_ae8f01e228239351711d4f3beb03168e1} 
+double {\bfseries arc\+\_\+radius}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a8e10833e89420b7d32ea1618850a6200}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a8e10833e89420b7d32ea1618850a6200} 
+\mbox{\hyperlink{structvoss_1_1_point}{Point}} {\bfseries arc\+\_\+center}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a6e7ff9223ed8170ddf904db041fefbb4}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a6e7ff9223ed8170ddf904db041fefbb4} 
+double {\bfseries prev\+\_\+t}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_abeaf74219ef29a2d66960a19e827e084}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_abeaf74219ef29a2d66960a19e827e084} 
+double {\bfseries slew}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a436c29216ec513eedcf4e98bf4c50c97}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a436c29216ec513eedcf4e98bf4c50c97} 
+double {\bfseries prev\+\_\+lin\+\_\+speed}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a60667c5bb69b713123d8a648fbe967ee}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a60667c5bb69b713123d8a648fbe967ee} 
+double {\bfseries close}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a87be826fd62f3c746864de656d961bab}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a87be826fd62f3c746864de656d961bab} 
+double {\bfseries prev\+\_\+lin\+\_\+err}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a6830a0f812a1d88fadeb84ffd6cc3c22}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a6830a0f812a1d88fadeb84ffd6cc3c22} 
+double {\bfseries total\+\_\+lin\+\_\+err}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{localizer\+::\+Abstract\+Localizer}} $>$ {\bfseries l}
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries target}
+\item 
+double {\bfseries angular\+\_\+target}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a0d093acfa52d5cd79b85fa67f07ac21c}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a0d093acfa52d5cd79b85fa67f07ac21c} 
+class {\bfseries Arc\+PIDController\+Builder}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a09fe8f71fce1dc8583616f726551e6de}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a09fe8f71fce1dc8583616f726551e6de} 
+\index{voss::controller::ArcPIDController@{voss::controller::ArcPIDController}!get\_angular\_command@{get\_angular\_command}}
+\index{get\_angular\_command@{get\_angular\_command}!voss::controller::ArcPIDController@{voss::controller::ArcPIDController}}
+\doxysubsubsection{\texorpdfstring{get\_angular\_command()}{get\_angular\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Arc\+PIDController\+::get\+\_\+angular\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{voss\+::\+Angular\+Direction}]{direction,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a8b7c149b90821676944da70a0dea6ee5}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a8b7c149b90821676944da70a0dea6ee5} 
+\index{voss::controller::ArcPIDController@{voss::controller::ArcPIDController}!get\_command@{get\_command}}
+\index{get\_command@{get\_command}!voss::controller::ArcPIDController@{voss::controller::ArcPIDController}}
+\doxysubsubsection{\texorpdfstring{get\_command()}{get\_command()}}
+{\footnotesize\ttfamily chassis\+::\+Diff\+Chassis\+Command voss\+::controller\+::\+Arc\+PIDController\+::get\+\_\+command (\begin{DoxyParamCaption}\item[{bool}]{reverse,  }\item[{bool}]{thru,  }\item[{std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$}]{ec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_arc_p_i_d_controller_a0a420107573361625259cc4bd662a447}\label{classvoss_1_1controller_1_1_arc_p_i_d_controller_a0a420107573361625259cc4bd662a447} 
+\index{voss::controller::ArcPIDController@{voss::controller::ArcPIDController}!reset@{reset}}
+\index{reset@{reset}!voss::controller::ArcPIDController@{voss::controller::ArcPIDController}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void voss\+::controller\+::\+Arc\+PIDController\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{voss\+::controller\+::\+Abstract\+Controller}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/controller/\mbox{\hyperlink{_arc_p_i_d_controller_8hpp}{Arc\+PIDController.\+hpp}}\end{DoxyCompactItemize}

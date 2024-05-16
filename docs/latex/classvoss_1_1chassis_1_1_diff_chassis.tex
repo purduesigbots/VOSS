@@ -1,0 +1,123 @@
+\doxysection{voss\+::chassis\+::Diff\+Chassis Class Reference}
+\hypertarget{classvoss_1_1chassis_1_1_diff_chassis}{}\label{classvoss_1_1chassis_1_1_diff_chassis}\index{voss::chassis::DiffChassis@{voss::chassis::DiffChassis}}
+Inheritance diagram for voss\+::chassis\+::Diff\+Chassis\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1chassis_1_1_diff_chassis}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_a7a2fa47fd1a31515452e3a2dface3f81}\label{classvoss_1_1chassis_1_1_diff_chassis_a7a2fa47fd1a31515452e3a2dface3f81} 
+{\bfseries Diff\+Chassis} (std\+::initializer\+\_\+list$<$ int8\+\_\+t $>$ left\+\_\+motors, std\+::initializer\+\_\+list$<$ int8\+\_\+t $>$ right\+\_\+motors, controller\+\_\+ptr default\+\_\+controller, ec\+\_\+ptr ec, double slew\+\_\+step=8, pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e brake\+Mode=pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e\+::\+E\+\_\+\+MOTOR\+\_\+\+BRAKE\+\_\+\+COAST)
+\item 
+void \mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis_a7565059a3866323cd6837d25d9d7e528}{tank}} (double left\+\_\+speed, double right\+\_\+speed)
+\item 
+void \mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis_ab380773aa1e4f1614390dc88f061428a}{arcade}} (double forward\+\_\+speed, double turn\+\_\+speed)
+\item 
+bool \mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis_afa0a21644f4687e1e902c54e67f8fbad}{execute}} (Diff\+Chassis\+Command cmd, double max)
+\item 
+void \mbox{\hyperlink{classvoss_1_1chassis_1_1_diff_chassis_a3ab6e4ac00edcae5ccd234fd3bf521b6}{set\+\_\+brake\+\_\+mode}} (pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e mode) override
+\item 
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_ad43950b8330fec0adad4f1180a57c4f1}\label{classvoss_1_1chassis_1_1_diff_chassis_ad43950b8330fec0adad4f1180a57c4f1} 
+auto {\bfseries get\+Motors} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Abstract\+Chassis} (controller\+\_\+ptr default\+\_\+controller, ec\+\_\+ptr ec)
+\item 
+void {\bfseries move} (double distance, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries move} (double distance, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries move} (double distance, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries move} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE)
+\item 
+void {\bfseries turn} (double target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+void {\bfseries turn} (double target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+void {\bfseries turn} (double target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, controller\+\_\+ptr controller, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\item 
+void {\bfseries turn\+\_\+to} (\mbox{\hyperlink{structvoss_1_1_point}{Point}} target, double max=100.\+0, voss\+::\+Flags flags=voss\+::\+Flags\+::\+NONE, voss\+::\+Angular\+Direction direction=voss\+::\+Angular\+Direction\+::\+AUTO)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries move\+\_\+task} (controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max, voss\+::\+Flags flags)
+\item 
+void {\bfseries turn\+\_\+task} (controller\+\_\+ptr controller, ec\+\_\+ptr ec, double max, voss\+::\+Flags flags, voss\+::\+Angular\+Direction direction)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}}
+\begin{DoxyCompactItemize}
+\item 
+controller\+\_\+ptr {\bfseries default\+\_\+controller}
+\item 
+ec\+\_\+ptr {\bfseries default\+\_\+ec}
+\item 
+std\+::unique\+\_\+ptr$<$ pros\+::\+Task $>$ {\bfseries task} = nullptr
+\item 
+bool {\bfseries task\+\_\+running} = false
+\item 
+pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e {\bfseries brake\+Mode}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_ab380773aa1e4f1614390dc88f061428a}\label{classvoss_1_1chassis_1_1_diff_chassis_ab380773aa1e4f1614390dc88f061428a} 
+\index{voss::chassis::DiffChassis@{voss::chassis::DiffChassis}!arcade@{arcade}}
+\index{arcade@{arcade}!voss::chassis::DiffChassis@{voss::chassis::DiffChassis}}
+\doxysubsubsection{\texorpdfstring{arcade()}{arcade()}}
+{\footnotesize\ttfamily void voss\+::chassis\+::\+Diff\+Chassis\+::arcade (\begin{DoxyParamCaption}\item[{double}]{forward\+\_\+speed,  }\item[{double}]{turn\+\_\+speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}.
+
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_afa0a21644f4687e1e902c54e67f8fbad}\label{classvoss_1_1chassis_1_1_diff_chassis_afa0a21644f4687e1e902c54e67f8fbad} 
+\index{voss::chassis::DiffChassis@{voss::chassis::DiffChassis}!execute@{execute}}
+\index{execute@{execute}!voss::chassis::DiffChassis@{voss::chassis::DiffChassis}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily bool voss\+::chassis\+::\+Diff\+Chassis\+::execute (\begin{DoxyParamCaption}\item[{Diff\+Chassis\+Command}]{cmd,  }\item[{double}]{max }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}.
+
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_a3ab6e4ac00edcae5ccd234fd3bf521b6}\label{classvoss_1_1chassis_1_1_diff_chassis_a3ab6e4ac00edcae5ccd234fd3bf521b6} 
+\index{voss::chassis::DiffChassis@{voss::chassis::DiffChassis}!set\_brake\_mode@{set\_brake\_mode}}
+\index{set\_brake\_mode@{set\_brake\_mode}!voss::chassis::DiffChassis@{voss::chassis::DiffChassis}}
+\doxysubsubsection{\texorpdfstring{set\_brake\_mode()}{set\_brake\_mode()}}
+{\footnotesize\ttfamily void voss\+::chassis\+::\+Diff\+Chassis\+::set\+\_\+brake\+\_\+mode (\begin{DoxyParamCaption}\item[{pros\+::motor\+\_\+brake\+\_\+mode\+\_\+e}]{mode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}.
+
+\Hypertarget{classvoss_1_1chassis_1_1_diff_chassis_a7565059a3866323cd6837d25d9d7e528}\label{classvoss_1_1chassis_1_1_diff_chassis_a7565059a3866323cd6837d25d9d7e528} 
+\index{voss::chassis::DiffChassis@{voss::chassis::DiffChassis}!tank@{tank}}
+\index{tank@{tank}!voss::chassis::DiffChassis@{voss::chassis::DiffChassis}}
+\doxysubsubsection{\texorpdfstring{tank()}{tank()}}
+{\footnotesize\ttfamily void voss\+::chassis\+::\+Diff\+Chassis\+::tank (\begin{DoxyParamCaption}\item[{double}]{left\+\_\+speed,  }\item[{double}]{right\+\_\+speed }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1chassis_1_1_abstract_chassis}{voss\+::chassis\+::\+Abstract\+Chassis}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/chassis/\mbox{\hyperlink{_diff_chassis_8hpp}{Diff\+Chassis.\+hpp}}\end{DoxyCompactItemize}

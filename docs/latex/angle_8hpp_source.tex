@@ -1,0 +1,34 @@
+\doxysection{angle.\+hpp}
+\hypertarget{angle_8hpp_source}{}\label{angle_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp}}
+\mbox{\hyperlink{angle_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{flags_8hpp}{VOSS/utils/flags.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }voss\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ to\_radians(\textcolor{keywordtype}{double}\ degrees)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{return}\ degrees\ *\ M\_PI\ /\ 180;}
+\DoxyCodeLine{00019\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ to\_degrees(\textcolor{keywordtype}{double}\ radians)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{return}\ radians\ *\ 180\ *\ M\_1\_PI;}
+\DoxyCodeLine{00023\ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ norm(\textcolor{keywordtype}{double}\ radians)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ radians\ =\ fmod(radians,\ 2\ *\ M\_PI);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (radians\ <\ 0)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ radians\ +=\ 2\ *\ M\_PI;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ radians;}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{double}\ norm\_delta(\textcolor{keywordtype}{double}\ radians)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return}\ std::remainder(radians,\ 2\ *\ M\_PI);}
+\DoxyCodeLine{00034\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \}\ \textcolor{comment}{//\ namespace\ voss}}
+
+\end{DoxyCode}

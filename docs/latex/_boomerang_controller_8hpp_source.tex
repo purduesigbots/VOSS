@@ -1,0 +1,55 @@
+\doxysection{Boomerang\+Controller.\+hpp}
+\hypertarget{_boomerang_controller_8hpp_source}{}\label{_boomerang_controller_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/BoomerangController.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/BoomerangController.hpp}}
+\mbox{\hyperlink{_boomerang_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_controller_8hpp}{AbstractController.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_p_i_d_controller_8hpp}{PIDController.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_chassis_command_8hpp}{VOSS/chassis/ChassisCommand.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{VOSS/exit\_conditions/AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_localizer_8hpp}{VOSS/localizer/AbstractLocalizer.hpp}}"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{flags_8hpp}{VOSS/utils/flags.hpp}}"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_p_i_d_8hpp}{VOSS/utils/PID.hpp}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{BoomerangController}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{AbstractController}}\ \{}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00024\ \ \ \ \ std::shared\_ptr<BoomerangController>\ p;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ lead\_pct;}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ carrotPoint;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils::PID}}\ linear\_pid,\ angular\_pid;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_error;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ can\_reverse;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{double}\ min\_vel;}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller}{BoomerangController}}(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00038\ \ \ \ \ get\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00040\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00041\ \ \ \ \ get\_angular\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction,}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ std::shared\_ptr<BoomerangController>}
+\DoxyCodeLine{00048\ \ \ \ \ modify\_linear\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00049\ \ \ \ \ std::shared\_ptr<BoomerangController>}
+\DoxyCodeLine{00050\ \ \ \ \ modify\_angular\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00051\ \ \ \ \ std::shared\_ptr<BoomerangController>\ modify\_min\_error(\textcolor{keywordtype}{double}\ error);}
+\DoxyCodeLine{00052\ \ \ \ \ std::shared\_ptr<BoomerangController>\ modify\_lead\_pct(\textcolor{keywordtype}{double}\ lead\_pct);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_boomerang_controller_builder}{BoomerangControllerBuilder}};}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

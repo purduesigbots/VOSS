@@ -1,0 +1,133 @@
+\doxysection{voss\+::localizer\+::Tracking\+Wheel\+Localizer Class Reference}
+\hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer}{}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer}\index{voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}}
+Inheritance diagram for voss\+::localizer\+::Tracking\+Wheel\+Localizer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1localizer_1_1_tracking_wheel_localizer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_ac8da6218fe678fb0c5937458aaf372ca}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_ac8da6218fe678fb0c5937458aaf372ca} 
+{\bfseries Tracking\+Wheel\+Localizer} (std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ left, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ right, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ middle, std\+::unique\+\_\+ptr$<$ pros\+::\+IMU $>$ imu, double left\+\_\+right\+\_\+dist, double middle\+\_\+dist)
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_aece47d3589c6a5d5d46fad74d91e611e}{update}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a93762739cb2cba4cfc3ad7075b284a29}{calibrate}} () override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a00962d1384c6c4926477e60ed5a1ba7c}{set\+\_\+pose}} (\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} pose) override
+\item 
+void \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a4c1f89d8783bcce77026c7fc209098c2}{set\+\_\+pose}} (double x, double y, double theta) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries begin\+\_\+localization} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries get\+\_\+pose} ()
+\item 
+double {\bfseries get\+\_\+x} ()
+\item 
+double {\bfseries get\+\_\+y} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+rad} ()
+\item 
+double {\bfseries get\+\_\+orientation\+\_\+deg} ()
+\item 
+\mbox{\hyperlink{structvoss_1_1_point}{Point}} {\bfseries get\+\_\+position} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_ada1f37c874d83b1ca5e22b184be4748c}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_ada1f37c874d83b1ca5e22b184be4748c} 
+std\+::atomic$<$ double $>$ {\bfseries prev\+\_\+left\+\_\+pos}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_afa809f4dd86568f3d23c01ff67b186bd}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_afa809f4dd86568f3d23c01ff67b186bd} 
+std\+::atomic$<$ double $>$ {\bfseries prev\+\_\+right\+\_\+pos}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_af4b6d3d419feb54c82340b26b23626b4}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_af4b6d3d419feb54c82340b26b23626b4} 
+std\+::atomic$<$ double $>$ {\bfseries prev\+\_\+middle\+\_\+pos}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a223f7db32565435ed1ee4b5394da96e6}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a223f7db32565435ed1ee4b5394da96e6} 
+\mbox{\hyperlink{structvoss_1_1_atomic_pose}{Atomic\+Pose}} {\bfseries prev\+\_\+pose}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a6b62128a4943ef6a6b84849d5f6638d6}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a6b62128a4943ef6a6b84849d5f6638d6} 
+std\+::atomic$<$ double $>$ {\bfseries left\+\_\+right\+\_\+dist}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_af5215c83a25d36b02daf6e3bb3a227bd}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_af5215c83a25d36b02daf6e3bb3a227bd} 
+std\+::atomic$<$ double $>$ {\bfseries middle\+\_\+dist}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a5d94f4dc412cb59242868a7d0d420e86}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a5d94f4dc412cb59242868a7d0d420e86} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ {\bfseries left\+\_\+tracking\+\_\+wheel}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a2e174677c2258ff2457f5cb2af570d7d}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a2e174677c2258ff2457f5cb2af570d7d} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ {\bfseries right\+\_\+tracking\+\_\+wheel}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a02f5179ad0d7a1f26958d6d0dd3e91e8}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a02f5179ad0d7a1f26958d6d0dd3e91e8} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_tracking_wheel}{Abstract\+Tracking\+Wheel}} $>$ {\bfseries middle\+\_\+tracking\+\_\+wheel}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a2b2509e515dc4a7c1e643b249f7c5857}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a2b2509e515dc4a7c1e643b249f7c5857} 
+std\+::unique\+\_\+ptr$<$ pros\+::\+IMU $>$ {\bfseries imu}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}}
+\begin{DoxyCompactItemize}
+\item 
+pros\+::\+Mutex {\bfseries mtx}
+\item 
+\mbox{\hyperlink{structvoss_1_1_atomic_pose}{Atomic\+Pose}} {\bfseries pose}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a0d2a12b349d4ace111b798f130d6835d}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a0d2a12b349d4ace111b798f130d6835d} 
+class {\bfseries Tracking\+Wheel\+Localizer\+Builder}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a93762739cb2cba4cfc3ad7075b284a29}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a93762739cb2cba4cfc3ad7075b284a29} 
+\index{voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}!calibrate@{calibrate}}
+\index{calibrate@{calibrate}!voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}}
+\doxysubsubsection{\texorpdfstring{calibrate()}{calibrate()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+Tracking\+Wheel\+Localizer\+::calibrate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a4c1f89d8783bcce77026c7fc209098c2}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a4c1f89d8783bcce77026c7fc209098c2} 
+\index{voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+Tracking\+Wheel\+Localizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{double}]{x,  }\item[{double}]{y,  }\item[{double}]{theta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a00962d1384c6c4926477e60ed5a1ba7c}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_a00962d1384c6c4926477e60ed5a1ba7c} 
+\index{voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}!set\_pose@{set\_pose}}
+\index{set\_pose@{set\_pose}!voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}}
+\doxysubsubsection{\texorpdfstring{set\_pose()}{set\_pose()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+Tracking\+Wheel\+Localizer\+::set\+\_\+pose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}}]{pose }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+\Hypertarget{classvoss_1_1localizer_1_1_tracking_wheel_localizer_aece47d3589c6a5d5d46fad74d91e611e}\label{classvoss_1_1localizer_1_1_tracking_wheel_localizer_aece47d3589c6a5d5d46fad74d91e611e} 
+\index{voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}!update@{update}}
+\index{update@{update}!voss::localizer::TrackingWheelLocalizer@{voss::localizer::TrackingWheelLocalizer}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void voss\+::localizer\+::\+Tracking\+Wheel\+Localizer\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{voss\+::localizer\+::\+Abstract\+Localizer}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/localizer/\mbox{\hyperlink{_tracking_wheel_localizer_8hpp}{Tracking\+Wheel\+Localizer.\+hpp}}\end{DoxyCompactItemize}

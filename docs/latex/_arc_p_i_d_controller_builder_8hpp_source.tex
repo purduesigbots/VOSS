@@ -1,0 +1,42 @@
+\doxysection{Arc\+PIDController\+Builder.\+hpp}
+\hypertarget{_arc_p_i_d_controller_builder_8hpp_source}{}\label{_arc_p_i_d_controller_builder_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDControllerBuilder.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDControllerBuilder.hpp}}
+\mbox{\hyperlink{_arc_p_i_d_controller_builder_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_arc_p_i_d_controller_8hpp}{VOSS/controller/ArcPIDController.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{ArcPIDController}}\ ctrl;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}}
+\DoxyCodeLine{00024\ \ \ \ \ new\_builder(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\ from(\mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller}{ArcPIDController}}\ arc);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\&\ with\_linear\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\&\ with\_angular\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ \ \ *\ The\ track\ width\ is\ measured\ from\ your\ robot.}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ \ \ *\ Due\ to\ turning\ scrub,\ you\ want\ to\ use\ a\ track\ width\ a\ few\ inches\ larger}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ \ \ *\ than\ the\ real\ one.}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\&\ with\_track\_width(\textcolor{keywordtype}{double}\ track\_width);}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\&\ with\_min\_error(\textcolor{keywordtype}{double}\ error);}
+\DoxyCodeLine{00039\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_arc_p_i_d_controller_builder}{ArcPIDControllerBuilder}}\&\ with\_slew(\textcolor{keywordtype}{double}\ slew);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ std::shared\_ptr<ArcPIDController>\ build();}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

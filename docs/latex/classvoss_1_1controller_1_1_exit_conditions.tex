@@ -1,0 +1,101 @@
+\doxysection{voss\+::controller\+::Exit\+Conditions Class Reference}
+\hypertarget{classvoss_1_1controller_1_1_exit_conditions}{}\label{classvoss_1_1controller_1_1_exit_conditions}\index{voss::controller::ExitConditions@{voss::controller::ExitConditions}}
+Inheritance diagram for voss\+::controller\+::Exit\+Conditions\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classvoss_1_1controller_1_1_exit_conditions}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions_adb14e0e89cd05c4385cabb1c080cb3f6}{set\+\_\+target}} (\mbox{\hyperlink{structvoss_1_1_pose}{voss\+::\+Pose}} new\+\_\+target) override
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a27f9d560eff3eee466dab4daedc68436}\label{classvoss_1_1controller_1_1_exit_conditions_a27f9d560eff3eee466dab4daedc68436} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+settle} (int settle\+\_\+time, double tolerance, int initial\+\_\+delay)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a1f497ebb1515171a098b20762fbd75e0}\label{classvoss_1_1controller_1_1_exit_conditions_a1f497ebb1515171a098b20762fbd75e0} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+timeout} (int timeout)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_ac8dbeb980aa7d914721b21a087782490}\label{classvoss_1_1controller_1_1_exit_conditions_ac8dbeb980aa7d914721b21a087782490} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+tolerance} (double linear\+\_\+tolerance, double angular\+\_\+tolerance, double tolerance\+\_\+time)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_abee7d5bcf556b9d564d321bdf99c8145}\label{classvoss_1_1controller_1_1_exit_conditions_abee7d5bcf556b9d564d321bdf99c8145} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+thru\+\_\+smoothness} (double smoothness)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a9b609abdf20772e2250601a23b06f167}\label{classvoss_1_1controller_1_1_exit_conditions_a9b609abdf20772e2250601a23b06f167} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+custom\+\_\+condition} (std\+::function$<$ bool()$>$ callback)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a8fdb8b502ffefb4c99a32aac024e9f2f}\label{classvoss_1_1controller_1_1_exit_conditions_a8fdb8b502ffefb4c99a32aac024e9f2f} 
+\mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} \& {\bfseries add\+\_\+condition} (std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{Abstract\+Exit\+Condition}} $>$ ec)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_acdd84eb7e24ddb501cc3f273c4553a77}\label{classvoss_1_1controller_1_1_exit_conditions_acdd84eb7e24ddb501cc3f273c4553a77} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} $>$ {\bfseries exit\+\_\+if} (std\+::function$<$ bool()$>$ callback)
+\item 
+bool \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions_a5d94dd2fcbd45608a9d724adac173e00}{is\+\_\+met}} (\mbox{\hyperlink{structvoss_1_1_pose}{voss\+::\+Pose}} current\+\_\+pose, bool thru)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a2fc196aeb12c4a0431aa6a9354f904f6}\label{classvoss_1_1controller_1_1_exit_conditions_a2fc196aeb12c4a0431aa6a9354f904f6} 
+bool {\bfseries all\+\_\+met} (\mbox{\hyperlink{structvoss_1_1_pose}{voss\+::\+Pose}} current\+\_\+pose, bool thru)
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a7e9cd01356b0b01de737a3dba4339690}\label{classvoss_1_1controller_1_1_exit_conditions_a7e9cd01356b0b01de737a3dba4339690} 
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} $>$ {\bfseries build} ()
+\item 
+void \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions_a625c8ca54769f19b090ce4e8e91e3cc1}{reset}} () override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_ae3ea2decdc8d078a7cf38ea17d41c388}\label{classvoss_1_1controller_1_1_exit_conditions_ae3ea2decdc8d078a7cf38ea17d41c388} 
+static \mbox{\hyperlink{classvoss_1_1controller_1_1_exit_conditions}{Exit\+Conditions}} {\bfseries new\+\_\+conditions} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{voss\+::controller\+::\+Abstract\+Exit\+Condition}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries target\+\_\+has\+\_\+coordinate} () const
+\item 
+bool {\bfseries target\+\_\+has\+\_\+heading} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{voss\+::controller\+::\+Abstract\+Exit\+Condition}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structvoss_1_1_pose}{Pose}} {\bfseries target\+\_\+pose}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a5d94dd2fcbd45608a9d724adac173e00}\label{classvoss_1_1controller_1_1_exit_conditions_a5d94dd2fcbd45608a9d724adac173e00} 
+\index{voss::controller::ExitConditions@{voss::controller::ExitConditions}!is\_met@{is\_met}}
+\index{is\_met@{is\_met}!voss::controller::ExitConditions@{voss::controller::ExitConditions}}
+\doxysubsubsection{\texorpdfstring{is\_met()}{is\_met()}}
+{\footnotesize\ttfamily bool voss\+::controller\+::\+Exit\+Conditions\+::is\+\_\+met (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoss_1_1_pose}{voss\+::\+Pose}}}]{current\+\_\+pose,  }\item[{bool}]{thru }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{voss\+::controller\+::\+Abstract\+Exit\+Condition}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_a625c8ca54769f19b090ce4e8e91e3cc1}\label{classvoss_1_1controller_1_1_exit_conditions_a625c8ca54769f19b090ce4e8e91e3cc1} 
+\index{voss::controller::ExitConditions@{voss::controller::ExitConditions}!reset@{reset}}
+\index{reset@{reset}!voss::controller::ExitConditions@{voss::controller::ExitConditions}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void voss\+::controller\+::\+Exit\+Conditions\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{voss\+::controller\+::\+Abstract\+Exit\+Condition}}.
+
+\Hypertarget{classvoss_1_1controller_1_1_exit_conditions_adb14e0e89cd05c4385cabb1c080cb3f6}\label{classvoss_1_1controller_1_1_exit_conditions_adb14e0e89cd05c4385cabb1c080cb3f6} 
+\index{voss::controller::ExitConditions@{voss::controller::ExitConditions}!set\_target@{set\_target}}
+\index{set\_target@{set\_target}!voss::controller::ExitConditions@{voss::controller::ExitConditions}}
+\doxysubsubsection{\texorpdfstring{set\_target()}{set\_target()}}
+{\footnotesize\ttfamily void voss\+::controller\+::\+Exit\+Conditions\+::set\+\_\+target (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structvoss_1_1_pose}{voss\+::\+Pose}}}]{new\+\_\+target }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{voss\+::controller\+::\+Abstract\+Exit\+Condition}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/exit\+\_\+conditions/\mbox{\hyperlink{_exit_conditions_8hpp}{Exit\+Conditions.\+hpp}}\end{DoxyCompactItemize}

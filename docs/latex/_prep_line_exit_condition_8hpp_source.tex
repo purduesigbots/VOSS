@@ -1,0 +1,21 @@
+\doxysection{Prep\+Line\+Exit\+Condition.\+hpp}
+\hypertarget{_prep_line_exit_condition_8hpp_source}{}\label{_prep_line_exit_condition_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/PrepLineExitCondition.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/exit\_conditions/PrepLineExitCondition.hpp}}
+\mbox{\hyperlink{_prep_line_exit_condition_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_exit_condition_8hpp}{AbstractExitCondition.hpp}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_pose_8hpp}{VOSS/utils/Pose.hpp}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_prep_line_exit_condition}{PrepLineExitCondition}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_exit_condition}{AbstractExitCondition}}\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{double}\ thru\_smoothness;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_prep_line_exit_condition}{PrepLineExitCondition}}(\textcolor{keywordtype}{double}\ thru\_smoothness);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_met(\mbox{\hyperlink{structvoss_1_1_pose}{voss::Pose}}\ pose,\ \textcolor{keywordtype}{bool}\ thru)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

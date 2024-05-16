@@ -1,0 +1,47 @@
+\doxysection{/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/utils/flags.hpp File Reference}
+\hypertarget{flags_8hpp}{}\label{flags_8hpp}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp}}
+{\ttfamily \#include $<$cstdint$>$}\newline
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{flags_8hpp_adacfcbfd872ba6f8fd3d27565b52069f}\label{flags_8hpp_adacfcbfd872ba6f8fd3d27565b52069f} 
+enum class {\bfseries Flags} \{ \newline
+{\bfseries NONE} = 0b0000
+, {\bfseries ASYNC} = 0b0001
+, {\bfseries REVERSE} = 0b0010
+, {\bfseries RELATIVE} = 0b0100
+, \newline
+{\bfseries THRU} = 0b1000
+ \}
+\item 
+\Hypertarget{flags_8hpp_a3bc07955f2084fad0f34c6eaed2fedf4}\label{flags_8hpp_a3bc07955f2084fad0f34c6eaed2fedf4} 
+enum class {\bfseries Angular\+Direction} \{ \newline
+{\bfseries AUTO}
+, {\bfseries COUNTERCLOCKWISE}
+, {\bfseries CCW} = COUNTERCLOCKWISE
+, {\bfseries CLOCKWISE}
+, \newline
+{\bfseries CW} = CLOCKWISE
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{flags_8hpp_a5acd9ee9dac89ca0adf2de5c63d8fddf}\label{flags_8hpp_a5acd9ee9dac89ca0adf2de5c63d8fddf} 
+auto {\bfseries voss\+::operator\texorpdfstring{$\vert$}{|}} (Flags flag1, Flags flag2)
+\item 
+\Hypertarget{flags_8hpp_ae2a6f7b8d28f34482bca03ad46d6a84d}\label{flags_8hpp_ae2a6f7b8d28f34482bca03ad46d6a84d} 
+auto {\bfseries voss\+::operator\&} (Flags flag1, Flags flag2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVersion}{Version}
+0.\+1.\+2 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/05-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}

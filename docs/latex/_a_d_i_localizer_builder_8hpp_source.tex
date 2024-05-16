@@ -1,0 +1,39 @@
+\doxysection{ADILocalizer\+Builder.\+hpp}
+\hypertarget{_a_d_i_localizer_builder_8hpp_source}{}\label{_a_d_i_localizer_builder_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp}}
+\mbox{\hyperlink{_a_d_i_localizer_builder_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_a_d_i_localizer_8hpp}{ADILocalizer.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ left,\ right,\ mid,\ imu\_port;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{double}\ lr\_tpi,\ mid\_tpi;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ track\_width;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ middle\_dist;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}();}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\ new\_builder();}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_left\_encoder(\textcolor{keywordtype}{int}\ c);}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_right\_encoder(\textcolor{keywordtype}{int}\ c);}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_middle\_encoder(\textcolor{keywordtype}{int}\ c);}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_left\_right\_tpi(\textcolor{keywordtype}{double}\ lr\_tpi);}
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_middle\_tpi(\textcolor{keywordtype}{double}\ mid\_tpi);}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_track\_width(\textcolor{keywordtype}{double}\ track\_width);}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_middle\_distance(\textcolor{keywordtype}{double}\ middle\_dist);}
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_a_d_i_localizer_builder}{ADILocalizerBuilder}}\&\ with\_imu(\textcolor{keywordtype}{int}\ imu\_port);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ std::shared\_ptr<ADILocalizer>\ build();}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

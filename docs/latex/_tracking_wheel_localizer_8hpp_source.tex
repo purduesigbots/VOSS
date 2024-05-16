@@ -1,0 +1,42 @@
+\doxysection{Tracking\+Wheel\+Localizer.\+hpp}
+\hypertarget{_tracking_wheel_localizer_8hpp_source}{}\label{_tracking_wheel_localizer_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizer.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizer.hpp}}
+\mbox{\hyperlink{_tracking_wheel_localizer_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}pros/imu.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_localizer_8hpp}{VOSS/localizer/AbstractLocalizer.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_tracking_wheel_8hpp}{VOSS/localizer/AbstractTrackingWheel.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }voss::localizer\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer}{TrackingWheelLocalizer}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1localizer_1_1_abstract_localizer}{AbstractLocalizer}}\ \{}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00022\ \ \ \ \ std::atomic<double>\ prev\_left\_pos,\ prev\_right\_pos,\ prev\_middle\_pos;}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{structvoss_1_1_atomic_pose}{AtomicPose}}\ prev\_pose;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ std::atomic<double>\ left\_right\_dist,\ middle\_dist;}
+\DoxyCodeLine{00026\ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ left\_tracking\_wheel,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ right\_tracking\_wheel,\ middle\_tracking\_wheel;}
+\DoxyCodeLine{00028\ \ \ \ \ std::unique\_ptr<pros::IMU>\ imu;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer}{TrackingWheelLocalizer}}(std::unique\_ptr<AbstractTrackingWheel>\ left,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ right,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<AbstractTrackingWheel>\ middle,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<pros::IMU>\ imu,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ left\_right\_dist,\ \textcolor{keywordtype}{double}\ middle\_dist);}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ update()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ calibrate()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_pose(\mbox{\hyperlink{structvoss_1_1_pose}{Pose}}\ pose)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_pose(\textcolor{keywordtype}{double}\ x,\ \textcolor{keywordtype}{double}\ y,\ \textcolor{keywordtype}{double}\ theta)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder}{TrackingWheelLocalizerBuilder}};}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}\ \textcolor{comment}{//\ namespace\ voss::localizer}}
+
+\end{DoxyCode}

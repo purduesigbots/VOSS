@@ -1,0 +1,43 @@
+\doxysection{Swing\+Controller.\+hpp}
+\hypertarget{_swing_controller_8hpp_source}{}\label{_swing_controller_8hpp_source}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp}}
+\mbox{\hyperlink{_swing_controller_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_p_i_d_controller_8hpp}{PIDController.hpp}}"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_abstract_controller_8hpp}{VOSS/controller/AbstractController.hpp}}"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_p_i_d_8hpp}{VOSS/utils/PID.hpp}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }voss::controller\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller}{SwingController}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classvoss_1_1controller_1_1_abstract_controller}{AbstractController}}\ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00020\ \ \ \ \ std::shared\_ptr<SwingController>\ p;}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1utils_1_1_p_i_d}{utils::PID}}\ angular\_pid;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{bool}\ can\_reverse;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ turn\_overshoot;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ prev\_ang\_speed;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller}{SwingController}}(std::shared\_ptr<localizer::AbstractLocalizer>\ l);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00031\ \ \ \ \ get\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00033\ \ \ \ \ chassis::DiffChassisCommand}
+\DoxyCodeLine{00034\ \ \ \ \ get\_angular\_command(\textcolor{keywordtype}{bool}\ reverse,\ \textcolor{keywordtype}{bool}\ thru,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ voss::AngularDirection\ direction,}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<AbstractExitCondition>\ ec)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ reset()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ std::shared\_ptr<SwingController>}
+\DoxyCodeLine{00041\ \ \ \ \ modify\_angular\_constants(\textcolor{keywordtype}{double}\ kP,\ \textcolor{keywordtype}{double}\ kI,\ \textcolor{keywordtype}{double}\ kD);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classvoss_1_1controller_1_1_swing_controller_builder}{SwingControllerBuilder}};}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ \}\ \textcolor{comment}{//\ namespace\ voss::controller}}
+
+\end{DoxyCode}

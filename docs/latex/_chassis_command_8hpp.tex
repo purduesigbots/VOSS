@@ -1,0 +1,60 @@
+\doxysection{/\+Users/rockychen/\+Desktop/\+VOSS/include/\+VOSS/chassis/\+Chassis\+Command.hpp File Reference}
+\hypertarget{_chassis_command_8hpp}{}\label{_chassis_command_8hpp}\index{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/ChassisCommand.hpp@{/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/ChassisCommand.hpp}}
+{\ttfamily \#include $<$variant$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1_stop}{voss\+::chassis\+::\+Stop}}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1diff__commands_1_1_voltages}{voss\+::chassis\+::diff\+\_\+commands\+::\+Voltages}}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1diff__commands_1_1_chained}{voss\+::chassis\+::diff\+\_\+commands\+::\+Chained}}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1diff__commands_1_1_swing}{voss\+::chassis\+::diff\+\_\+commands\+::\+Swing}}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1holo__commands_1_1_voltages}{voss\+::chassis\+::holo\+\_\+commands\+::\+Voltages}}
+\item 
+struct \mbox{\hyperlink{structvoss_1_1chassis_1_1overload}{voss\+::chassis\+::overload$<$ Ts $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{_chassis_command_8hpp_af64120d684f7957e98e6bf5b560dc2c7}{voss\+::chassis\+::\+Diff\+Chassis\+Command}}
+\item 
+\Hypertarget{_chassis_command_8hpp_a7695829862f50289a9ba885a18d59468}\label{_chassis_command_8hpp_a7695829862f50289a9ba885a18d59468} 
+using {\bfseries voss\+::chassis\+::\+Holo\+Chassis\+Command} = std\+::variant$<$\mbox{\hyperlink{structvoss_1_1chassis_1_1_stop}{Stop}}, \mbox{\hyperlink{structvoss_1_1chassis_1_1holo__commands_1_1_voltages}{holo\+\_\+commands\+::\+Voltages}}$>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{_chassis_command_8hpp_a33c2ce2d37fe5cb0f06e2d5d199b401b}\label{_chassis_command_8hpp_a33c2ce2d37fe5cb0f06e2d5d199b401b} 
+{\footnotesize template$<$class... Ts$>$ }\\{\bfseries voss\+::chassis\+::overload} (Ts...) -\/$>$ overload$<$ Ts... $>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVersion}{Version}
+0.\+1.\+2 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2024-\/05-\/16
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2024 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{_chassis_command_8hpp_af64120d684f7957e98e6bf5b560dc2c7}\label{_chassis_command_8hpp_af64120d684f7957e98e6bf5b560dc2c7} 
+\index{ChassisCommand.hpp@{ChassisCommand.hpp}!DiffChassisCommand@{DiffChassisCommand}}
+\index{DiffChassisCommand@{DiffChassisCommand}!ChassisCommand.hpp@{ChassisCommand.hpp}}
+\doxysubsubsection{\texorpdfstring{DiffChassisCommand}{DiffChassisCommand}}
+{\footnotesize\ttfamily using voss\+::chassis\+::\+Diff\+Chassis\+Command}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ std::variant<Stop,\ diff\_commands::Voltages,\ diff\_commands::Chained,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ diff\_commands::Swing>}
+
+\end{DoxyCode}
