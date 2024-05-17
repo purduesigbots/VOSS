@@ -50,7 +50,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
     * **Track width**
       - `.with_track_width(double track_width_distance)`
     * **Left right TPI** (ratio of encoder rotations to 1 inch of linear movement)
-      - `.with_left_right_tip(double tpi_value)`
+      - `.with_left_right_tpi(double tpi_value)`
 3. Call it to build --> `.build()`
 ```cpp
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
@@ -74,7 +74,7 @@ void initialize() {
     3. Divide the amount you moved the robot by the measured movement value from the odometry
         * adjustment factor = robot actual move amount/odometry measured amount
     4. Set the new tpi value to the current tpi value multiplied by the value you got from step 3
-        * new tip = old tpi x adjustment factor
+        * new tpi = old tpi x adjustment factor
 
 ### The basics of PID (Proportional Integral Derivative controllers)
 * **Linear error** = Linear distance from desired position to current position (inches)
@@ -204,6 +204,11 @@ auto arc = voss::controller::ArcPIDControllerBuilder(odom)
 * We will be creating a differential drive chassis in global scope
 * Call `DiffChassis(std::initializer_list<int8_t> left_motors, std::initializer_list<int8_t> right_motors, controller_ptr default_controller, ec_ptr ec, double slew_step, pros::motor_brake_mode_e brakeMode)`
 ```cpp
+#define LEFT_MOTORS                                                            \
+    { -4, -1, -21, 8, 13 }
+#define RIGHT_MOTORS                                                           \
+    { 10, 3, 9, -7, -15 }
+
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8, pros::E_MOTOR_BRAKE_COAST);
 //we recommend using the pid controller as default controller
 ```
