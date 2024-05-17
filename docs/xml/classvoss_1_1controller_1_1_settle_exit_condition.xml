@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_settle_exit_condition" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::SettleExitCondition</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public" virt="non-virtual">voss::controller::AbstractExitCondition</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1a0df9df3744bf43fc465104d6e7f2ee76" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::controller::SettleExitCondition::settle_time</definition>
+        <argsstring></argsstring>
+        <name>settle_time</name>
+        <qualifiedname>voss::controller::SettleExitCondition::settle_time</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="19" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1a8953b9d23c7ba218aaaf9a33a5b9090e" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::controller::SettleExitCondition::current_time</definition>
+        <argsstring></argsstring>
+        <name>current_time</name>
+        <qualifiedname>voss::controller::SettleExitCondition::current_time</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="20" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1a63df7f0454b4522915208159c7afbc86" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::controller::SettleExitCondition::initial_delay</definition>
+        <argsstring></argsstring>
+        <name>initial_delay</name>
+        <qualifiedname>voss::controller::SettleExitCondition::initial_delay</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="21" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1ab9134a0271ac70aa972a4bcf2122c353" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::controller::SettleExitCondition::initial_time</definition>
+        <argsstring></argsstring>
+        <name>initial_time</name>
+        <qualifiedname>voss::controller::SettleExitCondition::initial_time</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="22" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1a300af7f1a3186519defe3c98e0605241" prot="private" static="no" mutable="no">
+        <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+        <definition>Pose voss::controller::SettleExitCondition::prev_pose</definition>
+        <argsstring></argsstring>
+        <name>prev_pose</name>
+        <qualifiedname>voss::controller::SettleExitCondition::prev_pose</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="23" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_settle_exit_condition_1a46deab6e56fe10d0e145f84e443ecd53" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::SettleExitCondition::tolerance</definition>
+        <argsstring></argsstring>
+        <name>tolerance</name>
+        <qualifiedname>voss::controller::SettleExitCondition::tolerance</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="24" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_settle_exit_condition_1a47be3ecc18d027e89327d753c129fc9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::SettleExitCondition::SettleExitCondition</definition>
+        <argsstring>(int settle_time, double tolerance, int initial_delay)</argsstring>
+        <name>SettleExitCondition</name>
+        <qualifiedname>voss::controller::SettleExitCondition::SettleExitCondition</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>settle_time</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>tolerance</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>initial_delay</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="27" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_settle_exit_condition_1ad059800f5a622eb541fa92475700f0f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool voss::controller::SettleExitCondition::is_met</definition>
+        <argsstring>(Pose current_pose, bool thru) override</argsstring>
+        <name>is_met</name>
+        <qualifiedname>voss::controller::SettleExitCondition::is_met</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a268a765c6c383117b4d93176b54bf551">is_met</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+          <declname>current_pose</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="28" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_settle_exit_condition_1a4737031407f23cbd8df3074455e58353" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::SettleExitCondition::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::SettleExitCondition::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a5b9b63fc95bb836b8d0c0742c1fd95a3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="29" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::SettleExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_settle_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target_pose</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::SettleExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_settle_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" line="16" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/SettleExitCondition.hpp" bodystart="16" bodyend="30"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a8953b9d23c7ba218aaaf9a33a5b9090e" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>current_time</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a63df7f0454b4522915208159c7afbc86" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>initial_delay</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1ab9134a0271ac70aa972a4bcf2122c353" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>initial_time</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1ad059800f5a622eb541fa92475700f0f9" prot="public" virt="virtual"><scope>voss::controller::SettleExitCondition</scope><name>is_met</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a300af7f1a3186519defe3c98e0605241" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>prev_pose</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a4737031407f23cbd8df3074455e58353" prot="public" virt="virtual"><scope>voss::controller::SettleExitCondition</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a77ed6c2a7a72a66efb7b79abb602a593" prot="public" virt="virtual"><scope>voss::controller::SettleExitCondition</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a0df9df3744bf43fc465104d6e7f2ee76" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>settle_time</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a47be3ecc18d027e89327d753c129fc9c" prot="public" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>SettleExitCondition</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a69482f5baf26eb89b8c9e5076fe9c75c" prot="protected" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>target_has_coordinate</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1ada9b1f97f3868649045acb093a911bec" prot="protected" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>target_has_heading</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1abd47978aa86281c68ed5df2bfdfc1d02" prot="protected" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>target_pose</name></member>
+      <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a46deab6e56fe10d0e145f84e443ecd53" prot="private" virt="non-virtual"><scope>voss::controller::SettleExitCondition</scope><name>tolerance</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

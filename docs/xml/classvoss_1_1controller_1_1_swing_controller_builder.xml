@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_swing_controller_builder" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::SwingControllerBuilder</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_builder_1abebe95466d14afc8d571459d37642e42" prot="private" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1controller_1_1_swing_controller" kindref="compound">SwingController</ref></type>
+        <definition>SwingController voss::controller::SwingControllerBuilder::ctrl</definition>
+        <argsstring></argsstring>
+        <name>ctrl</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::ctrl</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_builder_1a09ca99d4fa7462f2efbfee6a5852f9ac" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::SwingControllerBuilder::SwingControllerBuilder</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>SwingControllerBuilder</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::SwingControllerBuilder</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="23" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_builder_1a58c82aa1a5db5d73efe8bf23a5e74855" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_swing_controller_builder" kindref="compound">SwingControllerBuilder</ref> &amp;</type>
+        <definition>SwingControllerBuilder &amp; voss::controller::SwingControllerBuilder::with_angular_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>with_angular_constants</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::with_angular_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="30" column="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_builder_1ae547e8ab66f21edf4c136eebfeddc564" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_swing_controller" kindref="compound">SwingController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; SwingController &gt; voss::controller::SwingControllerBuilder::build</definition>
+        <argsstring>()</argsstring>
+        <name>build</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::build</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="33" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_builder_1a78d6614ad374b92d4e9a6c7b700c9e33" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_swing_controller_builder" kindref="compound">SwingControllerBuilder</ref></type>
+        <definition>static SwingControllerBuilder voss::controller::SwingControllerBuilder::new_builder</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>new_builder</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::new_builder</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="26" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_builder_1a8cd822764507b78ce082bc5ef792c0ad" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_swing_controller_builder" kindref="compound">SwingControllerBuilder</ref></type>
+        <definition>static SwingControllerBuilder voss::controller::SwingControllerBuilder::from</definition>
+        <argsstring>(SwingController swc)</argsstring>
+        <name>from</name>
+        <qualifiedname>voss::controller::SwingControllerBuilder::from</qualifiedname>
+        <param>
+          <type><ref refid="classvoss_1_1controller_1_1_swing_controller" kindref="compound">SwingController</ref></type>
+          <declname>swc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="28" column="35"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingControllerBuilder.hpp" bodystart="18" bodyend="34"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1ae547e8ab66f21edf4c136eebfeddc564" prot="public" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>build</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1abebe95466d14afc8d571459d37642e42" prot="private" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>ctrl</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a8cd822764507b78ce082bc5ef792c0ad" prot="public" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>from</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a78d6614ad374b92d4e9a6c7b700c9e33" prot="public" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>new_builder</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a09ca99d4fa7462f2efbfee6a5852f9ac" prot="public" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>SwingControllerBuilder</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a58c82aa1a5db5d73efe8bf23a5e74855" prot="public" virt="non-virtual"><scope>voss::controller::SwingControllerBuilder</scope><name>with_angular_constants</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

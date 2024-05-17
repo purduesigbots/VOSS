@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_p_i_d_controller" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::PIDController</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_controller" prot="public" virt="non-virtual">voss::controller::AbstractController</basecompoundref>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a0d9b7d30d68f221968edac2d54a0215f" prot="protected" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_p_i_d_controller" kindref="compound">PIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;PIDController&gt; voss::controller::PIDController::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <qualifiedname>voss::controller::PIDController::p</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a12a4fb22c5d95ce50978f2568bcb7ebc" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1utils_1_1_p_i_d" kindref="compound">utils::PID</ref></type>
+        <definition>utils::PID voss::controller::PIDController::linear_pid</definition>
+        <argsstring></argsstring>
+        <name>linear_pid</name>
+        <qualifiedname>voss::controller::PIDController::linear_pid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="22" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a67fde1f5dc508b51a0558545b0ae0503" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1utils_1_1_p_i_d" kindref="compound">utils::PID</ref></type>
+        <definition>utils::PID voss::controller::PIDController::angular_pid</definition>
+        <argsstring></argsstring>
+        <name>angular_pid</name>
+        <qualifiedname>voss::controller::PIDController::angular_pid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="22" column="27" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a5ce94a559fb7248dd9a668e62c9e0f3d" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::PIDController::min_error</definition>
+        <argsstring></argsstring>
+        <name>min_error</name>
+        <qualifiedname>voss::controller::PIDController::min_error</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="23" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1aa7328b96adad0e2d1ce20b56c3948a0b" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool voss::controller::PIDController::can_reverse</definition>
+        <argsstring></argsstring>
+        <name>can_reverse</name>
+        <qualifiedname>voss::controller::PIDController::can_reverse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="24" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a4c0be59569359893eae805e04a063375" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::PIDController::min_vel</definition>
+        <argsstring></argsstring>
+        <name>min_vel</name>
+        <qualifiedname>voss::controller::PIDController::min_vel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="26" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_p_i_d_controller_1a4dd515cf358a6aaec233bf110288bc7d" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool voss::controller::PIDController::turn_overshoot</definition>
+        <argsstring></argsstring>
+        <name>turn_overshoot</name>
+        <qualifiedname>voss::controller::PIDController::turn_overshoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="27" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvoss_1_1controller_1_1_p_i_d_controller_1a89ed35988d9b408fb8b9216cc70c4e7f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class PIDControllerBuilder</definition>
+        <argsstring></argsstring>
+        <name>PIDControllerBuilder</name>
+        <qualifiedname>voss::controller::PIDController::PIDControllerBuilder</qualifiedname>
+        <param>
+          <type><ref refid="classvoss_1_1controller_1_1_p_i_d_controller_builder" kindref="compound">PIDControllerBuilder</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="48" column="18" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="friend" id="classvoss_1_1controller_1_1_p_i_d_controller_1a9912ed2822aa9b1a4b79d6b43bfbb7e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class BoomerangControllerBuilder</definition>
+        <argsstring></argsstring>
+        <name>BoomerangControllerBuilder</name>
+        <qualifiedname>voss::controller::PIDController::BoomerangControllerBuilder</qualifiedname>
+        <param>
+          <type><ref refid="classvoss_1_1controller_1_1_boomerang_controller_builder" kindref="compound">BoomerangControllerBuilder</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="49" column="18" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="49" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1a4dc7e4b0da0023457c4ff11b0d1d0607" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::PIDController::PIDController</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>PIDController</name>
+        <qualifiedname>voss::controller::PIDController::PIDController</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="30" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1a1098e94be2d21d4aeda0d2f2ca3a7cea" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::PIDController::get_command</definition>
+        <argsstring>(bool reverse, bool thru, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_command</name>
+        <qualifiedname>voss::controller::PIDController::get_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6">get_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="33" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1a83ad779db24e1a6a15d1d62ff22ed9ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::PIDController::get_angular_command</definition>
+        <argsstring>(bool reverse, bool thru, voss::AngularDirection direction, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_angular_command</name>
+        <qualifiedname>voss::controller::PIDController::get_angular_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da">get_angular_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>voss::AngularDirection</type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="36" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1ade51e68678126911ad711de791bc3fd2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::PIDController::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::PIDController::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="40" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1ae0295296891f2baacb851ee9604b1e95" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_p_i_d_controller" kindref="compound">PIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; PIDController &gt; voss::controller::PIDController::modify_linear_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>modify_linear_constants</name>
+        <qualifiedname>voss::controller::PIDController::modify_linear_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="42" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1add1dda4c126e33ad7942192e8ed2e65f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_p_i_d_controller" kindref="compound">PIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; PIDController &gt; voss::controller::PIDController::modify_angular_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>modify_angular_constants</name>
+        <qualifiedname>voss::controller::PIDController::modify_angular_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="45" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_p_i_d_controller_1af8e984735e0748a1d706026af9259de8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_p_i_d_controller" kindref="compound">PIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; PIDController &gt; voss::controller::PIDController::modify_min_error</definition>
+        <argsstring>(double min_error)</argsstring>
+        <name>modify_min_error</name>
+        <qualifiedname>voss::controller::PIDController::modify_min_error</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>min_error</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="46" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::PIDController</label>
+        <link refid="classvoss_1_1controller_1_1_p_i_d_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::PIDController</label>
+        <link refid="classvoss_1_1controller_1_1_p_i_d_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>angular_pid</edgelabel>
+          <edgelabel>linear_pid</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>voss::utils::PID</label>
+        <link refid="classvoss_1_1utils_1_1_p_i_d"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/PIDController.hpp" bodystart="18" bodyend="50"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>AbstractController</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a67fde1f5dc508b51a0558545b0ae0503" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>angular_pid</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a9912ed2822aa9b1a4b79d6b43bfbb7e2" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>BoomerangControllerBuilder</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1aa7328b96adad0e2d1ce20b56c3948a0b" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>can_reverse</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a83ad779db24e1a6a15d1d62ff22ed9ee" prot="public" virt="virtual"><scope>voss::controller::PIDController</scope><name>get_angular_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a1098e94be2d21d4aeda0d2f2ca3a7cea" prot="public" virt="virtual"><scope>voss::controller::PIDController</scope><name>get_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>l</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a12a4fb22c5d95ce50978f2568bcb7ebc" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>linear_pid</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a5ce94a559fb7248dd9a668e62c9e0f3d" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>min_error</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4c0be59569359893eae805e04a063375" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>min_vel</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1add1dda4c126e33ad7942192e8ed2e65f" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>modify_angular_constants</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1ae0295296891f2baacb851ee9604b1e95" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>modify_linear_constants</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1af8e984735e0748a1d706026af9259de8" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>modify_min_error</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a0d9b7d30d68f221968edac2d54a0215f" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>p</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4dc7e4b0da0023457c4ff11b0d1d0607" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>PIDController</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a89ed35988d9b408fb8b9216cc70c4e7f" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>PIDControllerBuilder</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1ade51e68678126911ad711de791bc3fd2" prot="public" virt="virtual"><scope>voss::controller::PIDController</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>set_angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" prot="public" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>target</name></member>
+      <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4dd515cf358a6aaec233bf110288bc7d" prot="protected" virt="non-virtual"><scope>voss::controller::PIDController</scope><name>turn_overshoot</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

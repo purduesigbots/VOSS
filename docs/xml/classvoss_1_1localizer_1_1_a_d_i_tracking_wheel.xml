@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::ADITrackingWheel</compoundname>
+    <basecompoundref refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" prot="public" virt="non-virtual">voss::localizer::AbstractTrackingWheel</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1aa51d912d93ff03fdd6d0db5542732ed0" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::adi::Encoder &gt;</type>
+        <definition>std::unique_ptr&lt;pros::adi::Encoder&gt; voss::localizer::ADITrackingWheel::encoder</definition>
+        <argsstring></argsstring>
+        <name>encoder</name>
+        <qualifiedname>voss::localizer::ADITrackingWheel::encoder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a9c519755898f207e9ad8f5947e37f56d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>double</type>
+        <definition>double voss::localizer::ADITrackingWheel::get_raw_position</definition>
+        <argsstring>() override</argsstring>
+        <name>get_raw_position</name>
+        <qualifiedname>voss::localizer::ADITrackingWheel::get_raw_position</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1ac2dcf52d4925cbdfe0d3c5d3367655aa">get_raw_position</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="23" column="12"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a0401ae61b75fb7439276918c29a5e20b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::ADITrackingWheel::ADITrackingWheel</definition>
+        <argsstring>(int adi_port)</argsstring>
+        <name>ADITrackingWheel</name>
+        <qualifiedname>voss::localizer::ADITrackingWheel::ADITrackingWheel</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="26" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1ae9d5e97824451b1d364f105d18d03c7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::ADITrackingWheel::ADITrackingWheel</definition>
+        <argsstring>(int smart_port, int adi_port)</argsstring>
+        <name>ADITrackingWheel</name>
+        <qualifiedname>voss::localizer::ADITrackingWheel::ADITrackingWheel</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>smart_port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="27" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a67c657ce268c1dadf334496918895de6" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::ADITrackingWheel::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::localizer::ADITrackingWheel::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a9d5693093b6f91adcf9041bcb73967b9">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="28" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>voss::localizer::ADITrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>voss::localizer::AbstractTrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>voss::localizer::ADITrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>voss::localizer::AbstractTrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp" bodystart="18" bodyend="29"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a666f05afcaa3b4ea7467a365733fda53" prot="protected" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>AbstractTrackingWheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a0401ae61b75fb7439276918c29a5e20b" prot="public" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>ADITrackingWheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1ae9d5e97824451b1d364f105d18d03c7d" prot="public" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>ADITrackingWheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1aa51d912d93ff03fdd6d0db5542732ed0" prot="private" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a8c2a4f2371226c45f118a3357084666b" prot="public" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>get_dist_travelled</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a9c519755898f207e9ad8f5947e37f56d" prot="protected" virt="virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>get_raw_position</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a67c657ce268c1dadf334496918895de6" prot="public" virt="virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>reset</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1aab2f9ae7c48c6754e6ae13444e58af9a" prot="public" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>set_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a3eb28f9b8922ba8420cdde5139523902" prot="protected" virt="non-virtual"><scope>voss::localizer::ADITrackingWheel</scope><name>tpi</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

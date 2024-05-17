@@ -1,0 +1,489 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="api_8hpp" kind="file" language="C++">
+    <compoundname>api.hpp</compoundname>
+    <includes refid="_abstract_chassis_8hpp" local="yes">chassis/AbstractChassis.hpp</includes>
+    <includes local="yes">chassis/ChassisCommand.hpp</includes>
+    <includes refid="_diff_chassis_8hpp" local="yes">chassis/DiffChassis.hpp</includes>
+    <includes refid="_h_drive_chassis_8hpp" local="yes">chassis/HDriveChassis.hpp</includes>
+    <includes refid="_x_drive_chassis_8hpp" local="yes">chassis/XDriveChassis.hpp</includes>
+    <includes refid="_abstract_controller_8hpp" local="yes">controller/AbstractController.hpp</includes>
+    <includes refid="_arc_p_i_d_controller_8hpp" local="yes">controller/ArcPIDController.hpp</includes>
+    <includes refid="_arc_p_i_d_controller_builder_8hpp" local="yes">controller/ArcPIDControllerBuilder.hpp</includes>
+    <includes refid="_boomerang_controller_8hpp" local="yes">controller/BoomerangController.hpp</includes>
+    <includes refid="_boomerang_controller_builder_8hpp" local="yes">controller/BoomerangControllerBuilder.hpp</includes>
+    <includes refid="_p_i_d_controller_8hpp" local="yes">controller/PIDController.hpp</includes>
+    <includes refid="_p_i_d_controller_builder_8hpp" local="yes">controller/PIDControllerBuilder.hpp</includes>
+    <includes refid="_swing_controller_8hpp" local="yes">controller/SwingController.hpp</includes>
+    <includes refid="_swing_controller_builder_8hpp" local="yes">controller/SwingControllerBuilder.hpp</includes>
+    <includes refid="_abstract_exit_condition_8hpp" local="yes">exit_conditions/AbstractExitCondition.hpp</includes>
+    <includes refid="_exit_conditions_8hpp" local="yes">exit_conditions/ExitConditions.hpp</includes>
+    <includes refid="_settle_exit_condition_8hpp" local="yes">exit_conditions/SettleExitCondition.hpp</includes>
+    <includes refid="_time_out_exit_condition_8hpp" local="yes">exit_conditions/TimeOutExitCondition.hpp</includes>
+    <includes refid="_tolerance_angular_exit_condition_8hpp" local="yes">exit_conditions/ToleranceAngularExitCondition.hpp</includes>
+    <includes refid="_tolerance_linear_exit_condition_8hpp" local="yes">exit_conditions/ToleranceLinearExitCondition.hpp</includes>
+    <includes refid="_abstract_localizer_8hpp" local="yes">localizer/AbstractLocalizer.hpp</includes>
+    <includes refid="_a_d_i_localizer_8hpp" local="yes">localizer/ADILocalizer.hpp</includes>
+    <includes refid="_a_d_i_localizer_builder_8hpp" local="yes">localizer/ADILocalizerBuilder.hpp</includes>
+    <includes refid="_g_p_s_localizer_8hpp" local="yes">localizer/GPSLocalizer.hpp</includes>
+    <includes refid="_i_m_e_localizer_8hpp" local="yes">localizer/IMELocalizer.hpp</includes>
+    <includes refid="_i_m_e_localizer_builder_8hpp" local="yes">localizer/IMELocalizerBuilder.hpp</includes>
+    <includes refid="_tracking_wheel_localizer_8hpp" local="yes">localizer/TrackingWheelLocalizer.hpp</includes>
+    <includes refid="_tracking_wheel_localizer_builder_8hpp" local="yes">localizer/TrackingWheelLocalizerBuilder.hpp</includes>
+    <includes refid="_selector_8hpp" local="yes">selector/Selector.hpp</includes>
+    <includes refid="angle_8hpp" local="yes">utils/angle.hpp</includes>
+    <includes refid="flags_8hpp" local="yes">utils/flags.hpp</includes>
+    <includes refid="_point_8hpp" local="yes">utils/Point.hpp</includes>
+    <includes refid="_pose_8hpp" local="yes">utils/Pose.hpp</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>api.hpp</label>
+        <link refid="api_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>chassis/AbstractChassis.hpp</label>
+        <link refid="_abstract_chassis_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>chassis/DiffChassis.hpp</label>
+        <link refid="_diff_chassis_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>chassis/HDriveChassis.hpp</label>
+        <link refid="_h_drive_chassis_8hpp_source"/>
+      </node>
+      <node id="25">
+        <label>chassis/XDriveChassis.hpp</label>
+        <link refid="_x_drive_chassis_8hpp_source"/>
+      </node>
+      <node id="6">
+        <label>VOSS/controller/AbstractController.hpp</label>
+        <link refid="_abstract_controller_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="26">
+        <label>controller/ArcPIDController.hpp</label>
+        <link refid="_arc_p_i_d_controller_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="28">
+        <label>controller/ArcPIDControllerBuilder.hpp</label>
+        <link refid="_arc_p_i_d_controller_builder_8hpp"/>
+        <childnode refid="26" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>controller/BoomerangController.hpp</label>
+        <link refid="_boomerang_controller_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>controller/BoomerangControllerBuilder.hpp</label>
+        <link refid="_boomerang_controller_builder_8hpp"/>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>PIDController.hpp</label>
+        <link refid="_p_i_d_controller_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>controller/PIDControllerBuilder.hpp</label>
+        <link refid="_p_i_d_controller_builder_8hpp"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>controller/SwingController.hpp</label>
+        <link refid="_swing_controller_8hpp"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="34">
+        <label>controller/SwingControllerBuilder.hpp</label>
+        <link refid="_swing_controller_builder_8hpp"/>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>VOSS/exit_conditions/AbstractExitCondition.hpp</label>
+        <link refid="_abstract_exit_condition_8hpp"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>exit_conditions/ExitConditions.hpp</label>
+        <link refid="_exit_conditions_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+      </node>
+      <node id="41">
+        <label>exit_conditions/SettleExitCondition.hpp</label>
+        <link refid="_settle_exit_condition_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>exit_conditions/TimeOutExitCondition.hpp</label>
+        <link refid="_time_out_exit_condition_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>ToleranceAngularExitCondition.hpp</label>
+        <link refid="_tolerance_angular_exit_condition_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="36">
+        <label>ToleranceExitCondition.hpp</label>
+        <link refid="_tolerance_exit_condition_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="38">
+        <label>ToleranceLinearExitCondition.hpp</label>
+        <link refid="_tolerance_linear_exit_condition_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="43">
+        <label>localizer/ADILocalizer.hpp</label>
+        <link refid="_a_d_i_localizer_8hpp"/>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="46">
+        <label>localizer/ADILocalizerBuilder.hpp</label>
+        <link refid="_a_d_i_localizer_builder_8hpp"/>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>VOSS/localizer/AbstractLocalizer.hpp</label>
+        <link refid="_abstract_localizer_8hpp"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>VOSS/localizer/AbstractTrackingWheel.hpp</label>
+        <link refid="_abstract_tracking_wheel_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>localizer/GPSLocalizer.hpp</label>
+        <link refid="_g_p_s_localizer_8hpp_source"/>
+      </node>
+      <node id="48">
+        <label>localizer/IMELocalizer.hpp</label>
+        <link refid="_i_m_e_localizer_8hpp"/>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="49">
+        <label>localizer/IMELocalizerBuilder.hpp</label>
+        <link refid="_i_m_e_localizer_builder_8hpp"/>
+        <childnode refid="48" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>localizer/TrackingWheelLocalizer.hpp</label>
+        <link refid="_tracking_wheel_localizer_8hpp"/>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="52">
+        <label>localizer/TrackingWheelLocalizerBuilder.hpp</label>
+        <link refid="_tracking_wheel_localizer_builder_8hpp"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>selector/Selector.hpp</label>
+        <link refid="_selector_8hpp"/>
+      </node>
+      <node id="27">
+        <label>VOSS/utils/PID.hpp</label>
+        <link refid="_p_i_d_8hpp"/>
+      </node>
+      <node id="15">
+        <label>VOSS/utils/Point.hpp</label>
+        <link refid="_point_8hpp"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>VOSS/utils/Pose.hpp</label>
+        <link refid="_pose_8hpp"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="54">
+        <label>utils/angle.hpp</label>
+        <link refid="angle_8hpp"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>VOSS/utils/flags.hpp</label>
+        <link refid="flags_8hpp"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>ChassisCommand.hpp</label>
+      </node>
+      <node id="7">
+        <label>VOSS/chassis/ChassisCommand.hpp</label>
+      </node>
+      <node id="10">
+        <label>atomic</label>
+      </node>
+      <node id="19">
+        <label>chassis/ChassisCommand.hpp</label>
+      </node>
+      <node id="11">
+        <label>cmath</label>
+      </node>
+      <node id="18">
+        <label>cstdint</label>
+      </node>
+      <node id="39">
+        <label>functional</label>
+      </node>
+      <node id="22">
+        <label>initializer_list</label>
+      </node>
+      <node id="23">
+        <label>memory</label>
+      </node>
+      <node id="16">
+        <label>mutex</label>
+      </node>
+      <node id="12">
+        <label>optional</label>
+      </node>
+      <node id="44">
+        <label>pros/adi.hpp</label>
+      </node>
+      <node id="45">
+        <label>pros/imu.hpp</label>
+      </node>
+      <node id="3">
+        <label>pros/misc.hpp</label>
+      </node>
+      <node id="21">
+        <label>pros/motor_group.hpp</label>
+      </node>
+      <node id="4">
+        <label>pros/motors.hpp</label>
+      </node>
+      <node id="14">
+        <label>pros/rtos.hpp</label>
+      </node>
+      <node id="40">
+        <label>vector</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="version"><para>0.1.2 </para>
+</simplesect>
+<simplesect kind="date"><para>2024-05-16</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2024 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/api.hpp"/>
+  </compounddef>
+</doxygen>

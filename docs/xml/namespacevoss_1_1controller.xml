@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1controller" kind="namespace" language="C++">
+    <compoundname>voss::controller</compoundname>
+    <innerclass refid="classvoss_1_1controller_1_1_abstract_controller" prot="public">voss::controller::AbstractController</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public">voss::controller::AbstractExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" prot="public">voss::controller::ArcPIDController</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder" prot="public">voss::controller::ArcPIDControllerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_boomerang_controller" prot="public">voss::controller::BoomerangController</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_boomerang_controller_builder" prot="public">voss::controller::BoomerangControllerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_custom_exit_condition" prot="public">voss::controller::CustomExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_exit_conditions" prot="public">voss::controller::ExitConditions</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_p_i_d_controller" prot="public">voss::controller::PIDController</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_p_i_d_controller_builder" prot="public">voss::controller::PIDControllerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_prep_line_exit_condition" prot="public">voss::controller::PrepLineExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_settle_exit_condition" prot="public">voss::controller::SettleExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_swing_controller" prot="public">voss::controller::SwingController</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_swing_controller_builder" prot="public">voss::controller::SwingControllerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_time_out_exit_condition" prot="public">voss::controller::TimeOutExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition" prot="public">voss::controller::ToleranceAngularExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_tolerance_exit_condition" prot="public">voss::controller::ToleranceExitCondition</innerclass>
+    <innerclass refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition" prot="public">voss::controller::ToleranceLinearExitCondition</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="17" column="1"/>
+  </compounddef>
+</doxygen>

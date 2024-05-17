@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::IMETrackingWheel</compoundname>
+    <basecompoundref refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" prot="public" virt="non-virtual">voss::localizer::AbstractTrackingWheel</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a5ba537bded66c3538405c98bfb720834" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::v5::Motor &gt;</type>
+        <definition>std::unique_ptr&lt;pros::v5::Motor&gt; voss::localizer::IMETrackingWheel::encoder</definition>
+        <argsstring></argsstring>
+        <name>encoder</name>
+        <qualifiedname>voss::localizer::IMETrackingWheel::encoder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a230ee3861aed2e60de00a402b62e7a1e" prot="protected" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>double</type>
+        <definition>double voss::localizer::IMETrackingWheel::get_raw_position</definition>
+        <argsstring>() override</argsstring>
+        <name>get_raw_position</name>
+        <qualifiedname>voss::localizer::IMETrackingWheel::get_raw_position</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1ac2dcf52d4925cbdfe0d3c5d3367655aa">get_raw_position</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" line="23" column="12"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1ab57c634fff166837c1a5dd35dfd72070" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::IMETrackingWheel::IMETrackingWheel</definition>
+        <argsstring>(int port)</argsstring>
+        <name>IMETrackingWheel</name>
+        <qualifiedname>voss::localizer::IMETrackingWheel::IMETrackingWheel</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" line="26" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a76aa7819a83d9df5de3765b46a05a577" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::IMETrackingWheel::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::localizer::IMETrackingWheel::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a9d5693093b6f91adcf9041bcb73967b9">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" line="27" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::localizer::AbstractTrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel"/>
+      </node>
+      <node id="1">
+        <label>voss::localizer::IMETrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>voss::localizer::AbstractTrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel"/>
+      </node>
+      <node id="1">
+        <label>voss::localizer::IMETrackingWheel</label>
+        <link refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMETrackingWheel.hpp" bodystart="18" bodyend="28"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a666f05afcaa3b4ea7467a365733fda53" prot="protected" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>AbstractTrackingWheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a5ba537bded66c3538405c98bfb720834" prot="private" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a8c2a4f2371226c45f118a3357084666b" prot="public" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>get_dist_travelled</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a230ee3861aed2e60de00a402b62e7a1e" prot="protected" virt="virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>get_raw_position</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1ab57c634fff166837c1a5dd35dfd72070" prot="public" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>IMETrackingWheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a76aa7819a83d9df5de3765b46a05a577" prot="public" virt="virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>reset</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1aab2f9ae7c48c6754e6ae13444e58af9a" prot="public" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>set_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a3eb28f9b8922ba8420cdde5139523902" prot="protected" virt="non-virtual"><scope>voss::localizer::IMETrackingWheel</scope><name>tpi</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

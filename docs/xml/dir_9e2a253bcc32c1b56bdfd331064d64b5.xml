@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_9e2a253bcc32c1b56bdfd331064d64b5" kind="dir">
+    <compoundname>utils</compoundname>
+    <innerfile refid="angle_8hpp">angle.hpp</innerfile>
+    <innerfile refid="flags_8hpp">flags.hpp</innerfile>
+    <innerfile refid="_p_i_d_8hpp">PID.hpp</innerfile>
+    <innerfile refid="_point_8hpp">Point.hpp</innerfile>
+    <innerfile refid="_pose_8hpp">Pose.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/"/>
+  </compounddef>
+</doxygen>

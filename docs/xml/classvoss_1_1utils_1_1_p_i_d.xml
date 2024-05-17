@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1utils_1_1_p_i_d" kind="class" language="C++" prot="public">
+    <compoundname>voss::utils::PID</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1utils_1_1_p_i_d_1ad33a589f217d0b592e74ec431627afc8" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::utils::PID::kP</definition>
+        <argsstring></argsstring>
+        <name>kP</name>
+        <qualifiedname>voss::utils::PID::kP</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="16" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1utils_1_1_p_i_d_1a02fbf1ad579a11e6c10ee3ee41676930" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::utils::PID::kI</definition>
+        <argsstring></argsstring>
+        <name>kI</name>
+        <qualifiedname>voss::utils::PID::kI</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="16" column="15" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1utils_1_1_p_i_d_1aa8169b0eadcee02c8dd2b06f61e751dd" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::utils::PID::kD</definition>
+        <argsstring></argsstring>
+        <name>kD</name>
+        <qualifiedname>voss::utils::PID::kD</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="16" column="18" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1utils_1_1_p_i_d_1a7f3972cc85c87b7ec7a1c47b15a12839" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::utils::PID::prev_error</definition>
+        <argsstring></argsstring>
+        <name>prev_error</name>
+        <qualifiedname>voss::utils::PID::prev_error</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="17" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1utils_1_1_p_i_d_1a974696369e88d0cb3b37d584484ebe39" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::utils::PID::total_error</definition>
+        <argsstring></argsstring>
+        <name>total_error</name>
+        <qualifiedname>voss::utils::PID::total_error</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="17" column="23" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1utils_1_1_p_i_d_1a488a28877cee79d18d1ec4aec674abd8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::utils::PID::PID</definition>
+        <argsstring>()</argsstring>
+        <name>PID</name>
+        <qualifiedname>voss::utils::PID::PID</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="20" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1utils_1_1_p_i_d_1a660a783bd7367616e12892c921fdac6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::utils::PID::PID</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>PID</name>
+        <qualifiedname>voss::utils::PID::PID</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="21" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1utils_1_1_p_i_d_1ae5f7d86d15ebeebedcd0d695eff49cbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::utils::PID::update</definition>
+        <argsstring>(double error)</argsstring>
+        <name>update</name>
+        <qualifiedname>voss::utils::PID::update</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="22" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1utils_1_1_p_i_d_1a3e8b5f28d89b02a6689da624221c43f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::utils::PID::reset</definition>
+        <argsstring>()</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::utils::PID::reset</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="23" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1utils_1_1_p_i_d_1a5730bab4c62f341812b2c9ec8bc63f2c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::utils::PID::set_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>set_constants</name>
+        <qualifiedname>voss::utils::PID::set_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="24" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="14" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" bodystart="14" bodyend="25"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1aa8169b0eadcee02c8dd2b06f61e751dd" prot="private" virt="non-virtual"><scope>voss::utils::PID</scope><name>kD</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a02fbf1ad579a11e6c10ee3ee41676930" prot="private" virt="non-virtual"><scope>voss::utils::PID</scope><name>kI</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1ad33a589f217d0b592e74ec431627afc8" prot="private" virt="non-virtual"><scope>voss::utils::PID</scope><name>kP</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a488a28877cee79d18d1ec4aec674abd8" prot="public" virt="non-virtual"><scope>voss::utils::PID</scope><name>PID</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a660a783bd7367616e12892c921fdac6f" prot="public" virt="non-virtual"><scope>voss::utils::PID</scope><name>PID</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a7f3972cc85c87b7ec7a1c47b15a12839" prot="private" virt="non-virtual"><scope>voss::utils::PID</scope><name>prev_error</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a3e8b5f28d89b02a6689da624221c43f9" prot="public" virt="non-virtual"><scope>voss::utils::PID</scope><name>reset</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a5730bab4c62f341812b2c9ec8bc63f2c" prot="public" virt="non-virtual"><scope>voss::utils::PID</scope><name>set_constants</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1a974696369e88d0cb3b37d584484ebe39" prot="private" virt="non-virtual"><scope>voss::utils::PID</scope><name>total_error</name></member>
+      <member refid="classvoss_1_1utils_1_1_p_i_d_1ae5f7d86d15ebeebedcd0d695eff49cbd" prot="public" virt="non-virtual"><scope>voss::utils::PID</scope><name>update</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

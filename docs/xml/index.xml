@@ -1,0 +1,597 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.10.0" xml:lang="en-US">
+  <compound refid="classvoss_1_1chassis_1_1_abstract_chassis" kind="class"><name>voss::chassis::AbstractChassis</name>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1adc91b88ada1d2667620264722bb08c3f" kind="variable"><name>default_controller</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a227c01ce1295d147456d60a4e76d8b02" kind="variable"><name>default_ec</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a330d7d3482c39fd6fd4a1ee5f85a5f59" kind="variable"><name>task</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a987d904c8e0d852a56ff981bd773e330" kind="variable"><name>task_running</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a93dabea6a6752f30838cdb4cf83e2d64" kind="variable"><name>brakeMode</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa816ea07cfc6db8f7c63d7c9ae40b9c8" kind="function"><name>move_task</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a429dbb1e6dc33c8977281cc9ad7adba2" kind="function"><name>turn_task</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ad202a5d089ec6be9644e96df3f693d33" kind="function"><name>AbstractChassis</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aaf2971bba7fe0c1b2d930d11b6f46826" kind="function"><name>tank</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a5c344af4f597ff8589e08a58f6f8ae0c" kind="function"><name>arcade</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ae713bbc148f83e5a4a47995afc95da26" kind="function"><name>execute</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1af71c71c045033f7820369096355c8f1a" kind="function"><name>set_brake_mode</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a4cbbe4f0c5a0fca87c85786495894858" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ae34a5de8c8d3025f24b01601ced2fce2" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ac388c1c005b11c668a196565387d9c3b" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a3789aff0c626862cf6d0f7448968fc62" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa921676307a3e621a0a53404f2a6315e" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a8aa5f4723c4c89c66c52670182f784dd" kind="function"><name>move</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa30e86db8ee4f5f0d6bf2a648058fbb1" kind="function"><name>turn</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa0fc63f7bce8c0325ffc72827232f69a" kind="function"><name>turn</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a7bc8f3ad3b551f7c599b791544e6eb70" kind="function"><name>turn</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a05fd095330fcf6629cdc008d1ac73f9f" kind="function"><name>turn_to</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ab91dfae37a766e3f34d1eeb27669cb9a" kind="function"><name>turn_to</name></member>
+    <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aef506fe71217c8282a62e8c5d57bad4f" kind="function"><name>turn_to</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_abstract_controller" kind="class"><name>voss::controller::AbstractController</name>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" kind="variable"><name>l</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" kind="variable"><name>target</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" kind="variable"><name>angular_target</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" kind="function"><name>AbstractController</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6" kind="function"><name>get_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da" kind="function"><name>get_angular_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" kind="function"><name>set_target</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" kind="function"><name>set_angular_target</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_abstract_exit_condition" kind="class"><name>voss::controller::AbstractExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1abd47978aa86281c68ed5df2bfdfc1d02" kind="variable"><name>target_pose</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a69482f5baf26eb89b8c9e5076fe9c75c" kind="function"><name>target_has_coordinate</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1ada9b1f97f3868649045acb093a911bec" kind="function"><name>target_has_heading</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a268a765c6c383117b4d93176b54bf551" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a77ed6c2a7a72a66efb7b79abb602a593" kind="function"><name>set_target</name></member>
+    <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a5b9b63fc95bb836b8d0c0742c1fd95a3" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_abstract_localizer" kind="class"><name>voss::localizer::AbstractLocalizer</name>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a2808c34bc2d36011761bb98dcb721c38" kind="variable"><name>mtx</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a518a8dae8504ec23fbb1e1ef156c0ea7" kind="variable"><name>pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a19cfacb976ddf64b36ca77d795a954bf" kind="function"><name>AbstractLocalizer</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a84c1ef3f3676ab555863052dd71e2d90" kind="function"><name>update</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a201c328c567bed1e4ef8f8fe1b09a0ae" kind="function"><name>begin_localization</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1ac61c7033492bd42b89c9c8b5fcdf810a" kind="function"><name>set_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a0a64e7f58c6c7508967d3724ef2ccc77" kind="function"><name>set_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a5e430b850451087d5f4c29b79fb7c559" kind="function"><name>get_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a58db2565cc9fcaa351b024204a5f9439" kind="function"><name>get_x</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a025dfc27c76064c66dcf4121f9fc2460" kind="function"><name>get_y</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1ab94cda3214b794c1357482a904bc6ee9" kind="function"><name>get_orientation_rad</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a349a071acbafc8b302a7e935ee84a862" kind="function"><name>get_orientation_deg</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a425f697a442e5582f0db1188f057ab47" kind="function"><name>get_position</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a3897273be48e242199726c440659c9ce" kind="function"><name>calibrate</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" kind="class"><name>voss::localizer::AbstractTrackingWheel</name>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a3eb28f9b8922ba8420cdde5139523902" kind="variable"><name>tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a666f05afcaa3b4ea7467a365733fda53" kind="function"><name>AbstractTrackingWheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1ac2dcf52d4925cbdfe0d3c5d3367655aa" kind="function"><name>get_raw_position</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a8c2a4f2371226c45f118a3357084666b" kind="function"><name>get_dist_travelled</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1aab2f9ae7c48c6754e6ae13444e58af9a" kind="function"><name>set_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel_1a9d5693093b6f91adcf9041bcb73967b9" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_a_d_i_localizer" kind="class"><name>voss::localizer::ADILocalizer</name>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a01cc67f61a5fd183b68ecdff93988de3" kind="variable"><name>prev_left_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a714480063eeb536a17a6e40d947a05f1" kind="variable"><name>prev_right_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8c10104016f414cc74192d0122b488a8" kind="variable"><name>prev_middle_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a84edd1671052d8fab700cfbf2eab0a8c" kind="variable"><name>prev_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8e22e86212b672f9bc2962d1275d97d5" kind="variable"><name>left_right_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0fd0a3946ecdcb3c93c9788e828255ab" kind="variable"><name>middle_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa4ad7fc6a7368af8b9dd33aa37b3547e" kind="variable"><name>track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1acccfed051e2442cfb3a9e4b70ffb600e" kind="variable"><name>left_right_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1af1d48c61af79b30a96ebf2c69f4a3a10" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a037fd4e0073d3bb536acc898463bc077" kind="variable"><name>imu_ports</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a65e860aa7e2f5928085226bf2199b7d5" kind="variable"><name>left_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa1627fe4505256e3b0b3479484e8a717" kind="variable"><name>right_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a86ce81fdc7ea8e91c502471ec6f719bb" kind="variable"><name>middle_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1ad259f34d9de11b09445011ced22452d6" kind="variable"><name>imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5d37dba7120d9eddd45e2d3a3f579f19" kind="function"><name>ADILocalizer</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa318a90d1713add4c421f8233efd8c83" kind="function"><name>get_left_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a6bf6b3134681c76eefe7c402c73d61cd" kind="function"><name>get_right_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1af0a42bdcb55fc253441641642478e7da" kind="function"><name>get_middle_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5f05240037e66688d3ffafcc4999418b" kind="function"><name>get_imu_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0ff9e7c700780572e8914d3609fa99bf" kind="function"><name>update</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a9a0c65f10b8aa21b8a2d5d9df72a42a3" kind="function"><name>calibrate</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a564b49f6926a502e4c8c229e0283dc4c" kind="function"><name>set_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a02029009ea60be1ac5fa2e7745415227" kind="function"><name>set_pose</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kind="class"><name>voss::localizer::ADILocalizerBuilder</name>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a380890d118b4bd6ab955e1f6b20e4f92" kind="variable"><name>left</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adcf2bc4501754346719f39db0106cd1d" kind="variable"><name>right</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a35152ff9eb3d60e5b2fe7d3ab350a0fe" kind="variable"><name>mid</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a9c5da7d25db7a700e902dc507935a243" kind="variable"><name>imu_port</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3cfd6db7daed61c2adb20da73356e2a5" kind="variable"><name>lr_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a31d27ad60e18d5ffe52c1ef6b80d50c9" kind="variable"><name>mid_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adf536112ad7db0d36c3e37ca592e21f7" kind="variable"><name>track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a20733143e285167fae5756b28f8a3e3b" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1abac22e7b776b3c7a46276500dc0d19d3" kind="function"><name>ADILocalizerBuilder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a14276260cb9095958661036908d88c81" kind="function"><name>with_left_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a6dc9dfcc1ee102356f5828e089ce8a54" kind="function"><name>with_right_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8133dcb72b66abd79c811444889ed204" kind="function"><name>with_middle_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a23b0d4a2a870f85ca6a9e0c411f6999d" kind="function"><name>with_left_right_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8448a977fba6df8e2855acfa1b350bef" kind="function"><name>with_middle_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a70fab3462efe324f480e0294d134d529" kind="function"><name>with_track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a172d013d8d343aa96c33567ada5a9191" kind="function"><name>with_middle_distance</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1ac228b1f21eeb48f3ee375eb111d557fb" kind="function"><name>with_imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3e4da824712364f2da883c4efd900a86" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a4a30b6263f4a71b99c06ab1f43cdefa2" kind="function"><name>new_builder</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel" kind="class"><name>voss::localizer::ADITrackingWheel</name>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1aa51d912d93ff03fdd6d0db5542732ed0" kind="variable"><name>encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a9c519755898f207e9ad8f5947e37f56d" kind="function"><name>get_raw_position</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a0401ae61b75fb7439276918c29a5e20b" kind="function"><name>ADITrackingWheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1ae9d5e97824451b1d364f105d18d03c7d" kind="function"><name>ADITrackingWheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel_1a67c657ce268c1dadf334496918895de6" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kind="class"><name>voss::controller::ArcPIDController</name>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a2d96300f11da6a0c6af0a0f6c000e503" kind="variable"><name>p</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a639ae6bb37c32458c4c750eb652d4ebf" kind="variable"><name>linear_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ad08b45125149e3f7e597e11270d05a84" kind="variable"><name>angular_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aca8e1cf93ec1eb82e57da4c20304efcf" kind="variable"><name>track_width</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abcebb2fa1aa95cadff718617ea389014" kind="variable"><name>min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a72a6ad2f4b54b293f4c91fa323a0ff19" kind="variable"><name>can_reverse</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ae8f01e228239351711d4f3beb03168e1" kind="variable"><name>arc_radius</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8e10833e89420b7d32ea1618850a6200" kind="variable"><name>arc_center</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6e7ff9223ed8170ddf904db041fefbb4" kind="variable"><name>prev_t</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abeaf74219ef29a2d66960a19e827e084" kind="variable"><name>slew</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a436c29216ec513eedcf4e98bf4c50c97" kind="variable"><name>prev_lin_speed</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a60667c5bb69b713123d8a648fbe967ee" kind="variable"><name>close</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a87be826fd62f3c746864de656d961bab" kind="variable"><name>prev_lin_err</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6830a0f812a1d88fadeb84ffd6cc3c22" kind="variable"><name>total_lin_err</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0d093acfa52d5cd79b85fa67f07ac21c" kind="friend"><name>ArcPIDControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a171539ff6900104129ba446603c427a6" kind="function"><name>ArcPIDController</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8b7c149b90821676944da70a0dea6ee5" kind="function"><name>get_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a09fe8f71fce1dc8583616f726551e6de" kind="function"><name>get_angular_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0a420107573361625259cc4bd662a447" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aed033edec0100bbf131b48c902905e83" kind="function"><name>modify_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a69d2f4384b0e43edc754ea276e0cc6ee" kind="function"><name>modify_track_width</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a1506d81eac7bb66b0bc9afa06bffbb1c" kind="function"><name>modify_min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a7d1cb54e395b718e816b69d50d03081f" kind="function"><name>modify_slew</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder" kind="class"><name>voss::controller::ArcPIDControllerBuilder</name>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a472b17cb5b5a87349441113475840731" kind="variable"><name>ctrl</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a3b1af9b561139a3ee9d9d12128a99dd7" kind="function"><name>ArcPIDControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a3671a98a0137751f9b1acfe92b51250e" kind="function"><name>with_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1aa4366d1da93cb70da76f46b23baac3e6" kind="function"><name>with_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a1e7d62f389a248cdbf9d5de3eba72f92" kind="function"><name>with_track_width</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1aa4e50fb6924cfbb557fe5e3474ed7dc7" kind="function"><name>with_min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a7da68e86f5ece7a4bbf4b6025d021050" kind="function"><name>with_slew</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1aeac2e5b861ab2c78cead2bdecf4e8b81" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a5fd554f75e9cffae6a23830c7db79289" kind="function"><name>new_builder</name></member>
+    <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder_1a1c45196f1ef8bab9922eece2f3f56d89" kind="function"><name>from</name></member>
+  </compound>
+  <compound refid="structvoss_1_1_atomic_pose" kind="struct"><name>voss::AtomicPose</name>
+    <member refid="structvoss_1_1_atomic_pose_1a0f0c34dbb96a8b1d472187f9ca417c9b" kind="variable"><name>x</name></member>
+    <member refid="structvoss_1_1_atomic_pose_1aa4144970c205d868cfeac0a3713ee73c" kind="variable"><name>y</name></member>
+    <member refid="structvoss_1_1_atomic_pose_1a2c71a64bd5b9a72d1afcc4dfc2f5a5ca" kind="variable"><name>theta</name></member>
+    <member refid="structvoss_1_1_atomic_pose_1a8dd0ac78ca3acd68e31c0ecc663cda54" kind="function"><name>operator=</name></member>
+    <member refid="structvoss_1_1_atomic_pose_1a3ee4d291410e155a3b5ee5b1390f6fb8" kind="function"><name>operator=</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_boomerang_controller" kind="class"><name>voss::controller::BoomerangController</name>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a42b73164a67554bf6702d70de03ab982" kind="variable"><name>p</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a449da2094f9ffaf18e83ffa3dd6eb850" kind="variable"><name>lead_pct</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a100ebdebc5efdca68bffe7da99140ca1" kind="variable"><name>carrotPoint</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a208b400db8436af728701f9a079d4e46" kind="variable"><name>linear_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a442cbbabaca0f5a13619f872649300c3" kind="variable"><name>angular_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a279147c85eb623ab6466ca287a27a49f" kind="variable"><name>min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a32f03192a0b42ae3298fb230b3617c61" kind="variable"><name>can_reverse</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a92de1133895df17280c37d09474336a5" kind="variable"><name>min_vel</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a9912ed2822aa9b1a4b79d6b43bfbb7e2" kind="friend"><name>BoomerangControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1ada5e5685ae3d58a46068acf10b0b2ca7" kind="function"><name>BoomerangController</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1ae94f01d925af48d375d00c2c9cd9d2fd" kind="function"><name>get_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1ac4f7771d4053800ce20ee6295f8bc00e" kind="function"><name>get_angular_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a6f672f8a4ca4a6624c7bfc9ddf413373" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a3fbcd08027a9c255530bc0bc432048dc" kind="function"><name>modify_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1a08964f023a80f405328769e65c9c77f5" kind="function"><name>modify_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1ab6e66fdd7779b62f4d1fec6110973306" kind="function"><name>modify_min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_1aa90c3da4642cb15bc7fff6ded8754343" kind="function"><name>modify_lead_pct</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_boomerang_controller_builder" kind="class"><name>voss::controller::BoomerangControllerBuilder</name>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a028612b8e08d06d6aa986c0500e11878" kind="variable"><name>ctrl</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1ab6784cb81b8c11b2bcd664fe8a5fe56a" kind="function"><name>BoomerangControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1af50e577ddc242199e5b428e083f4b7f1" kind="function"><name>with_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a6b4d6610e4ffc3d04b4480e51bf12d35" kind="function"><name>with_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a43ff1dcd0ab7a6ee63d532f51711dbc2" kind="function"><name>with_lead_pct</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a4d5995a74e10b1e41509b16d56c2662b" kind="function"><name>with_min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a445c0ee7a290ed3c74c2c77474c57e22" kind="function"><name>with_min_vel_for_thru</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1a2efed18586e01ed2d1fd503c7e6d7cb8" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1adb077c80749e98075b77e99bd6f50ee9" kind="function"><name>new_builder</name></member>
+    <member refid="classvoss_1_1controller_1_1_boomerang_controller_builder_1ab6f7b68af08c9656939fa01ad544d8ff" kind="function"><name>from</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_custom_exit_condition" kind="class"><name>voss::controller::CustomExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_custom_exit_condition_1a8d7d1f88f55b2bac7d821aab29118889" kind="variable"><name>callback</name></member>
+    <member refid="classvoss_1_1controller_1_1_custom_exit_condition_1ae581c759e15038d65fcee4474ac03004" kind="function"><name>CustomExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_custom_exit_condition_1aa11692d11a5e130b5a17e27ec2a398f4" kind="function"><name>is_met</name></member>
+  </compound>
+  <compound refid="classvoss_1_1chassis_1_1_diff_chassis" kind="class"><name>voss::chassis::DiffChassis</name>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a19f64b5bb29e067f0b6f3abc05ec93c9" kind="variable"><name>left_motors</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1aabdec9c91b37c575e94772f1b4b70686" kind="variable"><name>right_motors</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a724310f3ee0e031147bf47ed9209d725" kind="variable"><name>slew_step</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1aa8d86f6449f4c1f51e94d2ee21d18cb4" kind="variable"><name>prev_voltages</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1adf6a1df7361285b3867421bf30933e2f" kind="function"><name>slew</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a7a2fa47fd1a31515452e3a2dface3f81" kind="function"><name>DiffChassis</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a7565059a3866323cd6837d25d9d7e528" kind="function"><name>tank</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1ab380773aa1e4f1614390dc88f061428a" kind="function"><name>arcade</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1afa0a21644f4687e1e902c54e67f8fbad" kind="function"><name>execute</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a3ab6e4ac00edcae5ccd234fd3bf521b6" kind="function"><name>set_brake_mode</name></member>
+    <member refid="classvoss_1_1chassis_1_1_diff_chassis_1ad43950b8330fec0adad4f1180a57c4f1" kind="function"><name>getMotors</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_exit_conditions" kind="class"><name>voss::controller::ExitConditions</name>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1afaceaa29b89ae3b840e79aa644fc0ecf" kind="variable"><name>conditions</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a8e0bf0f131aeab5ea3c71a330cb85ff6" kind="function"><name>ExitConditions</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1ae3ea2decdc8d078a7cf38ea17d41c388" kind="function"><name>new_conditions</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1adb14e0e89cd05c4385cabb1c080cb3f6" kind="function"><name>set_target</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a27f9d560eff3eee466dab4daedc68436" kind="function"><name>add_settle</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a1f497ebb1515171a098b20762fbd75e0" kind="function"><name>add_timeout</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1ac8dbeb980aa7d914721b21a087782490" kind="function"><name>add_tolerance</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1abee7d5bcf556b9d564d321bdf99c8145" kind="function"><name>add_thru_smoothness</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a9b609abdf20772e2250601a23b06f167" kind="function"><name>add_custom_condition</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a8fdb8b502ffefb4c99a32aac024e9f2f" kind="function"><name>add_condition</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1acdd84eb7e24ddb501cc3f273c4553a77" kind="function"><name>exit_if</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a5d94dd2fcbd45608a9d724adac173e00" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a2fc196aeb12c4a0431aa6a9354f904f6" kind="function"><name>all_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a7e9cd01356b0b01de737a3dba4339690" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1controller_1_1_exit_conditions_1a625c8ca54769f19b090ce4e8e91e3cc1" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_i_m_e_localizer" kind="class"><name>voss::localizer::IMELocalizer</name>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a85ead143cfe8e1ecf957146903891023" kind="variable"><name>prev_left_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a3fb10e64970607f4c70826a0ff0fde2b" kind="variable"><name>prev_right_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a8bd5fe20f0386541731d97c5c65734af" kind="variable"><name>prev_middle_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1aca9ab25fe28aa5f53d14d6df40862cd4" kind="variable"><name>prev_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a5f8206464fc5624d723ea2c1789873dc" kind="variable"><name>left_right_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a78b958d5b49d77e8fadf2321dcf85cfc" kind="variable"><name>middle_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a448a9e9d42dbea14d06f13ac13f64a80" kind="variable"><name>track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a400eed35ff0071dc5e3e9f8057b59f50" kind="variable"><name>left_right_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1abcae8017914e65d480053d4b00f75ff7" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1aa3eeb1851042eed900bfd45ed653eb7e" kind="variable"><name>imu_ports</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1ae375a426762ef0356277e9422a8b4919" kind="variable"><name>left_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a77a8f149a54829ff64215b348d08c705" kind="variable"><name>right_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1ad6e80db91532b62b0bc2d41e66675ca0" kind="variable"><name>horizontal_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a75e4c3df2cf08dfeab530c0916926cff" kind="variable"><name>imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a100fb3eabac1839a484d615a2c54e9dd" kind="function"><name>IMELocalizer</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a1034568bf711a0feba9bdf802b154d93" kind="function"><name>get_left_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1af9c4752026c272cd8a55a6be8219cbd0" kind="function"><name>get_right_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a497e203cbea77a06aea69ae343ac7427" kind="function"><name>get_middle_encoder_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a5e413d98d920daa015a10355ec722155" kind="function"><name>get_imu_value</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1acc56dc44d83fd6732246828d09bd0809" kind="function"><name>update</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a08e8d840fb84b64e547e2bd8ff3e8781" kind="function"><name>calibrate</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a7dff1b0b39b20d18b41f3de7b7fb574f" kind="function"><name>set_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a3d35ca26c2500974ed5a40796ad9a7b9" kind="function"><name>set_pose</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kind="class"><name>voss::localizer::IMELocalizerBuilder</name>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a462ec29c8af7ae757f4b971e55430df5" kind="variable"><name>left_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a7c2b2fba39668c9b92aeac65d450a526" kind="variable"><name>right_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae60850720e828fd7bb958f03ccbdca6f" kind="variable"><name>horizontal_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae6b46282ee0e81ccf2e872c2ad697189" kind="variable"><name>lr_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ac48d3f8cf3f089a498060b72d974ca00" kind="variable"><name>mid_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a1f45c287ff822482b7f08d9f7d0c1598" kind="variable"><name>track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb68813e2d98c994635d5da33106bccd" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a64080e9fcfc02659a294cd4817c2f2b0" kind="variable"><name>imu_port</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a54ae976cb20c16d31e63d17d6da560b3" kind="function"><name>IMELocalizerBuilder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a748dbbca0d10b817d5fba2f66c65b2a6" kind="function"><name>with_left_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb30dd58d2fc9e03e286f98b46237651" kind="function"><name>with_right_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ad6f89ccd6a71fe4818e783dcaf4296fb" kind="function"><name>with_horizontal_motors</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1aac424e02d0374e3b7f602805febcf878" kind="function"><name>with_middle_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a544c9963115cf76ce84d8077199a5a6f" kind="function"><name>with_left_right_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a9f05a30e1af462d99ce65f12857f93a6" kind="function"><name>with_track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1afa9fd1b86b5bc22713b1a3b85f6925bc" kind="function"><name>with_middle_distance</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1adc8615f19aeb896f441fbb417336cbd3" kind="function"><name>with_imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a8972903e2b21cd32648a83126e99e5a5" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a20d865c327f4e1bd021570b55246176c" kind="function"><name>new_builder</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel" kind="class"><name>voss::localizer::IMETrackingWheel</name>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a5ba537bded66c3538405c98bfb720834" kind="variable"><name>encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a230ee3861aed2e60de00a402b62e7a1e" kind="function"><name>get_raw_position</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1ab57c634fff166837c1a5dd35dfd72070" kind="function"><name>IMETrackingWheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel_1a76aa7819a83d9df5de3765b46a05a577" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1utils_1_1_p_i_d" kind="class"><name>voss::utils::PID</name>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1ad33a589f217d0b592e74ec431627afc8" kind="variable"><name>kP</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a02fbf1ad579a11e6c10ee3ee41676930" kind="variable"><name>kI</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1aa8169b0eadcee02c8dd2b06f61e751dd" kind="variable"><name>kD</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a7f3972cc85c87b7ec7a1c47b15a12839" kind="variable"><name>prev_error</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a974696369e88d0cb3b37d584484ebe39" kind="variable"><name>total_error</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a488a28877cee79d18d1ec4aec674abd8" kind="function"><name>PID</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a660a783bd7367616e12892c921fdac6f" kind="function"><name>PID</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1ae5f7d86d15ebeebedcd0d695eff49cbd" kind="function"><name>update</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a3e8b5f28d89b02a6689da624221c43f9" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1utils_1_1_p_i_d_1a5730bab4c62f341812b2c9ec8bc63f2c" kind="function"><name>set_constants</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_p_i_d_controller" kind="class"><name>voss::controller::PIDController</name>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a0d9b7d30d68f221968edac2d54a0215f" kind="variable"><name>p</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a12a4fb22c5d95ce50978f2568bcb7ebc" kind="variable"><name>linear_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a67fde1f5dc508b51a0558545b0ae0503" kind="variable"><name>angular_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a5ce94a559fb7248dd9a668e62c9e0f3d" kind="variable"><name>min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1aa7328b96adad0e2d1ce20b56c3948a0b" kind="variable"><name>can_reverse</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4c0be59569359893eae805e04a063375" kind="variable"><name>min_vel</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4dd515cf358a6aaec233bf110288bc7d" kind="variable"><name>turn_overshoot</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a89ed35988d9b408fb8b9216cc70c4e7f" kind="friend"><name>PIDControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a9912ed2822aa9b1a4b79d6b43bfbb7e2" kind="friend"><name>BoomerangControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a4dc7e4b0da0023457c4ff11b0d1d0607" kind="function"><name>PIDController</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a1098e94be2d21d4aeda0d2f2ca3a7cea" kind="function"><name>get_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1a83ad779db24e1a6a15d1d62ff22ed9ee" kind="function"><name>get_angular_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1ade51e68678126911ad711de791bc3fd2" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1ae0295296891f2baacb851ee9604b1e95" kind="function"><name>modify_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1add1dda4c126e33ad7942192e8ed2e65f" kind="function"><name>modify_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_1af8e984735e0748a1d706026af9259de8" kind="function"><name>modify_min_error</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_p_i_d_controller_builder" kind="class"><name>voss::controller::PIDControllerBuilder</name>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1a4f7db067cff07a248e7db30e4ee0977b" kind="variable"><name>ctrl</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1ab1899a82f7780d024e2daa7b14251bf9" kind="function"><name>PIDControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1a2a85a69cfa4f6870b04f1c40bed520e5" kind="function"><name>with_linear_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1ae6ac77aaa4e598229dc08c2e46dfcd4c" kind="function"><name>with_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1a93fd79d750b2e3d940e23f58097ee139" kind="function"><name>with_min_error</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1aff76ed72ecd98228aeab22e52ae04261" kind="function"><name>with_min_vel_for_thru</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1adcb0da48fe3680eab50245165b9dee38" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1a893baf9b82ecf9e780a32904dddd5dde" kind="function"><name>new_builder</name></member>
+    <member refid="classvoss_1_1controller_1_1_p_i_d_controller_builder_1a3702d2a34c7a296fda2efd7e48b1eea2" kind="function"><name>from</name></member>
+  </compound>
+  <compound refid="structvoss_1_1_point" kind="struct"><name>voss::Point</name>
+    <member refid="structvoss_1_1_point_1a80f69f45f9c65c4066867b8d6c61ceda" kind="variable"><name>x</name></member>
+    <member refid="structvoss_1_1_point_1abea774be1390073e961b19ce5b16b092" kind="variable"><name>y</name></member>
+    <member refid="structvoss_1_1_point_1ad00777167c82ce5846a9e9eaf9643a3a" kind="function"><name>getDistance</name></member>
+  </compound>
+  <compound refid="structvoss_1_1_pose" kind="struct"><name>voss::Pose</name>
+    <member refid="structvoss_1_1_pose_1a884e5e40ccace3304ff63cd506783223" kind="variable"><name>x</name></member>
+    <member refid="structvoss_1_1_pose_1a5ad94aa0f3605c188e8faf44fc1293ca" kind="variable"><name>y</name></member>
+    <member refid="structvoss_1_1_pose_1ab33ff0b7a51ceb5c21fa68400f5a06ee" kind="variable"><name>theta</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_prep_line_exit_condition" kind="class"><name>voss::controller::PrepLineExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a79db532bede9eb60d3f87ec8eae168ee" kind="variable"><name>thru_smoothness</name></member>
+    <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a1000ce239b27b2bc9a0ddbb01ab78fb2" kind="function"><name>PrepLineExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a056534a446aa6684d169a6f39723820d" kind="function"><name>is_met</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel" kind="class"><name>voss::localizer::RotationTrackingWheel</name>
+    <member refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel_1a1e0b6b608bce186a6d1409a4a550717a" kind="variable"><name>encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel_1a07388d848e80529f71380eb56d7a8c95" kind="function"><name>get_raw_position</name></member>
+    <member refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel_1ad0858ca2f848d6af6f70995b05eb5896" kind="function"><name>RotationTrackingWheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel_1ae7a076c78039654c8a9255c7a38dd105" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_settle_exit_condition" kind="class"><name>voss::controller::SettleExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a0df9df3744bf43fc465104d6e7f2ee76" kind="variable"><name>settle_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a8953b9d23c7ba218aaaf9a33a5b9090e" kind="variable"><name>current_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a63df7f0454b4522915208159c7afbc86" kind="variable"><name>initial_delay</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1ab9134a0271ac70aa972a4bcf2122c353" kind="variable"><name>initial_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a300af7f1a3186519defe3c98e0605241" kind="variable"><name>prev_pose</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a46deab6e56fe10d0e145f84e443ecd53" kind="variable"><name>tolerance</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a47be3ecc18d027e89327d753c129fc9c" kind="function"><name>SettleExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1ad059800f5a622eb541fa92475700f0f9" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_settle_exit_condition_1a4737031407f23cbd8df3074455e58353" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_swing_controller" kind="class"><name>voss::controller::SwingController</name>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1ab467de2326570137c79eeaea551c7317" kind="variable"><name>p</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1ac211bdcd1a532e00f981d276e1a2232e" kind="variable"><name>angular_pid</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a63100d8652809fe2c3221fc573ab32ac" kind="variable"><name>can_reverse</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a1c263318d867e6fdecb7b9b21f09cf11" kind="variable"><name>turn_overshoot</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a08853dd20b317627221468f04d154a62" kind="variable"><name>prev_ang_speed</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a72b1013d99b825674c6be8c50a9edf51" kind="friend"><name>SwingControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1ae9705ed7bc1058fa9c328ac32b6d3f04" kind="function"><name>SwingController</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a4e3afc3d89a1c9c63f429180f8085b17" kind="function"><name>get_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a24a6a4aa8d2c825ad14c5868072427ce" kind="function"><name>get_angular_command</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1a7747edcd5f792a9377ae837a54e6c1b1" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_1acb52c2c405c9946d1abed5086c158e59" kind="function"><name>modify_angular_constants</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_swing_controller_builder" kind="class"><name>voss::controller::SwingControllerBuilder</name>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1abebe95466d14afc8d571459d37642e42" kind="variable"><name>ctrl</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a09ca99d4fa7462f2efbfee6a5852f9ac" kind="function"><name>SwingControllerBuilder</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a58c82aa1a5db5d73efe8bf23a5e74855" kind="function"><name>with_angular_constants</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1ae547e8ab66f21edf4c136eebfeddc564" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a78d6614ad374b92d4e9a6c7b700c9e33" kind="function"><name>new_builder</name></member>
+    <member refid="classvoss_1_1controller_1_1_swing_controller_builder_1a8cd822764507b78ce082bc5ef792c0ad" kind="function"><name>from</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_time_out_exit_condition" kind="class"><name>voss::controller::TimeOutExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_time_out_exit_condition_1a4cb296378b2e58b2120e81cdf6b05cfc" kind="variable"><name>timeout</name></member>
+    <member refid="classvoss_1_1controller_1_1_time_out_exit_condition_1aace00c851d922b4dbc9d1140a7e4f147" kind="variable"><name>current_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_time_out_exit_condition_1a9b08be3d333dc96e2abb843f2df9ebab" kind="function"><name>TimeOutExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_time_out_exit_condition_1a918420b57adabc6f7450a1730c8def51" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_time_out_exit_condition_1ac78daffe9a00f727eb51425c2fc93505" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition" kind="class"><name>voss::controller::ToleranceAngularExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1aa84ab54145b6b92b1f7a782259207441" kind="variable"><name>tolerance</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1a4ed9b544c130544687ed81334b083385" kind="variable"><name>tolerance_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1aa0d11cfebc7f72683083c25680913268" kind="variable"><name>current_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1a4975dd4b992361aa6eb032fdbad81e5d" kind="function"><name>ToleranceAngularExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1a4ef3e44a91ac16b00e05b3a23737f2a9" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition_1a35cb00c774df692f3595be53d1ac279a" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_tolerance_exit_condition" kind="class"><name>voss::controller::ToleranceExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a8ed41444c03ce6439fb6440f5f577140" kind="variable"><name>ang_exit</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a2594f8efd861617508371e36a8f0c1e1" kind="variable"><name>lin_exit</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a1c05860dc1e957be6d04a303b7eff5b7" kind="function"><name>set_target</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a73373c0f88625f6cf04aed9d54494d69" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a7a5aadac8c63846aadb81bc0e9112c31" kind="function"><name>reset</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1ab5490a03420c2eba4efdb9be7106e26f" kind="function"><name>add_ang_exit</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a638468bfd0ab62939fc4a928d9fec606" kind="function"><name>add_lin_exit</name></member>
+  </compound>
+  <compound refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition" kind="class"><name>voss::controller::ToleranceLinearExitCondition</name>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1a145ed7371db71eac279402b0ed6b647b" kind="variable"><name>tolerance</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1a6853e760a175241a96d2ff7f803dbd41" kind="variable"><name>tolerance_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1aba0a231f2c9200265d8dc170940231b2" kind="variable"><name>current_time</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1ae8e6e87d6697f3f934468920cb9543a1" kind="function"><name>ToleranceLinearExitCondition</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1a27318f070ac7221fc7e84ffa93ebc5db" kind="function"><name>is_met</name></member>
+    <member refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition_1a325087d25e6f20d400047b3becf02bd8" kind="function"><name>reset</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer" kind="class"><name>voss::localizer::TrackingWheelLocalizer</name>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1ada1f37c874d83b1ca5e22b184be4748c" kind="variable"><name>prev_left_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1afa809f4dd86568f3d23c01ff67b186bd" kind="variable"><name>prev_right_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1af4b6d3d419feb54c82340b26b23626b4" kind="variable"><name>prev_middle_pos</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a223f7db32565435ed1ee4b5394da96e6" kind="variable"><name>prev_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a6b62128a4943ef6a6b84849d5f6638d6" kind="variable"><name>left_right_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1af5215c83a25d36b02daf6e3bb3a227bd" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a5d94f4dc412cb59242868a7d0d420e86" kind="variable"><name>left_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a2e174677c2258ff2457f5cb2af570d7d" kind="variable"><name>right_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a02f5179ad0d7a1f26958d6d0dd3e91e8" kind="variable"><name>middle_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a2b2509e515dc4a7c1e643b249f7c5857" kind="variable"><name>imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a0d2a12b349d4ace111b798f130d6835d" kind="friend"><name>TrackingWheelLocalizerBuilder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1ac8da6218fe678fb0c5937458aaf372ca" kind="function"><name>TrackingWheelLocalizer</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1aece47d3589c6a5d5d46fad74d91e611e" kind="function"><name>update</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a93762739cb2cba4cfc3ad7075b284a29" kind="function"><name>calibrate</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a00962d1384c6c4926477e60ed5a1ba7c" kind="function"><name>set_pose</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a4c1f89d8783bcce77026c7fc209098c2" kind="function"><name>set_pose</name></member>
+  </compound>
+  <compound refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kind="class"><name>voss::localizer::TrackingWheelLocalizerBuilder</name>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abd3602ee672a349ec92d0804c2247bee" kind="variable"><name>left_right_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aecc4b423b3142ed651dc9567de11c06b" kind="variable"><name>middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab161dbc55abc9ce1e2b54110a9cc1e29" kind="variable"><name>left_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa5a7f943831107e025bf36b45d99376e" kind="variable"><name>right_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ad5a328fdb7d38547b04a8bdf23e68487" kind="variable"><name>middle_tracking_wheel</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a7d9904d0c4dfed425dbe28085acc2b24" kind="variable"><name>imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4756ed6828adf8d63cce231e3f8f7a16" kind="function"><name>TrackingWheelLocalizerBuilder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a779625af40b16a75e63b2ec856d082e1" kind="function"><name>with_left_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3c21c3643a2f4edf3b2020da4bed9f91" kind="function"><name>with_left_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a98bb9a05870c4cfd3f93b5e2ae6f8aea" kind="function"><name>with_left_rotation</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4bdec6c7c1c669685f576ce9e6197835" kind="function"><name>with_left_motor</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab3ad2cc7d7505729fc7bfe4e92f06fcf" kind="function"><name>with_right_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0300b073e332c7495d355e05a07862fe" kind="function"><name>with_right_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa48c652ab720bd6a3385582992670808" kind="function"><name>with_right_rotation</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac52f0864323731f7d99e56c811b9cc11" kind="function"><name>with_right_motor</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a5cbf8cbd001d24fca3f5933b9a0dc9f6" kind="function"><name>with_middle_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa9c79ecb024a589b41c726cbeb06197f" kind="function"><name>with_middle_encoder</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac8852399fa0cf2993481f2b81f6d9eb4" kind="function"><name>with_middle_rotation</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a6748b4f13c71a6256e7386c8d88b8eb1" kind="function"><name>with_middle_motor</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1acddbd63cea9a474137315169d6007826" kind="function"><name>with_left_right_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3560a0a0cf3738a8abde2e4735e5f016" kind="function"><name>with_middle_tpi</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a86b5ad0be862a83388cffa05708b7481" kind="function"><name>with_track_width</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a913fbce8806e5d855ac4edabab2a38c8" kind="function"><name>with_middle_dist</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abc0112f185e133ff4a39c425c41b0a0f" kind="function"><name>with_imu</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0d349986295c53d6089b1f83ac0cff84" kind="function"><name>build</name></member>
+    <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a268c61926c2534cb26477538de1c2606" kind="function"><name>new_builder</name></member>
+  </compound>
+  <compound refid="namespacevoss" kind="namespace"><name>voss</name>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069f" kind="enum"><name>Flags</name></member>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fab50339a10e1de285ac99d4c3990b8693" kind="enumvalue"><name>NONE</name></member>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fabe553330beb7b3d994656e0a4e66cd96" kind="enumvalue"><name>ASYNC</name></member>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fa642e0b6684e6165e142c074f1cd8d55c" kind="enumvalue"><name>REVERSE</name></member>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fac3cb497d8ec3c88b9024774b775358e2" kind="enumvalue"><name>RELATIVE</name></member>
+    <member refid="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fae8481083063914d1725f41036be49a90" kind="enumvalue"><name>THRU</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4" kind="enum"><name>AngularDirection</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4ae1f2d5134ed2543d38a0de9751cf75d9" kind="enumvalue"><name>AUTO</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4ab437c6ed212434e8984c403374fe494c" kind="enumvalue"><name>COUNTERCLOCKWISE</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4a59ec5d573abd014f3ae2c26ca962e8cf" kind="enumvalue"><name>CCW</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4acfe39a5621dfe382d2991f32c4ae08da" kind="enumvalue"><name>CLOCKWISE</name></member>
+    <member refid="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4a9af3107a066f6b0defb1cafc0499f6ed" kind="enumvalue"><name>CW</name></member>
+    <member refid="angle_8hpp_1a1fc7195ec3d6a530783dfc9a50b34c80" kind="function"><name>to_radians</name></member>
+    <member refid="angle_8hpp_1a3553191650896a1fe998f63dfc695689" kind="function"><name>to_degrees</name></member>
+    <member refid="angle_8hpp_1a2c85ca9a274100cb7e04f3742862e465" kind="function"><name>norm</name></member>
+    <member refid="angle_8hpp_1a632b6d9543a763d51e15945fbb5508f0" kind="function"><name>norm_delta</name></member>
+    <member refid="flags_8hpp_1a5acd9ee9dac89ca0adf2de5c63d8fddf" kind="function"><name>operator|</name></member>
+    <member refid="flags_8hpp_1ae2a6f7b8d28f34482bca03ad46d6a84d" kind="function"><name>operator&amp;</name></member>
+  </compound>
+  <compound refid="namespacevoss_1_1chassis" kind="namespace"><name>voss::chassis</name>
+    <member refid="_abstract_chassis_8hpp_1a39d18db214d0fedc3423f7e15068d977" kind="typedef"><name>controller_ptr</name></member>
+    <member refid="_abstract_chassis_8hpp_1a6c3d772fe472ad5cdbbde0b60d7fe3e5" kind="typedef"><name>ec_ptr</name></member>
+  </compound>
+  <compound refid="namespacevoss_1_1constants" kind="namespace"><name>voss::constants</name>
+    <member refid="constants_8hpp_1ae59ace087081325206708bd8c97e12ae" kind="variable"><name>MOTOR_UPDATE_DELAY</name></member>
+    <member refid="constants_8hpp_1a45d409432b1665f8e586ed08bfcf7d4e" kind="variable"><name>SENSOR_UPDATE_DELAY</name></member>
+  </compound>
+  <compound refid="namespacevoss_1_1controller" kind="namespace"><name>voss::controller</name>
+  </compound>
+  <compound refid="namespacevoss_1_1localizer" kind="namespace"><name>voss::localizer</name>
+  </compound>
+  <compound refid="namespacevoss_1_1selector" kind="namespace"><name>voss::selector</name>
+    <member refid="_selector_8hpp_1a7d02751eab3c5922a41ca420c6bf0e2b" kind="function"><name>init</name></member>
+    <member refid="_selector_8hpp_1a03300c81c8546e672e8666869f6c0187" kind="function"><name>get_auton</name></member>
+  </compound>
+  <compound refid="namespacevoss_1_1utils" kind="namespace"><name>voss::utils</name>
+  </compound>
+  <compound refid="api_8hpp" kind="file"><name>api.hpp</name>
+  </compound>
+  <compound refid="_abstract_chassis_8hpp" kind="file"><name>AbstractChassis.hpp</name>
+  </compound>
+  <compound refid="_diff_chassis_8hpp" kind="file"><name>DiffChassis.hpp</name>
+  </compound>
+  <compound refid="_h_drive_chassis_8hpp" kind="file"><name>HDriveChassis.hpp</name>
+  </compound>
+  <compound refid="_x_drive_chassis_8hpp" kind="file"><name>XDriveChassis.hpp</name>
+  </compound>
+  <compound refid="constants_8hpp" kind="file"><name>constants.hpp</name>
+  </compound>
+  <compound refid="_abstract_controller_8hpp" kind="file"><name>AbstractController.hpp</name>
+  </compound>
+  <compound refid="_arc_p_i_d_controller_8hpp" kind="file"><name>ArcPIDController.hpp</name>
+  </compound>
+  <compound refid="_arc_p_i_d_controller_builder_8hpp" kind="file"><name>ArcPIDControllerBuilder.hpp</name>
+  </compound>
+  <compound refid="_boomerang_controller_8hpp" kind="file"><name>BoomerangController.hpp</name>
+  </compound>
+  <compound refid="_boomerang_controller_builder_8hpp" kind="file"><name>BoomerangControllerBuilder.hpp</name>
+  </compound>
+  <compound refid="_p_i_d_controller_8hpp" kind="file"><name>PIDController.hpp</name>
+  </compound>
+  <compound refid="_p_i_d_controller_builder_8hpp" kind="file"><name>PIDControllerBuilder.hpp</name>
+  </compound>
+  <compound refid="_swing_controller_8hpp" kind="file"><name>SwingController.hpp</name>
+  </compound>
+  <compound refid="_swing_controller_builder_8hpp" kind="file"><name>SwingControllerBuilder.hpp</name>
+  </compound>
+  <compound refid="_abstract_exit_condition_8hpp" kind="file"><name>AbstractExitCondition.hpp</name>
+  </compound>
+  <compound refid="_custom_exit_condition_8hpp" kind="file"><name>CustomExitCondition.hpp</name>
+  </compound>
+  <compound refid="_exit_conditions_8hpp" kind="file"><name>ExitConditions.hpp</name>
+  </compound>
+  <compound refid="_prep_line_exit_condition_8hpp" kind="file"><name>PrepLineExitCondition.hpp</name>
+  </compound>
+  <compound refid="_settle_exit_condition_8hpp" kind="file"><name>SettleExitCondition.hpp</name>
+  </compound>
+  <compound refid="_time_out_exit_condition_8hpp" kind="file"><name>TimeOutExitCondition.hpp</name>
+  </compound>
+  <compound refid="_tolerance_angular_exit_condition_8hpp" kind="file"><name>ToleranceAngularExitCondition.hpp</name>
+  </compound>
+  <compound refid="_tolerance_exit_condition_8hpp" kind="file"><name>ToleranceExitCondition.hpp</name>
+  </compound>
+  <compound refid="_tolerance_linear_exit_condition_8hpp" kind="file"><name>ToleranceLinearExitCondition.hpp</name>
+  </compound>
+  <compound refid="_abstract_localizer_8hpp" kind="file"><name>AbstractLocalizer.hpp</name>
+  </compound>
+  <compound refid="_abstract_tracking_wheel_8hpp" kind="file"><name>AbstractTrackingWheel.hpp</name>
+  </compound>
+  <compound refid="_a_d_i_localizer_8hpp" kind="file"><name>ADILocalizer.hpp</name>
+  </compound>
+  <compound refid="_a_d_i_localizer_builder_8hpp" kind="file"><name>ADILocalizerBuilder.hpp</name>
+  </compound>
+  <compound refid="_a_d_i_tracking_wheel_8hpp" kind="file"><name>ADITrackingWheel.hpp</name>
+  </compound>
+  <compound refid="_g_p_s_localizer_8hpp" kind="file"><name>GPSLocalizer.hpp</name>
+  </compound>
+  <compound refid="_i_m_e_localizer_8hpp" kind="file"><name>IMELocalizer.hpp</name>
+  </compound>
+  <compound refid="_i_m_e_localizer_builder_8hpp" kind="file"><name>IMELocalizerBuilder.hpp</name>
+  </compound>
+  <compound refid="_i_m_e_tracking_wheel_8hpp" kind="file"><name>IMETrackingWheel.hpp</name>
+  </compound>
+  <compound refid="_rotation_tracking_wheel_8hpp" kind="file"><name>RotationTrackingWheel.hpp</name>
+  </compound>
+  <compound refid="_tracking_wheel_localizer_8hpp" kind="file"><name>TrackingWheelLocalizer.hpp</name>
+  </compound>
+  <compound refid="_tracking_wheel_localizer_builder_8hpp" kind="file"><name>TrackingWheelLocalizerBuilder.hpp</name>
+  </compound>
+  <compound refid="_selector_8hpp" kind="file"><name>Selector.hpp</name>
+  </compound>
+  <compound refid="angle_8hpp" kind="file"><name>angle.hpp</name>
+  </compound>
+  <compound refid="flags_8hpp" kind="file"><name>flags.hpp</name>
+  </compound>
+  <compound refid="_p_i_d_8hpp" kind="file"><name>PID.hpp</name>
+  </compound>
+  <compound refid="_point_8hpp" kind="file"><name>Point.hpp</name>
+  </compound>
+  <compound refid="_pose_8hpp" kind="file"><name>Pose.hpp</name>
+  </compound>
+  <compound refid="dir_34cf5b83b116cccb0def64b91dea5569" kind="dir"><name>chassis</name>
+  </compound>
+  <compound refid="dir_bfc3a32103881673ba6f15ff239b43f6" kind="dir"><name>controller</name>
+  </compound>
+  <compound refid="dir_1982d665c18d75c12f1d9474e4e274aa" kind="dir"><name>exit_conditions</name>
+  </compound>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>include</name>
+  </compound>
+  <compound refid="dir_e9e41d917a61c7cf2323cfd8924e71e3" kind="dir"><name>localizer</name>
+  </compound>
+  <compound refid="dir_d92ee5bf3334e819cb956d6f6118ea64" kind="dir"><name>selector</name>
+  </compound>
+  <compound refid="dir_9e2a253bcc32c1b56bdfd331064d64b5" kind="dir"><name>utils</name>
+  </compound>
+  <compound refid="dir_23e75d62246e42c3c7baebce29b35b12" kind="dir"><name>VOSS</name>
+  </compound>
+</doxygenindex>

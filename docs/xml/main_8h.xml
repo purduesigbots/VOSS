@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="main_8h" kind="file" language="C++">
+    <compoundname>main.h</compoundname>
+    <includes refid="api_8h" local="yes">api.h</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>main.h</label>
+        <link refid="main_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>errno.h</label>
+      </node>
+      <node id="4">
+        <label>math.h</label>
+      </node>
+      <node id="11">
+        <label>pros/adi.h</label>
+      </node>
+      <node id="12">
+        <label>pros/colors.h</label>
+      </node>
+      <node id="13">
+        <label>pros/device.h</label>
+      </node>
+      <node id="14">
+        <label>pros/distance.h</label>
+      </node>
+      <node id="15">
+        <label>pros/error.h</label>
+      </node>
+      <node id="16">
+        <label>pros/ext_adi.h</label>
+      </node>
+      <node id="17">
+        <label>pros/gps.h</label>
+      </node>
+      <node id="18">
+        <label>pros/imu.h</label>
+      </node>
+      <node id="19">
+        <label>pros/link.h</label>
+      </node>
+      <node id="20">
+        <label>pros/llemu.h</label>
+      </node>
+      <node id="21">
+        <label>pros/misc.h</label>
+      </node>
+      <node id="22">
+        <label>pros/motors.h</label>
+      </node>
+      <node id="23">
+        <label>pros/optical.h</label>
+      </node>
+      <node id="24">
+        <label>pros/rotation.h</label>
+      </node>
+      <node id="25">
+        <label>pros/rtos.h</label>
+      </node>
+      <node id="26">
+        <label>pros/screen.h</label>
+      </node>
+      <node id="27">
+        <label>pros/vision.h</label>
+      </node>
+      <node id="5">
+        <label>stdbool.h</label>
+      </node>
+      <node id="6">
+        <label>stddef.h</label>
+      </node>
+      <node id="7">
+        <label>stdint.h</label>
+      </node>
+      <node id="8">
+        <label>stdio.h</label>
+      </node>
+      <node id="9">
+        <label>stdlib.h</label>
+      </node>
+      <node id="10">
+        <label>unistd.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="main_8h_1ae5817dbade24ea595c3ce938b34f9994" prot="public" static="no">
+        <name>PROS_USE_SIMPLE_NAMES</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If defined, some commonly used enums will have preprocessor macros which give a shorter, more convenient naming pattern. If this isn&apos;t desired, simply comment the following line out.</para>
+<para>For instance, E_CONTROLLER_MASTER has a shorter name: CONTROLLER_MASTER. E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but not convienent for most student programmers. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="27" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/main.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8h_1ab1b081349029f8bf68a7f2086732e42b" prot="public" static="no">
+        <name>PROS_USE_LITERALS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>If defined, C++ literals will be available for use. All literals are in the pros::literals namespace.</para>
+<para>For instance, you can do <computeroutput>4_mtr = 50</computeroutput> to set motor 4&apos;s target velocity to 50 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="35" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/main.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="main_8h_1a2df3d06bc5bced154da27fce393f991f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void autonomous</definition>
+        <argsstring>(void)</argsstring>
+        <name>autonomous</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>You should add more #includes here If you find doing pros::Motor() to be tedious and you&apos;d prefer just to do Motor, you can use the namespace with the following commented out line.</para>
+<para>IMPORTANT: Only the okapi or pros namespace may be used, not both concurrently! The okapi namespace will export all symbols inside the pros namespace. Prototypes for the competition control tasks are redefined here to ensure that they can be called from user code (i.e. calling autonomous from a button press in opcontrol() for testing purposes). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="64" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/main.h" declline="64" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="main_8h_1a9efe22aaead3a5e936b5df459de02eba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void initialize</definition>
+        <argsstring>(void)</argsstring>
+        <name>initialize</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="65" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/main.h" declline="65" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="main_8h_1a3ed01880f60e5a3afffc71f623174dbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void disabled</definition>
+        <argsstring>(void)</argsstring>
+        <name>disabled</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="66" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/main.h" declline="66" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="main_8h_1a16a77889800f9a99f69f9dd026013505" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void competition_initialize</definition>
+        <argsstring>(void)</argsstring>
+        <name>competition_initialize</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="67" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/main.h" declline="67" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="main_8h_1a1903abdb5ef0f301d660754c8315fc17" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void opcontrol</definition>
+        <argsstring>(void)</argsstring>
+        <name>opcontrol</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/main.h" line="68" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/main.h" declline="68" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Contains common definitions and header files used throughout your PROS project.</para>
+<para><simplesect kind="copyright"><para>Copyright (c) 2017-2023, Purdue University ACM SIGBots. All rights reserved.</para>
+</simplesect>
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at <ulink url="http://mozilla.org/MPL/2.0/">http://mozilla.org/MPL/2.0/</ulink>. </para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/main.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_34cf5b83b116cccb0def64b91dea5569" kind="dir">
+    <compoundname>chassis</compoundname>
+    <innerfile refid="_abstract_chassis_8hpp">AbstractChassis.hpp</innerfile>
+    <innerfile refid="_diff_chassis_8hpp">DiffChassis.hpp</innerfile>
+    <innerfile refid="_h_drive_chassis_8hpp">HDriveChassis.hpp</innerfile>
+    <innerfile refid="_x_drive_chassis_8hpp">XDriveChassis.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/"/>
+  </compounddef>
+</doxygen>

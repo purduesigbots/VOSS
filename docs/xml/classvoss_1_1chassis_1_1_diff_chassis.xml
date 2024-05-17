@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1chassis_1_1_diff_chassis" kind="class" language="C++" prot="public">
+    <compoundname>voss::chassis::DiffChassis</compoundname>
+    <basecompoundref refid="classvoss_1_1chassis_1_1_abstract_chassis" prot="public" virt="non-virtual">voss::chassis::AbstractChassis</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1chassis_1_1_diff_chassis_1a19f64b5bb29e067f0b6f3abc05ec93c9" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::MotorGroup &gt;</type>
+        <definition>std::unique_ptr&lt;pros::MotorGroup&gt; voss::chassis::DiffChassis::left_motors</definition>
+        <argsstring></argsstring>
+        <name>left_motors</name>
+        <qualifiedname>voss::chassis::DiffChassis::left_motors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="23" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1chassis_1_1_diff_chassis_1aabdec9c91b37c575e94772f1b4b70686" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::MotorGroup &gt;</type>
+        <definition>std::unique_ptr&lt;pros::MotorGroup&gt; voss::chassis::DiffChassis::right_motors</definition>
+        <argsstring></argsstring>
+        <name>right_motors</name>
+        <qualifiedname>voss::chassis::DiffChassis::right_motors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="24" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1chassis_1_1_diff_chassis_1a724310f3ee0e031147bf47ed9209d725" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::chassis::DiffChassis::slew_step</definition>
+        <argsstring></argsstring>
+        <name>slew_step</name>
+        <qualifiedname>voss::chassis::DiffChassis::slew_step</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="25" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1chassis_1_1_diff_chassis_1aa8d86f6449f4c1f51e94d2ee21d18cb4" prot="private" static="no" mutable="no">
+        <type>diff_commands::Voltages</type>
+        <definition>diff_commands::Voltages voss::chassis::DiffChassis::prev_voltages</definition>
+        <argsstring></argsstring>
+        <name>prev_voltages</name>
+        <qualifiedname>voss::chassis::DiffChassis::prev_voltages</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="26" column="29" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1adf6a1df7361285b3867421bf30933e2f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::chassis::DiffChassis::slew</definition>
+        <argsstring>(double target, bool is_left)</argsstring>
+        <name>slew</name>
+        <qualifiedname>voss::chassis::DiffChassis::slew</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>is_left</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="28" column="12"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1a7a2fa47fd1a31515452e3a2dface3f81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::chassis::DiffChassis::DiffChassis</definition>
+        <argsstring>(std::initializer_list&lt; int8_t &gt; left_motors, std::initializer_list&lt; int8_t &gt; right_motors, controller_ptr default_controller, ec_ptr ec, double slew_step=8, pros::motor_brake_mode_e brakeMode=pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST)</argsstring>
+        <name>DiffChassis</name>
+        <qualifiedname>voss::chassis::DiffChassis::DiffChassis</qualifiedname>
+        <param>
+          <type>std::initializer_list&lt; int8_t &gt;</type>
+          <declname>left_motors</declname>
+        </param>
+        <param>
+          <type>std::initializer_list&lt; int8_t &gt;</type>
+          <declname>right_motors</declname>
+        </param>
+        <param>
+          <type>controller_ptr</type>
+          <declname>default_controller</declname>
+        </param>
+        <param>
+          <type>ec_ptr</type>
+          <declname>ec</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>slew_step</declname>
+          <defval>8</defval>
+        </param>
+        <param>
+          <type>pros::motor_brake_mode_e</type>
+          <declname>brakeMode</declname>
+          <defval>pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="31" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1a7565059a3866323cd6837d25d9d7e528" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::chassis::DiffChassis::tank</definition>
+        <argsstring>(double left_speed, double right_speed)</argsstring>
+        <name>tank</name>
+        <qualifiedname>voss::chassis::DiffChassis::tank</qualifiedname>
+        <reimplements refid="classvoss_1_1chassis_1_1_abstract_chassis_1aaf2971bba7fe0c1b2d930d11b6f46826">tank</reimplements>
+        <param>
+          <type>double</type>
+          <declname>left_speed</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>right_speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="38" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1ab380773aa1e4f1614390dc88f061428a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::chassis::DiffChassis::arcade</definition>
+        <argsstring>(double forward_speed, double turn_speed)</argsstring>
+        <name>arcade</name>
+        <qualifiedname>voss::chassis::DiffChassis::arcade</qualifiedname>
+        <reimplements refid="classvoss_1_1chassis_1_1_abstract_chassis_1a5c344af4f597ff8589e08a58f6f8ae0c">arcade</reimplements>
+        <param>
+          <type>double</type>
+          <declname>forward_speed</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>turn_speed</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="39" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1afa0a21644f4687e1e902c54e67f8fbad" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool voss::chassis::DiffChassis::execute</definition>
+        <argsstring>(DiffChassisCommand cmd, double max)</argsstring>
+        <name>execute</name>
+        <qualifiedname>voss::chassis::DiffChassis::execute</qualifiedname>
+        <reimplements refid="classvoss_1_1chassis_1_1_abstract_chassis_1ae713bbc148f83e5a4a47995afc95da26">execute</reimplements>
+        <param>
+          <type>DiffChassisCommand</type>
+          <declname>cmd</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>max</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="41" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1a3ab6e4ac00edcae5ccd234fd3bf521b6" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::chassis::DiffChassis::set_brake_mode</definition>
+        <argsstring>(pros::motor_brake_mode_e mode) override</argsstring>
+        <name>set_brake_mode</name>
+        <qualifiedname>voss::chassis::DiffChassis::set_brake_mode</qualifiedname>
+        <reimplements refid="classvoss_1_1chassis_1_1_abstract_chassis_1af71c71c045033f7820369096355c8f1a">set_brake_mode</reimplements>
+        <param>
+          <type>pros::motor_brake_mode_e</type>
+          <declname>mode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="42" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1chassis_1_1_diff_chassis_1ad43950b8330fec0adad4f1180a57c4f1" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>auto</type>
+        <definition>auto voss::chassis::DiffChassis::getMotors</definition>
+        <argsstring>() const</argsstring>
+        <name>getMotors</name>
+        <qualifiedname>voss::chassis::DiffChassis::getMotors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="44" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="44" bodyend="52"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::chassis::AbstractChassis</label>
+        <link refid="classvoss_1_1chassis_1_1_abstract_chassis"/>
+      </node>
+      <node id="1">
+        <label>voss::chassis::DiffChassis</label>
+        <link refid="classvoss_1_1chassis_1_1_diff_chassis"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>voss::chassis::AbstractChassis</label>
+        <link refid="classvoss_1_1chassis_1_1_abstract_chassis"/>
+      </node>
+      <node id="1">
+        <label>voss::chassis::DiffChassis</label>
+        <link refid="classvoss_1_1chassis_1_1_diff_chassis"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" line="20" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/DiffChassis.hpp" bodystart="20" bodyend="53"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ad202a5d089ec6be9644e96df3f693d33" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>AbstractChassis</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1ab380773aa1e4f1614390dc88f061428a" prot="public" virt="virtual"><scope>voss::chassis::DiffChassis</scope><name>arcade</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a93dabea6a6752f30838cdb4cf83e2d64" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>brakeMode</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1adc91b88ada1d2667620264722bb08c3f" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>default_controller</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a227c01ce1295d147456d60a4e76d8b02" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>default_ec</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a7a2fa47fd1a31515452e3a2dface3f81" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>DiffChassis</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1afa0a21644f4687e1e902c54e67f8fbad" prot="public" virt="virtual"><scope>voss::chassis::DiffChassis</scope><name>execute</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1ad43950b8330fec0adad4f1180a57c4f1" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>getMotors</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a19f64b5bb29e067f0b6f3abc05ec93c9" prot="private" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>left_motors</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a4cbbe4f0c5a0fca87c85786495894858" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ae34a5de8c8d3025f24b01601ced2fce2" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ac388c1c005b11c668a196565387d9c3b" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a3789aff0c626862cf6d0f7448968fc62" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa921676307a3e621a0a53404f2a6315e" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a8aa5f4723c4c89c66c52670182f784dd" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa816ea07cfc6db8f7c63d7c9ae40b9c8" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>move_task</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1aa8d86f6449f4c1f51e94d2ee21d18cb4" prot="private" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>prev_voltages</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1aabdec9c91b37c575e94772f1b4b70686" prot="private" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>right_motors</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a3ab6e4ac00edcae5ccd234fd3bf521b6" prot="public" virt="virtual"><scope>voss::chassis::DiffChassis</scope><name>set_brake_mode</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1adf6a1df7361285b3867421bf30933e2f" prot="private" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>slew</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a724310f3ee0e031147bf47ed9209d725" prot="private" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>slew_step</name></member>
+      <member refid="classvoss_1_1chassis_1_1_diff_chassis_1a7565059a3866323cd6837d25d9d7e528" prot="public" virt="virtual"><scope>voss::chassis::DiffChassis</scope><name>tank</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a330d7d3482c39fd6fd4a1ee5f85a5f59" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>task</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a987d904c8e0d852a56ff981bd773e330" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>task_running</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa30e86db8ee4f5f0d6bf2a648058fbb1" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aa0fc63f7bce8c0325ffc72827232f69a" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a7bc8f3ad3b551f7c599b791544e6eb70" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a429dbb1e6dc33c8977281cc9ad7adba2" prot="protected" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn_task</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1a05fd095330fcf6629cdc008d1ac73f9f" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn_to</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1ab91dfae37a766e3f34d1eeb27669cb9a" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn_to</name></member>
+      <member refid="classvoss_1_1chassis_1_1_abstract_chassis_1aef506fe71217c8282a62e8c5d57bad4f" prot="public" virt="non-virtual"><scope>voss::chassis::DiffChassis</scope><name>turn_to</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

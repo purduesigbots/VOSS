@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvoss_1_1_pose" kind="struct" language="C++" prot="public">
+    <compoundname>voss::Pose</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvoss_1_1_pose_1a884e5e40ccace3304ff63cd506783223" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::Pose::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>voss::Pose::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="20" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvoss_1_1_pose_1a5ad94aa0f3605c188e8faf44fc1293ca" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::Pose::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <qualifiedname>voss::Pose::y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="21" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvoss_1_1_pose_1ab33ff0b7a51ceb5c21fa68400f5a06ee" prot="public" static="no" mutable="no">
+        <type>std::optional&lt; double &gt;</type>
+        <definition>std::optional&lt;double&gt; voss::Pose::theta</definition>
+        <argsstring></argsstring>
+        <name>theta</name>
+        <qualifiedname>voss::Pose::theta</qualifiedname>
+        <initializer>= std::nullopt</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="22" column="19" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="19" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="19" bodyend="23"/>
+    <listofallmembers>
+      <member refid="structvoss_1_1_pose_1ab33ff0b7a51ceb5c21fa68400f5a06ee" prot="public" virt="non-virtual"><scope>voss::Pose</scope><name>theta</name></member>
+      <member refid="structvoss_1_1_pose_1a884e5e40ccace3304ff63cd506783223" prot="public" virt="non-virtual"><scope>voss::Pose</scope><name>x</name></member>
+      <member refid="structvoss_1_1_pose_1a5ad94aa0f3605c188e8faf44fc1293ca" prot="public" virt="non-virtual"><scope>voss::Pose</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_abstract_controller" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>voss::controller::AbstractController</compoundname>
+    <derivedcompoundref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" prot="public" virt="non-virtual">voss::controller::ArcPIDController</derivedcompoundref>
+    <derivedcompoundref refid="classvoss_1_1controller_1_1_boomerang_controller" prot="public" virt="non-virtual">voss::controller::BoomerangController</derivedcompoundref>
+    <derivedcompoundref refid="classvoss_1_1controller_1_1_p_i_d_controller" prot="public" virt="non-virtual">voss::controller::PIDController</derivedcompoundref>
+    <derivedcompoundref refid="classvoss_1_1controller_1_1_swing_controller" prot="public" virt="non-virtual">voss::controller::SwingController</derivedcompoundref>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" prot="protected" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;localizer::AbstractLocalizer&gt; voss::controller::AbstractController::l</definition>
+        <argsstring></argsstring>
+        <name>l</name>
+        <qualifiedname>voss::controller::AbstractController::l</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="22" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" prot="protected" static="no" mutable="no">
+        <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+        <definition>Pose voss::controller::AbstractController::target</definition>
+        <argsstring></argsstring>
+        <name>target</name>
+        <qualifiedname>voss::controller::AbstractController::target</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="23" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::AbstractController::angular_target</definition>
+        <argsstring></argsstring>
+        <name>angular_target</name>
+        <qualifiedname>voss::controller::AbstractController::angular_target</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="24" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::AbstractController::AbstractController</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>AbstractController</name>
+        <qualifiedname>voss::controller::AbstractController::AbstractController</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="27" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>virtual chassis::DiffChassisCommand voss::controller::AbstractController::get_command</definition>
+        <argsstring>(bool reverse, bool thru, std::shared_ptr&lt; AbstractExitCondition &gt; ec)=0</argsstring>
+        <name>get_command</name>
+        <qualifiedname>voss::controller::AbstractController::get_command</qualifiedname>
+        <reimplementedby refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8b7c149b90821676944da70a0dea6ee5">get_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_boomerang_controller_1ae94f01d925af48d375d00c2c9cd9d2fd">get_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_p_i_d_controller_1a1098e94be2d21d4aeda0d2f2ca3a7cea">get_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_swing_controller_1a4e3afc3d89a1c9c63f429180f8085b17">get_command</reimplementedby>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="30" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>virtual chassis::DiffChassisCommand voss::controller::AbstractController::get_angular_command</definition>
+        <argsstring>(bool reverse, bool thru, voss::AngularDirection direction, std::shared_ptr&lt; AbstractExitCondition &gt; ec)=0</argsstring>
+        <name>get_angular_command</name>
+        <qualifiedname>voss::controller::AbstractController::get_angular_command</qualifiedname>
+        <reimplementedby refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a09fe8f71fce1dc8583616f726551e6de">get_angular_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_boomerang_controller_1ac4f7771d4053800ce20ee6295f8bc00e">get_angular_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_p_i_d_controller_1a83ad779db24e1a6a15d1d62ff22ed9ee">get_angular_command</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_swing_controller_1a24a6a4aa8d2c825ad14c5868072427ce">get_angular_command</reimplementedby>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>voss::AngularDirection</type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="33" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void voss::controller::AbstractController::reset</definition>
+        <argsstring>()=0</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::AbstractController::reset</qualifiedname>
+        <reimplementedby refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0a420107573361625259cc4bd662a447">reset</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_boomerang_controller_1a6f672f8a4ca4a6624c7bfc9ddf413373">reset</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_p_i_d_controller_1ade51e68678126911ad711de791bc3fd2">reset</reimplementedby>
+        <reimplementedby refid="classvoss_1_1controller_1_1_swing_controller_1a7747edcd5f792a9377ae837a54e6c1b1">reset</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="37" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::controller::AbstractController::set_target</definition>
+        <argsstring>(Pose target, bool relative, std::shared_ptr&lt; AbstractExitCondition &gt; ec)</argsstring>
+        <name>set_target</name>
+        <qualifiedname>voss::controller::AbstractController::set_target</qualifiedname>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+          <declname>target</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>relative</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="39" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::controller::AbstractController::set_angular_target</definition>
+        <argsstring>(double angle, bool relative)</argsstring>
+        <name>set_angular_target</name>
+        <qualifiedname>voss::controller::AbstractController::set_angular_target</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>angle</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>relative</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="41" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::ArcPIDController</label>
+        <link refid="classvoss_1_1controller_1_1_arc_p_i_d_controller"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>voss::controller::BoomerangController</label>
+        <link refid="classvoss_1_1controller_1_1_boomerang_controller"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>voss::controller::PIDController</label>
+        <link refid="classvoss_1_1controller_1_1_p_i_d_controller"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>voss::controller::SwingController</label>
+        <link refid="classvoss_1_1controller_1_1_swing_controller"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>target</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" line="19" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/AbstractController.hpp" bodystart="19" bodyend="42"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" prot="public" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>AbstractController</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" prot="protected" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da" prot="public" virt="pure-virtual"><scope>voss::controller::AbstractController</scope><name>get_angular_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6" prot="public" virt="pure-virtual"><scope>voss::controller::AbstractController</scope><name>get_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" prot="protected" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>l</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3" prot="public" virt="pure-virtual"><scope>voss::controller::AbstractController</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" prot="public" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>set_angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" prot="public" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" prot="protected" virt="non-virtual"><scope>voss::controller::AbstractController</scope><name>target</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

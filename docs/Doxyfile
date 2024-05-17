@@ -1008,8 +1008,8 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which doxygen is
 # run.
 
-EXCLUDE                = ../../include/main.h \
-                        ../../include/api.h \
+EXCLUDE                = ../include/main.h \
+                        ../include/api.h \
                         ../include/VOSS/chassis/ChassisCommand.hpp
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or
@@ -1122,7 +1122,7 @@ FILTER_SOURCE_PATTERNS =
 # (index.html). This can be useful if you have a project on for instance GitHub
 # and want to reuse the introduction page also for the doxygen output.
 
-USE_MDFILE_AS_MAINPAGE =
+USE_MDFILE_AS_MAINPAGE = ../README.md
 
 # The Fortran standard specifies that for fixed formatted Fortran code all
 # characters from position 72 are to be considered as comment. A common

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_a_d_i_tracking_wheel_8hpp" kind="file" language="C++">
+    <compoundname>ADITrackingWheel.hpp</compoundname>
+    <includes local="yes">pros/adi.hpp</includes>
+    <includes refid="_abstract_tracking_wheel_8hpp" local="yes">VOSS/localizer/AbstractTrackingWheel.hpp</includes>
+    <includes local="no">memory</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>ADITrackingWheel.hpp</label>
+        <link refid="_a_d_i_tracking_wheel_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>VOSS/localizer/AbstractTrackingWheel.hpp</label>
+        <link refid="_abstract_tracking_wheel_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>atomic</label>
+      </node>
+      <node id="5">
+        <label>memory</label>
+      </node>
+      <node id="2">
+        <label>pros/adi.hpp</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel" prot="public">voss::localizer::ADITrackingWheel</innerclass>
+    <innernamespace refid="namespacevoss">voss</innernamespace>
+    <innernamespace refid="namespacevoss_1_1localizer">voss::localizer</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="version"><para>0.1.2 </para>
+</simplesect>
+<simplesect kind="date"><para>2024-05-16</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2024 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADITrackingWheel.hpp"/>
+  </compounddef>
+</doxygen>

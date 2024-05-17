@@ -1,0 +1,336 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::IMELocalizerBuilder</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a462ec29c8af7ae757f4b971e55430df5" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; int8_t &gt;</type>
+        <definition>std::vector&lt;int8_t&gt; voss::localizer::IMELocalizerBuilder::left_motors</definition>
+        <argsstring></argsstring>
+        <name>left_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::left_motors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="18" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a7c2b2fba39668c9b92aeac65d450a526" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; int8_t &gt;</type>
+        <definition>std::vector&lt;int8_t&gt; voss::localizer::IMELocalizerBuilder::right_motors</definition>
+        <argsstring></argsstring>
+        <name>right_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::right_motors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="18" column="29" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae60850720e828fd7bb958f03ccbdca6f" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; int8_t &gt;</type>
+        <definition>std::vector&lt;int8_t&gt; voss::localizer::IMELocalizerBuilder::horizontal_motors</definition>
+        <argsstring></argsstring>
+        <name>horizontal_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::horizontal_motors</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="18" column="42" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae6b46282ee0e81ccf2e872c2ad697189" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::IMELocalizerBuilder::lr_tpi</definition>
+        <argsstring></argsstring>
+        <name>lr_tpi</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::lr_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="19" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ac48d3f8cf3f089a498060b72d974ca00" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::IMELocalizerBuilder::mid_tpi</definition>
+        <argsstring></argsstring>
+        <name>mid_tpi</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::mid_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="19" column="19" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a1f45c287ff822482b7f08d9f7d0c1598" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::IMELocalizerBuilder::track_width</definition>
+        <argsstring></argsstring>
+        <name>track_width</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::track_width</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="20" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb68813e2d98c994635d5da33106bccd" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::IMELocalizerBuilder::middle_dist</definition>
+        <argsstring></argsstring>
+        <name>middle_dist</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::middle_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="21" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a64080e9fcfc02659a294cd4817c2f2b0" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::localizer::IMELocalizerBuilder::imu_port</definition>
+        <argsstring></argsstring>
+        <name>imu_port</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::imu_port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="22" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a54ae976cb20c16d31e63d17d6da560b3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::IMELocalizerBuilder::IMELocalizerBuilder</definition>
+        <argsstring>()</argsstring>
+        <name>IMELocalizerBuilder</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::IMELocalizerBuilder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="25" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a748dbbca0d10b817d5fba2f66c65b2a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_left_motors</definition>
+        <argsstring>(std::vector&lt; int8_t &gt; m)</argsstring>
+        <name>with_left_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_left_motors</qualifiedname>
+        <param>
+          <type>std::vector&lt; int8_t &gt;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="29" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb30dd58d2fc9e03e286f98b46237651" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_right_motors</definition>
+        <argsstring>(std::vector&lt; int8_t &gt; m)</argsstring>
+        <name>with_right_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_right_motors</qualifiedname>
+        <param>
+          <type>std::vector&lt; int8_t &gt;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="30" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ad6f89ccd6a71fe4818e783dcaf4296fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_horizontal_motors</definition>
+        <argsstring>(std::vector&lt; int8_t &gt; m)</argsstring>
+        <name>with_horizontal_motors</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_horizontal_motors</qualifiedname>
+        <param>
+          <type>std::vector&lt; int8_t &gt;</type>
+          <declname>m</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="31" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1aac424e02d0374e3b7f602805febcf878" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_middle_tpi</definition>
+        <argsstring>(double mid_tpi)</argsstring>
+        <name>with_middle_tpi</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_middle_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>mid_tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="32" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a544c9963115cf76ce84d8077199a5a6f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_left_right_tpi</definition>
+        <argsstring>(double lr_tpi)</argsstring>
+        <name>with_left_right_tpi</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_left_right_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>lr_tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="33" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a9f05a30e1af462d99ce65f12857f93a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_track_width</definition>
+        <argsstring>(double track_width)</argsstring>
+        <name>with_track_width</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_track_width</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>track_width</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="34" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1afa9fd1b86b5bc22713b1a3b85f6925bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_middle_distance</definition>
+        <argsstring>(double middle_dist)</argsstring>
+        <name>with_middle_distance</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_middle_distance</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>middle_dist</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="35" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1adc8615f19aeb896f441fbb417336cbd3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref> &amp;</type>
+        <definition>IMELocalizerBuilder &amp; voss::localizer::IMELocalizerBuilder::with_imu</definition>
+        <argsstring>(int imu_port)</argsstring>
+        <name>with_imu</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::with_imu</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>imu_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="36" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a8972903e2b21cd32648a83126e99e5a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer" kindref="compound">IMELocalizer</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; IMELocalizer &gt; voss::localizer::IMELocalizerBuilder::build</definition>
+        <argsstring>()</argsstring>
+        <name>build</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::build</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="38" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a20d865c327f4e1bd021570b55246176c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" kindref="compound">IMELocalizerBuilder</ref></type>
+        <definition>static IMELocalizerBuilder voss::localizer::IMELocalizerBuilder::new_builder</definition>
+        <argsstring>()</argsstring>
+        <name>new_builder</name>
+        <qualifiedname>voss::localizer::IMELocalizerBuilder::new_builder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="27" column="32"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" line="16" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/IMELocalizerBuilder.hpp" bodystart="16" bodyend="39"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a8972903e2b21cd32648a83126e99e5a5" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>build</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae60850720e828fd7bb958f03ccbdca6f" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>horizontal_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a54ae976cb20c16d31e63d17d6da560b3" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>IMELocalizerBuilder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a64080e9fcfc02659a294cd4817c2f2b0" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>imu_port</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a462ec29c8af7ae757f4b971e55430df5" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>left_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ae6b46282ee0e81ccf2e872c2ad697189" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>lr_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ac48d3f8cf3f089a498060b72d974ca00" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>mid_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb68813e2d98c994635d5da33106bccd" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>middle_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a20d865c327f4e1bd021570b55246176c" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>new_builder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a7c2b2fba39668c9b92aeac65d450a526" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>right_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a1f45c287ff822482b7f08d9f7d0c1598" prot="private" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>track_width</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1ad6f89ccd6a71fe4818e783dcaf4296fb" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_horizontal_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1adc8615f19aeb896f441fbb417336cbd3" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_imu</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a748dbbca0d10b817d5fba2f66c65b2a6" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_left_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a544c9963115cf76ce84d8077199a5a6f" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_left_right_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1afa9fd1b86b5bc22713b1a3b85f6925bc" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_middle_distance</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1aac424e02d0374e3b7f602805febcf878" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_middle_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1acb30dd58d2fc9e03e286f98b46237651" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_right_motors</name></member>
+      <member refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder_1a9f05a30e1af462d99ce65f12857f93a6" prot="public" virt="non-virtual"><scope>voss::localizer::IMELocalizerBuilder</scope><name>with_track_width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1selector" kind="namespace" language="C++">
+    <compoundname>voss::selector</compoundname>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_selector_8hpp_1a7d02751eab3c5922a41ca420c6bf0e2b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::selector::init</definition>
+        <argsstring>(int default_auton, const char **autons)</argsstring>
+        <name>init</name>
+        <qualifiedname>voss::selector::init</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>default_auton</declname>
+        </param>
+        <param>
+          <type>const char **</type>
+          <declname>autons</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/selector/Selector.hpp" line="14" column="6" declfile="/Users/rockychen/Desktop/VOSS/include/VOSS/selector/Selector.hpp" declline="14" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="_selector_8hpp_1a03300c81c8546e672e8666869f6c0187" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int voss::selector::get_auton</definition>
+        <argsstring>()</argsstring>
+        <name>get_auton</name>
+        <qualifiedname>voss::selector::get_auton</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/selector/Selector.hpp" line="15" column="5" declfile="/Users/rockychen/Desktop/VOSS/include/VOSS/selector/Selector.hpp" declline="15" declcolumn="5"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/selector/Selector.hpp" line="12" column="1"/>
+  </compounddef>
+</doxygen>

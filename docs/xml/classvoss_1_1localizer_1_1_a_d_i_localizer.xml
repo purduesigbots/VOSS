@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_a_d_i_localizer" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::ADILocalizer</compoundname>
+    <basecompoundref refid="classvoss_1_1localizer_1_1_abstract_localizer" prot="public" virt="non-virtual">voss::localizer::AbstractLocalizer</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a01cc67f61a5fd183b68ecdff93988de3" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::prev_left_pos</definition>
+        <argsstring></argsstring>
+        <name>prev_left_pos</name>
+        <qualifiedname>voss::localizer::ADILocalizer::prev_left_pos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="23" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a714480063eeb536a17a6e40d947a05f1" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::prev_right_pos</definition>
+        <argsstring></argsstring>
+        <name>prev_right_pos</name>
+        <qualifiedname>voss::localizer::ADILocalizer::prev_right_pos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="23" column="31" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8c10104016f414cc74192d0122b488a8" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::prev_middle_pos</definition>
+        <argsstring></argsstring>
+        <name>prev_middle_pos</name>
+        <qualifiedname>voss::localizer::ADILocalizer::prev_middle_pos</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="23" column="46" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a84edd1671052d8fab700cfbf2eab0a8c" prot="private" static="no" mutable="no">
+        <type><ref refid="structvoss_1_1_atomic_pose" kindref="compound">AtomicPose</ref></type>
+        <definition>AtomicPose voss::localizer::ADILocalizer::prev_pose</definition>
+        <argsstring></argsstring>
+        <name>prev_pose</name>
+        <qualifiedname>voss::localizer::ADILocalizer::prev_pose</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="24" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8e22e86212b672f9bc2962d1275d97d5" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::left_right_tpi</definition>
+        <argsstring></argsstring>
+        <name>left_right_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizer::left_right_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="26" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0fd0a3946ecdcb3c93c9788e828255ab" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::middle_tpi</definition>
+        <argsstring></argsstring>
+        <name>middle_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizer::middle_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="26" column="32" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa4ad7fc6a7368af8b9dd33aa37b3547e" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::track_width</definition>
+        <argsstring></argsstring>
+        <name>track_width</name>
+        <qualifiedname>voss::localizer::ADILocalizer::track_width</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="27" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1acccfed051e2442cfb3a9e4b70ffb600e" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::left_right_dist</definition>
+        <argsstring></argsstring>
+        <name>left_right_dist</name>
+        <qualifiedname>voss::localizer::ADILocalizer::left_right_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="28" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1af1d48c61af79b30a96ebf2c69f4a3a10" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::localizer::ADILocalizer::middle_dist</definition>
+        <argsstring></argsstring>
+        <name>middle_dist</name>
+        <qualifiedname>voss::localizer::ADILocalizer::middle_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="28" column="33" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a037fd4e0073d3bb536acc898463bc077" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; int &gt;</type>
+        <definition>std::atomic&lt;int&gt; voss::localizer::ADILocalizer::imu_ports</definition>
+        <argsstring></argsstring>
+        <name>imu_ports</name>
+        <qualifiedname>voss::localizer::ADILocalizer::imu_ports</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="29" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a65e860aa7e2f5928085226bf2199b7d5" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::adi::Encoder &gt;</type>
+        <definition>std::unique_ptr&lt;pros::adi::Encoder&gt; voss::localizer::ADILocalizer::left_encoder</definition>
+        <argsstring></argsstring>
+        <name>left_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizer::left_encoder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="31" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa1627fe4505256e3b0b3479484e8a717" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::adi::Encoder &gt;</type>
+        <definition>std::unique_ptr&lt;pros::adi::Encoder&gt; voss::localizer::ADILocalizer::right_encoder</definition>
+        <argsstring></argsstring>
+        <name>right_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizer::right_encoder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="32" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a86ce81fdc7ea8e91c502471ec6f719bb" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::adi::Encoder &gt;</type>
+        <definition>std::unique_ptr&lt;pros::adi::Encoder&gt; voss::localizer::ADILocalizer::middle_encoder</definition>
+        <argsstring></argsstring>
+        <name>middle_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizer::middle_encoder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="33" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1ad259f34d9de11b09445011ced22452d6" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::IMU &gt;</type>
+        <definition>std::unique_ptr&lt;pros::IMU&gt; voss::localizer::ADILocalizer::imu</definition>
+        <argsstring></argsstring>
+        <name>imu</name>
+        <qualifiedname>voss::localizer::ADILocalizer::imu</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="34" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5d37dba7120d9eddd45e2d3a3f579f19" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::ADILocalizer::ADILocalizer</definition>
+        <argsstring>(int left, int right, int mid, double lr_tpi, double mid_tpi, double track_width, double middle_dist, int imu_port)</argsstring>
+        <name>ADILocalizer</name>
+        <qualifiedname>voss::localizer::ADILocalizer::ADILocalizer</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>left</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>right</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>mid</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>lr_tpi</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>mid_tpi</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>track_width</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>middle_dist</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>imu_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="37" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa318a90d1713add4c421f8233efd8c83" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizer::get_left_encoder_value</definition>
+        <argsstring>()</argsstring>
+        <name>get_left_encoder_value</name>
+        <qualifiedname>voss::localizer::ADILocalizer::get_left_encoder_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="40" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a6bf6b3134681c76eefe7c402c73d61cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizer::get_right_encoder_value</definition>
+        <argsstring>()</argsstring>
+        <name>get_right_encoder_value</name>
+        <qualifiedname>voss::localizer::ADILocalizer::get_right_encoder_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="41" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1af0a42bdcb55fc253441641642478e7da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizer::get_middle_encoder_value</definition>
+        <argsstring>()</argsstring>
+        <name>get_middle_encoder_value</name>
+        <qualifiedname>voss::localizer::ADILocalizer::get_middle_encoder_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="42" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5f05240037e66688d3ffafcc4999418b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizer::get_imu_value</definition>
+        <argsstring>()</argsstring>
+        <name>get_imu_value</name>
+        <qualifiedname>voss::localizer::ADILocalizer::get_imu_value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="43" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0ff9e7c700780572e8914d3609fa99bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::ADILocalizer::update</definition>
+        <argsstring>() override</argsstring>
+        <name>update</name>
+        <qualifiedname>voss::localizer::ADILocalizer::update</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_localizer_1a84c1ef3f3676ab555863052dd71e2d90">update</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="45" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a9a0c65f10b8aa21b8a2d5d9df72a42a3" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::ADILocalizer::calibrate</definition>
+        <argsstring>() override</argsstring>
+        <name>calibrate</name>
+        <qualifiedname>voss::localizer::ADILocalizer::calibrate</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_localizer_1a3897273be48e242199726c440659c9ce">calibrate</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="46" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a564b49f6926a502e4c8c229e0283dc4c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::ADILocalizer::set_pose</definition>
+        <argsstring>(Pose pose) override</argsstring>
+        <name>set_pose</name>
+        <qualifiedname>voss::localizer::ADILocalizer::set_pose</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_localizer_1ac61c7033492bd42b89c9c8b5fcdf810a">set_pose</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+          <declname>pose</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="48" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_1a02029009ea60be1ac5fa2e7745415227" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::localizer::ADILocalizer::set_pose</definition>
+        <argsstring>(double x, double y, double theta) override</argsstring>
+        <name>set_pose</name>
+        <qualifiedname>voss::localizer::ADILocalizer::set_pose</qualifiedname>
+        <reimplements refid="classvoss_1_1localizer_1_1_abstract_localizer_1a0a64e7f58c6c7508967d3724ef2ccc77">set_pose</reimplements>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>theta</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="49" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>voss::localizer::ADILocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_a_d_i_localizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>voss::localizer::AbstractLocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_localizer"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::AtomicPose</label>
+        <link refid="structvoss_1_1_atomic_pose"/>
+      </node>
+      <node id="1">
+        <label>voss::localizer::ADILocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_a_d_i_localizer"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>voss::localizer::AbstractLocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_localizer"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>pose</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" line="20" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizer.hpp" bodystart="20" bodyend="50"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a19cfacb976ddf64b36ca77d795a954bf" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>AbstractLocalizer</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5d37dba7120d9eddd45e2d3a3f579f19" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>ADILocalizer</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a201c328c567bed1e4ef8f8fe1b09a0ae" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>begin_localization</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a9a0c65f10b8aa21b8a2d5d9df72a42a3" prot="public" virt="virtual"><scope>voss::localizer::ADILocalizer</scope><name>calibrate</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a5f05240037e66688d3ffafcc4999418b" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_imu_value</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa318a90d1713add4c421f8233efd8c83" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_left_encoder_value</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1af0a42bdcb55fc253441641642478e7da" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_middle_encoder_value</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a349a071acbafc8b302a7e935ee84a862" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_orientation_deg</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1ab94cda3214b794c1357482a904bc6ee9" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_orientation_rad</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a5e430b850451087d5f4c29b79fb7c559" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a425f697a442e5582f0db1188f057ab47" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_position</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a6bf6b3134681c76eefe7c402c73d61cd" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_right_encoder_value</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a58db2565cc9fcaa351b024204a5f9439" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_x</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a025dfc27c76064c66dcf4121f9fc2460" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>get_y</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1ad259f34d9de11b09445011ced22452d6" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>imu</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a037fd4e0073d3bb536acc898463bc077" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>imu_ports</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a65e860aa7e2f5928085226bf2199b7d5" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>left_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1acccfed051e2442cfb3a9e4b70ffb600e" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>left_right_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8e22e86212b672f9bc2962d1275d97d5" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>left_right_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1af1d48c61af79b30a96ebf2c69f4a3a10" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>middle_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a86ce81fdc7ea8e91c502471ec6f719bb" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>middle_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0fd0a3946ecdcb3c93c9788e828255ab" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>middle_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a2808c34bc2d36011761bb98dcb721c38" prot="protected" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>mtx</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a518a8dae8504ec23fbb1e1ef156c0ea7" prot="protected" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a01cc67f61a5fd183b68ecdff93988de3" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>prev_left_pos</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a8c10104016f414cc74192d0122b488a8" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>prev_middle_pos</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a84edd1671052d8fab700cfbf2eab0a8c" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>prev_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a714480063eeb536a17a6e40d947a05f1" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>prev_right_pos</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa1627fe4505256e3b0b3479484e8a717" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>right_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a564b49f6926a502e4c8c229e0283dc4c" prot="public" virt="virtual"><scope>voss::localizer::ADILocalizer</scope><name>set_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a02029009ea60be1ac5fa2e7745415227" prot="public" virt="virtual"><scope>voss::localizer::ADILocalizer</scope><name>set_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1aa4ad7fc6a7368af8b9dd33aa37b3547e" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizer</scope><name>track_width</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0ff9e7c700780572e8914d3609fa99bf" prot="public" virt="virtual"><scope>voss::localizer::ADILocalizer</scope><name>update</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

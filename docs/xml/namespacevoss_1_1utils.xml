@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1utils" kind="namespace" language="C++">
+    <compoundname>voss::utils</compoundname>
+    <innerclass refid="classvoss_1_1utils_1_1_p_i_d" prot="public">voss::utils::PID</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/PID.hpp" line="12" column="1"/>
+  </compounddef>
+</doxygen>

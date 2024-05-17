@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1chassis" kind="namespace" language="C++">
+    <compoundname>voss::chassis</compoundname>
+    <innerclass refid="classvoss_1_1chassis_1_1_abstract_chassis" prot="public">voss::chassis::AbstractChassis</innerclass>
+    <innerclass refid="classvoss_1_1chassis_1_1_diff_chassis" prot="public">voss::chassis::DiffChassis</innerclass>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="_abstract_chassis_8hpp_1a39d18db214d0fedc3423f7e15068d977" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_controller" kindref="compound">controller::AbstractController</ref> &gt;</type>
+        <definition>using voss::chassis::controller_ptr =  std::shared_ptr&lt;controller::AbstractController&gt;</definition>
+        <argsstring></argsstring>
+        <name>controller_ptr</name>
+        <qualifiedname>voss::chassis::controller_ptr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" line="25" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="_abstract_chassis_8hpp_1a6c3d772fe472ad5cdbbde0b60d7fe3e5" prot="public" static="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">controller::AbstractExitCondition</ref> &gt;</type>
+        <definition>using voss::chassis::ec_ptr =  std::shared_ptr&lt;controller::AbstractExitCondition&gt;</definition>
+        <argsstring></argsstring>
+        <name>ec_ptr</name>
+        <qualifiedname>voss::chassis::ec_ptr</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" line="26" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" line="23" column="1"/>
+  </compounddef>
+</doxygen>

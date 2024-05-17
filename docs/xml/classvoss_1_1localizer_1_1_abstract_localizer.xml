@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_abstract_localizer" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>voss::localizer::AbstractLocalizer</compoundname>
+    <derivedcompoundref refid="classvoss_1_1localizer_1_1_a_d_i_localizer" prot="public" virt="non-virtual">voss::localizer::ADILocalizer</derivedcompoundref>
+    <derivedcompoundref refid="classvoss_1_1localizer_1_1_i_m_e_localizer" prot="public" virt="non-virtual">voss::localizer::IMELocalizer</derivedcompoundref>
+    <derivedcompoundref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer" prot="public" virt="non-virtual">voss::localizer::TrackingWheelLocalizer</derivedcompoundref>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_abstract_localizer_1a2808c34bc2d36011761bb98dcb721c38" prot="protected" static="no" mutable="no">
+        <type>pros::Mutex</type>
+        <definition>pros::Mutex voss::localizer::AbstractLocalizer::mtx</definition>
+        <argsstring></argsstring>
+        <name>mtx</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::mtx</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="21" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_abstract_localizer_1a518a8dae8504ec23fbb1e1ef156c0ea7" prot="protected" static="no" mutable="no">
+        <type><ref refid="structvoss_1_1_atomic_pose" kindref="compound">AtomicPose</ref></type>
+        <definition>AtomicPose voss::localizer::AbstractLocalizer::pose</definition>
+        <argsstring></argsstring>
+        <name>pose</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::pose</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="22" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a19cfacb976ddf64b36ca77d795a954bf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::AbstractLocalizer::AbstractLocalizer</definition>
+        <argsstring>()</argsstring>
+        <name>AbstractLocalizer</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::AbstractLocalizer</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="25" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a84c1ef3f3676ab555863052dd71e2d90" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void voss::localizer::AbstractLocalizer::update</definition>
+        <argsstring>()=0</argsstring>
+        <name>update</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::update</qualifiedname>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a0ff9e7c700780572e8914d3609fa99bf">update</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1acc56dc44d83fd6732246828d09bd0809">update</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1aece47d3589c6a5d5d46fad74d91e611e">update</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="27" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a201c328c567bed1e4ef8f8fe1b09a0ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::localizer::AbstractLocalizer::begin_localization</definition>
+        <argsstring>()</argsstring>
+        <name>begin_localization</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::begin_localization</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="28" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1ac61c7033492bd42b89c9c8b5fcdf810a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void voss::localizer::AbstractLocalizer::set_pose</definition>
+        <argsstring>(Pose pose)</argsstring>
+        <name>set_pose</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::set_pose</qualifiedname>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a564b49f6926a502e4c8c229e0283dc4c">set_pose</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a7dff1b0b39b20d18b41f3de7b7fb574f">set_pose</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a00962d1384c6c4926477e60ed5a1ba7c">set_pose</reimplementedby>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+          <declname>pose</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="30" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a0a64e7f58c6c7508967d3724ef2ccc77" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void voss::localizer::AbstractLocalizer::set_pose</definition>
+        <argsstring>(double x, double y, double theta)</argsstring>
+        <name>set_pose</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::set_pose</qualifiedname>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a02029009ea60be1ac5fa2e7745415227">set_pose</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a3d35ca26c2500974ed5a40796ad9a7b9">set_pose</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a4c1f89d8783bcce77026c7fc209098c2">set_pose</reimplementedby>
+        <param>
+          <type>double</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>theta</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="31" column="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a5e430b850451087d5f4c29b79fb7c559" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+        <definition>Pose voss::localizer::AbstractLocalizer::get_pose</definition>
+        <argsstring>()</argsstring>
+        <name>get_pose</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_pose</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="33" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a58db2565cc9fcaa351b024204a5f9439" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::AbstractLocalizer::get_x</definition>
+        <argsstring>()</argsstring>
+        <name>get_x</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="34" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a025dfc27c76064c66dcf4121f9fc2460" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::AbstractLocalizer::get_y</definition>
+        <argsstring>()</argsstring>
+        <name>get_y</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="35" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1ab94cda3214b794c1357482a904bc6ee9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::AbstractLocalizer::get_orientation_rad</definition>
+        <argsstring>()</argsstring>
+        <name>get_orientation_rad</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_orientation_rad</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="36" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a349a071acbafc8b302a7e935ee84a862" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::localizer::AbstractLocalizer::get_orientation_deg</definition>
+        <argsstring>()</argsstring>
+        <name>get_orientation_deg</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_orientation_deg</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="37" column="12"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a425f697a442e5582f0db1188f057ab47" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structvoss_1_1_point" kindref="compound">Point</ref></type>
+        <definition>Point voss::localizer::AbstractLocalizer::get_position</definition>
+        <argsstring>()</argsstring>
+        <name>get_position</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::get_position</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="38" column="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_abstract_localizer_1a3897273be48e242199726c440659c9ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void voss::localizer::AbstractLocalizer::calibrate</definition>
+        <argsstring>()=0</argsstring>
+        <name>calibrate</name>
+        <qualifiedname>voss::localizer::AbstractLocalizer::calibrate</qualifiedname>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_a_d_i_localizer_1a9a0c65f10b8aa21b8a2d5d9df72a42a3">calibrate</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_i_m_e_localizer_1a08e8d840fb84b64e547e2bd8ff3e8781">calibrate</reimplementedby>
+        <reimplementedby refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_1a93762739cb2cba4cfc3ad7075b284a29">calibrate</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="39" column="18"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::localizer::ADILocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_a_d_i_localizer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::localizer::AbstractLocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_localizer"/>
+      </node>
+      <node id="3">
+        <label>voss::localizer::IMELocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_i_m_e_localizer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>voss::localizer::TrackingWheelLocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>voss::AtomicPose</label>
+        <link refid="structvoss_1_1_atomic_pose"/>
+      </node>
+      <node id="1">
+        <label>voss::localizer::AbstractLocalizer</label>
+        <link refid="classvoss_1_1localizer_1_1_abstract_localizer"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>pose</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="19" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" bodystart="19" bodyend="40"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a19cfacb976ddf64b36ca77d795a954bf" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>AbstractLocalizer</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a201c328c567bed1e4ef8f8fe1b09a0ae" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>begin_localization</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a3897273be48e242199726c440659c9ce" prot="public" virt="pure-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>calibrate</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a349a071acbafc8b302a7e935ee84a862" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_orientation_deg</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1ab94cda3214b794c1357482a904bc6ee9" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_orientation_rad</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a5e430b850451087d5f4c29b79fb7c559" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a425f697a442e5582f0db1188f057ab47" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_position</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a58db2565cc9fcaa351b024204a5f9439" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_x</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a025dfc27c76064c66dcf4121f9fc2460" prot="public" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>get_y</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a2808c34bc2d36011761bb98dcb721c38" prot="protected" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>mtx</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a518a8dae8504ec23fbb1e1ef156c0ea7" prot="protected" virt="non-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1ac61c7033492bd42b89c9c8b5fcdf810a" prot="public" virt="virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>set_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a0a64e7f58c6c7508967d3724ef2ccc77" prot="public" virt="virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>set_pose</name></member>
+      <member refid="classvoss_1_1localizer_1_1_abstract_localizer_1a84c1ef3f3676ab555863052dd71e2d90" prot="public" virt="pure-virtual"><scope>voss::localizer::AbstractLocalizer</scope><name>update</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

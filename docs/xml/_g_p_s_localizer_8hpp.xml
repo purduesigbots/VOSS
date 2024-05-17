@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_g_p_s_localizer_8hpp" kind="file" language="C++">
+    <compoundname>GPSLocalizer.hpp</compoundname>
+    <includedby refid="api_8hpp" local="yes">api.hpp</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>api.hpp</label>
+        <link refid="api_8hpp"/>
+      </node>
+      <node id="1">
+        <label>GPSLocalizer.hpp</label>
+        <link refid="_g_p_s_localizer_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/GPSLocalizer.hpp"/>
+  </compounddef>
+</doxygen>

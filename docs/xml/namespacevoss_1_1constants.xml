@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1constants" kind="namespace" language="C++">
+    <compoundname>voss::constants</compoundname>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="constants_8hpp_1ae59ace087081325206708bd8c97e12ae" prot="public" static="no" mutable="no">
+        <type>const unsigned int</type>
+        <definition>const unsigned int voss::constants::MOTOR_UPDATE_DELAY</definition>
+        <argsstring></argsstring>
+        <name>MOTOR_UPDATE_DELAY</name>
+        <qualifiedname>voss::constants::MOTOR_UPDATE_DELAY</qualifiedname>
+        <initializer>= 10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp" line="6" column="20" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="constants_8hpp_1a45d409432b1665f8e586ed08bfcf7d4e" prot="public" static="no" mutable="no">
+        <type>const unsigned int</type>
+        <definition>const unsigned int voss::constants::SENSOR_UPDATE_DELAY</definition>
+        <argsstring></argsstring>
+        <name>SENSOR_UPDATE_DELAY</name>
+        <qualifiedname>voss::constants::SENSOR_UPDATE_DELAY</qualifiedname>
+        <initializer>= 10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp" line="9" column="20" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp" bodystart="9" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp" line="3" column="1"/>
+  </compounddef>
+</doxygen>

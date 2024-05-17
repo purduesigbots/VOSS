@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_tolerance_exit_condition" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::ToleranceExitCondition</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public" virt="non-virtual">voss::controller::AbstractExitCondition</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a8ed41444c03ce6439fb6440f5f577140" prot="private" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_tolerance_angular_exit_condition" kindref="compound">ToleranceAngularExitCondition</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;ToleranceAngularExitCondition&gt; voss::controller::ToleranceExitCondition::ang_exit</definition>
+        <argsstring></argsstring>
+        <name>ang_exit</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::ang_exit</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="18" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a2594f8efd861617508371e36a8f0c1e1" prot="private" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_tolerance_linear_exit_condition" kindref="compound">ToleranceLinearExitCondition</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;ToleranceLinearExitCondition&gt; voss::controller::ToleranceExitCondition::lin_exit</definition>
+        <argsstring></argsstring>
+        <name>lin_exit</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::lin_exit</qualifiedname>
+        <initializer>= nullptr</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="19" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a1c05860dc1e957be6d04a303b7eff5b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::ToleranceExitCondition::set_target</definition>
+        <argsstring>(voss::Pose target) override</argsstring>
+        <name>set_target</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::set_target</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a77ed6c2a7a72a66efb7b79abb602a593">set_target</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">voss::Pose</ref></type>
+          <declname>target</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="22" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a73373c0f88625f6cf04aed9d54494d69" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool voss::controller::ToleranceExitCondition::is_met</definition>
+        <argsstring>(Pose pose, bool thru) override</argsstring>
+        <name>is_met</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::is_met</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a268a765c6c383117b4d93176b54bf551">is_met</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref></type>
+          <declname>pose</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="23" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a7a5aadac8c63846aadb81bc0e9112c31" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::ToleranceExitCondition::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a5b9b63fc95bb836b8d0c0742c1fd95a3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="24" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1ab5490a03420c2eba4efdb9be7106e26f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::controller::ToleranceExitCondition::add_ang_exit</definition>
+        <argsstring>(double angular_tolerance, double tolerance_time)</argsstring>
+        <name>add_ang_exit</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::add_ang_exit</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>angular_tolerance</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>tolerance_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="25" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_tolerance_exit_condition_1a638468bfd0ab62939fc4a928d9fec606" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::controller::ToleranceExitCondition::add_lin_exit</definition>
+        <argsstring>(double linear_tolerance, double tolerance_time)</argsstring>
+        <name>add_lin_exit</name>
+        <qualifiedname>voss::controller::ToleranceExitCondition::add_lin_exit</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>linear_tolerance</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>tolerance_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="26" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::ToleranceExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_tolerance_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target_pose</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::ToleranceExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_tolerance_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" line="16" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ToleranceExitCondition.hpp" bodystart="16" bodyend="27"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1ab5490a03420c2eba4efdb9be7106e26f" prot="public" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>add_ang_exit</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a638468bfd0ab62939fc4a928d9fec606" prot="public" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>add_lin_exit</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a8ed41444c03ce6439fb6440f5f577140" prot="private" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>ang_exit</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a73373c0f88625f6cf04aed9d54494d69" prot="public" virt="virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>is_met</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a2594f8efd861617508371e36a8f0c1e1" prot="private" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>lin_exit</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a7a5aadac8c63846aadb81bc0e9112c31" prot="public" virt="virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_tolerance_exit_condition_1a1c05860dc1e957be6d04a303b7eff5b7" prot="public" virt="virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a69482f5baf26eb89b8c9e5076fe9c75c" prot="protected" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>target_has_coordinate</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1ada9b1f97f3868649045acb093a911bec" prot="protected" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>target_has_heading</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1abd47978aa86281c68ed5df2bfdfc1d02" prot="protected" virt="non-virtual"><scope>voss::controller::ToleranceExitCondition</scope><name>target_pose</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

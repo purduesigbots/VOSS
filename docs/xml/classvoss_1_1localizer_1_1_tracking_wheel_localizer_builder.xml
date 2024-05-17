@@ -1,0 +1,489 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::TrackingWheelLocalizerBuilder</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abd3602ee672a349ec92d0804c2247bee" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::TrackingWheelLocalizerBuilder::left_right_dist</definition>
+        <argsstring></argsstring>
+        <name>left_right_dist</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::left_right_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="18" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aecc4b423b3142ed651dc9567de11c06b" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::TrackingWheelLocalizerBuilder::middle_dist</definition>
+        <argsstring></argsstring>
+        <name>middle_dist</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::middle_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="19" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab161dbc55abc9ce1e2b54110a9cc1e29" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" kindref="compound">AbstractTrackingWheel</ref> &gt;</type>
+        <definition>std::unique_ptr&lt;AbstractTrackingWheel&gt; voss::localizer::TrackingWheelLocalizerBuilder::left_tracking_wheel</definition>
+        <argsstring></argsstring>
+        <name>left_tracking_wheel</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::left_tracking_wheel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa5a7f943831107e025bf36b45d99376e" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" kindref="compound">AbstractTrackingWheel</ref> &gt;</type>
+        <definition>std::unique_ptr&lt;AbstractTrackingWheel&gt; voss::localizer::TrackingWheelLocalizerBuilder::right_tracking_wheel</definition>
+        <argsstring></argsstring>
+        <name>right_tracking_wheel</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::right_tracking_wheel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="21" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ad5a328fdb7d38547b04a8bdf23e68487" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" kindref="compound">AbstractTrackingWheel</ref> &gt;</type>
+        <definition>std::unique_ptr&lt;AbstractTrackingWheel&gt; voss::localizer::TrackingWheelLocalizerBuilder::middle_tracking_wheel</definition>
+        <argsstring></argsstring>
+        <name>middle_tracking_wheel</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::middle_tracking_wheel</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="22" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a7d9904d0c4dfed425dbe28085acc2b24" prot="private" static="no" mutable="no">
+        <type>std::unique_ptr&lt; pros::IMU &gt;</type>
+        <definition>std::unique_ptr&lt;pros::IMU&gt; voss::localizer::TrackingWheelLocalizerBuilder::imu</definition>
+        <argsstring></argsstring>
+        <name>imu</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::imu</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="23" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4756ed6828adf8d63cce231e3f8f7a16" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::TrackingWheelLocalizerBuilder::TrackingWheelLocalizerBuilder</definition>
+        <argsstring>()</argsstring>
+        <name>TrackingWheelLocalizerBuilder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::TrackingWheelLocalizerBuilder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="26" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a779625af40b16a75e63b2ec856d082e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_left_encoder</definition>
+        <argsstring>(int adi_port)</argsstring>
+        <name>with_left_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_left_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="30" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3c21c3643a2f4edf3b2020da4bed9f91" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_left_encoder</definition>
+        <argsstring>(int smart_port, int adi_port)</argsstring>
+        <name>with_left_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_left_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>smart_port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="31" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a98bb9a05870c4cfd3f93b5e2ae6f8aea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_left_rotation</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_left_rotation</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_left_rotation</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="33" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4bdec6c7c1c669685f576ce9e6197835" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_left_motor</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_left_motor</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_left_motor</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="34" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab3ad2cc7d7505729fc7bfe4e92f06fcf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_right_encoder</definition>
+        <argsstring>(int adi_port)</argsstring>
+        <name>with_right_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_right_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="35" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0300b073e332c7495d355e05a07862fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_right_encoder</definition>
+        <argsstring>(int smart_port, int adi_port)</argsstring>
+        <name>with_right_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_right_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>smart_port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="36" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa48c652ab720bd6a3385582992670808" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_right_rotation</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_right_rotation</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_right_rotation</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="38" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac52f0864323731f7d99e56c811b9cc11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_right_motor</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_right_motor</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_right_motor</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="39" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a5cbf8cbd001d24fca3f5933b9a0dc9f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_encoder</definition>
+        <argsstring>(int adi_port)</argsstring>
+        <name>with_middle_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="40" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa9c79ecb024a589b41c726cbeb06197f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_encoder</definition>
+        <argsstring>(int smart_port, int adi_port)</argsstring>
+        <name>with_middle_encoder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>smart_port</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>adi_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="41" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac8852399fa0cf2993481f2b81f6d9eb4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_rotation</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_middle_rotation</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_rotation</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="43" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a6748b4f13c71a6256e7386c8d88b8eb1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_motor</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_middle_motor</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_motor</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="44" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1acddbd63cea9a474137315169d6007826" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_left_right_tpi</definition>
+        <argsstring>(double tpi)</argsstring>
+        <name>with_left_right_tpi</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_left_right_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="45" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3560a0a0cf3738a8abde2e4735e5f016" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_tpi</definition>
+        <argsstring>(double tpi)</argsstring>
+        <name>with_middle_tpi</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="46" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a86b5ad0be862a83388cffa05708b7481" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_track_width</definition>
+        <argsstring>(double track_width)</argsstring>
+        <name>with_track_width</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_track_width</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>track_width</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="47" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a913fbce8806e5d855ac4edabab2a38c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_middle_dist</definition>
+        <argsstring>(double middle_dist)</argsstring>
+        <name>with_middle_dist</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_middle_dist</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>middle_dist</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="48" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abc0112f185e133ff4a39c425c41b0a0f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref> &amp;</type>
+        <definition>TrackingWheelLocalizerBuilder &amp; voss::localizer::TrackingWheelLocalizerBuilder::with_imu</definition>
+        <argsstring>(int port)</argsstring>
+        <name>with_imu</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::with_imu</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="49" column="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0d349986295c53d6089b1f83ac0cff84" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer" kindref="compound">TrackingWheelLocalizer</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; TrackingWheelLocalizer &gt; voss::localizer::TrackingWheelLocalizerBuilder::build</definition>
+        <argsstring>()</argsstring>
+        <name>build</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::build</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="51" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a268c61926c2534cb26477538de1c2606" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" kindref="compound">TrackingWheelLocalizerBuilder</ref></type>
+        <definition>static TrackingWheelLocalizerBuilder voss::localizer::TrackingWheelLocalizerBuilder::new_builder</definition>
+        <argsstring>()</argsstring>
+        <name>new_builder</name>
+        <qualifiedname>voss::localizer::TrackingWheelLocalizerBuilder::new_builder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="28" column="42"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" line="16" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/TrackingWheelLocalizerBuilder.hpp" bodystart="16" bodyend="52"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0d349986295c53d6089b1f83ac0cff84" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>build</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a7d9904d0c4dfed425dbe28085acc2b24" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>imu</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abd3602ee672a349ec92d0804c2247bee" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>left_right_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab161dbc55abc9ce1e2b54110a9cc1e29" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>left_tracking_wheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aecc4b423b3142ed651dc9567de11c06b" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>middle_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ad5a328fdb7d38547b04a8bdf23e68487" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>middle_tracking_wheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a268c61926c2534cb26477538de1c2606" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>new_builder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa5a7f943831107e025bf36b45d99376e" prot="private" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>right_tracking_wheel</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4756ed6828adf8d63cce231e3f8f7a16" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>TrackingWheelLocalizerBuilder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1abc0112f185e133ff4a39c425c41b0a0f" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_imu</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a779625af40b16a75e63b2ec856d082e1" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_left_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3c21c3643a2f4edf3b2020da4bed9f91" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_left_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a4bdec6c7c1c669685f576ce9e6197835" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_left_motor</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1acddbd63cea9a474137315169d6007826" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_left_right_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a98bb9a05870c4cfd3f93b5e2ae6f8aea" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_left_rotation</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a913fbce8806e5d855ac4edabab2a38c8" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a5cbf8cbd001d24fca3f5933b9a0dc9f6" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa9c79ecb024a589b41c726cbeb06197f" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a6748b4f13c71a6256e7386c8d88b8eb1" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_motor</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac8852399fa0cf2993481f2b81f6d9eb4" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_rotation</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a3560a0a0cf3738a8abde2e4735e5f016" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_middle_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ab3ad2cc7d7505729fc7bfe4e92f06fcf" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_right_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a0300b073e332c7495d355e05a07862fe" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_right_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1ac52f0864323731f7d99e56c811b9cc11" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_right_motor</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1aa48c652ab720bd6a3385582992670808" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_right_rotation</name></member>
+      <member refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder_1a86b5ad0be862a83388cffa05708b7481" prot="public" virt="non-virtual"><scope>voss::localizer::TrackingWheelLocalizerBuilder</scope><name>with_track_width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

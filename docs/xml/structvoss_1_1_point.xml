@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvoss_1_1_point" kind="struct" language="C++" prot="public">
+    <compoundname>voss::Point</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvoss_1_1_point_1a80f69f45f9c65c4066867b8d6c61ceda" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::Point::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>voss::Point::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" line="16" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvoss_1_1_point_1abea774be1390073e961b19ce5b16b092" prot="public" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::Point::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <qualifiedname>voss::Point::y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" line="17" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="structvoss_1_1_point_1ad00777167c82ce5846a9e9eaf9643a3a" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>static double voss::Point::getDistance</definition>
+        <argsstring>(Point a, Point b)</argsstring>
+        <name>getDistance</name>
+        <qualifiedname>voss::Point::getDistance</qualifiedname>
+        <param>
+          <type><ref refid="structvoss_1_1_point" kindref="compound">Point</ref></type>
+          <declname>a</declname>
+        </param>
+        <param>
+          <type><ref refid="structvoss_1_1_point" kindref="compound">Point</ref></type>
+          <declname>b</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" line="19" column="19" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" bodystart="19" bodyend="23"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" line="15" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Point.hpp" bodystart="15" bodyend="24"/>
+    <listofallmembers>
+      <member refid="structvoss_1_1_point_1ad00777167c82ce5846a9e9eaf9643a3a" prot="public" virt="non-virtual"><scope>voss::Point</scope><name>getDistance</name></member>
+      <member refid="structvoss_1_1_point_1a80f69f45f9c65c4066867b8d6c61ceda" prot="public" virt="non-virtual"><scope>voss::Point</scope><name>x</name></member>
+      <member refid="structvoss_1_1_point_1abea774be1390073e961b19ce5b16b092" prot="public" virt="non-virtual"><scope>voss::Point</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

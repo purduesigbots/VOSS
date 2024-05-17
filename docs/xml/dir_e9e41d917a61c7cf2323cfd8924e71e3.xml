@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_e9e41d917a61c7cf2323cfd8924e71e3" kind="dir">
+    <compoundname>localizer</compoundname>
+    <innerfile refid="_abstract_localizer_8hpp">AbstractLocalizer.hpp</innerfile>
+    <innerfile refid="_abstract_tracking_wheel_8hpp">AbstractTrackingWheel.hpp</innerfile>
+    <innerfile refid="_a_d_i_localizer_8hpp">ADILocalizer.hpp</innerfile>
+    <innerfile refid="_a_d_i_localizer_builder_8hpp">ADILocalizerBuilder.hpp</innerfile>
+    <innerfile refid="_a_d_i_tracking_wheel_8hpp">ADITrackingWheel.hpp</innerfile>
+    <innerfile refid="_g_p_s_localizer_8hpp">GPSLocalizer.hpp</innerfile>
+    <innerfile refid="_i_m_e_localizer_8hpp">IMELocalizer.hpp</innerfile>
+    <innerfile refid="_i_m_e_localizer_builder_8hpp">IMELocalizerBuilder.hpp</innerfile>
+    <innerfile refid="_i_m_e_tracking_wheel_8hpp">IMETrackingWheel.hpp</innerfile>
+    <innerfile refid="_rotation_tracking_wheel_8hpp">RotationTrackingWheel.hpp</innerfile>
+    <innerfile refid="_tracking_wheel_localizer_8hpp">TrackingWheelLocalizer.hpp</innerfile>
+    <innerfile refid="_tracking_wheel_localizer_builder_8hpp">TrackingWheelLocalizerBuilder.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/"/>
+  </compounddef>
+</doxygen>

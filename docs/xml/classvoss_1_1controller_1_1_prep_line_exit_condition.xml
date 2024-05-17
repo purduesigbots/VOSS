@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_prep_line_exit_condition" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::PrepLineExitCondition</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public" virt="non-virtual">voss::controller::AbstractExitCondition</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_prep_line_exit_condition_1a79db532bede9eb60d3f87ec8eae168ee" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::PrepLineExitCondition::thru_smoothness</definition>
+        <argsstring></argsstring>
+        <name>thru_smoothness</name>
+        <qualifiedname>voss::controller::PrepLineExitCondition::thru_smoothness</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" line="17" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" bodystart="17" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_prep_line_exit_condition_1a1000ce239b27b2bc9a0ddbb01ab78fb2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::PrepLineExitCondition::PrepLineExitCondition</definition>
+        <argsstring>(double thru_smoothness)</argsstring>
+        <name>PrepLineExitCondition</name>
+        <qualifiedname>voss::controller::PrepLineExitCondition::PrepLineExitCondition</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>thru_smoothness</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" line="20" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_prep_line_exit_condition_1a056534a446aa6684d169a6f39723820d" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool voss::controller::PrepLineExitCondition::is_met</definition>
+        <argsstring>(voss::Pose pose, bool thru) override</argsstring>
+        <name>is_met</name>
+        <qualifiedname>voss::controller::PrepLineExitCondition::is_met</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a268a765c6c383117b4d93176b54bf551">is_met</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">voss::Pose</ref></type>
+          <declname>pose</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" line="21" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::PrepLineExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_prep_line_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target_pose</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::PrepLineExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_prep_line_exit_condition"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" line="15" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/PrepLineExitCondition.hpp" bodystart="15" bodyend="22"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a056534a446aa6684d169a6f39723820d" prot="public" virt="virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>is_met</name></member>
+      <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a1000ce239b27b2bc9a0ddbb01ab78fb2" prot="public" virt="non-virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>PrepLineExitCondition</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a5b9b63fc95bb836b8d0c0742c1fd95a3" prot="public" virt="virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a77ed6c2a7a72a66efb7b79abb602a593" prot="public" virt="virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a69482f5baf26eb89b8c9e5076fe9c75c" prot="protected" virt="non-virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>target_has_coordinate</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1ada9b1f97f3868649045acb093a911bec" prot="protected" virt="non-virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>target_has_heading</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1abd47978aa86281c68ed5df2bfdfc1d02" prot="protected" virt="non-virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>target_pose</name></member>
+      <member refid="classvoss_1_1controller_1_1_prep_line_exit_condition_1a79db532bede9eb60d3f87ec8eae168ee" prot="private" virt="non-virtual"><scope>voss::controller::PrepLineExitCondition</scope><name>thru_smoothness</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

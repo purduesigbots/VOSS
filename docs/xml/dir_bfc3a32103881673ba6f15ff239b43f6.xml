@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_bfc3a32103881673ba6f15ff239b43f6" kind="dir">
+    <compoundname>controller</compoundname>
+    <innerfile refid="_abstract_controller_8hpp">AbstractController.hpp</innerfile>
+    <innerfile refid="_arc_p_i_d_controller_8hpp">ArcPIDController.hpp</innerfile>
+    <innerfile refid="_arc_p_i_d_controller_builder_8hpp">ArcPIDControllerBuilder.hpp</innerfile>
+    <innerfile refid="_boomerang_controller_8hpp">BoomerangController.hpp</innerfile>
+    <innerfile refid="_boomerang_controller_builder_8hpp">BoomerangControllerBuilder.hpp</innerfile>
+    <innerfile refid="_p_i_d_controller_8hpp">PIDController.hpp</innerfile>
+    <innerfile refid="_p_i_d_controller_builder_8hpp">PIDControllerBuilder.hpp</innerfile>
+    <innerfile refid="_swing_controller_8hpp">SwingController.hpp</innerfile>
+    <innerfile refid="_swing_controller_builder_8hpp">SwingControllerBuilder.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/"/>
+  </compounddef>
+</doxygen>

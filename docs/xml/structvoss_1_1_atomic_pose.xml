@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="structvoss_1_1_atomic_pose" kind="struct" language="C++" prot="public">
+    <compoundname>voss::AtomicPose</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvoss_1_1_atomic_pose_1a0f0c34dbb96a8b1d472187f9ca417c9b" prot="public" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::AtomicPose::x</definition>
+        <argsstring></argsstring>
+        <name>x</name>
+        <qualifiedname>voss::AtomicPose::x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="26" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvoss_1_1_atomic_pose_1aa4144970c205d868cfeac0a3713ee73c" prot="public" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::AtomicPose::y</definition>
+        <argsstring></argsstring>
+        <name>y</name>
+        <qualifiedname>voss::AtomicPose::y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="27" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvoss_1_1_atomic_pose_1a2c71a64bd5b9a72d1afcc4dfc2f5a5ca" prot="public" static="no" mutable="no">
+        <type>std::atomic&lt; double &gt;</type>
+        <definition>std::atomic&lt;double&gt; voss::AtomicPose::theta</definition>
+        <argsstring></argsstring>
+        <name>theta</name>
+        <qualifiedname>voss::AtomicPose::theta</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="28" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="structvoss_1_1_atomic_pose_1a8dd0ac78ca3acd68e31c0ecc663cda54" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::AtomicPose::operator=</definition>
+        <argsstring>(const Pose &amp;pose)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>voss::AtomicPose::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="structvoss_1_1_pose" kindref="compound">Pose</ref> &amp;</type>
+          <declname>pose</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="30" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="30" bodyend="38"/>
+      </memberdef>
+      <memberdef kind="function" id="structvoss_1_1_atomic_pose_1a3ee4d291410e155a3b5ee5b1390f6fb8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void voss::AtomicPose::operator=</definition>
+        <argsstring>(const AtomicPose &amp;pose)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>voss::AtomicPose::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="structvoss_1_1_atomic_pose" kindref="compound">AtomicPose</ref> &amp;</type>
+          <declname>pose</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="40" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="40" bodyend="44"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" line="25" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/Pose.hpp" bodystart="25" bodyend="45"/>
+    <listofallmembers>
+      <member refid="structvoss_1_1_atomic_pose_1a8dd0ac78ca3acd68e31c0ecc663cda54" prot="public" virt="non-virtual"><scope>voss::AtomicPose</scope><name>operator=</name></member>
+      <member refid="structvoss_1_1_atomic_pose_1a3ee4d291410e155a3b5ee5b1390f6fb8" prot="public" virt="non-virtual"><scope>voss::AtomicPose</scope><name>operator=</name></member>
+      <member refid="structvoss_1_1_atomic_pose_1a2c71a64bd5b9a72d1afcc4dfc2f5a5ca" prot="public" virt="non-virtual"><scope>voss::AtomicPose</scope><name>theta</name></member>
+      <member refid="structvoss_1_1_atomic_pose_1a0f0c34dbb96a8b1d472187f9ca417c9b" prot="public" virt="non-virtual"><scope>voss::AtomicPose</scope><name>x</name></member>
+      <member refid="structvoss_1_1_atomic_pose_1aa4144970c205d868cfeac0a3713ee73c" prot="public" virt="non-virtual"><scope>voss::AtomicPose</scope><name>y</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="dir_23e75d62246e42c3c7baebce29b35b12" kind="dir">
+    <compoundname>VOSS</compoundname>
+    <innerdir refid="dir_34cf5b83b116cccb0def64b91dea5569">chassis</innerdir>
+    <innerdir refid="dir_bfc3a32103881673ba6f15ff239b43f6">controller</innerdir>
+    <innerdir refid="dir_1982d665c18d75c12f1d9474e4e274aa">exit_conditions</innerdir>
+    <innerdir refid="dir_e9e41d917a61c7cf2323cfd8924e71e3">localizer</innerdir>
+    <innerdir refid="dir_d92ee5bf3334e819cb956d6f6118ea64">selector</innerdir>
+    <innerdir refid="dir_9e2a253bcc32c1b56bdfd331064d64b5">utils</innerdir>
+    <innerfile refid="api_8hpp">api.hpp</innerfile>
+    <innerfile refid="constants_8hpp">constants.hpp</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/"/>
+  </compounddef>
+</doxygen>

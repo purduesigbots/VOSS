@@ -1,0 +1,336 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kind="class" language="C++" prot="public">
+    <compoundname>voss::localizer::ADILocalizerBuilder</compoundname>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a380890d118b4bd6ab955e1f6b20e4f92" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::localizer::ADILocalizerBuilder::left</definition>
+        <argsstring></argsstring>
+        <name>left</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::left</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="19" column="9" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adcf2bc4501754346719f39db0106cd1d" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::localizer::ADILocalizerBuilder::right</definition>
+        <argsstring></argsstring>
+        <name>right</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::right</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="19" column="14" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a35152ff9eb3d60e5b2fe7d3ab350a0fe" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::localizer::ADILocalizerBuilder::mid</definition>
+        <argsstring></argsstring>
+        <name>mid</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::mid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="19" column="20" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a9c5da7d25db7a700e902dc507935a243" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int voss::localizer::ADILocalizerBuilder::imu_port</definition>
+        <argsstring></argsstring>
+        <name>imu_port</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::imu_port</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="19" column="24" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3cfd6db7daed61c2adb20da73356e2a5" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizerBuilder::lr_tpi</definition>
+        <argsstring></argsstring>
+        <name>lr_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::lr_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="20" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a31d27ad60e18d5ffe52c1ef6b80d50c9" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizerBuilder::mid_tpi</definition>
+        <argsstring></argsstring>
+        <name>mid_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::mid_tpi</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="20" column="19" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adf536112ad7db0d36c3e37ca592e21f7" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizerBuilder::track_width</definition>
+        <argsstring></argsstring>
+        <name>track_width</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::track_width</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="21" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a20733143e285167fae5756b28f8a3e3b" prot="private" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::localizer::ADILocalizerBuilder::middle_dist</definition>
+        <argsstring></argsstring>
+        <name>middle_dist</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::middle_dist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="22" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1abac22e7b776b3c7a46276500dc0d19d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::localizer::ADILocalizerBuilder::ADILocalizerBuilder</definition>
+        <argsstring>()</argsstring>
+        <name>ADILocalizerBuilder</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::ADILocalizerBuilder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="25" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a14276260cb9095958661036908d88c81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_left_encoder</definition>
+        <argsstring>(int c)</argsstring>
+        <name>with_left_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_left_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="29" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a6dc9dfcc1ee102356f5828e089ce8a54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_right_encoder</definition>
+        <argsstring>(int c)</argsstring>
+        <name>with_right_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_right_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="30" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8133dcb72b66abd79c811444889ed204" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_middle_encoder</definition>
+        <argsstring>(int c)</argsstring>
+        <name>with_middle_encoder</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_middle_encoder</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="31" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a23b0d4a2a870f85ca6a9e0c411f6999d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_left_right_tpi</definition>
+        <argsstring>(double lr_tpi)</argsstring>
+        <name>with_left_right_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_left_right_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>lr_tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="32" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8448a977fba6df8e2855acfa1b350bef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_middle_tpi</definition>
+        <argsstring>(double mid_tpi)</argsstring>
+        <name>with_middle_tpi</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_middle_tpi</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>mid_tpi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="33" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a70fab3462efe324f480e0294d134d529" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_track_width</definition>
+        <argsstring>(double track_width)</argsstring>
+        <name>with_track_width</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_track_width</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>track_width</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="34" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a172d013d8d343aa96c33567ada5a9191" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_middle_distance</definition>
+        <argsstring>(double middle_dist)</argsstring>
+        <name>with_middle_distance</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_middle_distance</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>middle_dist</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="35" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1ac228b1f21eeb48f3ee375eb111d557fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref> &amp;</type>
+        <definition>ADILocalizerBuilder &amp; voss::localizer::ADILocalizerBuilder::with_imu</definition>
+        <argsstring>(int imu_port)</argsstring>
+        <name>with_imu</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::with_imu</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>imu_port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="36" column="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3e4da824712364f2da883c4efd900a86" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer" kindref="compound">ADILocalizer</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ADILocalizer &gt; voss::localizer::ADILocalizerBuilder::build</definition>
+        <argsstring>()</argsstring>
+        <name>build</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::build</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="38" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a4a30b6263f4a71b99c06ab1f43cdefa2" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" kindref="compound">ADILocalizerBuilder</ref></type>
+        <definition>static ADILocalizerBuilder voss::localizer::ADILocalizerBuilder::new_builder</definition>
+        <argsstring>()</argsstring>
+        <name>new_builder</name>
+        <qualifiedname>voss::localizer::ADILocalizerBuilder::new_builder</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="27" column="32"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" line="17" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/ADILocalizerBuilder.hpp" bodystart="17" bodyend="39"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1abac22e7b776b3c7a46276500dc0d19d3" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>ADILocalizerBuilder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3e4da824712364f2da883c4efd900a86" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>build</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a9c5da7d25db7a700e902dc507935a243" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>imu_port</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a380890d118b4bd6ab955e1f6b20e4f92" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>left</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a3cfd6db7daed61c2adb20da73356e2a5" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>lr_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a35152ff9eb3d60e5b2fe7d3ab350a0fe" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>mid</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a31d27ad60e18d5ffe52c1ef6b80d50c9" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>mid_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a20733143e285167fae5756b28f8a3e3b" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>middle_dist</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a4a30b6263f4a71b99c06ab1f43cdefa2" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>new_builder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adcf2bc4501754346719f39db0106cd1d" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>right</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1adf536112ad7db0d36c3e37ca592e21f7" prot="private" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>track_width</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1ac228b1f21eeb48f3ee375eb111d557fb" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_imu</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a14276260cb9095958661036908d88c81" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_left_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a23b0d4a2a870f85ca6a9e0c411f6999d" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_left_right_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a172d013d8d343aa96c33567ada5a9191" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_middle_distance</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8133dcb72b66abd79c811444889ed204" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_middle_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a8448a977fba6df8e2855acfa1b350bef" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_middle_tpi</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a6dc9dfcc1ee102356f5828e089ce8a54" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_right_encoder</name></member>
+      <member refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder_1a70fab3462efe324f480e0294d134d529" prot="public" virt="non-virtual"><scope>voss::localizer::ADILocalizerBuilder</scope><name>with_track_width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

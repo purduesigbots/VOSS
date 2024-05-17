@@ -1,0 +1,348 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_exit_conditions" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::ExitConditions</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public" virt="non-virtual">voss::controller::AbstractExitCondition</basecompoundref>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_exit_conditions_1afaceaa29b89ae3b840e79aa644fc0ecf" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">controller::AbstractExitCondition</ref> &gt; &gt;</type>
+        <definition>std::vector&lt;std::shared_ptr&lt;controller::AbstractExitCondition&gt; &gt; voss::controller::ExitConditions::conditions</definition>
+        <argsstring></argsstring>
+        <name>conditions</name>
+        <qualifiedname>voss::controller::ExitConditions::conditions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="24" column="17" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a8e0bf0f131aeab5ea3c71a330cb85ff6" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::ExitConditions::ExitConditions</definition>
+        <argsstring>()</argsstring>
+        <name>ExitConditions</name>
+        <qualifiedname>voss::controller::ExitConditions::ExitConditions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="25" column="5"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1ae3ea2decdc8d078a7cf38ea17d41c388" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref></type>
+        <definition>static ExitConditions voss::controller::ExitConditions::new_conditions</definition>
+        <argsstring>()</argsstring>
+        <name>new_conditions</name>
+        <qualifiedname>voss::controller::ExitConditions::new_conditions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="28" column="27"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1adb14e0e89cd05c4385cabb1c080cb3f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::ExitConditions::set_target</definition>
+        <argsstring>(voss::Pose new_target) override</argsstring>
+        <name>set_target</name>
+        <qualifiedname>voss::controller::ExitConditions::set_target</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a77ed6c2a7a72a66efb7b79abb602a593">set_target</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">voss::Pose</ref></type>
+          <declname>new_target</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="30" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a27f9d560eff3eee466dab4daedc68436" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_settle</definition>
+        <argsstring>(int settle_time, double tolerance, int initial_delay)</argsstring>
+        <name>add_settle</name>
+        <qualifiedname>voss::controller::ExitConditions::add_settle</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>settle_time</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>tolerance</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>initial_delay</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="31" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a1f497ebb1515171a098b20762fbd75e0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_timeout</definition>
+        <argsstring>(int timeout)</argsstring>
+        <name>add_timeout</name>
+        <qualifiedname>voss::controller::ExitConditions::add_timeout</qualifiedname>
+        <param>
+          <type>int</type>
+          <declname>timeout</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="33" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1ac8dbeb980aa7d914721b21a087782490" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_tolerance</definition>
+        <argsstring>(double linear_tolerance, double angular_tolerance, double tolerance_time)</argsstring>
+        <name>add_tolerance</name>
+        <qualifiedname>voss::controller::ExitConditions::add_tolerance</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>linear_tolerance</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>angular_tolerance</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>tolerance_time</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="34" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1abee7d5bcf556b9d564d321bdf99c8145" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_thru_smoothness</definition>
+        <argsstring>(double smoothness)</argsstring>
+        <name>add_thru_smoothness</name>
+        <qualifiedname>voss::controller::ExitConditions::add_thru_smoothness</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>smoothness</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="37" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a9b609abdf20772e2250601a23b06f167" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_custom_condition</definition>
+        <argsstring>(std::function&lt; bool()&gt; callback)</argsstring>
+        <name>add_custom_condition</name>
+        <qualifiedname>voss::controller::ExitConditions::add_custom_condition</qualifiedname>
+        <param>
+          <type>std::function&lt; bool()&gt;</type>
+          <declname>callback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="38" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a8fdb8b502ffefb4c99a32aac024e9f2f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &amp;</type>
+        <definition>ExitConditions &amp; voss::controller::ExitConditions::add_condition</definition>
+        <argsstring>(std::shared_ptr&lt; AbstractExitCondition &gt; ec)</argsstring>
+        <name>add_condition</name>
+        <qualifiedname>voss::controller::ExitConditions::add_condition</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="39" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1acdd84eb7e24ddb501cc3f273c4553a77" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ExitConditions &gt; voss::controller::ExitConditions::exit_if</definition>
+        <argsstring>(std::function&lt; bool()&gt; callback)</argsstring>
+        <name>exit_if</name>
+        <qualifiedname>voss::controller::ExitConditions::exit_if</qualifiedname>
+        <param>
+          <type>std::function&lt; bool()&gt;</type>
+          <declname>callback</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="41" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a5d94dd2fcbd45608a9d724adac173e00" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>bool</type>
+        <definition>bool voss::controller::ExitConditions::is_met</definition>
+        <argsstring>(voss::Pose current_pose, bool thru)</argsstring>
+        <name>is_met</name>
+        <qualifiedname>voss::controller::ExitConditions::is_met</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a268a765c6c383117b4d93176b54bf551">is_met</reimplements>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">voss::Pose</ref></type>
+          <declname>current_pose</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="43" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a2fc196aeb12c4a0431aa6a9354f904f6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool voss::controller::ExitConditions::all_met</definition>
+        <argsstring>(voss::Pose current_pose, bool thru)</argsstring>
+        <name>all_met</name>
+        <qualifiedname>voss::controller::ExitConditions::all_met</qualifiedname>
+        <param>
+          <type><ref refid="structvoss_1_1_pose" kindref="compound">voss::Pose</ref></type>
+          <declname>current_pose</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="44" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a7e9cd01356b0b01de737a3dba4339690" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_exit_conditions" kindref="compound">ExitConditions</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ExitConditions &gt; voss::controller::ExitConditions::build</definition>
+        <argsstring>()</argsstring>
+        <name>build</name>
+        <qualifiedname>voss::controller::ExitConditions::build</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="46" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_exit_conditions_1a625c8ca54769f19b090ce4e8e91e3cc1" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::ExitConditions::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::ExitConditions::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a5b9b63fc95bb836b8d0c0742c1fd95a3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="48" column="10"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::ExitConditions</label>
+        <link refid="classvoss_1_1controller_1_1_exit_conditions"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractExitCondition</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_exit_condition"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target_pose</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::ExitConditions</label>
+        <link refid="classvoss_1_1controller_1_1_exit_conditions"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" line="21" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/ExitConditions.hpp" bodystart="21" bodyend="49"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a8fdb8b502ffefb4c99a32aac024e9f2f" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_condition</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a9b609abdf20772e2250601a23b06f167" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_custom_condition</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a27f9d560eff3eee466dab4daedc68436" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_settle</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1abee7d5bcf556b9d564d321bdf99c8145" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_thru_smoothness</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a1f497ebb1515171a098b20762fbd75e0" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_timeout</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1ac8dbeb980aa7d914721b21a087782490" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>add_tolerance</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a2fc196aeb12c4a0431aa6a9354f904f6" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>all_met</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a7e9cd01356b0b01de737a3dba4339690" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>build</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1afaceaa29b89ae3b840e79aa644fc0ecf" prot="private" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>conditions</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1acdd84eb7e24ddb501cc3f273c4553a77" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>exit_if</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a8e0bf0f131aeab5ea3c71a330cb85ff6" prot="private" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>ExitConditions</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a5d94dd2fcbd45608a9d724adac173e00" prot="public" virt="virtual"><scope>voss::controller::ExitConditions</scope><name>is_met</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1ae3ea2decdc8d078a7cf38ea17d41c388" prot="public" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>new_conditions</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1a625c8ca54769f19b090ce4e8e91e3cc1" prot="public" virt="virtual"><scope>voss::controller::ExitConditions</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_exit_conditions_1adb14e0e89cd05c4385cabb1c080cb3f6" prot="public" virt="virtual"><scope>voss::controller::ExitConditions</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1a69482f5baf26eb89b8c9e5076fe9c75c" prot="protected" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>target_has_coordinate</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1ada9b1f97f3868649045acb093a911bec" prot="protected" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>target_has_heading</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_exit_condition_1abd47978aa86281c68ed5df2bfdfc1d02" prot="protected" virt="non-virtual"><scope>voss::controller::ExitConditions</scope><name>target_pose</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,479 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_arc_p_i_d_controller" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::ArcPIDController</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_controller" prot="public" virt="non-virtual">voss::controller::AbstractController</basecompoundref>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a2d96300f11da6a0c6af0a0f6c000e503" prot="protected" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kindref="compound">ArcPIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;ArcPIDController&gt; voss::controller::ArcPIDController::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <qualifiedname>voss::controller::ArcPIDController::p</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a639ae6bb37c32458c4c750eb652d4ebf" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1utils_1_1_p_i_d" kindref="compound">utils::PID</ref></type>
+        <definition>utils::PID voss::controller::ArcPIDController::linear_pid</definition>
+        <argsstring></argsstring>
+        <name>linear_pid</name>
+        <qualifiedname>voss::controller::ArcPIDController::linear_pid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="21" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ad08b45125149e3f7e597e11270d05a84" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1utils_1_1_p_i_d" kindref="compound">utils::PID</ref></type>
+        <definition>utils::PID voss::controller::ArcPIDController::angular_pid</definition>
+        <argsstring></argsstring>
+        <name>angular_pid</name>
+        <qualifiedname>voss::controller::ArcPIDController::angular_pid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="22" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aca8e1cf93ec1eb82e57da4c20304efcf" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::track_width</definition>
+        <argsstring></argsstring>
+        <name>track_width</name>
+        <qualifiedname>voss::controller::ArcPIDController::track_width</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="23" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abcebb2fa1aa95cadff718617ea389014" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::min_error</definition>
+        <argsstring></argsstring>
+        <name>min_error</name>
+        <qualifiedname>voss::controller::ArcPIDController::min_error</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="24" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a72a6ad2f4b54b293f4c91fa323a0ff19" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::can_reverse</definition>
+        <argsstring></argsstring>
+        <name>can_reverse</name>
+        <qualifiedname>voss::controller::ArcPIDController::can_reverse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="25" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ae8f01e228239351711d4f3beb03168e1" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::arc_radius</definition>
+        <argsstring></argsstring>
+        <name>arc_radius</name>
+        <qualifiedname>voss::controller::ArcPIDController::arc_radius</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="26" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8e10833e89420b7d32ea1618850a6200" prot="protected" static="no" mutable="no">
+        <type><ref refid="structvoss_1_1_point" kindref="compound">Point</ref></type>
+        <definition>Point voss::controller::ArcPIDController::arc_center</definition>
+        <argsstring></argsstring>
+        <name>arc_center</name>
+        <qualifiedname>voss::controller::ArcPIDController::arc_center</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="27" column="11" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6e7ff9223ed8170ddf904db041fefbb4" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::prev_t</definition>
+        <argsstring></argsstring>
+        <name>prev_t</name>
+        <qualifiedname>voss::controller::ArcPIDController::prev_t</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="28" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abeaf74219ef29a2d66960a19e827e084" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::slew</definition>
+        <argsstring></argsstring>
+        <name>slew</name>
+        <qualifiedname>voss::controller::ArcPIDController::slew</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="29" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a436c29216ec513eedcf4e98bf4c50c97" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::prev_lin_speed</definition>
+        <argsstring></argsstring>
+        <name>prev_lin_speed</name>
+        <qualifiedname>voss::controller::ArcPIDController::prev_lin_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="30" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a60667c5bb69b713123d8a648fbe967ee" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::close</definition>
+        <argsstring></argsstring>
+        <name>close</name>
+        <qualifiedname>voss::controller::ArcPIDController::close</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="32" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a87be826fd62f3c746864de656d961bab" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::prev_lin_err</definition>
+        <argsstring></argsstring>
+        <name>prev_lin_err</name>
+        <qualifiedname>voss::controller::ArcPIDController::prev_lin_err</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="34" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6830a0f812a1d88fadeb84ffd6cc3c22" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::ArcPIDController::total_lin_err</definition>
+        <argsstring></argsstring>
+        <name>total_lin_err</name>
+        <qualifiedname>voss::controller::ArcPIDController::total_lin_err</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="34" column="25" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="34" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0d093acfa52d5cd79b85fa67f07ac21c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class ArcPIDControllerBuilder</definition>
+        <argsstring></argsstring>
+        <name>ArcPIDControllerBuilder</name>
+        <qualifiedname>voss::controller::ArcPIDController::ArcPIDControllerBuilder</qualifiedname>
+        <param>
+          <type><ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_builder" kindref="compound">ArcPIDControllerBuilder</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="55" column="18" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="55" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a171539ff6900104129ba446603c427a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::ArcPIDController::ArcPIDController</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>ArcPIDController</name>
+        <qualifiedname>voss::controller::ArcPIDController::ArcPIDController</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="37" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8b7c149b90821676944da70a0dea6ee5" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::ArcPIDController::get_command</definition>
+        <argsstring>(bool reverse, bool thru, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_command</name>
+        <qualifiedname>voss::controller::ArcPIDController::get_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6">get_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="40" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a09fe8f71fce1dc8583616f726551e6de" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::ArcPIDController::get_angular_command</definition>
+        <argsstring>(bool reverse, bool thru, voss::AngularDirection direction, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_angular_command</name>
+        <qualifiedname>voss::controller::ArcPIDController::get_angular_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da">get_angular_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>voss::AngularDirection</type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="43" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0a420107573361625259cc4bd662a447" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::ArcPIDController::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::ArcPIDController::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="47" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aed033edec0100bbf131b48c902905e83" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kindref="compound">ArcPIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ArcPIDController &gt; voss::controller::ArcPIDController::modify_linear_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>modify_linear_constants</name>
+        <qualifiedname>voss::controller::ArcPIDController::modify_linear_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="50" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a69d2f4384b0e43edc754ea276e0cc6ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kindref="compound">ArcPIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ArcPIDController &gt; voss::controller::ArcPIDController::modify_track_width</definition>
+        <argsstring>(double track_width)</argsstring>
+        <name>modify_track_width</name>
+        <qualifiedname>voss::controller::ArcPIDController::modify_track_width</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>track_width</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="51" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a1506d81eac7bb66b0bc9afa06bffbb1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kindref="compound">ArcPIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ArcPIDController &gt; voss::controller::ArcPIDController::modify_min_error</definition>
+        <argsstring>(double error)</argsstring>
+        <name>modify_min_error</name>
+        <qualifiedname>voss::controller::ArcPIDController::modify_min_error</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>error</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="52" column="21"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a7d1cb54e395b718e816b69d50d03081f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_arc_p_i_d_controller" kindref="compound">ArcPIDController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; ArcPIDController &gt; voss::controller::ArcPIDController::modify_slew</definition>
+        <argsstring>(double slew)</argsstring>
+        <name>modify_slew</name>
+        <qualifiedname>voss::controller::ArcPIDController::modify_slew</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>slew</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="53" column="21"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::ArcPIDController</label>
+        <link refid="classvoss_1_1controller_1_1_arc_p_i_d_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="5">
+        <label>voss::Point</label>
+        <link refid="structvoss_1_1_point"/>
+      </node>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::ArcPIDController</label>
+        <link refid="classvoss_1_1controller_1_1_arc_p_i_d_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>angular_pid</edgelabel>
+          <edgelabel>linear_pid</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>arc_center</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>voss::utils::PID</label>
+        <link refid="classvoss_1_1utils_1_1_p_i_d"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/ArcPIDController.hpp" bodystart="18" bodyend="56"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>AbstractController</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ad08b45125149e3f7e597e11270d05a84" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>angular_pid</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8e10833e89420b7d32ea1618850a6200" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>arc_center</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1ae8f01e228239351711d4f3beb03168e1" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>arc_radius</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a171539ff6900104129ba446603c427a6" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>ArcPIDController</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0d093acfa52d5cd79b85fa67f07ac21c" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>ArcPIDControllerBuilder</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a72a6ad2f4b54b293f4c91fa323a0ff19" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>can_reverse</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a60667c5bb69b713123d8a648fbe967ee" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>close</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a09fe8f71fce1dc8583616f726551e6de" prot="public" virt="virtual"><scope>voss::controller::ArcPIDController</scope><name>get_angular_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a8b7c149b90821676944da70a0dea6ee5" prot="public" virt="virtual"><scope>voss::controller::ArcPIDController</scope><name>get_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>l</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a639ae6bb37c32458c4c750eb652d4ebf" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>linear_pid</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abcebb2fa1aa95cadff718617ea389014" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>min_error</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aed033edec0100bbf131b48c902905e83" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>modify_linear_constants</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a1506d81eac7bb66b0bc9afa06bffbb1c" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>modify_min_error</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a7d1cb54e395b718e816b69d50d03081f" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>modify_slew</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a69d2f4384b0e43edc754ea276e0cc6ee" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>modify_track_width</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a2d96300f11da6a0c6af0a0f6c000e503" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>p</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a87be826fd62f3c746864de656d961bab" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>prev_lin_err</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a436c29216ec513eedcf4e98bf4c50c97" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>prev_lin_speed</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6e7ff9223ed8170ddf904db041fefbb4" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>prev_t</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a0a420107573361625259cc4bd662a447" prot="public" virt="virtual"><scope>voss::controller::ArcPIDController</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>set_angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" prot="public" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1abeaf74219ef29a2d66960a19e827e084" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>slew</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>target</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1a6830a0f812a1d88fadeb84ffd6cc3c22" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>total_lin_err</name></member>
+      <member refid="classvoss_1_1controller_1_1_arc_p_i_d_controller_1aca8e1cf93ec1eb82e57da4c20304efcf" prot="protected" virt="non-virtual"><scope>voss::controller::ArcPIDController</scope><name>track_width</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

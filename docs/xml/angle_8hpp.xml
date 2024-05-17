@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="angle_8hpp" kind="file" language="C++">
+    <compoundname>angle.hpp</compoundname>
+    <includes refid="flags_8hpp" local="yes">VOSS/utils/flags.hpp</includes>
+    <includes local="no">cmath</includes>
+    <includedby refid="api_8hpp" local="yes">api.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>angle.hpp</label>
+        <link refid="angle_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>VOSS/utils/flags.hpp</label>
+        <link refid="flags_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>cmath</label>
+      </node>
+      <node id="3">
+        <label>cstdint</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>api.hpp</label>
+        <link refid="api_8hpp"/>
+      </node>
+      <node id="1">
+        <label>angle.hpp</label>
+        <link refid="angle_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innernamespace refid="namespacevoss">voss</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="version"><para>0.1.2 </para>
+</simplesect>
+<simplesect kind="date"><para>2024-05-16</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2024 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp"/>
+  </compounddef>
+</doxygen>

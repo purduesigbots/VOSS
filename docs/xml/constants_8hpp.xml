@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="constants_8hpp" kind="file" language="C++">
+    <compoundname>constants.hpp</compoundname>
+    <innernamespace refid="namespacevoss">voss</innernamespace>
+    <innernamespace refid="namespacevoss_1_1constants">voss::constants</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/constants.hpp"/>
+  </compounddef>
+</doxygen>

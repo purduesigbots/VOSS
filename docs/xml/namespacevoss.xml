@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss" kind="namespace" language="C++">
+    <compoundname>voss</compoundname>
+    <innerclass refid="structvoss_1_1_atomic_pose" prot="public">voss::AtomicPose</innerclass>
+    <innerclass refid="structvoss_1_1_point" prot="public">voss::Point</innerclass>
+    <innerclass refid="structvoss_1_1_pose" prot="public">voss::Pose</innerclass>
+    <innernamespace refid="namespacevoss_1_1chassis">voss::chassis</innernamespace>
+    <innernamespace refid="namespacevoss_1_1constants">voss::constants</innernamespace>
+    <innernamespace refid="namespacevoss_1_1controller">voss::controller</innernamespace>
+    <innernamespace refid="namespacevoss_1_1localizer">voss::localizer</innernamespace>
+    <innernamespace refid="namespacevoss_1_1selector">voss::selector</innernamespace>
+    <innernamespace refid="namespacevoss_1_1utils">voss::utils</innernamespace>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069f" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>Flags</name>
+        <qualifiedname>voss::Flags</qualifiedname>
+        <enumvalue id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fab50339a10e1de285ac99d4c3990b8693" prot="public">
+          <name>NONE</name>
+          <initializer>= 0b0000</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fabe553330beb7b3d994656e0a4e66cd96" prot="public">
+          <name>ASYNC</name>
+          <initializer>= 0b0001</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fa642e0b6684e6165e142c074f1cd8d55c" prot="public">
+          <name>REVERSE</name>
+          <initializer>= 0b0010</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fac3cb497d8ec3c88b9024774b775358e2" prot="public">
+          <name>RELATIVE</name>
+          <initializer>= 0b0100</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1adacfcbfd872ba6f8fd3d27565b52069fae8481083063914d1725f41036be49a90" prot="public">
+          <name>THRU</name>
+          <initializer>= 0b1000</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" line="16" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" bodystart="16" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="enum" id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4" prot="public" static="no" strong="yes">
+        <type></type>
+        <name>AngularDirection</name>
+        <qualifiedname>voss::AngularDirection</qualifiedname>
+        <enumvalue id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4ae1f2d5134ed2543d38a0de9751cf75d9" prot="public">
+          <name>AUTO</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4ab437c6ed212434e8984c403374fe494c" prot="public">
+          <name>COUNTERCLOCKWISE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4a59ec5d573abd014f3ae2c26ca962e8cf" prot="public">
+          <name>CCW</name>
+          <initializer>= COUNTERCLOCKWISE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4acfe39a5621dfe382d2991f32c4ae08da" prot="public">
+          <name>CLOCKWISE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="flags_8hpp_1a3bc07955f2084fad0f34c6eaed2fedf4a9af3107a066f6b0defb1cafc0499f6ed" prot="public">
+          <name>CW</name>
+          <initializer>= CLOCKWISE</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" line="34" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" bodystart="34" bodyend="40"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="angle_8hpp_1a1fc7195ec3d6a530783dfc9a50b34c80" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::to_radians</definition>
+        <argsstring>(double degrees)</argsstring>
+        <name>to_radians</name>
+        <qualifiedname>voss::to_radians</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>degrees</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" line="17" column="15" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" bodystart="17" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="function" id="angle_8hpp_1a3553191650896a1fe998f63dfc695689" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::to_degrees</definition>
+        <argsstring>(double radians)</argsstring>
+        <name>to_degrees</name>
+        <qualifiedname>voss::to_degrees</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>radians</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" line="21" column="15" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" bodystart="21" bodyend="23"/>
+      </memberdef>
+      <memberdef kind="function" id="angle_8hpp_1a2c85ca9a274100cb7e04f3742862e465" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::norm</definition>
+        <argsstring>(double radians)</argsstring>
+        <name>norm</name>
+        <qualifiedname>voss::norm</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>radians</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" line="25" column="15" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" bodystart="25" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="angle_8hpp_1a632b6d9543a763d51e15945fbb5508f0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double voss::norm_delta</definition>
+        <argsstring>(double radians)</argsstring>
+        <name>norm_delta</name>
+        <qualifiedname>voss::norm_delta</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>radians</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" line="32" column="15" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/angle.hpp" bodystart="32" bodyend="34"/>
+      </memberdef>
+      <memberdef kind="function" id="flags_8hpp_1a5acd9ee9dac89ca0adf2de5c63d8fddf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>auto</type>
+        <definition>auto voss::operator|</definition>
+        <argsstring>(Flags flag1, Flags flag2)</argsstring>
+        <name>operator|</name>
+        <qualifiedname>voss::operator|</qualifiedname>
+        <param>
+          <type>Flags</type>
+          <declname>flag1</declname>
+        </param>
+        <param>
+          <type>Flags</type>
+          <declname>flag2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" line="24" column="13" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" bodystart="24" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="flags_8hpp_1ae2a6f7b8d28f34482bca03ad46d6a84d" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>auto</type>
+        <definition>auto voss::operator&amp;</definition>
+        <argsstring>(Flags flag1, Flags flag2)</argsstring>
+        <name>operator&amp;</name>
+        <qualifiedname>voss::operator&amp;</qualifiedname>
+        <param>
+          <type>Flags</type>
+          <declname>flag1</declname>
+        </param>
+        <param>
+          <type>Flags</type>
+          <declname>flag2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" line="29" column="13" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/utils/flags.hpp" bodystart="29" bodyend="32"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/chassis/AbstractChassis.hpp" line="23" column="1"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_abstract_tracking_wheel_8hpp" kind="file" language="C++">
+    <compoundname>AbstractTrackingWheel.hpp</compoundname>
+    <includes local="no">atomic</includes>
+    <includedby refid="_a_d_i_tracking_wheel_8hpp" local="yes">ADITrackingWheel.hpp</includedby>
+    <includedby refid="_i_m_e_tracking_wheel_8hpp" local="yes">IMETrackingWheel.hpp</includedby>
+    <includedby refid="_rotation_tracking_wheel_8hpp" local="yes">RotationTrackingWheel.hpp</includedby>
+    <includedby refid="_tracking_wheel_localizer_8hpp" local="yes">TrackingWheelLocalizer.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>AbstractTrackingWheel.hpp</label>
+        <link refid="_abstract_tracking_wheel_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>atomic</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="7">
+        <label>api.hpp</label>
+        <link refid="api_8hpp"/>
+      </node>
+      <node id="2">
+        <label>ADITrackingWheel.hpp</label>
+        <link refid="_a_d_i_tracking_wheel_8hpp"/>
+      </node>
+      <node id="1">
+        <label>AbstractTrackingWheel.hpp</label>
+        <link refid="_abstract_tracking_wheel_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>IMETrackingWheel.hpp</label>
+        <link refid="_i_m_e_tracking_wheel_8hpp"/>
+      </node>
+      <node id="4">
+        <label>RotationTrackingWheel.hpp</label>
+        <link refid="_rotation_tracking_wheel_8hpp"/>
+      </node>
+      <node id="5">
+        <label>TrackingWheelLocalizer.hpp</label>
+        <link refid="_tracking_wheel_localizer_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>TrackingWheelLocalizerBuilder.hpp</label>
+        <link refid="_tracking_wheel_localizer_builder_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" prot="public">voss::localizer::AbstractTrackingWheel</innerclass>
+    <innernamespace refid="namespacevoss">voss</innernamespace>
+    <innernamespace refid="namespacevoss_1_1localizer">voss::localizer</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="version"><para>0.1.2 </para>
+</simplesect>
+<simplesect kind="date"><para>2024-05-16</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2024 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractTrackingWheel.hpp"/>
+  </compounddef>
+</doxygen>

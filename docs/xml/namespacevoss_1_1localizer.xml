@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="namespacevoss_1_1localizer" kind="namespace" language="C++">
+    <compoundname>voss::localizer</compoundname>
+    <innerclass refid="classvoss_1_1localizer_1_1_abstract_localizer" prot="public">voss::localizer::AbstractLocalizer</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_abstract_tracking_wheel" prot="public">voss::localizer::AbstractTrackingWheel</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_a_d_i_localizer" prot="public">voss::localizer::ADILocalizer</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_a_d_i_localizer_builder" prot="public">voss::localizer::ADILocalizerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_a_d_i_tracking_wheel" prot="public">voss::localizer::ADITrackingWheel</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_i_m_e_localizer" prot="public">voss::localizer::IMELocalizer</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_i_m_e_localizer_builder" prot="public">voss::localizer::IMELocalizerBuilder</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_i_m_e_tracking_wheel" prot="public">voss::localizer::IMETrackingWheel</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_rotation_tracking_wheel" prot="public">voss::localizer::RotationTrackingWheel</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer" prot="public">voss::localizer::TrackingWheelLocalizer</innerclass>
+    <innerclass refid="classvoss_1_1localizer_1_1_tracking_wheel_localizer_builder" prot="public">voss::localizer::TrackingWheelLocalizerBuilder</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/localizer/AbstractLocalizer.hpp" line="17" column="1"/>
+  </compounddef>
+</doxygen>

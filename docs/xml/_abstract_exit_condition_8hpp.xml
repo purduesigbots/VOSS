@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="_abstract_exit_condition_8hpp" kind="file" language="C++">
+    <compoundname>AbstractExitCondition.hpp</compoundname>
+    <includes refid="_pose_8hpp" local="yes">VOSS/utils/Pose.hpp</includes>
+    <includedby refid="_abstract_chassis_8hpp" local="yes">AbstractChassis.hpp</includedby>
+    <includedby refid="_abstract_controller_8hpp" local="yes">AbstractController.hpp</includedby>
+    <includedby refid="_boomerang_controller_8hpp" local="yes">BoomerangController.hpp</includedby>
+    <includedby refid="_custom_exit_condition_8hpp" local="yes">CustomExitCondition.hpp</includedby>
+    <includedby refid="_exit_conditions_8hpp" local="yes">ExitConditions.hpp</includedby>
+    <includedby refid="_prep_line_exit_condition_8hpp" local="yes">PrepLineExitCondition.hpp</includedby>
+    <includedby refid="_settle_exit_condition_8hpp" local="yes">SettleExitCondition.hpp</includedby>
+    <includedby refid="_time_out_exit_condition_8hpp" local="yes">TimeOutExitCondition.hpp</includedby>
+    <includedby refid="_tolerance_angular_exit_condition_8hpp" local="yes">ToleranceAngularExitCondition.hpp</includedby>
+    <includedby refid="_tolerance_exit_condition_8hpp" local="yes">ToleranceExitCondition.hpp</includedby>
+    <includedby refid="_tolerance_linear_exit_condition_8hpp" local="yes">ToleranceLinearExitCondition.hpp</includedby>
+    <includedby refid="api_8hpp" local="yes">api.hpp</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>AbstractExitCondition.hpp</label>
+        <link refid="_abstract_exit_condition_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>VOSS/utils/Pose.hpp</label>
+        <link refid="_pose_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>atomic</label>
+      </node>
+      <node id="4">
+        <label>cmath</label>
+      </node>
+      <node id="5">
+        <label>optional</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>api.hpp</label>
+        <link refid="api_8hpp"/>
+      </node>
+      <node id="2">
+        <label>AbstractChassis.hpp</label>
+        <link refid="_abstract_chassis_8hpp"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>DiffChassis.hpp</label>
+        <link refid="_diff_chassis_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>AbstractController.hpp</label>
+        <link refid="_abstract_controller_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>ArcPIDController.hpp</label>
+        <link refid="_arc_p_i_d_controller_8hpp"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>ArcPIDControllerBuilder.hpp</label>
+        <link refid="_arc_p_i_d_controller_builder_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>BoomerangController.hpp</label>
+        <link refid="_boomerang_controller_8hpp"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>BoomerangControllerBuilder.hpp</label>
+        <link refid="_boomerang_controller_builder_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>PIDController.hpp</label>
+        <link refid="_p_i_d_controller_8hpp"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>PIDControllerBuilder.hpp</label>
+        <link refid="_p_i_d_controller_builder_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>SwingController.hpp</label>
+        <link refid="_swing_controller_8hpp"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>SwingControllerBuilder.hpp</label>
+        <link refid="_swing_controller_builder_8hpp"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>AbstractExitCondition.hpp</label>
+        <link refid="_abstract_exit_condition_8hpp"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>CustomExitCondition.hpp</label>
+        <link refid="_custom_exit_condition_8hpp"/>
+      </node>
+      <node id="15">
+        <label>ExitConditions.hpp</label>
+        <link refid="_exit_conditions_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>PrepLineExitCondition.hpp</label>
+        <link refid="_prep_line_exit_condition_8hpp"/>
+      </node>
+      <node id="17">
+        <label>SettleExitCondition.hpp</label>
+        <link refid="_settle_exit_condition_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>TimeOutExitCondition.hpp</label>
+        <link refid="_time_out_exit_condition_8hpp"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>ToleranceAngularExitCondition.hpp</label>
+        <link refid="_tolerance_angular_exit_condition_8hpp"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>ToleranceExitCondition.hpp</label>
+        <link refid="_tolerance_exit_condition_8hpp"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>ToleranceLinearExitCondition.hpp</label>
+        <link refid="_tolerance_linear_exit_condition_8hpp"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classvoss_1_1controller_1_1_abstract_exit_condition" prot="public">voss::controller::AbstractExitCondition</innerclass>
+    <innernamespace refid="namespacevoss">voss</innernamespace>
+    <innernamespace refid="namespacevoss_1_1controller">voss::controller</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="version"><para>0.1.2 </para>
+</simplesect>
+<simplesect kind="date"><para>2024-05-16</para>
+</simplesect>
+<simplesect kind="copyright"><para>Copyright (c) 2024 </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/exit_conditions/AbstractExitCondition.hpp"/>
+  </compounddef>
+</doxygen>

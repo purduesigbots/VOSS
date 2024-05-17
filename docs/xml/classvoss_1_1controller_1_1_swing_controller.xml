@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classvoss_1_1controller_1_1_swing_controller" kind="class" language="C++" prot="public">
+    <compoundname>voss::controller::SwingController</compoundname>
+    <basecompoundref refid="classvoss_1_1controller_1_1_abstract_controller" prot="public" virt="non-virtual">voss::controller::AbstractController</basecompoundref>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_1ab467de2326570137c79eeaea551c7317" prot="protected" static="no" mutable="no">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_swing_controller" kindref="compound">SwingController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt;SwingController&gt; voss::controller::SwingController::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <qualifiedname>voss::controller::SwingController::p</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="20" column="21" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_1ac211bdcd1a532e00f981d276e1a2232e" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvoss_1_1utils_1_1_p_i_d" kindref="compound">utils::PID</ref></type>
+        <definition>utils::PID voss::controller::SwingController::angular_pid</definition>
+        <argsstring></argsstring>
+        <name>angular_pid</name>
+        <qualifiedname>voss::controller::SwingController::angular_pid</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="21" column="16" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_1a63100d8652809fe2c3221fc573ab32ac" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool voss::controller::SwingController::can_reverse</definition>
+        <argsstring></argsstring>
+        <name>can_reverse</name>
+        <qualifiedname>voss::controller::SwingController::can_reverse</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="22" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_1a1c263318d867e6fdecb7b9b21f09cf11" prot="protected" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool voss::controller::SwingController::turn_overshoot</definition>
+        <argsstring></argsstring>
+        <name>turn_overshoot</name>
+        <qualifiedname>voss::controller::SwingController::turn_overshoot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="23" column="10" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="23" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvoss_1_1controller_1_1_swing_controller_1a08853dd20b317627221468f04d154a62" prot="protected" static="no" mutable="no">
+        <type>double</type>
+        <definition>double voss::controller::SwingController::prev_ang_speed</definition>
+        <argsstring></argsstring>
+        <name>prev_ang_speed</name>
+        <qualifiedname>voss::controller::SwingController::prev_ang_speed</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="25" column="12" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="25" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="classvoss_1_1controller_1_1_swing_controller_1a72b1013d99b825674c6be8c50a9edf51" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>class</type>
+        <definition>friend class SwingControllerBuilder</definition>
+        <argsstring></argsstring>
+        <name>SwingControllerBuilder</name>
+        <qualifiedname>voss::controller::SwingController::SwingControllerBuilder</qualifiedname>
+        <param>
+          <type><ref refid="classvoss_1_1controller_1_1_swing_controller_builder" kindref="compound">SwingControllerBuilder</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="43" column="18" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="43" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_1ae9705ed7bc1058fa9c328ac32b6d3f04" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>voss::controller::SwingController::SwingController</definition>
+        <argsstring>(std::shared_ptr&lt; localizer::AbstractLocalizer &gt; l)</argsstring>
+        <name>SwingController</name>
+        <qualifiedname>voss::controller::SwingController::SwingController</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1localizer_1_1_abstract_localizer" kindref="compound">localizer::AbstractLocalizer</ref> &gt;</type>
+          <declname>l</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="28" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_1a4e3afc3d89a1c9c63f429180f8085b17" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::SwingController::get_command</definition>
+        <argsstring>(bool reverse, bool thru, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_command</name>
+        <qualifiedname>voss::controller::SwingController::get_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a739a2e24836c7888c81a40fc47003ff6">get_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="31" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_1a24a6a4aa8d2c825ad14c5868072427ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>chassis::DiffChassisCommand</type>
+        <definition>chassis::DiffChassisCommand voss::controller::SwingController::get_angular_command</definition>
+        <argsstring>(bool reverse, bool thru, voss::AngularDirection direction, std::shared_ptr&lt; AbstractExitCondition &gt; ec) override</argsstring>
+        <name>get_angular_command</name>
+        <qualifiedname>voss::controller::SwingController::get_angular_command</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a691e9633a826c59559e6954733cb93da">get_angular_command</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>reverse</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>thru</declname>
+        </param>
+        <param>
+          <type>voss::AngularDirection</type>
+          <declname>direction</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_abstract_exit_condition" kindref="compound">AbstractExitCondition</ref> &gt;</type>
+          <declname>ec</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="34" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_1a7747edcd5f792a9377ae837a54e6c1b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void voss::controller::SwingController::reset</definition>
+        <argsstring>() override</argsstring>
+        <name>reset</name>
+        <qualifiedname>voss::controller::SwingController::reset</qualifiedname>
+        <reimplements refid="classvoss_1_1controller_1_1_abstract_controller_1a0b2f19c4ea3f498051a894cb491b57e3">reset</reimplements>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="38" column="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classvoss_1_1controller_1_1_swing_controller_1acb52c2c405c9946d1abed5086c158e59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::shared_ptr&lt; <ref refid="classvoss_1_1controller_1_1_swing_controller" kindref="compound">SwingController</ref> &gt;</type>
+        <definition>std::shared_ptr&lt; SwingController &gt; voss::controller::SwingController::modify_angular_constants</definition>
+        <argsstring>(double kP, double kI, double kD)</argsstring>
+        <name>modify_angular_constants</name>
+        <qualifiedname>voss::controller::SwingController::modify_angular_constants</qualifiedname>
+        <param>
+          <type>double</type>
+          <declname>kP</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kI</declname>
+        </param>
+        <param>
+          <type>double</type>
+          <declname>kD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="41" column="5"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+      </node>
+      <node id="1">
+        <label>voss::controller::SwingController</label>
+        <link refid="classvoss_1_1controller_1_1_swing_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="3">
+        <label>voss::Pose</label>
+        <link refid="structvoss_1_1_pose"/>
+      </node>
+      <node id="2">
+        <label>voss::controller::AbstractController</label>
+        <link refid="classvoss_1_1controller_1_1_abstract_controller"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>target</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>voss::controller::SwingController</label>
+        <link refid="classvoss_1_1controller_1_1_swing_controller"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>angular_pid</edgelabel>
+        </childnode>
+      </node>
+      <node id="4">
+        <label>voss::utils::PID</label>
+        <link refid="classvoss_1_1utils_1_1_p_i_d"/>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" line="18" column="1" bodyfile="/Users/rockychen/Desktop/VOSS/include/VOSS/controller/SwingController.hpp" bodystart="18" bodyend="44"/>
+    <listofallmembers>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a5f48c31d76ce171c5938068c4baae501" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>AbstractController</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1ac211bdcd1a532e00f981d276e1a2232e" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>angular_pid</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1af026697c62845e91b79d40abcf689571" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a63100d8652809fe2c3221fc573ab32ac" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>can_reverse</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a24a6a4aa8d2c825ad14c5868072427ce" prot="public" virt="virtual"><scope>voss::controller::SwingController</scope><name>get_angular_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a4e3afc3d89a1c9c63f429180f8085b17" prot="public" virt="virtual"><scope>voss::controller::SwingController</scope><name>get_command</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1ad6948d441c91e949aab51a7f8b88c791" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>l</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1acb52c2c405c9946d1abed5086c158e59" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>modify_angular_constants</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1ab467de2326570137c79eeaea551c7317" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>p</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a08853dd20b317627221468f04d154a62" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>prev_ang_speed</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a7747edcd5f792a9377ae837a54e6c1b1" prot="public" virt="virtual"><scope>voss::controller::SwingController</scope><name>reset</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9da5dcddccf8235872c7a92a6d84363d" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>set_angular_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a9bc6503364b9e478ea39274853b107e3" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>set_target</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1ae9705ed7bc1058fa9c328ac32b6d3f04" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>SwingController</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a72b1013d99b825674c6be8c50a9edf51" prot="public" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>SwingControllerBuilder</name></member>
+      <member refid="classvoss_1_1controller_1_1_abstract_controller_1a70ff0f2a397b25cbacefd4d56ffe57aa" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>target</name></member>
+      <member refid="classvoss_1_1controller_1_1_swing_controller_1a1c263318d867e6fdecb7b9b21f09cf11" prot="protected" virt="non-virtual"><scope>voss::controller::SwingController</scope><name>turn_overshoot</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
