@@ -77,6 +77,9 @@ double SplinePath::length() {
 PoseWithCurvature SplinePath::at(double distance) {
     double t = arc_length_reparam.lookup_inverse(distance);
     int index = t;
+    if (index >= this->length()) {
+        index = this->length() - 1;
+    }
     MotionState x_state = x_segments[index].at(t - index);
     MotionState y_state = y_segments[index].at(t - index);
 

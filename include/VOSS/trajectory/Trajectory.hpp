@@ -10,6 +10,8 @@ struct TrajectoryConstraints {
     double max_vel;
     double max_accel;
     double max_decel;
+    double max_ang_accel;
+    double max_centr_accel;
     double track_width;
 };
 

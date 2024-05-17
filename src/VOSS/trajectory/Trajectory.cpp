@@ -14,7 +14,10 @@ Trajectory::Trajectory(SplinePath path, TrajectoryConstraints constraints): path
         if (curvature == 0.0) {
             new_state.vel = constraints.max_vel;
         } else {
-            new_state.vel = constraints.max_vel / (1 + constraints.track_width / 2 * curvature);
+            new_state.vel = constraints.max_vel / (1 + constraints.track_width / 2 * fabs(curvature));
+            if (constraints.max_centr_accel) {
+                new_state.vel = fmin(new_state.vel, sqrt(constraints.max_centr_accel / fabs(curvature)));
+            }
         }
         profile_samples.push_back(new_state);
     }
@@ -22,70 +25,104 @@ Trajectory::Trajectory(SplinePath path, TrajectoryConstraints constraints): path
     profile_samples.front().vel = 0;
     // second pass: acceleration forward pass
     for (int i = 1; i < profile_samples.size(); i++) {
-        double vel = profile_samples[i - 1].vel;
-        if (vel >= profile_samples[i].vel) {
+        double prev_vel = profile_samples[i - 1].vel;
+        if (prev_vel >= profile_samples[i].vel) {
             profile_samples[i].acc = 0.0;
             continue;
         }
-        double max_accel = constraints.max_accel;
+
+        // initial bounds for velocity. A reasonable minimum is set so velocity never reaches zero.
+        double max_vel = profile_samples[i].vel;
+        double ds = path_samples.distances[i] - path_samples.distances[i - 1];
+        double min_vel = sqrt(2 * constraints.max_accel * ds);
+
+        // apply translational acceleration bounds
+        max_vel = fmin(max_vel, sqrt(prev_vel * prev_vel + 2 * constraints.max_accel * ds));
+        double min_vel_det = prev_vel * prev_vel + 2 * constraints.max_decel * ds;
+        if (min_vel_det > 0.0) {
+            min_vel = fmax(min_vel, sqrt(min_vel_det));
+        }
+
+        // apply angular acceleration bounds
+        // see http://www2.informatik.uni-freiburg.de/~lau/students/Sprunk2008.pdf pages 25-28
         double curvature = path_samples.poses[i].curvature;
         double prev_curvature = path_samples.poses[i - 1].curvature;
-        double ds = path_samples.distances[i] - path_samples.distances[i - 1];
+        if (curvature != 0.0) {
+            double pos_det = (curvature + prev_curvature) * (curvature + prev_curvature) * prev_vel * prev_vel + 8 * curvature * ds * constraints.max_ang_accel;
+            double neg_det = (curvature + prev_curvature) * (curvature + prev_curvature) * prev_vel * prev_vel - 8 * curvature * ds * constraints.max_ang_accel;
+            if (curvature > 0.0) {
+                double vel_1 = ((prev_curvature - curvature) * prev_vel + sqrt(pos_det)) / (2 * curvature);
+                if (neg_det < 0.0) {
+                    max_vel = fmin(max_vel, vel_1);
+                } else {
+                    double vel_2 = ((prev_curvature - curvature) * prev_vel + sqrt(neg_det)) / (2 * curvature);
+                    if (max_vel >= vel_2) {
+                        max_vel = fmin(max_vel, vel_1);
+                    } else {
+                        vel_2 = ((prev_curvature - curvature) * prev_vel - sqrt(neg_det)) / (2 * curvature);
+                        max_vel = fmax(vel_2, min_vel);
+                    }
+                }
+            } else {
+                double vel_2 = ((prev_curvature - curvature) * prev_vel - sqrt(neg_det)) / (2 * curvature);
+                if (pos_det < 0.0) {
+                    max_vel = fmin(max_vel, vel_2);
+                } else {
+                    double vel_1 = ((prev_curvature - curvature) * prev_vel - sqrt(pos_det)) / (2 * curvature);
+                    if (max_vel >= vel_1) {
+                        max_vel = fmin(max_vel, vel_2);
+                    } else {
+                        double vel_1 = ((prev_curvature - curvature) * prev_vel + sqrt(pos_det)) / (2 * curvature);
+                        max_vel = fmax(vel_1, min_vel);
+                    }
+                }
+            }
+        } else if (prev_curvature != 0.0) {
+            double vel_1 = (-2 * constraints.max_ang_accel) / (prev_curvature * prev_vel) - prev_vel;
+            double vel_2 = (2 * constraints.max_ang_accel) / (prev_curvature * prev_vel) - prev_vel;
+            max_vel = fmin(max_vel, fmax(vel_1, vel_2));
+        }
 
-        if (curvature != 0.0 && prev_curvature != 0.0) {
-            double radius = 1 / curvature;
-            double outer_radius = radius + constraints.track_width / 2;
-            double dr = (radius - 1 / prev_curvature) / ds * vel;
-            max_accel = radius * (max_accel / outer_radius + dr * (vel / (radius * radius) - vel * (1 + constraints.track_width / 2 * curvature) / (outer_radius * outer_radius)));
-        }
-        double new_vel = vel * vel + 2 * max_accel * ds;
-        if (new_vel < 0) {
-            new_vel = 0;
-            max_accel = -(vel * vel) / (2 * ds);
-        }
-        new_vel = sqrt(new_vel);
-
-        if (new_vel <= profile_samples[i].vel) {
-            profile_samples[i].vel = new_vel;
-            profile_samples[i].acc = max_accel;
-        } else {
-            new_vel = profile_samples[i].vel;
-            profile_samples[i].acc = (new_vel * new_vel - vel * vel) / (2 * ds);
-        }
+        profile_samples[i].vel = max_vel;
+        profile_samples[i - 1].acc = (max_vel * max_vel - prev_vel * prev_vel) / (2 * ds);
     }
 
     profile_samples.back().vel = 0;
     // third pass: acceleration backward pass
     for (int i = profile_samples.size() - 2; i >= 0; i--) {
-        double vel = profile_samples[i + 1].vel;
-        if (vel >= profile_samples[i].vel) continue;
+        double next_vel = profile_samples[i + 1].vel;
+        if (next_vel >= profile_samples[i].vel) continue;
 
-        double max_decel = constraints.max_decel;
+        double max_vel = profile_samples[i].vel;
+        double ds = path_samples.distances[i + 1] - path_samples.distances[i];
+        double min_vel = sqrt(-2 * constraints.max_decel * ds);
+
+        max_vel = fmin(max_vel, sqrt(next_vel * next_vel - 2 * constraints.max_decel * ds));
+        double min_vel_det = next_vel * next_vel - 2 * constraints.max_accel * ds;
+        if (min_vel_det > 0.0) {
+            min_vel = fmax(min_vel, sqrt(min_vel_det));
+        }
+
         double curvature = path_samples.poses[i].curvature;
         double next_curvature = path_samples.poses[i + 1].curvature;
-        double ds = path_samples.distances[i + 1] - path_samples.distances[i];
-
-        if (curvature != 0.0 && next_curvature != 0.0) {
-            double radius = 1 / curvature;
-            double outer_radius = radius + constraints.track_width / 2;
-            double dr = (1 / next_curvature - radius) / ds * vel;
-            max_decel = radius * (max_decel / outer_radius + dr * (vel / (radius * radius) - vel * (1 + constraints.track_width / 2 * curvature) / (outer_radius * outer_radius)));
+        if (curvature != 0.0) {
+            double pos_det = (curvature + next_curvature) * (curvature + next_curvature) * next_vel * next_vel + 8 * curvature * ds * constraints.max_ang_accel;
+            double neg_det = (curvature + next_curvature) * (curvature + next_curvature) * next_vel * next_vel - 8 * curvature * ds * constraints.max_ang_accel;
+            if (curvature > 0.0) {
+                double vel_1 = ((next_curvature - curvature) * next_vel + sqrt(pos_det)) / (2 * curvature);
+                max_vel = fmin(max_vel, fmax(vel_1, min_vel));
+            } else {
+                double vel_2 = ((next_curvature - curvature) * next_vel - sqrt(neg_det)) / (2 * curvature);
+                max_vel = fmin(max_vel, fmax(vel_2, min_vel));
+            }
+        } else if (next_curvature != 0.0) {
+            double vel_1 = (-2 * constraints.max_ang_accel) / (next_curvature * next_vel) - next_vel;
+            double vel_2 = (2 * constraints.max_ang_accel) / (next_curvature * next_vel) - next_vel;
+            max_vel = fmin(max_vel, fmax(vel_1, vel_2));
         }
 
-        double prev_vel = vel * vel - 2 * max_decel * ds;
-        if (prev_vel < 0) {
-            prev_vel = 0;
-            max_decel = (vel * vel) / (2 * ds);
-        }
-        prev_vel = sqrt(prev_vel);
-
-        if (prev_vel <= profile_samples[i].vel) {
-            profile_samples[i].vel = prev_vel;
-            profile_samples[i].acc = max_decel;
-        } else {
-            prev_vel = profile_samples[i].vel;
-            profile_samples[i].acc = (vel * vel - prev_vel * prev_vel) / 2 * ds;
-        }
+        profile_samples[i].vel = max_vel;
+        profile_samples[i].acc = (next_vel * next_vel - max_vel * max_vel) / (2 * ds);
     }
 
     this->profile = Profile(profile_samples);
