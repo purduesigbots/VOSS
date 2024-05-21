@@ -17,31 +17,46 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                           std::shared_ptr<AbstractExitCondition> ec) {
     double left_vel, right_vel;
     Point current_pos = l->get_position();
-    double h = l->get_orientation_rad();
+
     int idx = this->get_closest(l->get_pose());
 
-    Point look_ahead_pt =
-        get_lookahead_pt(l->get_pose(), idx)
-            .value_or(Point{target_path.at(prev_closest_index).x,
-                            target_path.at(prev_closest_index).y});
+    if (Point::getDistance(current_pos, {this->target.x, this->target.y}) <
+            this->look_ahead_dist &&
+        idx == target_path.size() - 1) {
+        const Pose target = target_path.back();
 
-    double lin_err = Point::getDistance(current_pos, look_ahead_pt);
+        auto vel_pair =
+            pid_controller_for_ending(l->get_pose(), target, reverse);
+        left_vel = vel_pair.first;
+        right_vel = vel_pair.second;
 
-    double lin_vel = linear_pid.update(lin_err) * (reverse ? -1 : 1);
-    double ang_vel =
-        angular_pid.update(get_reference_y_err(l->get_pose(), look_ahead_pt));
+    } else {
 
-    double curvature = this->get_curvature(l->get_pose(), look_ahead_pt);
-    // L = V * (2 + CT)/2
-    // R = V * (2 − CT)/2
+        Point look_ahead_pt =
+            get_lookahead_pt(l->get_pose(), idx)
+                .value_or(Point{target_path.at(prev_closest_index).x,
+                                target_path.at(prev_closest_index).y});
 
-    left_vel = lin_vel * (2.0 - curvature * this->track_width) / 2.0 - ang_vel;
-    right_vel = lin_vel * (2.0 + curvature * this->track_width) / 2.0 + ang_vel;
+        double lin_err = Point::getDistance(current_pos, look_ahead_pt);
 
-    double vMax = std::max(fabs(left_vel), fabs(right_vel));
-    if (vMax > 100) {
-        left_vel *= 100.0 / vMax;
-        right_vel *= 100.0 / vMax;
+        double lin_vel = linear_pid.update(lin_err) * (reverse ? -1 : 1);
+        double ang_vel = angular_pid.update(
+            get_reference_y_err(l->get_pose(), look_ahead_pt));
+
+        double curvature = this->get_curvature(l->get_pose(), look_ahead_pt);
+        // L = V * (2 + CT)/2
+        // R = V * (2 − CT)/2
+
+        left_vel =
+            lin_vel * (2.0 - curvature * this->track_width) / 2.0 - ang_vel;
+        right_vel =
+            lin_vel * (2.0 + curvature * this->track_width) / 2.0 + ang_vel;
+
+        double vMax = std::max(fabs(left_vel), fabs(right_vel));
+        if (vMax > 100) {
+            left_vel *= 100.0 / vMax;
+            right_vel *= 100.0 / vMax;
+        }
     }
 
     if (!ec->is_met(l->get_pose(),
@@ -58,6 +73,63 @@ chassis::DiffChassisCommand PPController::get_angular_command(
     return voss::chassis::Stop();
 }
 
+std::pair<double, double>
+PPController::pid_controller_for_ending(const Pose& current_pos,
+                                        const Pose& target, bool reverse) {
+    int dir = reverse ? -1 : 1;
+    double current_angle = current_pos.theta.value();
+    bool noPose = !this->target.theta.has_value();
+
+    double dx = target.x - current_pos.x;
+    double dy = target.y - current_pos.y;
+
+    double distance_error = sqrt(dx * dx + dy * dy);
+
+    double angle_error = atan2(dy, dx) - current_angle;
+
+    if (reverse) {
+        angle_error = atan2(-dy, -dx) - current_angle;
+    }
+
+    angle_error = voss::norm_delta(angle_error);
+
+    double lin_speed = linear_pid.update(distance_error) * dir;
+
+    double ang_speed;
+    if (distance_error < min_error) {
+        this->can_reverse = true;
+
+        if (noPose) {
+            ang_speed = 0; // disable turning when close to the point to prevent
+                           // spinning
+        } else {
+            // turn to face the finale pose angle if executing a pose movement
+            double poseError = target.theta.value() - current_angle;
+
+            while (fabs(poseError) > M_PI)
+                poseError -= 2 * M_PI * poseError / fabs(poseError);
+            ang_speed = angular_pid.update(poseError);
+        }
+
+        // reduce the linear speed if the bot is tangent to the target
+        lin_speed *= cos(angle_error);
+
+    } else if (distance_error < 2 * min_error) {
+        // scale angular speed down to 0 as distance_error approaches min_error
+        ang_speed = angular_pid.update(angle_error);
+        ang_speed *= (distance_error - min_error) / min_error;
+    } else {
+        if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
+            angle_error =
+                angle_error - (angle_error / fabs(angle_error)) * M_PI;
+            lin_speed = -lin_speed;
+        }
+
+        ang_speed = angular_pid.update(angle_error);
+    }
+    lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
+    return {lin_speed - ang_speed, lin_speed + ang_speed};
+}
 
 int PPController::get_closest(const Pose& current_pos) {
     double closestDist = std::numeric_limits<double>::max();

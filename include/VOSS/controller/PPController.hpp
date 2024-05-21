@@ -31,6 +31,8 @@ class PPController : virtual public IsPathFollowController,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
 
+
+
     void reset();
 
     std::shared_ptr<PPController> get_ptr();
@@ -39,9 +41,13 @@ class PPController : virtual public IsPathFollowController,
     utils::PID angular_pid;
     utils::PID linear_pid;
     double track_width;
+    bool can_reverse = false;
+    double min_error;
 
     int prev_closest_index{0};
     double look_ahead_dist;
+
+    std::pair<double, double> pid_controller_for_ending(const Pose& current_pos, const Pose& target, bool reverse);
 
     int get_closest(const Pose& current_pose);
     double get_curvature(const Pose& robot, const Point& pt) const;
