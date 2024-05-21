@@ -58,15 +58,8 @@ chassis::DiffChassisCommand PPController::get_angular_command(
     return voss::chassis::Stop();
 }
 
-void PPController::reset() {
-}
-
-std::shared_ptr<PPController> PPController::get_ptr() {
-    return this->shared_from_this();
-}
 
 int PPController::get_closest(const Pose& current_pos) {
-    int index = -1;
     double closestDist = std::numeric_limits<double>::max();
     int closest = -1;
     Point pos = {current_pos.x, current_pos.y};
@@ -149,6 +142,15 @@ double PPController::get_reference_y_err(const Pose& robot_pt,
     double dy = pt.y - robot_pt.y;
 
     return dy * sin(robot_pt.theta.value()) + dx * cos(robot_pt.theta.value());
+}
+
+void PPController::reset() {
+    angular_pid.reset();
+    linear_pid.reset();
+}
+
+std::shared_ptr<PPController> PPController::get_ptr() {
+    return this->shared_from_this();
 }
 
 }; // namespace voss::controller
