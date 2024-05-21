@@ -1,42 +1,48 @@
 
 #include "PPController.hpp"
+#include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/Math.hpp"
 
 namespace voss::controller {
+
+PPController::PPController(PPController::PP_Construct_Params params)
+    : linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
+      angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
+      look_ahead_dist(params.look_ahead_dist), track_width(params.track_width) {
+}
+
 chassis::DiffChassisCommand
 PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                           bool reverse, bool thru,
                           std::shared_ptr<AbstractExitCondition> ec) {
     double left_vel, right_vel;
-    Pose current_pose = l->get_pose();
-    Point look_ahead_pt;
+    Point current_pos = l->get_position();
+    double h = l->get_orientation_rad();
+    int idx = this->get_closest(l->get_pose());
 
-    // v_i = = velocity at prior point, a = max acceleration, d = distance
-    // between the points v_f = sqrt(v_i * v_i + 2 * a * d)
+    Point look_ahead_pt =
+        get_lookahead_pt(l->get_pose(), idx)
+            .value_or(Point{target_path.at(prev_closest_index).x,
+                            target_path.at(prev_closest_index).y});
 
+    double lin_err = Point::getDistance(current_pos, look_ahead_pt);
+
+    double lin_vel = linear_pid.update(lin_err) * (reverse ? -1 : 1);
+    double ang_vel =
+        angular_pid.update(get_reference_y_err(l->get_pose(), look_ahead_pt));
 
     double curvature = this->get_curvature(l->get_pose(), look_ahead_pt);
-    double vel;
-    double accel;
     // L = V * (2 + CT)/2
     // R = V * (2 − CT)/2
 
-    if(reverse) {
-        curvature *= -1;
-        vel *= -1;
-        accel *= -1;
+    left_vel = lin_vel * (2.0 - curvature * this->track_width) / 2.0 - ang_vel;
+    right_vel = lin_vel * (2.0 + curvature * this->track_width) / 2.0 + ang_vel;
+
+    double vMax = std::max(fabs(left_vel), fabs(right_vel));
+    if (vMax > 100) {
+        left_vel *= 100.0 / vMax;
+        right_vel *= 100.0 / vMax;
     }
-
-
-    left_vel = vel * (2.0 + curvature * this->track_width) / 2.0;
-    right_vel = vel * (2.0 - curvature * this->track_width) / 2.0;
-
-    left_vel = left_ffwd.update(left_vel, (left_vel - prev_left_vel)); //change these to mp accel?
-    right_vel = left_ffwd.update(left_vel, (left_vel - prev_left_vel));
-
-    left_vel += left_pid.update((left_vel - prev_left_vel)); // it would be nice if we can get actual vel
-    right_vel += left_pid.update((left_vel - prev_left_vel)); // we would probably want to get actual vel from localizer
-
 
     if (!ec->is_met(l->get_pose(),
                     thru)) { // we might not want thru for pp but who knows
@@ -59,28 +65,27 @@ std::shared_ptr<PPController> PPController::get_ptr() {
     return this->shared_from_this();
 }
 
-int PPController::get_closest(const Point& current_pos) {
+int PPController::get_closest(const Pose& current_pos) {
     int index = -1;
-    double closestDist = -1;
+    double closestDist = std::numeric_limits<double>::max();
+    int closest = -1;
+    Point pos = {current_pos.x, current_pos.y};
 
-    for (int i = this->prev_closest_index; i < this->target_path.size(); i++) {
-        auto pose = this->target_path.at(i);
-        double checkDist = Point::getDistance({pose.x, pose.y}, current_pos);
+    // loop from the last closest point to one point past the lookahead
+    for (int i = 0; i < target_path.size(); i++) {
+        auto it = target_path.at(i);
 
-        if (index == -1) {
-            index = i;
-            closestDist = checkDist;
-        } else {
-            if (checkDist <= closestDist) {
-                index = i;
-                closestDist = checkDist;
-            }
+        double distance = Point::getDistance(pos, {it.x, it.y});
+        if (distance < closestDist) {
+            closestDist = distance;
+            closest = i;
         }
     }
 
-    this->prev_closest_index = index;
-    return index;
+    prev_closest_index = closest;
+    return closest;
 }
+
 double PPController::get_curvature(const Pose& robot, const Point& pt) const {
     const Point current_pt = {robot.x, robot.y};
     const double h = robot.theta.value();
@@ -92,14 +97,58 @@ double PPController::get_curvature(const Pose& robot, const Point& pt) const {
     double x = fabs(a * pt.x + b * pt.y + c) / sqrt(a * a + b * b);
 
     double side = sgn(sin(h) * (pt.x - robot.x) - cos(h) * (pt.y - robot.y));
-    if(side == 0) {
+    if (side == 0) {
         return 0;
     }
 
-    return side * (2.0 * x / look_ahead_dist * look_ahead_dist); // side * curvature
+    return side *
+           (2.0 * x / look_ahead_dist * look_ahead_dist); // side * curvature
 }
-std::optional<Point> PPController::get_lookahead_pt() {
-    
+
+std::optional<Point> PPController::get_lookahead_pt(const Pose& robot_pt,
+                                                    int idx) {
+    Pose prev_pose = target_path.at(idx);
+    Pose curr_pose = target_path.at(idx + 1);
+
+    return circle_line_intersect(robot_pt, prev_pose, curr_pose);
+}
+
+std::optional<Point> PPController::circle_line_intersect(
+    const Pose& robot_pt, const Pose& start_pose, const Pose& end_pose) const {
+    Point end_pt = {end_pose.x, end_pose.y};
+    Point start_pt = {start_pose.x, start_pose.y};
+    Point d = end_pt - start_pt;
+    Point f = start_pt - Point{robot_pt.x, robot_pt.y};
+    double a = d * d;
+    double b = 2 * (f * d);
+    double c = (f * f) - this->look_ahead_dist * this->look_ahead_dist;
+    double discriminant = b * b - 4 * a * c;
+
+    if (discriminant >= 0) {
+        discriminant = sqrt(discriminant);
+        double t1 = (-b - discriminant) / (2 * a);
+        double t2 = (-b + discriminant) / (2 * a);
+
+        double t = NAN;
+        if (t1 >= 0 && t1 <= 1) {
+            t = t1;
+        } else if (t2 >= 0 && t2 <= 1) {
+            t = t2;
+        } else {
+            return std::nullopt;
+        }
+
+        return std::optional<Point>({std::lerp(start_pt.x, end_pt.x, t),
+                                     std::lerp(start_pt.y, end_pt.y, t)});
+    }
+    return std::nullopt;
+}
+double PPController::get_reference_y_err(const Pose& robot_pt,
+                                         const Point& pt) {
+    double dx = pt.x - robot_pt.x;
+    double dy = pt.y - robot_pt.y;
+
+    return dy * sin(robot_pt.theta.value()) + dx * cos(robot_pt.theta.value());
 }
 
 }; // namespace voss::controller

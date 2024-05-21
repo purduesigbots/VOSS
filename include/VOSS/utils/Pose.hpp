@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Point.hpp"
 #include <atomic>
 #include <cmath>
 #include <optional>
@@ -20,6 +21,12 @@ struct Pose {
             return Pose{x_new, y_new, a.theta.value() + h};
         }
         return Pose{x_new, y_new, std::nullopt};
+    }
+
+    void operator=(const Point& pt) {
+        x = pt.x;
+        y = pt.y;
+        theta = std::nullopt;
     }
 };
 
