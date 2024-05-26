@@ -35,7 +35,7 @@ DiffChassis::DiffChassis(
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
 
-    this->slew_step = slew_step > 0 ? slew_step : 200;
+    this->slew_step = slew_step >= 0 ? slew_step : 200;
     this->brakeMode = brakeMode;
     this->left_motors->set_brake_mode(this->brakeMode);
     this->right_motors->set_brake_mode(this->brakeMode);
