@@ -4,17 +4,17 @@
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/flags.hpp"
+#include "VOSS/trajectory/Trajectory.hpp"
 
 namespace voss::controller {
 
 class AbstractController {
 
   protected:
-    AbstractController() = default;
-
     Pose target;
     double angular_target;
     std::vector<Pose> target_path;
+    std::optional<trajectory::Trajectory> target_trajectory;
 
   public:
 
@@ -32,10 +32,14 @@ class AbstractController {
 
     void set_target(const Pose& target);
     void set_angular_target(double angle);
+    void set_target_path(const std::vector<Pose>& path);
+    void set_target_trajectory(const trajectory::Trajectory& traj);
 };
 
 class IsMoveController : virtual public AbstractController {};
 class IsTurnController : virtual public AbstractController {};
 class IsPathFollowController : virtual public AbstractController {};
+class IsTrajectoryFollowController : virtual public AbstractController {};
+
 
 } // namespace voss::controller

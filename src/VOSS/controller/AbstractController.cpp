@@ -17,4 +17,13 @@ void AbstractController::set_angular_target(double angular_target) {
     this->angular_target = angular_target;
 }
 
+void AbstractController::set_target_path(const std::vector<Pose>& path) {
+    this->target_path = path;
+}
+
+void AbstractController::set_target_trajectory(
+    const trajectory::Trajectory& traj) {
+    this->target_trajectory = traj;
+}
+
 } // namespace voss::controller

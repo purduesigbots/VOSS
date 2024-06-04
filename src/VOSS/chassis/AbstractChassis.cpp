@@ -17,40 +17,18 @@ AbstractChassis::AbstractChassis(
     this->default_ec = std::move(ec);
 }
 
-Pose AbstractChassis::process_target_pose(Pose target, bool relative) {
-    if (target.theta.has_value()) {
-        target.theta = voss::to_radians(target.theta.value());
-    }
-    if (relative) {
-        return Pose::get_relative(target, this->l->get_pose());
-    }
-    return target;
-}
-
-double AbstractChassis::process_target_angle(double angle, bool relative) {
-    angle = voss::to_radians(angle);
-    if (relative) {
-        return voss::norm(angle + this->l->get_orientation_rad());
-    }
-    return voss::norm(angle);
-}
-
-void AbstractChassis::move_task(move_controller_ptr controller, ec_ptr ec,
+void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags) {
+    const bool reverse = flags & voss::Flags::REVERSE;
+    const bool thru = flags & voss::Flags::THRU;
+
+    ec->reset();
+    controller->reset();
 
     this->task = std::make_unique<pros::Task>([=, this]() {
-        ec->reset();
-        controller->reset();
         while (!this->execute(
-            controller->get_command(this->l,
-                                    flags & voss::Flags::REVERSE,
-                                    flags & voss::Flags::THRU, ec),
-            max)) {
-            if (pros::competition::is_disabled()) {
-                this->task_running = false;
-                return;
-            }
-
+                   controller->get_command(this->l, reverse, thru, ec), max) ||
+               !pros::competition::is_disabled()) {
             pros::delay(constants::MOTOR_UPDATE_DELAY);
         }
         this->task_running = false;
@@ -64,33 +42,28 @@ void AbstractChassis::move_task(move_controller_ptr controller, ec_ptr ec,
     this->task->join();
 }
 
-void AbstractChassis::turn_task(turn_controller_ptr controller, ec_ptr ec,
+void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags,
                                 voss::AngularDirection direction) {
-
-    this->task =
-        std::make_unique<pros::Task>([=, this]() {
-            ec->reset();
-            controller->reset();
-            while (!this->execute(controller->get_angular_command(
-                                      this->l,
-                                      flags & voss::Flags::REVERSE,
-                                      flags & voss::Flags::THRU, direction, ec),
-                                  max)) {
-                if (pros::competition::is_disabled()) {
-                    this->task_running = false;
-                    return;
-                }
-
-                pros::delay(constants::MOTOR_UPDATE_DELAY);
-            }
-            this->task_running = false;
-        });
+    const bool reverse = flags & voss::Flags::REVERSE;
+    const bool thru = flags & voss::Flags::THRU;
+    ec->reset();
+    controller->reset();
+    this->task = std::make_unique<pros::Task>([=, this]() {
+        while (!this->execute(controller->get_angular_command(
+                                  this->l, reverse, thru, direction, ec),
+                              max) ||
+               !pros::competition::is_disabled()) {
+            pros::delay(constants::MOTOR_UPDATE_DELAY);
+        }
+        this->task_running = false;
+    });
 
     // Early exit for async movement
     if (flags & voss::Flags::ASYNC) {
         return;
     }
+
     this->task->join();
 }
 
@@ -201,6 +174,85 @@ void AbstractChassis::turn_to(Point target, turn_controller_ptr controller,
 
     this->turn_task(std::move(controller), std::move(ec), max, flags,
                     direction);
+}
+void AbstractChassis::follow_path(std::initializer_list<Pose> path,
+                                  path_follow_controller_ptr controller,
+                                  double max, voss::FollowerFlags flags) {
+    this->follow_path(path, std::move(controller), this->default_ec, max,
+                      flags);
+}
+
+void AbstractChassis::follow_path(std::initializer_list<Pose> path,
+                                  path_follow_controller_ptr controller,
+                                  ec_ptr ec, double max,
+                                  voss::FollowerFlags flags) {
+    while (this->task_running) {
+        pros::delay(10);
+    }
+    this->task_running = true;
+    auto processed_path = this->process_target_path(path);
+
+    controller->set_target_path(processed_path);
+    ec->set_target(*processed_path.end());
+
+    this->move_task(std::move(controller), std::move(ec), max,
+                    static_cast<Flags>(flags));
+}
+
+void AbstractChassis::follow_trajectory(
+    const trajectory::SplinePath& trajectory,
+    trajectory_follow_controller_ptr controller,
+    const voss::trajectory::TrajectoryConstraints& constraints,
+    voss::FollowerFlags flags) {
+    this->follow_trajectory(trajectory, std::move(controller), this->default_ec,
+                            constraints, flags);
+}
+
+void AbstractChassis::follow_trajectory(
+    const trajectory::SplinePath& trajectory,
+    trajectory_follow_controller_ptr controller, ec_ptr ec,
+    const voss::trajectory::TrajectoryConstraints& constraints,
+    voss::FollowerFlags flags) {
+    while (this->task_running) {
+        pros::delay(10);
+    }
+    this->task_running = true;
+
+    auto target_traj = trajectory::Trajectory(trajectory, constraints);
+
+    controller->set_target_trajectory(target_traj);
+    ec->set_target(target_traj.at(1).pose.pose);
+
+    this->move_task(std::move(controller), std::move(ec), 100,
+                    static_cast<Flags>(flags));
+}
+
+Pose AbstractChassis::process_target_pose(Pose target, bool relative) {
+    if (target.theta.has_value()) {
+        target.theta = voss::to_radians(target.theta.value());
+    }
+    if (relative) {
+        return Pose::get_relative(target, this->l->get_pose());
+    }
+    return target;
+}
+
+double AbstractChassis::process_target_angle(double angle, bool relative) {
+    angle = voss::to_radians(angle);
+    if (relative) {
+        return voss::norm(angle + this->l->get_orientation_rad());
+    }
+    return voss::norm(angle);
+}
+
+std::vector<Pose>
+AbstractChassis::process_target_path(const std::vector<Pose>& path) {
+    for (auto it : path) {
+        if (it.theta.has_value()) {
+            it.theta = voss::to_radians(it.theta.value());
+        }
+    }
+    return path;
 }
 
 } // namespace voss::chassis
