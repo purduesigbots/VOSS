@@ -40,4 +40,7 @@ MotionState Profile::at(double t) {
     return {(0.5 * prev_state.acc * dt + prev_state.vel) * dt + prev_state.pos, prev_state.acc * dt + prev_state.vel, prev_state.acc};
 }
 
+double Profile::duration() {
+    return times.back();
+}
 }

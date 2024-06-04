@@ -19,7 +19,7 @@ struct TrajectoryPose {
     Pose pose;
     double vel;
     double acc;
-    double ang_acc;
+    double ang_vel;
 };
 
 class Trajectory {
@@ -30,6 +30,7 @@ class Trajectory {
     Trajectory(SplinePath path, TrajectoryConstraints constraints);
 
     TrajectoryPose at(double t);
+    double duration();
 };
 
 }

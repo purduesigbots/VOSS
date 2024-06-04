@@ -139,4 +139,8 @@ TrajectoryPose Trajectory::at(double t) {
     return result;
 }
 
+double Trajectory::duration() {
+    return profile.duration();
+}
+
 }

@@ -221,7 +221,7 @@ void AbstractChassis::follow_trajectory(
     auto target_traj = trajectory::Trajectory(trajectory, constraints);
 
     controller->set_target_trajectory(target_traj);
-    ec->set_target(target_traj.at(1).pose.pose);
+    ec->set_target(target_traj.at(target_traj.duration()).pose);
 
     this->move_task(std::move(controller), std::move(ec), 100,
                     static_cast<Flags>(flags));

@@ -16,6 +16,7 @@ class Profile {
     Profile() = default;
 
     MotionState at(double t);
+    double duration();
 };
 
 }

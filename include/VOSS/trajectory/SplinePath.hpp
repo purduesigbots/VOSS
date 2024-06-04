@@ -29,6 +29,7 @@ class SplinePath {
     SplinePath(std::initializer_list<Pose> waypoints, bool reversed);
     SplinePath(std::vector<Pose> waypoints, bool reversed);
 
+    double num_segments();
     double length();
     bool is_reversed();
     PoseWithCurvature at(double distance);

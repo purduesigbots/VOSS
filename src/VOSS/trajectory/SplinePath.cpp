@@ -39,7 +39,7 @@ SplinePath::SplinePath(std::initializer_list<Pose> waypoints, bool reversed): re
         return voss::Point::getDistance({dx, dy}, {0, 0});
     };
 
-    arc_length_reparam = voss::utils::IntegralScan(0.0, this->length(), 1E-6, f);
+    arc_length_reparam = voss::utils::IntegralScan(0.0, this->num_segments(), 1E-6, f);
 }
 
 SplinePath::SplinePath(std::vector<Pose> waypoints, bool reversed): reversed(reversed) {
@@ -74,11 +74,15 @@ SplinePath::SplinePath(std::vector<Pose> waypoints, bool reversed): reversed(rev
         return voss::Point::getDistance({dx, dy}, {0, 0});
     };
 
-    arc_length_reparam = voss::utils::IntegralScan(0.0, this->length(), 1E-6, f);
+    arc_length_reparam = voss::utils::IntegralScan(0.0, this->num_segments(), 1E-6, f);
+}
+
+double SplinePath::num_segments() {
+    return this->x_segments.size();
 }
 
 double SplinePath::length() {
-    return this->x_segments.size();
+    return arc_length_reparam.end();
 }
 
 bool SplinePath::is_reversed() {
@@ -88,8 +92,8 @@ bool SplinePath::is_reversed() {
 PoseWithCurvature SplinePath::at(double distance) {
     double t = arc_length_reparam.lookup_inverse(distance);
     int index = t;
-    if (index >= this->length()) {
-        index = this->length() - 1;
+    if (index >= this->num_segments()) {
+        index = this->num_segments() - 1;
     }
     MotionState x_state = x_segments[index].at(t - index);
     MotionState y_state = y_segments[index].at(t - index);
