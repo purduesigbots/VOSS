@@ -19,12 +19,14 @@ class DiffChassis : public AbstractChassis {
     double slew(double target, bool is_left);
 
   public:
-    DiffChassis(std::initializer_list<int8_t> left_motors,
-                std::initializer_list<int8_t> right_motors,
-                controller_ptr default_controller, ec_ptr ec,
-                double slew_step = 8,
-                pros::motor_brake_mode_e brakeMode =
-                    pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST);
+    DiffChassis(
+        std::initializer_list<int8_t> left_motors,
+        std::initializer_list<int8_t> right_motors,
+        std::shared_ptr<voss::controller::PIDController> default_controller,
+        std::shared_ptr<voss::localizer::AbstractLocalizer> localizer,
+        ec_ptr ec, double slew_step = 8,
+        pros::motor_brake_mode_e brakeMode =
+            pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST);
 
     void tank(double left_speed, double right_speed);
     void arcade(double forward_speed, double turn_speed);

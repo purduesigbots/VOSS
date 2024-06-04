@@ -1,22 +1,22 @@
 #include "VOSS/controller/SwingController.hpp"
 
-#include "SwingControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <utility>
 
 namespace voss::controller {
-SwingController::SwingController(
-    std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)){};
+SwingController::SwingController(SwingController_Construct_Params params)
+    : std::enable_shared_from_this<SwingController>(),
+      angular_pid(params.ang_kp, params.ang_ki, params.ang_kd){};
 
 chassis::DiffChassisCommand
-SwingController::get_command(bool reverse, bool thru,
+SwingController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                              std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
 
 chassis::DiffChassisCommand SwingController::get_angular_command(
-    bool reverse, bool thru, voss::AngularDirection direction,
+    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
+    voss::AngularDirection direction,
     std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in background of Swing Turn commands
     // ArcTan is used to find the angle between the robot and the target
@@ -26,10 +26,10 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
     // Power appled to motors based on proportion of the error and the weight of
     // the constant Exit conditions are when the robot has settled for a
     // designated time duration or accurate to a specified tolerance
-    double current_angle = this->l->get_orientation_rad();
+    double current_angle = l->get_orientation_rad();
     double target_angle = 0;
     if (!this->target.theta.has_value()) {
-        Point current_pos = this->l->get_position();
+        Point current_pos = l->get_position();
         double dx = this->target.x - current_pos.x;
         double dy = this->target.y - current_pos.y;
         target_angle = atan2(dy, dx);
@@ -66,8 +66,7 @@ chassis::DiffChassisCommand SwingController::get_angular_command(
 
     prev_ang_speed = ang_speed;
 
-    if (ec->is_met(this->l->get_pose(), thru) ||
-        chainedExecutable) { // exit or thru
+    if (ec->is_met(l->get_pose(), thru) || chainedExecutable) { // exit or thru
         if (thru) {
             if (this->can_reverse ^ !reverse) { // same sign
                 return std::signbit(ang_speed)  // 1
@@ -101,13 +100,15 @@ void SwingController::reset() {
 
 std::shared_ptr<SwingController>
 SwingController::modify_angular_constants(double kP, double kI, double kD) {
-    auto pid_mod = SwingControllerBuilder::from(*this)
-                       .with_angular_constants(kP, kI, kD)
-                       .build();
+    this->p = std::make_shared<SwingController>(SwingController(*this));
 
-    this->p = pid_mod;
+    this->p->angular_pid.set_constants(kP, kI, kD);
 
     return this->p;
+}
+
+std::shared_ptr<SwingController> SwingController::get_ptr() {
+    return this->shared_from_this();
 }
 
 }; // namespace voss::controller

@@ -1,21 +1,22 @@
 #include "VOSS/controller/ArcPIDController.hpp"
-#include "ArcPIDControllerBuilder.hpp"
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 #include <utility>
 
 namespace voss::controller {
 
-ArcPIDController::ArcPIDController(
-    std::shared_ptr<localizer::AbstractLocalizer> l)
-    : AbstractController(std::move(l)) {
+ArcPIDController::ArcPIDController(Arc_Construct_Params params)
+    : std::enable_shared_from_this<ArcPIDController>(),
+      linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
+      angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
+      track_width(params.track_width), min_error(params.min_error) {
 }
 
 chassis::DiffChassisCommand
-ArcPIDController::get_command(bool reverse, bool thru,
+ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
                               std::shared_ptr<AbstractExitCondition> ec) {
-    Point current_pos = this->l->get_position();
-    double current_angle = this->l->get_orientation_rad();
+    Point current_pos = l->get_position();
+    double current_angle = l->get_orientation_rad();
 
     // x: current_x, y: current_y
     // x': target_x, y': target_y
@@ -67,9 +68,6 @@ ArcPIDController::get_command(bool reverse, bool thru,
         lin_speed = -lin_speed;
     }
 
-    if (lin_speed > prev_lin_speed + slew) {
-        lin_speed = prev_lin_speed + slew;
-    }
     lin_speed *= reverse ? -1 : 1;
 
     double left_speed, right_speed;
@@ -97,8 +95,7 @@ ArcPIDController::get_command(bool reverse, bool thru,
         right_speed = lin_speed;
     }
     prev_t = t;
-    prev_lin_speed = lin_speed;
-    if (ec->is_met(this->l->get_pose(), thru)) {
+    if (ec->is_met(l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{
                 chassis::diff_commands::Chained{left_speed, right_speed}};
@@ -111,7 +108,8 @@ ArcPIDController::get_command(bool reverse, bool thru,
 }
 
 chassis::DiffChassisCommand ArcPIDController::get_angular_command(
-    bool reverse, bool thru, voss::AngularDirection direction,
+    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
+    voss::AngularDirection direction,
     std::shared_ptr<AbstractExitCondition> ec) {
     return chassis::DiffChassisCommand{chassis::Stop{}};
 }
@@ -119,48 +117,34 @@ chassis::DiffChassisCommand ArcPIDController::get_angular_command(
 void ArcPIDController::reset() {
     this->linear_pid.reset();
     this->angular_pid.reset();
-    this->prev_lin_speed = 0.0;
     this->arc_radius = NAN;
 }
 
 std::shared_ptr<ArcPIDController>
 ArcPIDController::modify_linear_constants(double kP, double kI, double kD) {
-    auto pid_mod = ArcPIDControllerBuilder::from(*this)
-                       .with_linear_constants(kP, kI, kD)
-                       .build();
-
-    this->p = pid_mod;
-
+    this->p = std::make_shared<ArcPIDController>(ArcPIDController(*this));
+    this->p->linear_pid.set_constants(kP, kI, kD);
     return this->p;
 }
 
 std::shared_ptr<ArcPIDController>
 ArcPIDController::modify_track_width(double track_width) {
-    auto pid_mod = ArcPIDControllerBuilder::from(*this)
-                       .with_track_width(track_width)
-                       .build();
-
-    this->p = pid_mod;
+    this->p = std::make_shared<ArcPIDController>(ArcPIDController(*this));
+    this->p->track_width = track_width;
 
     return this->p;
 }
 
 std::shared_ptr<ArcPIDController>
 ArcPIDController::modify_min_error(double min_error) {
-    auto pid_mod =
-        ArcPIDControllerBuilder::from(*this).with_min_error(min_error).build();
-
-    this->p = pid_mod;
+    this->p = std::make_shared<ArcPIDController>(ArcPIDController(*this));
+    this->p->min_error = min_error;
 
     return this->p;
 }
 
-std::shared_ptr<ArcPIDController> ArcPIDController::modify_slew(double slew) {
-    auto pid_mod = ArcPIDControllerBuilder::from(*this).with_slew(slew).build();
-
-    this->p = pid_mod;
-
-    return this->p;
+std::shared_ptr<ArcPIDController> ArcPIDController::get_ptr() {
+    return this->shared_from_this();
 }
 
 } // namespace voss::controller

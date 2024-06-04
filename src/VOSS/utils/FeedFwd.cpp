@@ -2,7 +2,7 @@
 #include "VOSS/utils/FeedFwd.hpp"
 #include "VOSS/utils/Math.hpp"
 
-namespace voss {
+namespace voss::utils {
 
 FeedForward::FeedForward(double kS, double kV, double kA, double kD)
     : kS(kS), kD(kD), kA(kA), kV(kV){};

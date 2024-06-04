@@ -1,8 +1,5 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/controller/BoomerangControllerBuilder.hpp"
-#include "VOSS/controller/PIDControllerBuilder.hpp"
-#include "VOSS/controller/SwingControllerBuilder.hpp"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
 
@@ -19,32 +16,19 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_imu(16)
                 .build();
 
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_min_vel_for_thru(100)
-               .build();
+auto pid = voss::controller::PIDController({}).get_ptr();
 
-auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
-                     .with_min_vel_for_thru(70)
-                     .with_min_error(5)
-                     .build();
+auto boomerang = voss::controller::BoomerangController({}).get_ptr();
 
-auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                 .with_angular_constants(250, 0.05, 2435)
-                 .build();
+auto swing = voss::controller::SwingController({.ang_kp = 200}).get_ptr();
 
-auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(16)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_slew(8)
-               .build();
+auto arc = voss::controller::ArcPIDController(
+               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
+               .get_ptr();
+
+auto pp =
+    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
+        .get_ptr();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -56,8 +40,8 @@ auto ec = voss::controller::ExitConditions::new_conditions()
                   return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
               });
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec,
-                                          pros::E_MOTOR_BRAKE_COAST);
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, odom,
+                                          ec, pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
 
@@ -142,6 +126,10 @@ void opcontrol() {
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 90});
             chassis.move({-24, 24}, arc);
+            std::initializer_list<voss::Pose> path = {{0, 0, 90}, {0, 24, 90}, {48, 48, 90}};
+            chassis.follow_path({{0, 0, 90}, {0, 24, 90}, {48, 48, 90}}, pp,
+                                100);
+            chassis.follow_path(path, pp);
         }
 
         pros::lcd::clear_line(1);

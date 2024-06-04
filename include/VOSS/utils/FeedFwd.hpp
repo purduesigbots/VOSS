@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace voss {
+namespace voss::utils {
 
 class FeedForward {
   public:
