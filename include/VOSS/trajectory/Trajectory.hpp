@@ -16,9 +16,10 @@ struct TrajectoryConstraints {
 };
 
 struct TrajectoryPose {
-    PoseWithCurvature pose;
+    Pose pose;
     double vel;
     double acc;
+    double ang_acc;
 };
 
 class Trajectory {

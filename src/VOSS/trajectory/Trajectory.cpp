@@ -131,7 +131,12 @@ Trajectory::Trajectory(SplinePath path, TrajectoryConstraints constraints): path
 TrajectoryPose Trajectory::at(double t) {
     MotionState state = this->profile.at(t);
     PoseWithCurvature pose = this->path.at(state.pos);
-    return {pose, state.vel, state.acc};
+    TrajectoryPose result = {pose.pose, state.vel, state.acc, state.vel * pose.curvature};
+    if (path.is_reversed()) {
+        result.vel *= -1;
+        result.acc *= -1;
+    }
+    return result;
 }
 
 }

@@ -23,12 +23,14 @@ class SplinePath {
     std::vector<SplineSegment> x_segments;
     std::vector<SplineSegment> y_segments;
     voss::utils::IntegralScan arc_length_reparam;
+    bool reversed;
 
   public:
-    SplinePath(std::initializer_list<Pose> waypoints);
-    SplinePath(std::vector<Pose> waypoints);
+    SplinePath(std::initializer_list<Pose> waypoints, bool reversed);
+    SplinePath(std::vector<Pose> waypoints, bool reversed);
 
     double length();
+    bool is_reversed();
     PoseWithCurvature at(double distance);
 
     PathSample sample(double dist_resolution);

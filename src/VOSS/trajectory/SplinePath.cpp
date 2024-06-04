@@ -3,10 +3,11 @@
 #include <cmath>
 #include <functional>
 #include "VOSS/utils/Point.hpp"
+#include "VOSS/utils/angle.hpp"
 
 namespace voss::trajectory {
 
-SplinePath::SplinePath(std::initializer_list<Pose> waypoints) {
+SplinePath::SplinePath(std::initializer_list<Pose> waypoints, bool reversed): reversed(reversed) {
     for (auto waypoint = waypoints.begin() + 1; waypoint != waypoints.end(); waypoint++) {
         Pose prev = *(waypoint - 1);
         MotionState begin_x, end_x, begin_y, end_y;
@@ -15,6 +16,9 @@ SplinePath::SplinePath(std::initializer_list<Pose> waypoints) {
         end_x.pos = waypoint->x;
         end_y.pos = waypoint->y;
         double dist = voss::Point::getDistance({prev.x, prev.y}, {waypoint->x, waypoint->y});
+        if (reversed) {
+            dist *= -1;
+        }
         begin_x.vel = cos(prev.theta.value()) * dist;
         begin_y.vel = sin(prev.theta.value()) * dist;
         end_x.vel = cos(waypoint->theta.value()) * dist;
@@ -38,7 +42,7 @@ SplinePath::SplinePath(std::initializer_list<Pose> waypoints) {
     arc_length_reparam = voss::utils::IntegralScan(0.0, this->length(), 1E-6, f);
 }
 
-SplinePath::SplinePath(std::vector<Pose> waypoints) {
+SplinePath::SplinePath(std::vector<Pose> waypoints, bool reversed): reversed(reversed) {
     for (auto waypoint = waypoints.begin() + 1; waypoint != waypoints.end(); waypoint++) {
         Pose prev = *(waypoint - 1);
         MotionState begin_x, end_x, begin_y, end_y;
@@ -47,6 +51,9 @@ SplinePath::SplinePath(std::vector<Pose> waypoints) {
         end_x.pos = waypoint->x;
         end_y.pos = waypoint->y;
         double dist = voss::Point::getDistance({prev.x, prev.y}, {waypoint->x, waypoint->y});
+        if (reversed) {
+            dist *= -1;
+        }
         begin_x.vel = cos(prev.theta.value()) * dist;
         begin_y.vel = sin(prev.theta.value()) * dist;
         end_x.vel = cos(waypoint->theta.value()) * dist;
@@ -74,6 +81,10 @@ double SplinePath::length() {
     return this->x_segments.size();
 }
 
+bool SplinePath::is_reversed() {
+    return this->reversed;
+}
+
 PoseWithCurvature SplinePath::at(double distance) {
     double t = arc_length_reparam.lookup_inverse(distance);
     int index = t;
@@ -87,6 +98,10 @@ PoseWithCurvature SplinePath::at(double distance) {
     result.pose.x = x_state.pos;
     result.pose.y = y_state.pos;
     result.pose.theta = atan2(y_state.vel, x_state.vel);
+    if (reversed) {
+        result.pose.theta.value() += M_PI;
+    }
+    result.pose.theta = norm(result.pose.theta.value());
     double d1_d2_cross = x_state.vel * y_state.acc - y_state.vel * x_state.acc;
     double d1_norm = voss::Point::getDistance({x_state.vel, y_state.vel}, {0, 0});
     result.curvature = d1_d2_cross / (d1_norm * d1_norm * d1_norm);
