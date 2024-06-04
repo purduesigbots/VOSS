@@ -30,6 +30,16 @@ auto pp =
     voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
         .get_ptr();
 
+auto ramsete = voss::controller::RamseteController({.track_width = 16}).get_ptr();
+auto traj_constraints = voss::trajectory::TrajectoryConstraints {
+    .max_vel = 50,
+    .max_accel = 50,
+    .max_decel = -30,
+    .max_ang_accel = M_PI,
+    .max_centr_accel = 0.0,
+    .track_width = 16
+};
+
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
               .add_settle(400, 0.5, 400)
@@ -130,6 +140,8 @@ void opcontrol() {
             chassis.follow_path({{0, 0, 90}, {0, 24, 90}, {48, 48, 90}}, pp,
                                 100);
             chassis.follow_path(path, pp);
+            auto spline_path = voss::trajectory::SplinePath({{0, 0, M_PI_2}, {24, -24, M_PI}}, false);
+            chassis.follow_trajectory(spline_path, ramsete, traj_constraints);
         }
 
         pros::lcd::clear_line(1);
