@@ -16,9 +16,7 @@
 #include "VOSS/trajectory/SplinePath.hpp"
 #include "VOSS/trajectory/Trajectory.hpp"
 
-namespace voss::chassis {
-
-namespace ptrs {
+namespace voss::controller::ptrs {
 using controller_ptr =
     std::shared_ptr<controller::AbstractController>; // abstract controller
                                                      // pointer
@@ -34,9 +32,11 @@ using trajectory_follow_controller_ptr = std::shared_ptr<
 using ec_ptr =
     std::shared_ptr<controller::AbstractExitCondition>; // exit condition
                                                         // pointer
-} // namespace ptrs
+} // namespace voss::controller::ptrs
 
-using namespace ptrs;
+namespace voss::chassis {
+
+using namespace voss::controller::ptrs;
 
 class AbstractChassis {
   public:
@@ -104,17 +104,17 @@ class AbstractChassis {
                      double max = 100.0,
                      voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
-    void
-    follow_trajectory(const voss::trajectory::SplinePath& trajectory,
-                      trajectory_follow_controller_ptr controller,
-                      const voss::trajectory::TrajectoryConstraints& constraints,
-                      voss::FollowerFlags flags = voss::FollowerFlags::NONE);
+    void follow_trajectory(
+        const voss::trajectory::SplinePath& trajectory,
+        trajectory_follow_controller_ptr controller,
+        const voss::trajectory::TrajectoryConstraints& constraints,
+        voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
-    void
-    follow_trajectory(const voss::trajectory::SplinePath& trajectory,
-                      trajectory_follow_controller_ptr controller, ec_ptr ec,
-                      const voss::trajectory::TrajectoryConstraints& constraints,
-                      voss::FollowerFlags flags = voss::FollowerFlags::NONE);
+    void follow_trajectory(
+        const voss::trajectory::SplinePath& trajectory,
+        trajectory_follow_controller_ptr controller, ec_ptr ec,
+        const voss::trajectory::TrajectoryConstraints& constraints,
+        voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
   protected:
     void move_task(controller_ptr controller, ec_ptr ec, double max,
@@ -125,8 +125,7 @@ class AbstractChassis {
 
     Pose process_target_pose(Pose target, bool relative);
     double process_target_angle(double angle, bool relative);
-    std::vector<Pose>
-    process_target_path(const std::vector<Pose>& path);
+    std::vector<Pose> process_target_path(const std::vector<Pose>& path);
 
   protected:
     std::shared_ptr<voss::controller::PIDController> default_controller;

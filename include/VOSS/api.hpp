@@ -10,6 +10,7 @@
 #include "controller/ArcPIDController.hpp"
 #include "controller/BoomerangController.hpp"
 #include "controller/PIDController.hpp"
+#include "controller/PPController.hpp"
 #include "controller/SwingController.hpp"
 
 #include "exit_conditions/AbstractExitCondition.hpp"

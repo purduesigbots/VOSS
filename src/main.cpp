@@ -26,6 +26,10 @@ auto arc = voss::controller::ArcPIDController(
                {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
                .get_ptr();
 
+auto pp =
+    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
+        .get_ptr();
+
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
               .add_settle(400, 0.5, 400)
@@ -122,6 +126,10 @@ void opcontrol() {
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 90});
             chassis.move({-24, 24}, arc);
+            std::initializer_list<voss::Pose> path = {{0, 0, 90}, {0, 24, 90}, {48, 48, 90}};
+            chassis.follow_path({{0, 0, 90}, {0, 24, 90}, {48, 48, 90}}, pp,
+                                100);
+            chassis.follow_path(path, pp);
         }
 
         pros::lcd::clear_line(1);
