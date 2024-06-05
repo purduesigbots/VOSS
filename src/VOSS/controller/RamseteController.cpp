@@ -31,7 +31,7 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, 
     double k = 2 * zeta * sqrt(target_state.ang_vel * target_state.ang_vel + b * target_state.vel * target_state.vel);
 
     double vel = target_state.vel * cos(angle_error) + k * x_error_relative;
-    double ang_vel = target_state.ang_vel + b * target_state.vel * sin(angle_error) * y_error / angle_error;
+    double ang_vel = target_state.ang_vel + b * target_state.vel * sin(angle_error) * /*y_error*/y_error_relative / angle_error;
 
     double left_vel = vel - ang_vel * track_width * 0.5;
     double right_vel = vel + ang_vel * track_width * 0.5;

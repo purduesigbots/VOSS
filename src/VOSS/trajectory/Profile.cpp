@@ -1,6 +1,8 @@
 #include "VOSS/trajectory/Profile.hpp"
-
+#include "iostream"
 #include "VOSS/utils/Algorithms.hpp"
+#include <cmath>
+#define DEBUG true
 
 namespace voss::trajectory {
 
@@ -15,7 +17,9 @@ Profile::Profile(std::vector<MotionState> samples): samples(samples) {
         } else {
             new_time += (current.vel - prev.vel) / prev.acc;
         }
-        times.push_back(new_time);
+        if(!std::isnan(new_time)) {
+            times.push_back(new_time);
+        }
     }
 }
 
