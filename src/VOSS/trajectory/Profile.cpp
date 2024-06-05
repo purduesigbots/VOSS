@@ -12,14 +12,8 @@ Profile::Profile(std::vector<MotionState> samples): samples(samples) {
         double new_time = this->times.back();
         MotionState current = samples.at(i);
         MotionState prev = samples.at(i - 1);
-        if (current.acc == 0.0) {
-            new_time += (current.pos - prev.pos) / prev.vel;
-        } else {
-            new_time += (current.vel - prev.vel) / prev.acc;
-        }
-        if(!std::isnan(new_time)) {
-            times.push_back(new_time);
-        }
+        new_time += 2 * (current.pos - prev.pos) / (current.vel + prev.vel);
+        this->times.push_back(new_time);
     }
 }
 
