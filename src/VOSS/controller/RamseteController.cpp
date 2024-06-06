@@ -23,7 +23,7 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, 
     double x_error_relative = cos(current_pose.theta.value()) * x_error + sin(current_pose.theta.value()) * y_error;
     double y_error_relative = -sin(current_pose.theta.value()) * x_error + cos(current_pose.theta.value()) * y_error;
 
-    if (target_state.vel == 0.0) {
+    if (current_time > this->target_trajectory->get_duration()) {
         target_state.vel = 0.01 * x_error_relative;
         target_state.ang_vel = 0.01 * angle_error;
     }
@@ -31,13 +31,25 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, 
     double k = 2 * zeta * sqrt(target_state.ang_vel * target_state.ang_vel + b * target_state.vel * target_state.vel);
 
     double vel = target_state.vel * cos(angle_error) + k * x_error_relative;
-    double ang_vel = target_state.ang_vel + b * target_state.vel * sin(angle_error) * /*y_error*/y_error_relative / angle_error;
+    double ang_vel = target_state.ang_vel + k * angle_error + b * target_state.vel * sin(angle_error) * y_error_relative / angle_error;
 
     double left_vel = vel - ang_vel * track_width * 0.5;
     double right_vel = vel + ang_vel * track_width * 0.5;
 
-    left_vel = motor_ff.update(left_vel, 0.0);
-    right_vel = motor_ff.update(right_vel, 0.0);
+    // hack: approximate left and right acceleration based on estimated left and right velocity for next time step
+    trajectory::TrajectoryPose lookahead = this->target_trajectory->at(current_time + 0.01);
+    if (current_time + 0.01 > this->target_trajectory->get_duration()) {
+        lookahead.vel = 0.01 * x_error_relative;
+        lookahead.ang_vel = 0.01 * angle_error;
+    }
+    double lookahead_vel = lookahead.vel * cos(angle_error) + k * x_error_relative;
+    double lookahead_ang_vel = lookahead.ang_vel + k * angle_error + b * lookahead.vel * sin(angle_error) * y_error_relative / angle_error;
+
+    double left_accel = (lookahead_vel - lookahead_ang_vel * track_width * 0.5 - left_vel) / 0.01;
+    double right_accel = (lookahead_vel + lookahead_ang_vel * track_width * 0.5 - right_vel) / 0.01;
+
+    left_vel = motor_ff.update(left_vel, left_accel);
+    right_vel = motor_ff.update(right_vel, right_accel);
 
     if (ec->is_met(current_pose, thru)) {
         if (thru) {
