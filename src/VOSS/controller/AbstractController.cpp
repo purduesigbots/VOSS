@@ -23,7 +23,12 @@ void AbstractController::set_target_path(const std::vector<Pose>& path) {
 
 void AbstractController::set_target_trajectory(
     const trajectory::Trajectory& traj) {
-    this->target_trajectory = traj;
+    this->target_trajectory = std::make_shared<trajectory::Trajectory>(traj);
+}
+
+void AbstractController::set_target_trajectory(
+    const trajectory::PreGenTrajectory& traj) {
+    this->target_trajectory = std::make_shared<trajectory::PreGenTrajectory>(traj);
 }
 
 } // namespace voss::controller

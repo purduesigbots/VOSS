@@ -5,6 +5,7 @@
 #include "VOSS/localizer/AbstractLocalizer.hpp"
 #include "VOSS/utils/flags.hpp"
 #include "VOSS/trajectory/Trajectory.hpp"
+#include "VOSS/trajectory/PreGenTrajectory.hpp"
 
 namespace voss::controller {
 
@@ -14,7 +15,7 @@ class AbstractController {
     Pose target;
     double angular_target;
     std::vector<Pose> target_path;
-    std::optional<trajectory::Trajectory> target_trajectory;
+    std::shared_ptr<trajectory::AbstractTrajectory> target_trajectory;
 
   public:
 
@@ -34,6 +35,7 @@ class AbstractController {
     void set_angular_target(double angle);
     void set_target_path(const std::vector<Pose>& path);
     void set_target_trajectory(const trajectory::Trajectory& traj);
+    void set_target_trajectory(const trajectory::PreGenTrajectory& gen);
 };
 
 class IsMoveController : virtual public AbstractController {};
