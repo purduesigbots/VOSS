@@ -1,9 +1,8 @@
 #pragma once
 
 #include <cstddef>
-#include <stdint.h>
+#include <cstdint>
 
-namespace voss::asset {
 extern "C" {
 
 typedef struct __attribute__((__packed__)) _asset {
@@ -18,4 +17,5 @@ typedef struct __attribute__((__packed__)) _asset {
     static asset x = {_binary_static_##x##_start,                              \
                       (size_t)_binary_static_##x##_size};                      \
     }
-}; // namespace voss::asset
+// fun fact this comment disabled the warning cursed by macro and auto format
+// (don't delete it)

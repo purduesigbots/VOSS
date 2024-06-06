@@ -119,12 +119,12 @@ class AbstractChassis {
         voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
     void follow_trajectory(
-        const asset::asset& trajectory_file,
+        const asset& trajectory_file,
         trajectory_follow_controller_ptr controller,
         voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
     void follow_trajectory(
-        const asset::asset& trajectory_file,
+        const asset& trajectory_file,
         trajectory_follow_controller_ptr controller, ec_ptr ec,
         voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 

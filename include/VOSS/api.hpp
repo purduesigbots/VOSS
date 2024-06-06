@@ -1,6 +1,6 @@
 #pragma once
 
-#include "asset/Asset.hpp"
+#include "VOSS/asset/Asset.hpp"
 
 #include "chassis/AbstractChassis.hpp"
 #include "chassis/ChassisCommand.hpp"

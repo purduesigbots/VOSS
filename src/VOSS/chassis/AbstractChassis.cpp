@@ -229,21 +229,21 @@ void AbstractChassis::follow_trajectory(
 }
 
 void AbstractChassis::follow_trajectory(
-    const asset::asset& trajectory_file, trajectory_follow_controller_ptr controller,
+    const asset& trajectory_file, trajectory_follow_controller_ptr controller,
     voss::FollowerFlags flags) {
-    this->follow_trajectory(trajectory_file, std::move(controller), this->default_ec,
-                            flags);
+    this->follow_trajectory(trajectory_file, std::move(controller),
+                            this->default_ec, flags);
 }
 
 void AbstractChassis::follow_trajectory(
-    const asset::asset& trajectory_file, trajectory_follow_controller_ptr controller,
+    const asset& trajectory_file, trajectory_follow_controller_ptr controller,
     ec_ptr ec, voss::FollowerFlags flags) {
     while (this->task_running) {
         pros::delay(10);
     }
     this->task_running = true;
 
-    auto target_traj = asset::decode_csv(trajectory_file);
+    auto target_traj = decode_csv(trajectory_file);
 
     controller->set_target_trajectory(target_traj);
     ec->set_target(target_traj.at(target_traj.get_duration()).pose);
