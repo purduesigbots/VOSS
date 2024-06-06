@@ -16,6 +16,8 @@
 #include "VOSS/trajectory/SplinePath.hpp"
 #include "VOSS/trajectory/Trajectory.hpp"
 
+#include "VOSS/asset/Asset.hpp"
+
 namespace voss::controller::ptrs {
 using controller_ptr =
     std::shared_ptr<controller::AbstractController>; // abstract controller
@@ -114,6 +116,16 @@ class AbstractChassis {
         const voss::trajectory::SplinePath& trajectory,
         trajectory_follow_controller_ptr controller, ec_ptr ec,
         const voss::trajectory::TrajectoryConstraints& constraints,
+        voss::FollowerFlags flags = voss::FollowerFlags::NONE);
+
+    void follow_trajectory(
+        const asset::asset& trajectory_file,
+        trajectory_follow_controller_ptr controller,
+        voss::FollowerFlags flags = voss::FollowerFlags::NONE);
+
+    void follow_trajectory(
+        const asset::asset& trajectory_file,
+        trajectory_follow_controller_ptr controller, ec_ptr ec,
         voss::FollowerFlags flags = voss::FollowerFlags::NONE);
 
   protected:

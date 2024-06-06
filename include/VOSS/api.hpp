@@ -1,5 +1,7 @@
 #pragma once
 
+#include "asset/Asset.hpp"
+
 #include "chassis/AbstractChassis.hpp"
 #include "chassis/ChassisCommand.hpp"
 #include "chassis/DiffChassis.hpp"
