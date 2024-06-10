@@ -27,14 +27,12 @@ auto arc = voss::controller::ArcPIDController(
                .get_ptr();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-auto ec = voss::controller::ExitConditions::new_conditions()
+auto ec = voss::controller::ExitConditionsBuilder::new_builder()
               .add_settle(400, 0.5, 400)
               .add_tolerance(1.0, 2.0, 200)
               .add_timeout(22500)
               .add_thru_smoothness(4)
-              .build() -> exit_if([]() {
-                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-              });
+              .build();
 
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, odom,
                                           ec, pros::E_MOTOR_BRAKE_COAST);
@@ -121,7 +119,12 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
+            chassis.move({-24, 24}, arc, ec->set_timeout(10000));
+            chassis.move({-24, 24}, boomerang,
+                         ec->set_tolerance(2, 1, 100)->exit_if([]() -> bool {
+                             return master.get_digital_new_press(
+                                 pros::E_CONTROLLER_DIGITAL_UP);
+                         }));
         }
 
         pros::lcd::clear_line(1);
