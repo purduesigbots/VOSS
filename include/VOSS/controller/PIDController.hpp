@@ -6,9 +6,7 @@
 
 namespace voss::controller {
 
-class PIDController : private std::enable_shared_from_this<PIDController>,
-                      public virtual IsMoveController,
-                      public virtual IsTurnController {
+class PIDController : public IsMoveController, public IsTurnController {
   protected:
     std::shared_ptr<PIDController> p;
 
@@ -34,14 +32,13 @@ class PIDController : private std::enable_shared_from_this<PIDController>,
     PIDController(PID_Construct_Params params);
 
     chassis::DiffChassisCommand
-    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                std::shared_ptr<AbstractExitCondition> ec) override;
+    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse,
+                bool thru, std::shared_ptr<AbstractExitCondition> ec) override;
     chassis::DiffChassisCommand
-    get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
+    get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                        bool reverse, bool thru,
                         voss::AngularDirection direction,
                         std::shared_ptr<AbstractExitCondition> ec) override;
-
-    std::shared_ptr<PIDController> get_ptr();
 
     void reset() override;
 

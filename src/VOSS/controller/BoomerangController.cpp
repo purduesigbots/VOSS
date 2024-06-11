@@ -8,6 +8,7 @@ namespace voss::controller {
 
 BoomerangController::BoomerangController(Boomerang_Construct_Param params)
     : std::enable_shared_from_this<BoomerangController>(),
+      IsMoveController(),
       linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       lead_pct(params.lead_pct), min_error(params.min_error),

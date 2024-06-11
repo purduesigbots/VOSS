@@ -8,14 +8,15 @@
 namespace voss::controller {
 
 PIDController::PIDController(PID_Construct_Params params)
-    : std::enable_shared_from_this<PIDController>(),
+    : IsTurnController(), IsMoveController(),
       linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       min_error(params.min_error), min_vel(params.min_vel) {
 }
 
 chassis::DiffChassisCommand
-PIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
+PIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                           bool reverse, bool thru,
                            std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in background of move commands
     // distance formula to find the distance between the robot and the target
@@ -95,10 +96,10 @@ PIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool
         lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::DiffChassisCommand
-PIDController::get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                                   voss::AngularDirection direction,
-                                   std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand PIDController::get_angular_command(
+    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
+    voss::AngularDirection direction,
+    std::shared_ptr<AbstractExitCondition> ec) {
     // Runs in the background of turn commands
     // Error is the difference between the target angle and the current angle
     // ArcTan is used to find the angle between the robot and the target
@@ -176,10 +177,6 @@ PIDController::modify_min_error(double min_error) {
     this->p->min_error = min_error;
 
     return this->p;
-}
-
-std::shared_ptr<PIDController> PIDController::get_ptr() {
-    return this->shared_from_this();
 }
 
 } // namespace voss::controller

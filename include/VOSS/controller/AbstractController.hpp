@@ -10,12 +10,11 @@
 namespace voss::controller {
 
 class AbstractController {
-
   protected:
-    Pose target;
-    double angular_target;
-    std::vector<Pose> target_path;
-    std::shared_ptr<trajectory::AbstractTrajectory> target_trajectory;
+    Pose target{0, 0, std::nullopt};
+    double angular_target{0};
+    std::vector<Pose> target_path{};
+    std::shared_ptr<trajectory::AbstractTrajectory> target_trajectory{};
 
   public:
 
@@ -31,17 +30,29 @@ class AbstractController {
 
     virtual void reset() = 0;
 
-    void set_target(const Pose& target);
+    void set_target(Pose target);
     void set_angular_target(double angle);
     void set_target_path(const std::vector<Pose>& path);
     void set_target_trajectory(const trajectory::Trajectory& traj);
     void set_target_trajectory(const trajectory::PreGenTrajectory& gen);
 };
 
-class IsMoveController : virtual public AbstractController {};
-class IsTurnController : virtual public AbstractController {};
-class IsPathFollowController : virtual public AbstractController {};
-class IsTrajectoryFollowController : virtual public AbstractController {};
+class IsMoveController : virtual public AbstractController {
+  public:
+    IsMoveController() = default;
+};
+class IsTurnController : virtual public AbstractController {
+  public:
+    IsTurnController() = default;
+};
+class IsPathFollowController : virtual public AbstractController {
+  public:
+    IsPathFollowController() = default;
+};
+class IsTrajectoryFollowController : virtual public AbstractController {
+  public:
+    IsTrajectoryFollowController() = default;
+};
 
 
 } // namespace voss::controller

@@ -1,9 +1,11 @@
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
+#include "iostream"
 
 namespace voss::controller {
 
 void AbstractExitCondition::set_target(Pose target) {
     this->target_pose = target;
+    printf("im here12\n");
 }
 
 void AbstractExitCondition::reset() {

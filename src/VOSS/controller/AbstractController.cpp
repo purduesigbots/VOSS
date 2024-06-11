@@ -3,13 +3,17 @@
 #include "VOSS/utils/angle.hpp"
 #include <cmath>
 #include <memory>
+#include "iostream"
 
 namespace voss::controller {
 
 // Set desired postion with x, y, and heading
 // Relative target position WIP
-void AbstractController::set_target(const Pose& target) {
+void AbstractController::set_target(Pose target) {
+    printf("im here9\n");
+    std::cout << this->target.x << '\n';
     this->target = target;
+    printf("im here10\n");
 }
 
 // Set desired orientation

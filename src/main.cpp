@@ -4,41 +4,40 @@
 #include "VOSS/utils/flags.hpp"
 
 #define LEFT_MOTORS                                                            \
-    { -4, -1, -21, 8, 13 }
+    { -2, -3, -4 }
 #define RIGHT_MOTORS                                                           \
-    { 10, 3, 9, -7, -15 }
+    { 5, 6, 10 }
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_right_motor(10)
                 .with_left_motor(-4)
-                .with_track_width(11)
                 .with_left_right_tpi(18.43)
-                .with_imu(16)
+                .with_imu(1)
                 .build();
 
-auto pid = voss::controller::PIDController({}).get_ptr();
+auto pid = std::shared_ptr<voss::controller::PIDController>({});
 
-auto boomerang = voss::controller::BoomerangController({}).get_ptr();
-
-auto swing = voss::controller::SwingController({.ang_kp = 200}).get_ptr();
-
-auto arc = voss::controller::ArcPIDController(
-               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
-               .get_ptr();
-
-auto pp =
-    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
-        .get_ptr();
-
-auto ramsete = voss::controller::RamseteController({.track_width = 16}).get_ptr();
-auto traj_constraints = voss::trajectory::TrajectoryConstraints {
-    .max_vel = 50,
-    .max_accel = 50,
-    .max_decel = -30,
-    .max_ang_accel = M_PI,
-    .max_centr_accel = 0.0,
-    .track_width = 16
-};
+auto boomerang = std::shared_ptr<voss::controller::BoomerangController>({});
+//
+//auto swing = voss::controller::SwingController({.ang_kp = 200}).get_ptr();
+//
+//auto arc = voss::controller::ArcPIDController(
+//               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
+//               .get_ptr();
+//
+//auto pp =
+//    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
+//        .get_ptr();
+//
+//auto ramsete = voss::controller::RamseteController({.track_width = 16}).get_ptr();
+//auto traj_constraints = voss::trajectory::TrajectoryConstraints {
+//    .max_vel = 50,
+//    .max_accel = 50,
+//    .max_decel = -30,
+//    .max_ang_accel = M_PI,
+//    .max_centr_accel = 0.0,
+//    .track_width = 16
+//};
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -46,9 +45,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
               .add_tolerance(1.0, 2.0, 200)
               .add_timeout(22500)
               .add_thru_smoothness(4)
-              .build() -> exit_if([]() {
-                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-              });
+              .build();
 
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, odom,
                                           ec, pros::E_MOTOR_BRAKE_COAST);
@@ -64,6 +61,7 @@ pros::IMU imu(16);
 void initialize() {
     pros::lcd::initialize();
     odom->begin_localization();
+    pros::delay(3000);
 }
 
 /**
@@ -135,13 +133,7 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
-            std::initializer_list<voss::Pose> path = {{0, 0, 90}, {0, 24, 90}, {48, 48, 90}};
-            chassis.follow_path({{0, 0, 90}, {0, 24, 90}, {48, 48, 90}}, pp,
-                                100);
-            chassis.follow_path(path, pp);
-            auto spline_path = voss::trajectory::SplinePath({{0, 0, M_PI_2}, {24, -24, M_PI}}, false);
-            chassis.follow_trajectory(spline_path, ramsete, traj_constraints);
+            chassis.move(24);
         }
 
         pros::lcd::clear_line(1);

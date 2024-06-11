@@ -25,7 +25,7 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
 
     ec->reset();
     controller->reset();
-
+    printf("im here6\n");
     this->task = std::make_unique<pros::Task>([=, this]() {
         while (!this->execute(
                    controller->get_command(this->l, reverse, thru, ec), max) ||
@@ -69,37 +69,39 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
 }
 
 void AbstractChassis::move(double distance, double max, voss::Flags flags) {
+    printf("im here0\n");
     this->move({distance, 0}, this->default_controller, this->default_ec, max,
                flags | voss::Flags::RELATIVE);
 }
 
 void AbstractChassis::move(double distance, move_controller_ptr controller,
                            double max, voss::Flags flags) {
-
+    printf("im here1\n");
     this->move({distance, 0}, std::move(controller), this->default_ec, max,
                flags | voss::Flags::RELATIVE);
 }
 
 void AbstractChassis::move(double distance, move_controller_ptr controller,
                            ec_ptr ec, double max, voss::Flags flags) {
-
+    printf("im here2\n");
     this->move({distance, 0}, std::move(controller), std::move(ec), max,
                flags | Flags::RELATIVE);
 }
 
 void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
+    printf("im here3\n");
     this->move(target, this->default_controller, this->default_ec, max, flags);
 }
 
 void AbstractChassis::move(Pose target, move_controller_ptr controller,
                            double max, voss::Flags flags) {
-
+    printf("im here4\n");
     this->move(target, std::move(controller), this->default_ec, max, flags);
 }
 
 void AbstractChassis::move(Pose target, move_controller_ptr controller,
                            ec_ptr ec, double max, voss::Flags flags) {
-
+    printf("im here5\n");
     while (this->task_running) {
         pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
@@ -107,10 +109,11 @@ void AbstractChassis::move(Pose target, move_controller_ptr controller,
 
     Pose processed_target =
         this->process_target_pose(target, flags & voss::Flags::RELATIVE);
-
-    controller->set_target(processed_target);
+    printf("im here7\n");
+    printf("%lf, %lf, %lf", processed_target.x, processed_target.y, processed_target.theta.value_or(0.0));
+    std::dynamic_pointer_cast<controller::AbstractController>(controller)->set_target(processed_target);
     ec->set_target(processed_target);
-
+    printf("im here8\n");
     this->move_task(std::move(controller), std::move(ec), max, flags);
 }
 
