@@ -297,8 +297,9 @@ void AbstractChassis::follow_trajectory(
     }
     this->task_running = true;
 
+    auto processed_traj = this->process_target_path(trajectory);
     auto target_traj = trajectory::Trajectory(
-        {trajectory, flags & voss::FollowerFlags::REVERSE}, constraints);
+        {processed_traj, flags & voss::FollowerFlags::REVERSE}, constraints);
 
     controller->set_target_trajectory(target_traj);
     ec->set_target(target_traj.at(target_traj.get_duration()).pose);
