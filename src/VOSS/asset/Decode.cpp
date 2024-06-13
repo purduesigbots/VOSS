@@ -9,7 +9,7 @@
 namespace voss {
 trajectory::PreGenTrajectory decode_csv(const asset& file) {
     std::map<double, trajectory::TrajectoryPose> t_to_trajectory;
-    std::string input(reinterpret_cast<char*>(file.buf), file.size);
+//    std::string input(reinterpret_cast<char*>(file.buf), file.size);
 
     // TODO: implement path file protocol
 

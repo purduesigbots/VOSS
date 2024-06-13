@@ -5,7 +5,7 @@
 
 namespace voss::controller {
 
-PPController::PPController(PPController::PP_Construct_Params params)
+PPController::PPController(PPController::Params params)
     : linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       look_ahead_dist(params.look_ahead_dist), track_width(params.track_width) {
@@ -13,14 +13,16 @@ PPController::PPController(PPController::PP_Construct_Params params)
 
 chassis::DiffChassisCommand
 PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
-                          bool reverse, bool thru,
-                          std::shared_ptr<AbstractExitCondition> ec) {
+                          std::shared_ptr<AbstractExitCondition> ec,
+                          const velocity_pair& v_pair, bool reverse,
+                          bool thru) {
     double left_vel, right_vel;
     Point current_pos = l->get_position();
 
     int idx = this->get_closest(l->get_pose());
 
-    if (Point::getDistance(current_pos, {this->target.x, this->target.y}) <
+    if (Point::getDistance(current_pos,
+                           {this->target_pose.x, this->target_pose.y}) <
             this->look_ahead_dist &&
         idx == target_path.size() - 1) {
         const Pose target = target_path.back();
@@ -43,7 +45,7 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                          (reverse ? -1 : 1);
 
         double ang_vel = angular_pid.update(
-            get_reference_y_err(l->get_pose(), look_ahead_pt) /
+            get_relative_y_error(l->get_pose(), look_ahead_pt) /
             look_ahead_dist);
 
         double curvature = this->get_curvature(l->get_pose(), look_ahead_pt);
@@ -69,19 +71,13 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
     return chassis::Stop();
 }
 
-chassis::DiffChassisCommand PPController::get_angular_command(
-    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-    voss::AngularDirection direction,
-    std::shared_ptr<AbstractExitCondition> ec) {
-    return voss::chassis::Stop();
-}
 
 std::pair<double, double>
 PPController::pid_controller_for_ending(const Pose& current_pos,
                                         const Pose& target, bool reverse) {
     int dir = reverse ? -1 : 1;
     double current_angle = current_pos.theta.value();
-    bool noPose = !this->target.theta.has_value();
+    bool noPose = !this->target_pose.theta.has_value();
 
     double dx = target.x - current_pos.x;
     double dy = target.y - current_pos.y;
@@ -211,8 +207,8 @@ std::optional<Point> PPController::circle_line_intersect(
     }
     return std::nullopt;
 }
-double PPController::get_reference_y_err(const Pose& robot_pt,
-                                         const Point& pt) {
+double PPController::get_relative_y_error(const Pose& robot_pt,
+                                          const Point& pt) {
     double dx = pt.x - robot_pt.x;
     double dy = pt.y - robot_pt.y;
 
@@ -222,10 +218,6 @@ double PPController::get_reference_y_err(const Pose& robot_pt,
 void PPController::reset() {
     angular_pid.reset();
     linear_pid.reset();
-}
-
-std::shared_ptr<PPController> PPController::get_ptr() {
-    return this->shared_from_this();
 }
 
 }; // namespace voss::controller

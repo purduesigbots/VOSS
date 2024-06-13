@@ -9,6 +9,13 @@
 namespace voss::chassis {
 
 class DiffChassis : public AbstractChassis {
+  private:
+    void move_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags) override;
+
+    void turn_task(controller_ptr controller, ec_ptr ec, double max,
+                   voss::Flags flags,
+                   voss::AngularDirection direction) override;
 
   private:
     std::unique_ptr<pros::MotorGroup> left_motors;
@@ -23,7 +30,7 @@ class DiffChassis : public AbstractChassis {
         std::initializer_list<int8_t> left_motors,
         std::initializer_list<int8_t> right_motors,
         std::shared_ptr<voss::controller::PIDController> default_controller,
-        std::shared_ptr<voss::localizer::AbstractLocalizer> localizer,
+        localizer_ptr localizer,
         ec_ptr ec, double slew_step = 8,
         pros::motor_brake_mode_e brakeMode =
             pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST);
@@ -31,7 +38,7 @@ class DiffChassis : public AbstractChassis {
     void tank(double left_speed, double right_speed);
     void arcade(double forward_speed, double turn_speed);
 
-    bool execute(DiffChassisCommand cmd, double max);
+    bool execute(DiffChassisCommand cmd, double max) override;
     void set_brake_mode(pros::motor_brake_mode_e mode) override;
 
     auto getMotors() const {

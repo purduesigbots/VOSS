@@ -15,11 +15,13 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_imu(1)
                 .build();
 
-auto pid = std::shared_ptr<voss::controller::PIDController>({});
+auto pid = voss::controller::create_controller<voss::controller::PIDController>({.lin_kp = 0, .ang_kd = 10});
+
+
 
 auto boomerang = std::shared_ptr<voss::controller::BoomerangController>({});
 //
-//auto swing = voss::controller::SwingController({.ang_kp = 200}).get_ptr();
+auto swing = voss::controller::create_controller<voss::controller::SwingController>({});
 //
 //auto arc = voss::controller::ArcPIDController(
 //               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
@@ -29,15 +31,15 @@ auto boomerang = std::shared_ptr<voss::controller::BoomerangController>({});
 //    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
 //        .get_ptr();
 //
-//auto ramsete = voss::controller::RamseteController({.track_width = 16}).get_ptr();
-//auto traj_constraints = voss::trajectory::TrajectoryConstraints {
-//    .max_vel = 50,
-//    .max_accel = 50,
-//    .max_decel = -30,
-//    .max_ang_accel = M_PI,
-//    .max_centr_accel = 0.0,
-//    .track_width = 16
-//};
+auto ramsete = voss::controller::create_controller<voss::controller::RamseteController>({});
+auto traj_constraints = voss::trajectory::TrajectoryConstraints {
+    .max_vel = 50,
+    .max_accel = 50,
+    .max_decel = -30,
+    .max_ang_accel = M_PI,
+    .max_centr_accel = 0.0,
+    .track_width = 16
+};
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
@@ -123,26 +125,11 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
+ASSET(traj_txt)
+
 void opcontrol() {
+    odom->set_pose({0.0, 0.0, 90});
+    chassis.follow_trajectory({{0, 0, 0}, {20, 20, 5}, {45, 25, 180}}, ramsete, traj_constraints);
 
-    while (true) {
-        voss::Pose p = odom->get_pose();
-
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
-                       master.get_analog(ANALOG_RIGHT_X));
-
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move(24);
-        }
-
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
-        pros::delay(10);
-    }
 }

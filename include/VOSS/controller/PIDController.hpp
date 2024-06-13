@@ -6,7 +6,7 @@
 
 namespace voss::controller {
 
-class PIDController : public IsMoveController, public IsTurnController {
+class PIDController : public AbstractController {
   protected:
     std::shared_ptr<PIDController> p;
 
@@ -18,7 +18,7 @@ class PIDController : public IsMoveController, public IsTurnController {
     bool turn_overshoot;
 
   public:
-    struct PID_Construct_Params {
+    struct Params {
         double lin_kp = 20;
         double lin_ki = 0;
         double lin_kd = 0;
@@ -29,16 +29,18 @@ class PIDController : public IsMoveController, public IsTurnController {
         double min_vel = 100;
     };
 
-    PIDController(PID_Construct_Params params);
+    explicit PIDController(Params params);
 
     chassis::DiffChassisCommand
-    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse,
-                bool thru, std::shared_ptr<AbstractExitCondition> ec) override;
+    get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                std::shared_ptr<AbstractExitCondition> ec,
+                const velocity_pair& v_pair, bool reverse, bool thru) override;
+
     chassis::DiffChassisCommand
     get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l,
-                        bool reverse, bool thru,
-                        voss::AngularDirection direction,
-                        std::shared_ptr<AbstractExitCondition> ec) override;
+                        std::shared_ptr<AbstractExitCondition> ec,
+                        const velocity_pair& v_pair, bool reverse, bool thru,
+                        voss::AngularDirection direction) override;
 
     void reset() override;
 

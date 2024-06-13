@@ -4,14 +4,14 @@
 
 namespace voss::controller {
 
-RamseteController::RamseteController(RamseteController_Construct_Params params)
-    : std::enable_shared_from_this<RamseteController>(),
-    motor_ff(params.kS, params.kV, params.kA, params.kD), zeta(params.zeta), b(params.b), track_width(params.track_width) {
+RamseteController::RamseteController(RamseteController::Params params)
+    : motor_ff(params.kS, params.kV, params.kA, params.kD), zeta(params.zeta), b(params.b), track_width(params.track_width) {
 }
 
 chassis::DiffChassisCommand
-RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                           std::shared_ptr<AbstractExitCondition> ec) {
+RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                               std::shared_ptr<AbstractExitCondition> ec,
+                               const velocity_pair& v_pair, bool reverse, bool thru) {
     double current_time = (pros::c::millis() - init_time) / 1000.0;
 
     trajectory::TrajectoryPose target_state = this->target_trajectory->at(current_time);
@@ -62,20 +62,8 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, 
     return chassis::diff_commands::Voltages{left_vel, right_vel};
 }
 
-chassis::DiffChassisCommand
-RamseteController::get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l,
-                        bool reverse, bool thru,
-                        voss::AngularDirection direction,
-                        std::shared_ptr<AbstractExitCondition> ec) {
-    return chassis::Stop{};
-}
-
 void RamseteController::reset() {
     init_time = pros::c::millis();
-}
-
-std::shared_ptr<RamseteController> RamseteController::get_ptr() {
-    return this->shared_from_this();
 }
 
 std::shared_ptr<RamseteController> RamseteController::modify_constants(double zeta, double b) {

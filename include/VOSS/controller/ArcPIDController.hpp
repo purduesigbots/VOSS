@@ -6,8 +6,7 @@
 
 namespace voss::controller {
 
-class ArcPIDController : private std::enable_shared_from_this<ArcPIDController>,
-                         public virtual IsMoveController {
+class ArcPIDController : public AbstractController {
   private:
   protected:
     std::shared_ptr<ArcPIDController> p;
@@ -21,7 +20,7 @@ class ArcPIDController : private std::enable_shared_from_this<ArcPIDController>,
     double prev_t;
 
   public:
-    struct Arc_Construct_Params {
+    struct Params {
         double lin_kp = 20;
         double lin_ki = 0;
         double lin_kd = 0;
@@ -32,17 +31,12 @@ class ArcPIDController : private std::enable_shared_from_this<ArcPIDController>,
         double min_error = 5;
     };
 
-    ArcPIDController(Arc_Construct_Params params);
+    explicit ArcPIDController(Params params);
 
     chassis::DiffChassisCommand
-    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                std::shared_ptr<AbstractExitCondition> ec) override;
-    chassis::DiffChassisCommand
-    get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                        voss::AngularDirection direction,
-                        std::shared_ptr<AbstractExitCondition> ec) override;
-
-    std::shared_ptr<ArcPIDController> get_ptr();
+    get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                std::shared_ptr<AbstractExitCondition> ec,
+                const velocity_pair& v_pair, bool reverse, bool thru) override;
 
     void reset() override;
 
