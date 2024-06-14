@@ -6,19 +6,19 @@
 
 namespace voss::controller {
 
-BoomerangController::BoomerangController(Boomerang_Construct_Param params)
-    : std::enable_shared_from_this<BoomerangController>(),
-      linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
+BoomerangController::BoomerangController(BoomerangController::Params params)
+    : linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       lead_pct(params.lead_pct), min_error(params.min_error),
       min_vel(params.min_vel) {
 }
 
-chassis::DiffChassisCommand
-BoomerangController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                                 std::shared_ptr<AbstractExitCondition> ec) {
+chassis::DiffChassisCommand BoomerangController::get_command(
+    std::shared_ptr<localizer::AbstractLocalizer> l,
+    std::shared_ptr<AbstractExitCondition> ec, const velocity_pair& v_pair,
+    bool reverse, bool thru) {
 
-    if (!target.theta.has_value()) {
+    if (!target_pose.theta.has_value()) {
         return chassis::DiffChassisCommand{chassis::Stop{}};
     }
 
@@ -26,15 +26,16 @@ BoomerangController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l
 
     int dir = reverse ? -1 : 1;
     Pose trueTarget;
-    double dx = target.x - current_pos.x;
-    double dy = target.y - current_pos.y;
+    double dx = target_pose.x - current_pos.x;
+    double dy = target_pose.y - current_pos.y;
 
     double distance_error = sqrt(dx * dx + dy * dy);
-    double at = voss::to_radians(target.theta.value());
+    double at = voss::to_radians(target_pose.theta.value());
 
-    this->carrotPoint = {this->target.x - distance_error * cos(at) * lead_pct,
-                         this->target.y - distance_error * sin(at) * lead_pct,
-                         target.theta};
+    this->carrotPoint = {
+        this->target_pose.x - distance_error * cos(at) * lead_pct,
+        this->target_pose.y - distance_error * sin(at) * lead_pct,
+        target_pose.theta};
     double current_angle = l->get_orientation_rad() + (reverse ? M_PI : 0);
 
     double angle_error;
@@ -48,7 +49,8 @@ BoomerangController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l
     }
     lin_speed *= dir;
 
-    double pose_error = voss::norm_delta(target.theta.value() - current_angle);
+    double pose_error =
+        voss::norm_delta(target_pose.theta.value() - current_angle);
 
     double ang_speed;
     if (distance_error < min_error) {
@@ -89,13 +91,6 @@ BoomerangController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l
         lin_speed - ang_speed, lin_speed + ang_speed}};
 }
 
-chassis::DiffChassisCommand BoomerangController::get_angular_command(
-    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-    voss::AngularDirection direction,
-    std::shared_ptr<AbstractExitCondition> ec) {
-    return chassis::DiffChassisCommand{chassis::Stop{}};
-}
-
 void BoomerangController::reset() {
     this->linear_pid.reset();
     this->angular_pid.reset();
@@ -131,9 +126,6 @@ BoomerangController::modify_lead_pct(double lead_pct) {
     this->p->lead_pct = lead_pct;
 
     return this->p;
-}
-std::shared_ptr<BoomerangController> BoomerangController::get_ptr() {
-    return this->shared_from_this();
 }
 
 } // namespace voss::controller

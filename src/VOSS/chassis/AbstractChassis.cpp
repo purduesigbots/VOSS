@@ -1,6 +1,7 @@
 #include "VOSS/chassis/AbstractChassis.hpp"
 #include "pros/llemu.hpp"
 #include "pros/rtos.hpp"
+#include "VOSS/asset/Decode.hpp"
 #include "VOSS/constants.hpp"
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
@@ -16,6 +17,30 @@ AbstractChassis::AbstractChassis(
     this->default_controller = std::move(default_controller);
     this->default_ec = std::move(ec);
 }
+
+void AbstractChassis::move(double distance, double max, voss::Flags flags) {
+    printf("im here0\n");
+    this->move({distance, 0}, this->default_controller, this->default_ec, max,
+               flags | voss::Flags::RELATIVE);
+}
+
+void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
+    printf("im here3\n");
+    this->move(target, this->default_controller, this->default_ec, max, flags);
+}
+
+void AbstractChassis::turn(double target, double max, voss::Flags flags,
+                           voss::AngularDirection direction) {
+    this->turn(target, this->default_controller, this->default_ec, max, flags,
+               direction);
+}
+
+void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
+                              voss::AngularDirection direction) {
+    this->turn_to(target, this->default_controller, this->default_ec, max,
+                  flags, direction);
+}
+
 
 Pose AbstractChassis::process_target_pose(Pose target, bool relative) {
     if (target.theta.has_value()) {
@@ -35,172 +60,14 @@ double AbstractChassis::process_target_angle(double angle, bool relative) {
     return voss::norm(angle);
 }
 
-void AbstractChassis::move_task(move_controller_ptr controller, ec_ptr ec,
-                                double max, voss::Flags flags) {
-
-    this->task = std::make_unique<pros::Task>([=, this]() {
-        ec->reset();
-        controller->reset();
-        while (!this->execute(
-            controller->get_command(this->l,
-                                    flags & voss::Flags::REVERSE,
-                                    flags & voss::Flags::THRU, ec),
-            max)) {
-            if (pros::competition::is_disabled()) {
-                this->task_running = false;
-                return;
-            }
-
-            pros::delay(constants::MOTOR_UPDATE_DELAY);
+std::vector<Pose>
+AbstractChassis::process_target_path(const std::vector<Pose>& path) {
+    for (auto it : path) {
+        if (it.theta.has_value()) {
+            it.theta = voss::to_radians(it.theta.value());
         }
-        this->task_running = false;
-    });
-
-    // Early exit for async movement
-    if (flags & voss::Flags::ASYNC) {
-        return;
     }
-
-    this->task->join();
-}
-
-void AbstractChassis::turn_task(turn_controller_ptr controller, ec_ptr ec,
-                                double max, voss::Flags flags,
-                                voss::AngularDirection direction) {
-
-    this->task =
-        std::make_unique<pros::Task>([=, this]() {
-            ec->reset();
-            controller->reset();
-            while (!this->execute(controller->get_angular_command(
-                                      this->l,
-                                      flags & voss::Flags::REVERSE,
-                                      flags & voss::Flags::THRU, direction, ec),
-                                  max)) {
-                if (pros::competition::is_disabled()) {
-                    this->task_running = false;
-                    return;
-                }
-
-                pros::delay(constants::MOTOR_UPDATE_DELAY);
-            }
-            this->task_running = false;
-        });
-
-    // Early exit for async movement
-    if (flags & voss::Flags::ASYNC) {
-        return;
-    }
-    this->task->join();
-}
-
-void AbstractChassis::move(double distance, double max, voss::Flags flags) {
-    this->move({distance, 0}, this->default_controller, this->default_ec, max,
-               flags | voss::Flags::RELATIVE);
-}
-
-void AbstractChassis::move(double distance, move_controller_ptr controller,
-                           double max, voss::Flags flags) {
-
-    this->move({distance, 0}, std::move(controller), this->default_ec, max,
-               flags | voss::Flags::RELATIVE);
-}
-
-void AbstractChassis::move(double distance, move_controller_ptr controller,
-                           ec_ptr ec, double max, voss::Flags flags) {
-
-    this->move({distance, 0}, std::move(controller), std::move(ec), max,
-               flags | Flags::RELATIVE);
-}
-
-void AbstractChassis::move(Pose target, double max, voss::Flags flags) {
-    this->move(target, this->default_controller, this->default_ec, max, flags);
-}
-
-void AbstractChassis::move(Pose target, move_controller_ptr controller,
-                           double max, voss::Flags flags) {
-
-    this->move(target, std::move(controller), this->default_ec, max, flags);
-}
-
-void AbstractChassis::move(Pose target, move_controller_ptr controller,
-                           ec_ptr ec, double max, voss::Flags flags) {
-
-    while (this->task_running) {
-        pros::delay(constants::MOTOR_UPDATE_DELAY);
-    }
-    this->task_running = true;
-
-    Pose processed_target =
-        this->process_target_pose(target, flags & voss::Flags::RELATIVE);
-
-    controller->set_target(processed_target);
-    ec->set_target(processed_target);
-
-    this->move_task(std::move(controller), std::move(ec), max, flags);
-}
-
-void AbstractChassis::turn(double target, double max, voss::Flags flags,
-                           voss::AngularDirection direction) {
-    this->turn(target, this->default_controller, this->default_ec, max, flags,
-               direction);
-}
-
-void AbstractChassis::turn(double target, turn_controller_ptr controller,
-                           double max, voss::Flags flags,
-                           voss::AngularDirection direction) {
-    this->turn(target, std::move(controller), this->default_ec, max, flags,
-               direction);
-}
-
-void AbstractChassis::turn(double target, turn_controller_ptr controller,
-                           ec_ptr ec, double max, voss::Flags flags,
-                           voss::AngularDirection direction) {
-    while (this->task_running) {
-        pros::delay(constants::MOTOR_UPDATE_DELAY);
-    }
-    this->task_running = true;
-
-    double processed_target =
-        this->process_target_angle(target, flags & voss::Flags::RELATIVE);
-
-    controller->set_target({NAN, NAN, processed_target});
-    controller->set_angular_target(processed_target);
-    ec->set_target({NAN, NAN, processed_target});
-
-    this->turn_task(std::move(controller), std::move(ec), max, flags,
-                    direction);
-}
-
-void AbstractChassis::turn_to(Point target, double max, voss::Flags flags,
-                              voss::AngularDirection direction) {
-    this->turn_to(target, this->default_controller, this->default_ec, max,
-                  flags, direction);
-}
-
-void AbstractChassis::turn_to(Point target, turn_controller_ptr controller,
-                              double max, voss::Flags flags,
-                              voss::AngularDirection direction) {
-    this->turn_to(target, std::move(controller), this->default_ec, max, flags,
-                  direction);
-}
-
-void AbstractChassis::turn_to(Point target, turn_controller_ptr controller,
-                              ec_ptr ec, double max, voss::Flags flags,
-                              voss::AngularDirection direction) {
-    while (this->task_running) {
-        pros::delay(10);
-    }
-    this->task_running = true;
-
-    Pose processed_target = process_target_pose(
-        {target.x, target.y, std::nullopt}, flags & voss::Flags::RELATIVE);
-
-    controller->set_target(processed_target);
-    ec->set_target(processed_target);
-
-    this->turn_task(std::move(controller), std::move(ec), max, flags,
-                    direction);
+    return path;
 }
 
 } // namespace voss::chassis

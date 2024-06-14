@@ -1,8 +1,69 @@
 #include "VOSS/chassis/DiffChassis.hpp"
 #include "pros/motors.h"
+#include "VOSS/utils/Math.hpp"
 #include <cmath>
 
 namespace voss::chassis {
+
+void DiffChassis::move_task(controller_ptr controller, ec_ptr ec, double max,
+                            voss::Flags flags) {
+    const bool reverse = flags & voss::Flags::REVERSE;
+    const bool thru = flags & voss::Flags::THRU;
+    auto left_v_s = this->left_motors->get_actual_velocity_all();
+    auto right_v_s = this->right_motors->get_actual_velocity_all();
+    ec->reset();
+    controller->reset();
+    printf("im here6\n");
+    this->task = std::make_unique<pros::Task>([=, this]() {
+        while (!this->execute(controller->get_command(
+                                  this->l, ec,
+                                  {average(left_v_s.begin(), left_v_s.end()),
+                                   average(right_v_s.begin(), right_v_s.end())},
+                                  reverse, thru),
+                              max) ||
+               !pros::competition::is_disabled()) {
+            pros::delay(constants::MOTOR_UPDATE_DELAY);
+        }
+        this->task_running = false;
+    });
+
+    // Early exit for async movement
+    if (flags & voss::Flags::ASYNC) {
+        return;
+    }
+
+    this->task->join();
+}
+
+void DiffChassis::turn_task(controller_ptr controller, ec_ptr ec, double max,
+                            voss::Flags flags,
+                            voss::AngularDirection direction) {
+    const bool reverse = flags & voss::Flags::REVERSE;
+    const bool thru = flags & voss::Flags::THRU;
+    auto left_v_s = this->left_motors->get_actual_velocity_all();
+    auto right_v_s = this->right_motors->get_actual_velocity_all();
+    ec->reset();
+    controller->reset();
+    this->task = std::make_unique<pros::Task>([=, this]() {
+        while (!this->execute(controller->get_angular_command(
+                                  this->l, ec,
+                                  {average(left_v_s.begin(), left_v_s.end()),
+                                   average(right_v_s.begin(), right_v_s.end())},
+                                  reverse, thru, direction),
+                              max) ||
+               !pros::competition::is_disabled()) {
+            pros::delay(constants::MOTOR_UPDATE_DELAY);
+        }
+        this->task_running = false;
+    });
+
+    // Early exit for async movement
+    if (flags & voss::Flags::ASYNC) {
+        return;
+    }
+
+    this->task->join();
+}
 
 // Limits acceleration by slew step
 double DiffChassis::slew(double target, bool is_left) {
@@ -29,7 +90,7 @@ DiffChassis::DiffChassis(
     std::initializer_list<int8_t> left_motors,
     std::initializer_list<int8_t> right_motors,
     std::shared_ptr<voss::controller::PIDController> default_controller,
-    std::shared_ptr<voss::localizer::AbstractLocalizer> localizer, ec_ptr ec,
+    localizer_ptr localizer, ec_ptr ec,
     double slew_step, pros::motor_brake_mode_e brakeMode)
     : AbstractChassis(default_controller, localizer, ec) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);

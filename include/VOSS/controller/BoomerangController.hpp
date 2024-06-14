@@ -10,9 +10,7 @@
 
 namespace voss::controller {
 
-class BoomerangController
-    : private std::enable_shared_from_this<BoomerangController>,
-      public virtual IsMoveController {
+class BoomerangController : public AbstractController {
   protected:
     std::shared_ptr<BoomerangController> p;
     double lead_pct;
@@ -25,7 +23,7 @@ class BoomerangController
     double min_vel;
 
   public:
-    struct Boomerang_Construct_Param {
+    struct Params {
         double lin_kp = 20;
         double lin_ki = 0;
         double lin_kd = 0;
@@ -37,17 +35,12 @@ class BoomerangController
         double min_vel = 100;
     };
 
-    BoomerangController(Boomerang_Construct_Param params);
+    explicit BoomerangController(Params params);
 
     chassis::DiffChassisCommand
-    get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                std::shared_ptr<AbstractExitCondition> ec) override;
-    chassis::DiffChassisCommand
-    get_angular_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                        voss::AngularDirection direction,
-                        std::shared_ptr<AbstractExitCondition> ec) override;
-
-    std::shared_ptr<BoomerangController> get_ptr();
+    get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                std::shared_ptr<AbstractExitCondition> ec,
+                const velocity_pair& v_pair, bool reverse, bool thru) override;
 
     void reset() override;
 

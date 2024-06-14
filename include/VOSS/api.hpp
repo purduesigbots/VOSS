@@ -1,5 +1,7 @@
 #pragma once
 
+#include "VOSS/asset/Asset.hpp"
+
 #include "chassis/AbstractChassis.hpp"
 #include "chassis/ChassisCommand.hpp"
 #include "chassis/DiffChassis.hpp"
@@ -10,6 +12,8 @@
 #include "controller/ArcPIDController.hpp"
 #include "controller/BoomerangController.hpp"
 #include "controller/PIDController.hpp"
+#include "controller/PPController.hpp"
+#include "controller/RamseteController.hpp"
 #include "controller/SwingController.hpp"
 
 #include "exit_conditions/AbstractExitCondition.hpp"

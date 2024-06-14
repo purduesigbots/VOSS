@@ -12,6 +12,22 @@ struct Point {
         double dy = a.y - b.y;
         return sqrt(dx * dx + dy * dy);
     }
+
+    bool inline operator==(const Point& b) const {
+        return this->x == b.x && this->y == b.y;
+    }
+
+    Point inline operator+(const Point& b) const {
+        return {this->x + b.x, this->y + b.y};
+    }
+
+    Point inline operator-(const Point& b) const {
+        return {this->x - b.x, this->y - b.y};
+    }
+
+    double inline operator*(const Point& b) const {
+        return this->x * b.x + this->y * b.y;
+    }
 };
 
 } // namespace voss

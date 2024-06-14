@@ -5,16 +5,16 @@
 
 namespace voss::controller {
 
-ArcPIDController::ArcPIDController(Arc_Construct_Params params)
-    : std::enable_shared_from_this<ArcPIDController>(),
-      linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
+ArcPIDController::ArcPIDController(ArcPIDController::Params params)
+    : linear_pid(params.lin_kp, params.lin_ki, params.lin_kd),
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       track_width(params.track_width), min_error(params.min_error) {
 }
 
 chassis::DiffChassisCommand
-ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-                              std::shared_ptr<AbstractExitCondition> ec) {
+ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
+                              std::shared_ptr<AbstractExitCondition> ec,
+                              const velocity_pair& v_pair, bool reverse, bool thru) {
     Point current_pos = l->get_position();
     double current_angle = l->get_orientation_rad();
 
@@ -26,11 +26,11 @@ ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, b
     // equation 1: t(-sin) + s(y'-y) = (x'-x)/2
     // equation 2: t(cos) + s(x-x') = (y'-y)/2
     double a = -sin(current_angle);
-    double b = this->target.y - current_pos.y;
-    double c = (this->target.x - current_pos.x) / 2;
+    double b = this->target_pose.y - current_pos.y;
+    double c = (this->target_pose.x - current_pos.x) / 2;
     double d = cos(current_angle);
-    double e = current_pos.x - this->target.x;
-    double f = (this->target.y - current_pos.y) / 2;
+    double e = current_pos.x - this->target_pose.x;
+    double f = (this->target_pose.y - current_pos.y) / 2;
 
     // apply cramer's rule to solve for t
     double t;
@@ -107,13 +107,6 @@ ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l, b
         chassis::diff_commands::Voltages{left_speed, right_speed}};
 }
 
-chassis::DiffChassisCommand ArcPIDController::get_angular_command(
-    std::shared_ptr<localizer::AbstractLocalizer> l, bool reverse, bool thru,
-    voss::AngularDirection direction,
-    std::shared_ptr<AbstractExitCondition> ec) {
-    return chassis::DiffChassisCommand{chassis::Stop{}};
-}
-
 void ArcPIDController::reset() {
     this->linear_pid.reset();
     this->angular_pid.reset();
@@ -141,10 +134,6 @@ ArcPIDController::modify_min_error(double min_error) {
     this->p->min_error = min_error;
 
     return this->p;
-}
-
-std::shared_ptr<ArcPIDController> ArcPIDController::get_ptr() {
-    return this->shared_from_this();
 }
 
 } // namespace voss::controller
