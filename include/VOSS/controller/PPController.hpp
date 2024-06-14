@@ -19,6 +19,8 @@ class PPController : public AbstractController {
 
     explicit PPController(Params params);
 
+    static std::shared_ptr<PPController> create_controller(Params params);
+
     chassis::DiffChassisCommand
     get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                 std::shared_ptr<AbstractExitCondition> ec,

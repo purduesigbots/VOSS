@@ -7,6 +7,11 @@ namespace voss::controller {
 SwingController::SwingController(SwingController::Params params)
     : angular_pid(params.ang_kp, params.ang_ki, params.ang_kd){};
 
+std::shared_ptr<SwingController> SwingController::create_controller(Params params) {
+    return std::move(std::make_shared<SwingController>(params));
+}
+
+
 chassis::DiffChassisCommand SwingController::get_angular_command(
     std::shared_ptr<localizer::AbstractLocalizer> l,
     std::shared_ptr<AbstractExitCondition> ec, const velocity_pair& v_pair,
@@ -99,5 +104,4 @@ SwingController::modify_angular_constants(double kP, double kI, double kD) {
 
     return this->p;
 }
-
 }; // namespace voss::controller

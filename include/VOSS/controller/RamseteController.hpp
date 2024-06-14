@@ -7,13 +7,6 @@
 
 namespace voss::controller {
 class RamseteController : public AbstractController {
-  protected:
-    std::shared_ptr<RamseteController> p;
-    double zeta;
-    double b;
-    utils::FeedForward motor_ff;
-    double track_width;
-    long init_time;
 
   public:
     struct Params {
@@ -27,13 +20,24 @@ class RamseteController : public AbstractController {
     };
     explicit RamseteController(Params params);
 
+  public:
     chassis::DiffChassisCommand
     get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                 std::shared_ptr<AbstractExitCondition> ec,
                 const velocity_pair& v_pair, bool reverse, bool thru) override;
 
+    static std::shared_ptr<RamseteController> create_controller(Params params);
+
     void reset() override;
 
     std::shared_ptr<RamseteController> modify_constants(double zeta, double b);
+
+  protected:
+    std::shared_ptr<RamseteController> p;
+    double zeta;
+    double b;
+    utils::FeedForward motor_ff;
+    double track_width;
+    long init_time;
 };
 } // namespace voss::controller

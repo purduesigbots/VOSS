@@ -11,6 +11,12 @@ ArcPIDController::ArcPIDController(ArcPIDController::Params params)
       track_width(params.track_width), min_error(params.min_error) {
 }
 
+std::shared_ptr<ArcPIDController>
+ArcPIDController::create_controller(ArcPIDController::Params params) {
+    return std::move(std::make_shared<ArcPIDController>(params));
+}
+
+
 chassis::DiffChassisCommand
 ArcPIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                               std::shared_ptr<AbstractExitCondition> ec,

@@ -7,16 +7,6 @@
 namespace voss::controller {
 
 class PIDController : public AbstractController {
-  protected:
-    std::shared_ptr<PIDController> p;
-
-    utils::PID linear_pid, angular_pid;
-    double min_error;
-    bool can_reverse;
-
-    double min_vel;
-    bool turn_overshoot;
-
   public:
     struct Params {
         double lin_kp = 20;
@@ -28,8 +18,10 @@ class PIDController : public AbstractController {
         double min_error = 5;
         double min_vel = 100;
     };
-
+  public:
     explicit PIDController(Params params);
+
+    static std::shared_ptr<PIDController> create_controller(Params params);
 
     chassis::DiffChassisCommand
     get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
@@ -49,6 +41,16 @@ class PIDController : public AbstractController {
     std::shared_ptr<PIDController>
     modify_angular_constants(double kP, double kI, double kD);
     std::shared_ptr<PIDController> modify_min_error(double min_error);
+
+  protected:
+    std::shared_ptr<PIDController> p;
+
+    utils::PID linear_pid, angular_pid;
+    double min_error;
+    bool can_reverse;
+
+    double min_vel;
+    bool turn_overshoot;
 };
 
 } // namespace voss::controller

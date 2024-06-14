@@ -13,6 +13,11 @@ BoomerangController::BoomerangController(BoomerangController::Params params)
       min_vel(params.min_vel) {
 }
 
+std::shared_ptr<BoomerangController>
+BoomerangController::create_controller(BoomerangController::Params params) {
+    return std::move(std::make_shared<BoomerangController>(params));
+}
+
 chassis::DiffChassisCommand BoomerangController::get_command(
     std::shared_ptr<localizer::AbstractLocalizer> l,
     std::shared_ptr<AbstractExitCondition> ec, const velocity_pair& v_pair,
@@ -127,5 +132,6 @@ BoomerangController::modify_lead_pct(double lead_pct) {
 
     return this->p;
 }
+
 
 } // namespace voss::controller

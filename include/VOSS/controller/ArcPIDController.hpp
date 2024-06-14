@@ -7,18 +7,6 @@
 namespace voss::controller {
 
 class ArcPIDController : public AbstractController {
-  private:
-  protected:
-    std::shared_ptr<ArcPIDController> p;
-    utils::PID linear_pid;
-    utils::PID angular_pid;
-    double track_width;
-    double min_error;
-    double can_reverse;
-    double arc_radius;
-    Point arc_center;
-    double prev_t;
-
   public:
     struct Params {
         double lin_kp = 20;
@@ -31,7 +19,10 @@ class ArcPIDController : public AbstractController {
         double min_error = 5;
     };
 
+  public:
     explicit ArcPIDController(Params params);
+
+    static std::shared_ptr<ArcPIDController> create_controller(Params params);
 
     chassis::DiffChassisCommand
     get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
@@ -44,6 +35,17 @@ class ArcPIDController : public AbstractController {
     modify_linear_constants(double kP, double kI, double kD);
     std::shared_ptr<ArcPIDController> modify_track_width(double track_width);
     std::shared_ptr<ArcPIDController> modify_min_error(double error);
+
+  protected:
+    std::shared_ptr<ArcPIDController> p;
+    utils::PID linear_pid;
+    utils::PID angular_pid;
+    double track_width;
+    double min_error;
+    double can_reverse;
+    double arc_radius;
+    Point arc_center;
+    double prev_t;
 };
 
 } // namespace voss::controller

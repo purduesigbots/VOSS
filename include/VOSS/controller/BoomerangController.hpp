@@ -11,17 +11,6 @@
 namespace voss::controller {
 
 class BoomerangController : public AbstractController {
-  protected:
-    std::shared_ptr<BoomerangController> p;
-    double lead_pct;
-    Pose carrotPoint;
-
-    utils::PID linear_pid, angular_pid;
-    double min_error;
-    bool can_reverse;
-
-    double min_vel;
-
   public:
     struct Params {
         double lin_kp = 20;
@@ -35,7 +24,10 @@ class BoomerangController : public AbstractController {
         double min_vel = 100;
     };
 
+  public:
     explicit BoomerangController(Params params);
+
+    static std::shared_ptr<BoomerangController> create_controller(Params params);
 
     chassis::DiffChassisCommand
     get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
@@ -50,6 +42,17 @@ class BoomerangController : public AbstractController {
     modify_angular_constants(double kP, double kI, double kD);
     std::shared_ptr<BoomerangController> modify_min_error(double error);
     std::shared_ptr<BoomerangController> modify_lead_pct(double lead_pct);
+
+  protected:
+    std::shared_ptr<BoomerangController> p;
+    double lead_pct;
+    Pose carrotPoint;
+
+    utils::PID linear_pid, angular_pid;
+    double min_error;
+    bool can_reverse;
+
+    double min_vel;
 };
 
 } // namespace voss::controller

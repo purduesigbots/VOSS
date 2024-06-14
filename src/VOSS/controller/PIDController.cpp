@@ -13,6 +13,11 @@ PIDController::PIDController(PIDController::Params params)
       min_error(params.min_error), min_vel(params.min_vel) {
 }
 
+std::shared_ptr<PIDController>
+PIDController::create_controller(PIDController::Params params) {
+    return std::move(std::make_shared<PIDController>(params));
+}
+
 chassis::DiffChassisCommand
 PIDController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                            std::shared_ptr<AbstractExitCondition> ec,

@@ -11,6 +11,11 @@ PPController::PPController(PPController::Params params)
       look_ahead_dist(params.look_ahead_dist), track_width(params.track_width) {
 }
 
+std::shared_ptr<PPController>
+PPController::create_controller(PPController::Params params) {
+    return std::move(std::make_shared<PPController>(params));
+}
+
 chassis::DiffChassisCommand
 PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                           std::shared_ptr<AbstractExitCondition> ec,
