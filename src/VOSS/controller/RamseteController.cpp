@@ -1,12 +1,15 @@
 #include "VOSS/controller/RamseteController.hpp"
-
 #include "VOSS/utils/angle.hpp"
+#include "VOSS/utils/Math.hpp"
 
 namespace voss::controller {
 
 RamseteController::RamseteController(RamseteController::Params params)
-    : motor_ff(params.kS, params.kV, params.kA, params.kD), zeta(params.zeta),
-      b(params.b), track_width(params.track_width) {
+    : motor_ff(params.ffwd_kS, params.ffwd_kV, params.ffwd_kA, params.ffwd_kD),
+      zeta(params.zeta), b(params.b), track_width(params.track_width),
+      left_motor_pid(params.left_kP, params.left_kI, params.left_kD),
+      right_motor_pid(params.right_kP, params.right_kI, params.right_kD),
+      wheel_diameter(params.wheel_diameter) {
 }
 
 std::shared_ptr<RamseteController>
@@ -19,7 +22,7 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                                std::shared_ptr<AbstractExitCondition> ec,
                                const velocity_pair& v_pair, bool reverse,
                                bool thru) {
-    double current_time = (pros::c::millis() - init_time) / 1000.0;
+    double current_time = (pros::c::millis() - init_time) / 1000.0; // to sec
 
     trajectory::TrajectoryPose target_state =
         this->target_trajectory->at(current_time);
@@ -72,8 +75,15 @@ RamseteController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
         (lookahead_vel + lookahead_ang_vel * track_width * 0.5 - right_vel) /
         0.01;
 
-    left_vel = motor_ff.update(left_vel, left_accel);
-    right_vel = motor_ff.update(right_vel, right_accel);
+    left_vel =
+        left_motor_pid.update(
+            v_pair.left - linear_vel_to_rpm(left_vel, this->wheel_diameter)) -
+        motor_ff.update(left_vel, left_accel);
+
+    right_vel =
+        right_motor_pid.update(
+            v_pair.right - linear_vel_to_rpm(right_vel, this->wheel_diameter)) +
+        motor_ff.update(right_vel, right_accel);
 
     if (ec->is_met(current_pose, thru)) {
         if (thru) {

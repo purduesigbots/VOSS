@@ -22,8 +22,8 @@ create_controller(typename ControllerType::Params params) {
 
 // get_command, get_angular_command
 // store targets: target_pose, angular_target, target_trajectory
-// (std::shared_ptr<AbstractTrajectory>), target_path able to differentiate
-// different types of motion controller
+// (std::shared_ptr<AbstractTrajectory>), target_path
+// able to differentiate different types of motion controller
 
 class AbstractController {
   public:

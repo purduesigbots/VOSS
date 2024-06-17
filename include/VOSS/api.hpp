@@ -38,3 +38,4 @@
 #include "utils/flags.hpp"
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"
+#include "utils/Math.hpp"
