@@ -18,11 +18,14 @@ void AbstractLocalizer::begin_localization() {
     pros::Task localization_task([this]() {
         this->calibrate();
         while (true) {
+            uint32_t begin = pros::millis();
             std::unique_lock<pros::Mutex> lock(this->mtx);
             this->update();
             lock.unlock();
 
-            pros::delay(constants::SENSOR_UPDATE_DELAY);
+//            pros::delay(constants::SENSOR_UPDATE_DELAY);
+            pros::Task::delay_until(&begin, constants::SENSOR_UPDATE_DELAY);
+            pros::Task::current().notify();
         }
     });
 }

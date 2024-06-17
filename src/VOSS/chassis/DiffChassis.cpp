@@ -22,7 +22,11 @@ void DiffChassis::move_task(controller_ptr controller, ec_ptr ec, double max,
                                   reverse, thru),
                               max) ||
                !pros::competition::is_disabled()) {
-            pros::delay(constants::MOTOR_UPDATE_DELAY);
+            auto start = pros::micros();
+            while (
+                pros::Task::notify_take(true, constants::MOTOR_UPDATE_DELAY) > 0);
+            printf("Time: %llu\n", pros::micros() - start);
+            //            pros::delay(constants::MOTOR_UPDATE_DELAY);
         }
         this->task_running = false;
     });
@@ -52,7 +56,10 @@ void DiffChassis::turn_task(controller_ptr controller, ec_ptr ec, double max,
                                   reverse, thru, direction),
                               max) ||
                !pros::competition::is_disabled()) {
-            pros::delay(constants::MOTOR_UPDATE_DELAY);
+            auto start = pros::micros();
+            while (
+                pros::Task::notify_take(true, constants::MOTOR_UPDATE_DELAY) > 0);
+            printf("Time: %llu\n", pros::micros() - start);
         }
         this->task_running = false;
     });
@@ -90,8 +97,8 @@ DiffChassis::DiffChassis(
     std::initializer_list<int8_t> left_motors,
     std::initializer_list<int8_t> right_motors,
     std::shared_ptr<voss::controller::PIDController> default_controller,
-    localizer_ptr localizer, ec_ptr ec,
-    double slew_step, pros::motor_brake_mode_e brakeMode)
+    localizer_ptr localizer, ec_ptr ec, double slew_step,
+    pros::motor_brake_mode_e brakeMode)
     : AbstractChassis(default_controller, localizer, ec) {
     this->left_motors = std::make_unique<pros::MotorGroup>(left_motors);
     this->right_motors = std::make_unique<pros::MotorGroup>(right_motors);
