@@ -16,6 +16,9 @@ template <typename It> double average(It begin, It end) {
     return s / dist;
 }
 
-double linear_vel_to_rpm(double velocity_inches_per_sec, double wheel_diameter);
+/**
+ * @param gear_ratio motor_gear_teeth / wheel_gear_teeth
+ */
+double linear_to_rotational(double velocity_inches_per_sec, double wheel_diameter, double gear_ratio);
 
 }; // namespace voss

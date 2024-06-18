@@ -302,7 +302,7 @@ void AbstractChassis::follow_trajectory(
         {processed_traj, flags & voss::FollowerFlags::REVERSE}, constraints);
 
     controller->set_target_trajectory(target_traj);
-    ec->set_target(target_traj.at(target_traj.get_duration()).pose);
+    ec->set_target(*(trajectory.end() - 1));
 
     this->move_task(std::move(controller), std::move(ec), 100,
                     static_cast<Flags>(flags));

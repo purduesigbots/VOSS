@@ -20,13 +20,13 @@ void DiffChassis::move_task(controller_ptr controller, ec_ptr ec, double max,
                                   {average(left_v_s.begin(), left_v_s.end()),
                                    average(right_v_s.begin(), right_v_s.end())},
                                   reverse, thru),
-                              max) ||
-               !pros::competition::is_disabled()) {
-            auto start = pros::micros();
-            while (
-                pros::Task::notify_take(true, constants::MOTOR_UPDATE_DELAY) > 0);
-            printf("Time: %llu\n", pros::micros() - start);
-            //            pros::delay(constants::MOTOR_UPDATE_DELAY);
+                              max)) {
+
+            if (pros::competition::is_disabled()) {
+                this->task_running = false;
+                return;
+            }
+            pros::delay(10);
         }
         this->task_running = false;
     });
@@ -54,12 +54,13 @@ void DiffChassis::turn_task(controller_ptr controller, ec_ptr ec, double max,
                                   {average(left_v_s.begin(), left_v_s.end()),
                                    average(right_v_s.begin(), right_v_s.end())},
                                   reverse, thru, direction),
-                              max) ||
-               !pros::competition::is_disabled()) {
-            auto start = pros::micros();
-            while (
-                pros::Task::notify_take(true, constants::MOTOR_UPDATE_DELAY) > 0);
-            printf("Time: %llu\n", pros::micros() - start);
+                              max)) {
+
+            if (pros::competition::is_disabled()) {
+                this->task_running = false;
+                return;
+            }
+            pros::delay(10);
         }
         this->task_running = false;
     });
@@ -155,6 +156,13 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                 this->right_motors->move_voltage(120 * v.right);
 
                 this->prev_voltages = v;
+
+                return false;
+            },
+            // this is for user who dont want to setup a velocity control
+            [this, max](diff_commands::RPM& v) -> bool {
+                this->left_motors->move_velocity(v.left);
+                this->right_motors->move_velocity(v.right);
 
                 return false;
             },
