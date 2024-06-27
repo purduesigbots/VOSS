@@ -35,8 +35,8 @@ DiffChassis::DiffChassis(std::initializer_list<int8_t> left_motors,
 
     this->slew_step = slew_step > 0 ? slew_step : 200;
     this->brakeMode = brakeMode;
-    this->left_motors->set_brake_mode(this->brakeMode);
-    this->right_motors->set_brake_mode(this->brakeMode);
+    this->left_motors->set_brake_mode_all(this->brakeMode);
+    this->right_motors->set_brake_mode_all(this->brakeMode);
     this->prev_voltages = {0, 0};
 }
 
@@ -55,8 +55,8 @@ void DiffChassis::arcade(double forward_speed, double turn_speed) {
 
 void DiffChassis::set_brake_mode(pros::motor_brake_mode_e mode) {
     this->brakeMode = mode;
-    this->left_motors->set_brake_mode(mode);
-    this->right_motors->set_brake_mode(mode);
+    this->left_motors->set_brake_mode_all(mode);
+    this->right_motors->set_brake_mode_all(mode);
 }
 
 // Evoke the chassis to move according to how it was set up using the
@@ -114,7 +114,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
             [this, max](diff_commands::Swing& v) {
                 double v_max = std::max(fabs(v.left), fabs(v.right));
                 if (v.right == 0) {
-                    this->right_motors->set_brake_mode(pros::MotorBrake::hold);
+                    this->right_motors->set_brake_mode_all(pros::MotorBrake::hold);
                     this->right_motors->brake();
                     if (v_max > max) {
                         v.left = v.left * max / v_max;
@@ -124,7 +124,7 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                     this->prev_voltages = {v.left, 0.0};
 
                 } else if (v.left == 0) {
-                    this->left_motors->set_brake_mode(pros::MotorBrake::hold);
+                    this->left_motors->set_brake_mode_all(pros::MotorBrake::hold);
                     this->left_motors->brake();
                     if (v_max > max) {
                         v.right = v.right * max / v_max;

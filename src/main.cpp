@@ -56,7 +56,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
                   return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
               });
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec,
+auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 0,
                                           pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
