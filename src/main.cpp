@@ -5,59 +5,39 @@
 #include "VOSS/controller/SwingControllerBuilder.hpp"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
+#include <iostream>
+//
+//#define LEFT_MOTORS                                                            \
+//    { -4, -1, -21, 8, 13 }
+//#define RIGHT_MOTORS                                                           \
+//    { 10, 3, 9, -7, -15 }
 
-#define LEFT_MOTORS                                                            \
-    { -4, -1, -21, 8, 13 }
-#define RIGHT_MOTORS                                                           \
-    { 10, 3, 9, -7, -15 }
+auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder().build();
 
-auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_right_motor(10)
-                .with_left_motor(-4)
-                .with_track_width(11)
-                .with_left_right_tpi(18.43)
-                .with_imu(16)
-                .build();
 
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_min_vel_for_thru(100)
-               .build();
 
-auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
-                     .with_min_vel_for_thru(70)
-                     .with_min_error(5)
-                     .build();
+auto pid = voss::controller::PIDControllerBuilder::new_builder(odom).build();
 
-auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                 .with_angular_constants(250, 0.05, 2435)
-                 .build();
 
-auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(16)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_slew(8)
-               .build();
 
-pros::Controller master(pros::E_CONTROLLER_MASTER);
-auto ec = voss::controller::ExitConditions::new_conditions()
-              .add_settle(400, 0.5, 400)
-              .add_tolerance(1.0, 2.0, 200)
-              .add_timeout(22500)
-              .add_thru_smoothness(4)
-              .build() -> exit_if([]() {
-                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-              });
+auto ec = voss::controller::ExitConditions::new_conditions().build();
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
-                                          pros::E_MOTOR_BRAKE_COAST);
+auto chassis = voss::chassis::DiffChassis({}, {}, pid, ec);
+
+pros::Motor intake(5);
+
+pros::adi::Pneumatics piston1('A', false);
+
+//auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
+//                                          pros::E_MOTOR_BRAKE_COAST);
+
+bool piston_state = false;
+void piston_toggle() {
+    piston_state = !piston_state;
+    piston1.set_value(piston_state);
+}
+
+
 
 pros::IMU imu(16);
 
@@ -131,26 +111,54 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
+void print_time() {
+    while(true) {
+        pros::lcd::print(5, "%d", pros::millis());
+
+        pros::delay(10);
+    }
+}
+
+
+
 void opcontrol() {
+    pros::Task timer(print_time);
+
+
+
+
+
+    pros::Controller controller1(pros::E_CONTROLLER_MASTER);
 
     while (true) {
-        voss::Pose p = odom->get_pose();
 
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
-                       master.get_analog(ANALOG_RIGHT_X));
-
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
+        controller1.set_text(0, 0, "hello driver");
+        if(controller1.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
+            controller1.rumble("-...-");
         }
 
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
-        pros::delay(10);
+        chassis.tank(controller1.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
+                     controller1.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y));
+
+        if(controller1.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+            intake.move_voltage(12000);
+        } else if (controller1.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+            intake.move_voltage(-12000);
+        } else {
+            intake.brake();
+        }
+
+        if(controller1.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+            piston_toggle();
+        }
+
+        pros::lcd::print(0, "Piston1: %s", piston_state ? "ON" : "OFF");
+        pros::lcd::print(2, "Motor: %f", intake.get_position());
+
+        printf("IMU: %f\n", imu.get_rotation());
+
+
+        pros::delay(10);//10 ms = 0.01 s
     }
 }
