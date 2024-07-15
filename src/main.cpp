@@ -42,7 +42,7 @@ auto traj_constraints = voss::trajectory::TrajectoryConstraints {
 };
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-auto ec = voss::controller::ExitConditions::new_conditions()
+auto ec = voss::controller::ExitConditionsBuilder::new_builder()
               .add_settle(400, 0.5, 400)
               .add_tolerance(1.0, 2.0, 200)
               .add_timeout(22500)
@@ -131,5 +131,4 @@ ASSET(traj_txt)
 void opcontrol() {
     odom->set_pose({0.0, 0.0, 90});
     chassis.follow_trajectory({{0, 0, 0}, {20, 20, 5}, {45, 25, 180}}, ramsete, traj_constraints);
-
 }
