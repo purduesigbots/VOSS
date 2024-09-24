@@ -6,7 +6,7 @@
 namespace voss::localizer {
 
 TrackingWheelLocalizerBuilder::TrackingWheelLocalizerBuilder()
-    : left_right_dist(0.0), middle_dist(0.0), left_tracking_wheel(nullptr),
+    : left_right_dist(0.0), middle_dist(0.0), horizontal_offset(0.0), left_tracking_wheel(nullptr),
       right_tracking_wheel(nullptr), middle_tracking_wheel(nullptr),
       imu(nullptr) {
 }
@@ -127,11 +127,19 @@ TrackingWheelLocalizerBuilder::with_imu(int port) {
     return *this;
 }
 
+TrackingWheelLocalizerBuilder&
+TrackingWheelLocalizerBuilder::with_horizontal_offset(int offset) {
+    this->horizontal_offset = offset;
+    return *this; 
+}
+
 std::shared_ptr<TrackingWheelLocalizer> TrackingWheelLocalizerBuilder::build() {
-    return std::make_shared<TrackingWheelLocalizer>(
+    auto result = std::make_shared<TrackingWheelLocalizer>(
         std::move(left_tracking_wheel), std::move(right_tracking_wheel),
         std::move(middle_tracking_wheel), std::move(imu), left_right_dist,
         middle_dist);
+        result->offset = this->horizontal_offset;
+        return result;
 }
 
 } // namespace voss::localizer

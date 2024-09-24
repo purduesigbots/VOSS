@@ -8,6 +8,7 @@ class TrackingWheelLocalizerBuilder {
   private:
     double left_right_dist;
     double middle_dist;
+    double horizontal_offset;
     std::unique_ptr<AbstractTrackingWheel> left_tracking_wheel;
     std::unique_ptr<AbstractTrackingWheel> right_tracking_wheel;
     std::unique_ptr<AbstractTrackingWheel> middle_tracking_wheel;
@@ -38,6 +39,7 @@ class TrackingWheelLocalizerBuilder {
     TrackingWheelLocalizerBuilder& with_track_width(double track_width);
     TrackingWheelLocalizerBuilder& with_middle_dist(double middle_dist);
     TrackingWheelLocalizerBuilder& with_imu(int port);
+    TrackingWheelLocalizerBuilder& with_horizontal_offset(int offset);
 
     std::shared_ptr<TrackingWheelLocalizer> build();
 };
