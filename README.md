@@ -268,17 +268,17 @@ void autonomous(){
     chassis.move(10, 70);
     chassis.move({1.0, 1.0}, 70);
     chassis.move({1.0, 1.0, 30}, 100, voss::Flags::RELATIVE);
-    chassis.move({1.0, 1.0}, 100, voss::Flags::REVERSE | voss ::Flags::ASYNC | voss::Flags::THRU);
+    chassis.move({1.0, 1.0}, 100, voss::Flags::REVERSE | voss::Flags::ASYNC | voss::Flags::THRU);
    // using boomerang controller:
     chassis.move({1.0, 1.0, 90}, boomerang);
     chassis.move({1.0, 1.0, 20}, boomerang, 70);
     chassis.move({1.0, 1.0, 30}, boomerang, 100, voss::Flags::RELATIVE);
-    chassis.move({1.0, 1.0, 10}, boomerang, 100, voss::Flags::REVERSE | voss ::Flags::ASYNC | voss::Flags::THRU);
+    chassis.move({1.0, 1.0, 10}, boomerang, 100, voss::Flags::REVERSE | voss::Flags::ASYNC | voss::Flags::THRU);
    // using arc controller:
     chassis.move({1.0, 1.0}, arc);
     chassis.move({1.0, 1.0}, arc, 70);
     chassis.move({1.0, 1.0}, arc, 100, voss::Flags::RELATIVE);
-    chassis.move({1.0, 1.0}, arc, 100, voss::Flags::REVERSE | voss ::Flags::ASYNC | voss::Flags::THRU);
+    chassis.move({1.0, 1.0}, arc, 100, voss::Flags::REVERSE | voss::Flags::ASYNC | voss::Flags::THRU);
 }
 ```
 
