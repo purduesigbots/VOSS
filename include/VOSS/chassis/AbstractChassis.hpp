@@ -272,7 +272,7 @@ void AbstractChassis::follow_path(std::initializer_list<Pose> path,
     auto processed_path = this->process_target_path(path);
 
     controller->set_target_path(processed_path);
-    ec->set_target(*processed_path.end());
+    ec->set_target(*(processed_path.end() - 1));
 
     this->move_task(std::move(controller), std::move(ec), max,
                     static_cast<Flags>(flags));

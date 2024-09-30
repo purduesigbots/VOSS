@@ -23,7 +23,6 @@ class RamseteController : public AbstractController {
     };
     explicit RamseteController(Params params);
 
-
     struct PID_Params {
         double left_kP = 0.0;
         double left_kI = 0.0;
@@ -32,7 +31,8 @@ class RamseteController : public AbstractController {
         double right_kI = 0.0;
         double right_kD = 0.0;
     };
-    std::shared_ptr<RamseteController> with_velocity_controller(PID_Params controller);
+    std::shared_ptr<RamseteController>
+    with_velocity_controller(PID_Params controller);
 
   public:
     chassis::DiffChassisCommand
@@ -51,11 +51,10 @@ class RamseteController : public AbstractController {
     double zeta;
     double b;
     utils::FeedForward motor_ff;
-    utils::PID left_motor_pid;
-    utils::PID right_motor_pid;
+    utils::PID left_motor_pid{0, 0, 0};
+    utils::PID right_motor_pid{0, 0, 0};
     double track_width;
     long init_time;
-    bool has_vel_pid_controller;
     double gear_ratio;
     double wheel_diameter;
 };

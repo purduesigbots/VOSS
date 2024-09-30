@@ -1,5 +1,6 @@
 
 #include "PPController.hpp"
+#include "../../../include/VOSS/controller/PPController.hpp"
 #include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/Math.hpp"
 
@@ -10,6 +11,15 @@ PPController::PPController(PPController::Params params)
       angular_pid(params.ang_kp, params.ang_ki, params.ang_kd),
       look_ahead_dist(params.look_ahead_dist), track_width(params.track_width) {
 }
+
+//controller::PPController::PPController(double lin_kp, double lin_ki,
+//                                       double lin_kd, double ang_kp,
+//                                       double ang_ki, double ang_kd,
+//                                       double look_ahead_dist,
+//                                       double track_width)
+//    : linear_pid(lin_kp, lin_ki, lin_kd), angular_pid(ang_kp, ang_ki, ang_kd),
+//      look_ahead_dist(look_ahead_dist), track_width(track_width) {
+//}
 
 std::shared_ptr<PPController>
 PPController::create_controller(PPController::Params params) {
@@ -23,11 +33,15 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
                           bool thru) {
     double left_vel, right_vel;
     Point current_pos = l->get_position();
+    int dir = reverse ? -1 : 1;
 
     int idx = this->get_closest(l->get_pose());
+    printf("idx: %d\n", idx);
 
-    if (Point::getDistance(current_pos,
-                           {this->target_pose.x, this->target_pose.y}) <
+    Point look_ahead_pt = this->getLookAheadPoint(l->get_pose());
+    printf("x: %lf, y: %lf\n", look_ahead_pt.x, look_ahead_pt.y);
+    if (Point::getDistance(look_ahead_pt, {this->target_path.back().x,
+                                           this->target_path.back().y}) <
             this->look_ahead_dist &&
         idx == target_path.size() - 1) {
         const Pose target = target_path.back();
@@ -39,28 +53,18 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
 
     } else {
 
-        Point look_ahead_pt =
-            get_lookahead_pt(l->get_pose(), idx)
-                .value_or(Point{target_path.at(prev_closest_index).x,
-                                target_path.at(prev_closest_index).y});
+        auto err_mat = get_relative_error(l->get_pose(), look_ahead_pt);
 
-        double lin_err = Point::getDistance(current_pos, look_ahead_pt);
-
-        double lin_vel = linear_pid.update(lin_err / this->look_ahead_dist) *
+        double lin_vel = linear_pid.update(err_mat.x / this->look_ahead_dist) *
                          (reverse ? -1 : 1);
 
-        double ang_vel = angular_pid.update(
-            get_relative_y_error(l->get_pose(), look_ahead_pt) /
-            look_ahead_dist);
+        double ang_vel = angular_pid.update(err_mat.y / look_ahead_dist);
 
         double curvature = this->get_curvature(l->get_pose(), look_ahead_pt);
         // L = V * (2 + CT)/2
         // R = V * (2 − CT)/2
-
-        left_vel =
-            lin_vel * (2.0 - curvature * this->track_width) / 2.0 - ang_vel;
-        right_vel =
-            lin_vel * (2.0 + curvature * this->track_width) / 2.0 + ang_vel;
+        left_vel = dir * (lin_vel - ang_vel);
+        right_vel = dir * (lin_vel + ang_vel);
 
         double vMax = std::max(fabs(left_vel), fabs(right_vel));
         if (vMax > 100) {
@@ -76,13 +80,12 @@ PPController::get_command(std::shared_ptr<localizer::AbstractLocalizer> l,
     return chassis::Stop();
 }
 
-
 std::pair<double, double>
 PPController::pid_controller_for_ending(const Pose& current_pos,
                                         const Pose& target, bool reverse) {
     int dir = reverse ? -1 : 1;
     double current_angle = current_pos.theta.value();
-    bool noPose = !this->target_pose.theta.has_value();
+    bool noPose = !target.theta.has_value();
 
     double dx = target.x - current_pos.x;
     double dy = target.y - current_pos.y;
@@ -102,6 +105,7 @@ PPController::pid_controller_for_ending(const Pose& current_pos,
     double ang_speed;
     if (distance_error < min_error) {
         this->can_reverse = true;
+
 
         if (noPose) {
             ang_speed = 0; // disable turning when close to the point to prevent
@@ -136,23 +140,20 @@ PPController::pid_controller_for_ending(const Pose& current_pos,
 }
 
 int PPController::get_closest(const Pose& current_pos) {
-    double closestDist = std::numeric_limits<double>::max();
-    int closest = -1;
-    Point pos = {current_pos.x, current_pos.y};
-
-    // loop from the last closest point to one point past the lookahead
-    for (int i = 0; i < target_path.size(); i++) {
-        auto it = target_path.at(i);
-
-        double distance = Point::getDistance(pos, {it.x, it.y});
-        if (distance < closestDist) {
-            closestDist = distance;
-            closest = i;
+    double dx = target_path.front().x - current_pos.x;
+    double dy = target_path.front().y - current_pos.y;
+    double min_dist = sqrt(dx * dx + dy * dy);
+    int minIndex = 0;
+    for (int i = 1; i < this->target_path.size(); i++) {
+        dx = this->target_path.at(i).x - current_pos.x;
+        dy = this->target_path.at(i).y - current_pos.y;
+        double dist = sqrt(dx * dx + dy * dy);
+        if (dist < min_dist) {
+            min_dist = dist;
+            minIndex = i;
         }
     }
-
-    prev_closest_index = closest;
-    return closest;
+    return minIndex;
 }
 
 double PPController::get_curvature(const Pose& robot, const Point& pt) const {
@@ -212,12 +213,78 @@ std::optional<Point> PPController::circle_line_intersect(
     }
     return std::nullopt;
 }
-double PPController::get_relative_y_error(const Pose& robot_pt,
-                                          const Point& pt) {
+Point PPController::get_relative_error(const Pose& robot_pt, const Point& pt) {
     double dx = pt.x - robot_pt.x;
     double dy = pt.y - robot_pt.y;
 
-    return dy * sin(robot_pt.theta.value()) + dx * cos(robot_pt.theta.value());
+    double h = robot_pt.theta.value();
+    float r_x = dy * cos(h) - dx * sin(h);
+    float r_y = dy * sin(h) + dx * cos(h);
+
+    return {r_x, r_y};
+}
+
+Point PPController::getLookAheadPoint(const Pose& robot) {
+    double dx = this->target_path.back().x - robot.x;
+    double dy = this->target_path.back().y - robot.y;
+    double dist = sqrt(dx * dx + dy * dy);
+    if (dist < this->look_ahead_dist) {
+        return {this->target_path.back().x, this->target_path.back().y};
+    }
+    int closest_idx = this->get_closest(robot);
+    voss::Point look_ahead_pt(0, 0);
+    Point robot_position = {robot.x, robot.y};
+
+    for (int i = 1; i < this->target_path.size(); i++) {
+        voss::Pose cur_pt = this->target_path.at(i);
+        voss::Pose prev_pt = this->target_path.at(i + 1);
+
+        // if suitable distance is found
+        if (voss::Point::getDistance({cur_pt.x, cur_pt.y}, robot_position) >
+                this->look_ahead_dist &&
+            voss::Point::getDistance({prev_pt.x, prev_pt.y}, robot_position) <
+                this->look_ahead_dist &&
+            closest_idx < i) {
+
+            // interpolation
+            double prevX = prev_pt.x;
+            double prevY = prev_pt.y;
+
+            double currX = cur_pt.x;
+            double currY = cur_pt.y;
+
+            double minT = 0;
+            double maxT = 1;
+
+            double newX = prevX;
+            double newY = prevY;
+
+            int iterations = 10;
+
+            // binary approximation
+            for (int z = 0; z < iterations; z++) {
+                double midT = (minT + maxT) / 2.0;
+                newX = prevX * (1 - midT) + currX * midT;
+                newY = prevY * (1 - midT) + currY * midT;
+
+                look_ahead_pt = {newX, newY};
+
+                double distToSelf =
+                    voss::Point::getDistance(look_ahead_pt, robot_position);
+
+                if (distToSelf < look_ahead_dist) {
+                    minT = midT;
+                } else {
+                    maxT = midT;
+                }
+            }
+            return look_ahead_pt;
+        }
+    }
+
+    look_ahead_pt = {this->target_path[closest_idx].x,
+                     this->target_path[closest_idx].y};
+    return look_ahead_pt;
 }
 
 void PPController::reset() {

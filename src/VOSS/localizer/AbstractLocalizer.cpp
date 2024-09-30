@@ -25,7 +25,6 @@ void AbstractLocalizer::begin_localization() {
 
 //            pros::delay(constants::SENSOR_UPDATE_DELAY);
             pros::Task::delay_until(&begin, constants::SENSOR_UPDATE_DELAY);
-            pros::Task::current().notify();
         }
     });
 }

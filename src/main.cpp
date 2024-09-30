@@ -1,7 +1,5 @@
 #include "main.h"
 #include "VOSS/api.hpp"
-#include "VOSS/localizer/ADILocalizerBuilder.hpp"
-#include "VOSS/utils/flags.hpp"
 
 #define LEFT_MOTORS                                                            \
     { -2, -3, -4 }
@@ -15,42 +13,51 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_imu(1)
                 .build();
 
-auto pid = voss::controller::create_controller<voss::controller::PIDController>({.lin_kp = 0, .ang_kd = 10});
-
-
+auto pid = voss::controller::create_controller<voss::controller::PIDController>(
+    {.lin_kp = 0, .ang_kd = 10});
 
 auto boomerang = std::shared_ptr<voss::controller::BoomerangController>({});
 //
-auto swing = voss::controller::create_controller<voss::controller::SwingController>({});
+auto swing = voss::controller::SwingController::create_controller({});
 //
-//auto arc = voss::controller::ArcPIDController(
+// auto arc = voss::controller::ArcPIDController(
 //               {.lin_kp = 1000, .ang_kp = 250, .track_width = 16})
 //               .get_ptr();
 //
-//auto pp =
-//    voss::controller::PPController({.look_ahead_dist = 5, .track_width = 16})
-//        .get_ptr();
+//auto pp = std::make_shared<voss::controller::PPController>(50, 0, 55, 240, 0.05,
+//                                                           2400, 15, 14);
+auto pp = voss::controller::PPController::create_controller({});
 //
-auto ramsete = voss::controller::create_controller<voss::controller::RamseteController>({});
-auto traj_constraints = voss::trajectory::TrajectoryConstraints {
-    .max_vel = 50,
-    .max_accel = 50,
-    .max_decel = -30,
-    .max_ang_accel = M_PI,
-    .max_centr_accel = 0.0,
-    .track_width = 16
-};
+#define TW 14
+auto ramsete =
+    voss::controller::create_controller<voss::controller::RamseteController>(
+        {.zeta = 0.9,
+         .b = 0.01,
+         .ffwd_kV = 1.2,
+         .ffwd_kS = 8,
+         .ffwd_kA = 0.01,
+         .ffwd_kD = 0,
+         .track_width = TW,
+         .gear_ratio = 36.0 / 60});
+
+auto traj_constraints =
+    voss::trajectory::TrajectoryConstraints{.max_vel = 70,
+                                            .max_accel = 100,
+                                            .max_decel = -50,
+                                            .max_ang_accel = M_PI,
+                                            .max_centr_accel = 0.0,
+                                            .track_width = TW};
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 auto ec = voss::controller::ExitConditions::new_conditions()
               .add_settle(400, 0.5, 400)
               .add_tolerance(1.0, 2.0, 200)
-              .add_timeout(22500)
+              .add_timeout(10000)
               .add_thru_smoothness(4)
               .build();
 
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, odom,
-                                          ec, pros::E_MOTOR_BRAKE_COAST);
+                                          ec, 0, pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
 
@@ -97,19 +104,22 @@ void competition_initialize() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+
+void display_odom() {
+    while (true) {
+        auto p = odom->get_position();
+
+        pros::lcd::print(1, "%lf", p.x);
+        pros::lcd::print(2, "%lf", p.y);
+        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
+        pros::delay(10);
+    }
+}
+
 void autonomous() {
-    // auto odom = voss::localizer::ADILocalizerBuilder::new_builder().build();
-    // auto pid =
-    // voss::controller::BoomerangControllerBuilder::new_builder(odom)
-    //                .with_lead_pct(60)
-    //                .build();
-
-    // // auto pid2 =
-    // // voss::controller::BoomerangControllerBuilder::new_builder(odom)
-    // //                 .with_lead_pct(65)
-    // //                 .build();
-
-    // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
+    odom->set_pose({0.0, 0.0, 90});
+    chassis.follow_path({{0, 0}, {0, 48}, {48, 60, 45}}, pp, 80);
+    printf("exit\n");
 }
 
 /**
@@ -126,10 +136,16 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 
-ASSET(traj_txt)
-
 void opcontrol() {
-    odom->set_pose({0.0, 0.0, 90});
-    chassis.follow_trajectory({{0, 0, 0}, {20, 20, 5}, {45, 25, 180}}, ramsete, traj_constraints);
+    pros::Task tk(display_odom);
+    while (true) {
 
+        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
+                       master.get_analog(ANALOG_RIGHT_X));
+
+        if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
+            autonomous();
+        }
+        pros::delay(10);
+    }
 }

@@ -18,6 +18,9 @@ class PPController : public AbstractController {
     };
 
     explicit PPController(Params params);
+//    explicit PPController(double lin_kp, double lin_ki, double lin_kd,
+//                          double ang_kp, double ang_ki, double ang_kd,
+//                          double look_ahead_dist, double track_width);
 
     static std::shared_ptr<PPController> create_controller(Params params);
 
@@ -41,13 +44,15 @@ class PPController : public AbstractController {
     std::pair<double, double> pid_controller_for_ending(const Pose& current_pos,
                                                         const Pose& target,
                                                         bool reverse);
-
+    Point getLookAheadPoint(const Pose& robot);
     int get_closest(const Pose& current_pose);
     double get_curvature(const Pose& robot, const Point& pt) const;
     std::optional<Point> get_lookahead_pt(const Pose& robot_pt, int idx);
     std::optional<Point> circle_line_intersect(const Pose& robot_pt,
                                                const Pose& start_pt,
                                                const Pose& end_pt) const;
-    static double get_relative_y_error(const Pose& robot_pt, const Point& pt);
+    static Point get_relative_error(const Pose& robot_pt, const Point& pt);
+
+
 };
 } // namespace voss::controller
