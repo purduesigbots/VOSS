@@ -183,6 +183,9 @@ std::optional<Point> PPController::get_lookahead_pt(const Pose& robot_pt,
     return circle_line_intersect(robot_pt, prev_pose, curr_pose);
 }
 
+
+// calculating the intersect of the circle and the line, don't mess with the math because it comes directly from the paper
+// also I don't know how it works
 std::optional<Point> PPController::circle_line_intersect(
     const Pose& robot_pt, const Pose& start_pose, const Pose& end_pose) const {
     Point end_pt = {end_pose.x, end_pose.y};
@@ -213,6 +216,7 @@ std::optional<Point> PPController::circle_line_intersect(
     }
     return std::nullopt;
 }
+
 Point PPController::get_relative_error(const Pose& robot_pt, const Point& pt) {
     double dx = pt.x - robot_pt.x;
     double dy = pt.y - robot_pt.y;
