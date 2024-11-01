@@ -1,65 +1,18 @@
 #include "main.h"
-#include "VOSS/api.hpp"
-#include "VOSS/controller/BoomerangControllerBuilder.hpp"
-#include "VOSS/controller/PIDControllerBuilder.hpp"
-#include "VOSS/controller/SwingControllerBuilder.hpp"
-#include "VOSS/localizer/ADILocalizerBuilder.hpp"
-#include "VOSS/utils/flags.hpp"
 
-#define LEFT_MOTORS                                                            \
-    { -4, -1, -21, 8, 13 }
-#define RIGHT_MOTORS                                                           \
-    { 10, 3, 9, -7, -15 }
+//#include "SSOV/chassis/DiffChassis.hpp"
+#include "RobotOdom.h"
+#include "SSOV/controller/PIDPointController.hpp"
+#include "SSOV/exit_condition/ToleranceExitCondition.hpp"
+#include "SSOV/Routines.hpp"
 
-auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_right_motor(10)
-                .with_left_motor(-4)
-                .with_track_width(11)
-                .with_left_right_tpi(18.43)
-                .with_imu(16)
-                .build();
-
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_min_vel_for_thru(100)
-               .build();
-
-auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
-                     .with_min_vel_for_thru(70)
-                     .with_min_error(5)
-                     .build();
-
-auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                 .with_angular_constants(250, 0.05, 2435)
-                 .build();
-
-auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(16)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_slew(8)
-               .build();
-
-pros::Controller master(pros::E_CONTROLLER_MASTER);
-auto ec = voss::controller::ExitConditions::new_conditions()
-              .add_settle(400, 0.5, 400)
-              .add_tolerance(1.0, 2.0, 200)
-              .add_timeout(22500)
-              .add_thru_smoothness(4)
-              .build() -> exit_if([]() {
-                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-              });
-
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
-                                          pros::E_MOTOR_BRAKE_COAST);
-
-pros::IMU imu(16);
+//ssov::DiffChassis chassis({-13, -14, -15}, {16, 18, 19});
+//RobotOdom odom({-13, -14, -15}, {16, 18, 19}, 12, 20);
+//ssov::PIDPointController controller({0, 0, 0}, {0, 0, 0}, 0);
+auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19});
+auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13, -14, -15}, std::initializer_list<int8_t>{16, 18, 19}, 12, 20);
+auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
+auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -68,8 +21,13 @@ pros::IMU imu(16);
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-    pros::lcd::initialize();
-    odom->begin_localization();
+	pros::lcd::initialize();
+	pros::lcd::set_text(1, "Hello PROS User!");
+	ssov::defaults::chassis = chassis;
+	ssov::defaults::localizer = odom;
+	ssov::defaults::point_controller = pid;
+	ssov::defaults::exit_condition = ec;
+	odom->begin_localization();
 }
 
 /**
@@ -77,8 +35,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {
-}
+void disabled() {}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -89,8 +46,7 @@ void disabled() {
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {
-}
+void competition_initialize() {}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -103,20 +59,7 @@ void competition_initialize() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-    // auto odom = voss::localizer::ADILocalizerBuilder::new_builder().build();
-    // auto pid =
-    // voss::controller::BoomerangControllerBuilder::new_builder(odom)
-    //                .with_lead_pct(60)
-    //                .build();
-
-    // // auto pid2 =
-    // // voss::controller::BoomerangControllerBuilder::new_builder(odom)
-    // //                 .with_lead_pct(65)
-    // //                 .build();
-
-    // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
-}
+void autonomous() {}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -132,25 +75,20 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-    while (true) {
-        voss::Pose p = odom->get_pose();
+	while (true) {
+		ssov::Pose pose = odom->get_pose();
+		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, pose.theta);
 
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
-                       master.get_analog(ANALOG_RIGHT_X));
-
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
-        }
-
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
-        pros::delay(10);
-    }
+		// Arcade control scheme
+		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
+		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+		chassis->arcade(dir / 1.27, turn / 1.27);
+		if (master.get_digital_new_press(DIGITAL_A)) {
+			odom->set_pose({0, 0, 0});
+			ssov::move({-24, 0}, {.reverse = true});
+		}
+		pros::delay(20);                               // Run for 20 ms then update
+	}
 }
