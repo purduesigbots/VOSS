@@ -17,7 +17,7 @@ namespace ssov {
                 linear_pid(linear_constants),
                 angular_pid(angular_constants),
                 min_error(min_error) {};
-            ChassisSpeeds compute(const Pose &current_pose, const Point &target_point, const bool &reverse, const bool &thru) override;
+            ChassisSpeeds compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) override;
             void reset() override;
     };
 }

@@ -45,7 +45,7 @@ public:
         left_mtrs->move_voltage(left_speed * 120);
         right_mtrs->move_voltage(right_speed * 120);
     }
-    void set_speeds(ChassisSpeeds speeds) {
+    void set_speeds(const ChassisSpeeds& speeds) {
         tank(speeds.left_speed, speeds.right_speed);
     }
     ChassisSpeeds get_speeds() const {

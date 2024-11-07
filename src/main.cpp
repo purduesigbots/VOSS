@@ -27,7 +27,7 @@ void initialize() {
 	ssov::defaults::localizer = odom;
 	ssov::defaults::point_controller = pid;
 	ssov::defaults::exit_condition = ec;
-	odom->begin_localization();
+	odom->calibrate();
 }
 
 /**
@@ -76,6 +76,7 @@ void autonomous() {}
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
+	bool log_data = false;
 
 	while (true) {
 		ssov::Pose pose = odom->get_pose();
@@ -85,10 +86,20 @@ void opcontrol() {
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 		chassis->arcade(dir / 1.27, turn / 1.27);
-		if (master.get_digital_new_press(DIGITAL_A)) {
-			odom->set_pose({0, 0, 0});
-			ssov::move({-24, 0}, {.reverse = true});
+		//if (master.get_digital_new_press(DIGITAL_A)) {
+		//	odom->set_pose({0, 0, 0});
+		//	ssov::move({-24, 0}, {.reverse = true});
+		//}
+		if (master.get_digital_new_press(DIGITAL_X)) {
+			log_data = !log_data;
 		}
-		pros::delay(20);                               // Run for 20 ms then update
+		auto local_change = odom->get_local_change();
+		auto vel = odom->get_velocities();
+		if (log_data) {
+			//printf("%.2f %.2f %.2f\n", odom->get_left_velocity(), odom->get_right_velocity(), odom->get_rot_velocity());
+			//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
+			printf("%.2f, %.2f\n", vel.y, local_change.y * 100);
+		}
+		pros::delay(10);                               // Run for 20 ms then update
 	}
 }

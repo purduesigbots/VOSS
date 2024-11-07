@@ -6,7 +6,7 @@
 namespace ssov {
 class PointController {
     public:
-        virtual ChassisSpeeds compute(const Pose &current_pose, const Point &target_point, const bool &reverse, const bool &thru) = 0;
+        virtual ChassisSpeeds compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) = 0;
         virtual void reset() = 0;
 };
 }

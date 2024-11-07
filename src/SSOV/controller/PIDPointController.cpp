@@ -5,7 +5,7 @@
 #include <cmath>
 
 namespace ssov {
-ChassisSpeeds PIDPointController::compute(const Pose &current_pose, const Point &target_point, const bool &reverse, const bool &thru) {
+ChassisSpeeds PIDPointController::compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) {
     int dir = reverse ? -1 : 1;
     double dx = target_point.x - current_pose.x;
     double dy = target_point.y - current_pose.y;
