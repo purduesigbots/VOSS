@@ -97,7 +97,7 @@ class RobotOdom : public ssov::OdometryLocalizer {
             prev_angle = angle;
             return {dx, dy, dtheta};
         }
-        ssov::Pose get_velocities() {
+        ssov::Pose get_velocities() override {
             double left_velocity = get_left_velocity();
             double right_velocity = get_right_velocity();
             double rot_velocity = get_rot_velocity();
