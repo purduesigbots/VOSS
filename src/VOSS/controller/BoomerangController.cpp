@@ -28,16 +28,22 @@ BoomerangController::get_command(bool reverse, bool thru,
     double dy = target.y - current_pos.y;
 
     double distance_error = sqrt(dx * dx + dy * dy);
-    double at = voss::to_radians(target.theta.value());
+    double at = target.theta.value();
 
     this->carrotPoint = {this->target.x - distance_error * cos(at) * lead_pct,
                          this->target.y - distance_error * sin(at) * lead_pct,
                          target.theta};
+    dx = carrotPoint.x - current_pos.x;
+    dy = carrotPoint.y - current_pos.y;
     double current_angle =
-        this->l->get_orientation_rad() + (reverse ? M_PI : 0);
+        this->l->get_orientation_rad();
 
     double angle_error;
-    angle_error = atan2(dy, dx) - current_angle;
+    if (!reverse) {
+        angle_error = atan2(dy, dx) - current_angle;
+    } else {
+        angle_error = atan2(-dy, -dx) - current_angle;
+    }
 
     angle_error = voss::norm_delta(angle_error);
 
