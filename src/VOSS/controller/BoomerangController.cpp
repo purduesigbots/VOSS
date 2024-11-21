@@ -35,8 +35,7 @@ BoomerangController::get_command(bool reverse, bool thru,
                          target.theta};
     dx = carrotPoint.x - current_pos.x;
     dy = carrotPoint.y - current_pos.y;
-    double current_angle =
-        this->l->get_orientation_rad();
+    double current_angle = this->l->get_orientation_rad();
 
     double angle_error;
     if (!reverse) {
