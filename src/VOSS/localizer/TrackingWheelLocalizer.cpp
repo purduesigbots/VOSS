@@ -1,6 +1,9 @@
 #include "VOSS/localizer/TrackingWheelLocalizer.hpp"
+
+#include <utility>
 #include "VOSS/constants.hpp"
 #include "VOSS/utils/angle.hpp"
+#include "VOSS/utils/math.hpp"
 
 namespace voss::localizer {
 
@@ -8,12 +11,14 @@ TrackingWheelLocalizer::TrackingWheelLocalizer(
     std::unique_ptr<AbstractTrackingWheel> left,
     std::unique_ptr<AbstractTrackingWheel> right,
     std::unique_ptr<AbstractTrackingWheel> middle,
-    std::unique_ptr<pros::IMU> imu, double left_right_dist, double middle_dist)
+    std::vector<std::unique_ptr<pros::IMU>> imu, double left_right_dist,
+    double middle_dist, Pose offset)
     : AbstractLocalizer(), left_tracking_wheel(std::move(left)),
       right_tracking_wheel(std::move(right)),
       middle_tracking_wheel(std::move(middle)), imu(std::move(imu)),
       left_right_dist(left_right_dist), middle_dist(middle_dist),
-      prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0) {
+      prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
+      offset({offset.x, offset.y, offset.theta.value_or(0.0)}) {
 }
 
 void TrackingWheelLocalizer::update() {
@@ -33,8 +38,15 @@ void TrackingWheelLocalizer::update() {
         delta_middle =
             middle_tracking_wheel->get_dist_travelled() - prev_middle_pos;
     }
-    if (imu) {
-        pose.theta = -to_radians(imu->get_rotation());
+    if (!imu.empty()) {
+        std::vector<double> rotations;
+        for(const auto& s_imu : this->imu) {
+            if(s_imu->is_installed()) {
+                rotations.push_back(s_imu->get_rotation());
+            }
+        }
+        double rotation_avg = voss::get_avg(rotations);
+        pose.theta = -to_radians(rotation_avg);
         delta_angle = pose.theta - prev_pose.theta;
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
@@ -81,20 +93,34 @@ void TrackingWheelLocalizer::calibrate() {
     if (middle_tracking_wheel) {
         middle_tracking_wheel->reset();
     }
-    if (imu) {
-        imu->reset(true);
-        while (imu->is_calibrating()) {
-            pros::delay(constants::SENSOR_UPDATE_DELAY);
+    if (!imu.empty()) {
+        for (const auto& s_imu : this->imu) {
+            if (s_imu->is_installed()) {
+                s_imu->reset(true);
+                pros::Task([&s_imu] {
+                    while (s_imu->is_calibrating()) {
+                        pros::delay(constants::SENSOR_UPDATE_DELAY);
+                    }
+                });
+            }
         }
     }
-    this->pose = AtomicPose{0.0, 0.0, 0.0};
+    this->pose = AtomicPose{this->offset.x, this->offset.y,
+                            offset.theta.value()};
 }
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
-    this->AbstractLocalizer::set_pose(pose);
+    Pose offseted_pose = {pose.x + this->offset.x,
+                          pose.y + offset.y,
+                          pose.theta.value() + offset.theta.value()};
+    this->AbstractLocalizer::set_pose(offseted_pose);
     this->prev_pose = this->pose;
-    if (this->imu && pose.theta.has_value()) {
-        this->imu->set_rotation(-pose.theta.value());
+    if (!this->imu.empty() && pose.theta.has_value()) {
+        for (const auto& s_imu : this->imu) {
+            if (s_imu->is_installed()) {
+                s_imu->set_rotation(-offseted_pose.theta.value());
+            }
+        }
     }
 }
 

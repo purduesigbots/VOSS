@@ -1,8 +1,11 @@
 #pragma once
 
+#include "pros/imu.hpp"
 #include <atomic>
 #include <cmath>
+#include <numeric>
 #include <optional>
+#include <vector>
 
 namespace voss {
 

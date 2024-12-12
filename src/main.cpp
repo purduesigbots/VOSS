@@ -16,7 +16,8 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_left_motor(-4)
                 .with_track_width(11)
                 .with_left_right_tpi(18.43)
-                .with_imu(16)
+                .with_imus({16, 17})
+                .with_offset({0, 0, 45.0})
                 .build();
 
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
