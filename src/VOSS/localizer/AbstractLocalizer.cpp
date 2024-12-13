@@ -15,8 +15,8 @@ AbstractLocalizer::AbstractLocalizer() {
 // Once started it don't stop until program is stopped or data abort
 // Uses mutex to keep values protected
 void AbstractLocalizer::begin_localization() {
+    this->calibrate();
     pros::Task localization_task([this]() {
-        this->calibrate();
         while (true) {
             std::unique_lock<pros::Mutex> lock(this->mtx);
             this->update();

@@ -1,9 +1,9 @@
 #include "VOSS/localizer/TrackingWheelLocalizer.hpp"
 
-#include <utility>
 #include "VOSS/constants.hpp"
 #include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/math.hpp"
+#include <utility>
 
 namespace voss::localizer {
 
@@ -41,8 +41,8 @@ void TrackingWheelLocalizer::update() {
     }
     if (!imu.empty()) {
         std::vector<double> rotations;
-        for(const auto& s_imu : this->imu) {
-            if(s_imu->is_installed()) {
+        for (const auto& s_imu : this->imu) {
+            if (s_imu->is_installed()) {
                 rotations.push_back(s_imu->get_rotation());
             }
         }
@@ -79,9 +79,11 @@ void TrackingWheelLocalizer::update() {
 
     double p = this->pose.theta - delta_angle / 2.0; // global angle
 
-    if(rotation_offset) {
-        double rotated_x = local_x * cos(rotation_offset) - local_y * sin(rotation_offset);
-        double rotated_y = local_x * sin(rotation_offset) + local_y * cos(rotation_offset);
+    if (rotation_offset) {
+        double rotated_x =
+            local_x * cos(rotation_offset) - local_y * sin(rotation_offset);
+        double rotated_y =
+            local_x * sin(rotation_offset) + local_y * cos(rotation_offset);
         local_x = rotated_x;
         local_y = rotated_y;
     }
@@ -102,14 +104,20 @@ void TrackingWheelLocalizer::calibrate() {
         middle_tracking_wheel->reset();
     }
     if (!imu.empty()) {
+        // check if IMU is installed
+        // otherwise remove it from the list
+        std::erase_if(imu,
+                      [](const auto& s_imu)
+                      { return !s_imu->is_installed(); });
+
+        // calibrate imu without blocking should speed up the calibration process
         for (const auto& s_imu : this->imu) {
-            if (s_imu->is_installed()) {
-                s_imu->reset(true);
-                pros::Task([&s_imu] {
-                    while (s_imu->is_calibrating()) {
-                        pros::delay(constants::SENSOR_UPDATE_DELAY);
-                    }
-                });
+            s_imu->reset(false);
+        }
+
+        for (const auto& s_imu : this->imu) {
+            while (s_imu->is_calibrating()) {
+                pros::delay(voss::constants::SENSOR_UPDATE_DELAY);
             }
         }
     }
