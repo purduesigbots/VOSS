@@ -145,7 +145,7 @@ std::shared_ptr<TrackingWheelLocalizer> TrackingWheelLocalizerBuilder::build() {
     return std::make_shared<TrackingWheelLocalizer>(
         std::move(left_tracking_wheel), std::move(right_tracking_wheel),
         std::move(middle_tracking_wheel), std::move(imu), left_right_dist,
-        middle_dist, offset);
+        middle_dist, this->offset);
 }
 
 

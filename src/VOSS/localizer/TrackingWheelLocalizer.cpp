@@ -26,6 +26,7 @@ void TrackingWheelLocalizer::update() {
     double delta_right = 0.0;
     double delta_middle = 0.0;
     double delta_angle = 0.0;
+    double rotation_offset = to_radians(offset.theta.value_or(0.0));
 
     if (left_tracking_wheel) {
         delta_left = left_tracking_wheel->get_dist_travelled() - prev_left_pos;
@@ -78,6 +79,13 @@ void TrackingWheelLocalizer::update() {
 
     double p = this->pose.theta - delta_angle / 2.0; // global angle
 
+    if(rotation_offset) {
+        double rotated_x = local_x * cos(rotation_offset) - local_y * sin(rotation_offset);
+        double rotated_y = local_x * sin(rotation_offset) + local_y * cos(rotation_offset);
+        local_x = rotated_x;
+        local_y = rotated_y;
+    }
+
     // convert to absolute displacement
     this->pose.x += cos(p) * local_x - sin(p) * local_y;
     this->pose.y += sin(p) * local_x + cos(p) * local_y;
@@ -105,20 +113,16 @@ void TrackingWheelLocalizer::calibrate() {
             }
         }
     }
-    this->pose = AtomicPose{this->offset.x, this->offset.y,
-                            offset.theta.value()};
+    this->pose = AtomicPose{0, 0, 0.0};
 }
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
-    Pose offseted_pose = {pose.x + this->offset.x,
-                          pose.y + offset.y,
-                          pose.theta.value() + offset.theta.value()};
-    this->AbstractLocalizer::set_pose(offseted_pose);
+    this->AbstractLocalizer::set_pose(pose);
     this->prev_pose = this->pose;
     if (!this->imu.empty() && pose.theta.has_value()) {
         for (const auto& s_imu : this->imu) {
             if (s_imu->is_installed()) {
-                s_imu->set_rotation(-offseted_pose.theta.value());
+                s_imu->set_rotation(-pose.theta.value());
             }
         }
     }

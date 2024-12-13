@@ -12,7 +12,7 @@ class TrackingWheelLocalizerBuilder {
     std::unique_ptr<AbstractTrackingWheel> right_tracking_wheel;
     std::unique_ptr<AbstractTrackingWheel> middle_tracking_wheel;
     std::vector<std::unique_ptr<pros::IMU>> imu{};
-    Pose offset;
+    Pose offset = {0, 0, 0.0};
 
   public:
     TrackingWheelLocalizerBuilder();

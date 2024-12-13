@@ -11,13 +11,17 @@
 #define RIGHT_MOTORS                                                           \
     { 10, 3, 9, -7, -15 }
 
+constexpr std::initializer_list<uint8_t> INERTIAL_PORTS {11, 12};
+constexpr char LEFT_ENCODER_TOP = 'G';
+constexpr char RIGHT_ENCODER_TOP = 'E';
+
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_right_motor(10)
-                .with_left_motor(-4)
-                .with_track_width(11)
+                .with_left_encoder(RIGHT_ENCODER_TOP)
+                .with_middle_encoder(LEFT_ENCODER_TOP)
                 .with_left_right_tpi(18.43)
-                .with_imus({16, 17})
-                .with_offset({0, 0, 45.0})
+                .with_middle_tpi(18.43)
+                .with_imus(INERTIAL_PORTS)
+                .with_offset({0, 0, -45.0 - 180})
                 .build();
 
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
