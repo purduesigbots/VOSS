@@ -19,6 +19,8 @@ TrackingWheelLocalizer::TrackingWheelLocalizer(
       left_right_dist(left_right_dist), middle_dist(middle_dist),
       prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       offset({offset.x, offset.y, offset.theta.value_or(0.0)}) {
+    this->left_right_dist += offset.y;
+    this->middle_dist += offset.y;
 }
 
 void TrackingWheelLocalizer::update() {
