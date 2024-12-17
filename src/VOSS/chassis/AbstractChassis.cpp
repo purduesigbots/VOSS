@@ -25,13 +25,13 @@ void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                                         flags & voss::Flags::THRU, ec),
                 max)) {
                 if (pros::competition::is_disabled()) {
-                    this->task_running = false;
+                    this->task_running.store(false);
                     return;
                 }
 
                 pros::delay(constants::MOTOR_UPDATE_DELAY);
             }
-            this->task_running = false;
+            this->task_running.store(false);
         });
 
     // Early exit for async movement
@@ -55,13 +55,13 @@ void AbstractChassis::turn_task(controller_ptr controller, ec_ptr ec,
                                       flags & voss::Flags::THRU, direction, ec),
                                   max)) {
                 if (pros::competition::is_disabled()) {
-                    this->task_running = false;
+                    this->task_running.store(false);
                     return;
                 }
 
                 pros::delay(constants::MOTOR_UPDATE_DELAY);
             }
-            this->task_running = false;
+            this->task_running.store(false);
         });
 
     // Early exit for async movement
@@ -99,10 +99,10 @@ void AbstractChassis::move(Pose target, controller_ptr controller, double max,
 
 void AbstractChassis::move(Pose target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags) {
-    while (this->task_running) {
+    while (this->task_running.load()) {
         pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
-    this->task_running = true;
+    this->task_running.store(true);
     controller->set_target(target, flags & voss::Flags::RELATIVE, ec);
 
     this->move_task(std::move(controller), std::move(ec), max, flags);
@@ -124,10 +124,10 @@ void AbstractChassis::turn(double target, controller_ptr controller, double max,
 void AbstractChassis::turn(double target, controller_ptr controller, ec_ptr ec,
                            double max, voss::Flags flags,
                            voss::AngularDirection direction) {
-    while (this->task_running) {
+    while (this->task_running.load()) {
         pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
-    this->task_running = true;
+    this->task_running.store(true);
 
     controller->set_target({NAN, NAN, target}, flags & voss::Flags::RELATIVE,
                            ec);
@@ -153,16 +153,23 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
 void AbstractChassis::turn_to(Point target, controller_ptr controller,
                               ec_ptr ec, double max, voss::Flags flags,
                               voss::AngularDirection direction) {
-    while (this->task_running) {
+    while (this->task_running.load()) {
         pros::delay(10);
     }
-    this->task_running = true;
+    this->task_running.store(true);
 
     controller->set_target({target.x, target.y, std::nullopt},
                            flags & voss::Flags::RELATIVE, ec);
 
     this->turn_task(std::move(controller), std::move(ec), max, flags,
                     direction);
+}
+
+
+void AbstractChassis::wait_until_settled() {
+    while(this->task_running.load()) {
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
+    }
 }
 
 } // namespace voss::chassis
