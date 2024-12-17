@@ -40,6 +40,7 @@ class AbstractChassis {
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
     void wait_until_settled();
+    bool is_settled();
 
     void move(double distance, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE);

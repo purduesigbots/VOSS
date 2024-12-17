@@ -165,11 +165,14 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                     direction);
 }
 
-
 void AbstractChassis::wait_until_settled() {
-    while(this->task_running.load()) {
+    while (this->task_running.load()) {
         pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
+}
+
+bool AbstractChassis::is_settled() {
+    return this->task_running.load();
 }
 
 } // namespace voss::chassis
