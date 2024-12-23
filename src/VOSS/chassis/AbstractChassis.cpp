@@ -154,7 +154,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                               ec_ptr ec, double max, voss::Flags flags,
                               voss::AngularDirection direction) {
     while (this->task_running) {
-        pros::delay(10);
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
     this->task_running = true;
 
@@ -165,13 +165,13 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                     direction);
 }
 
-void AbstractChassis::wait_until_settled() {
+void AbstractChassis::wait_until_settled() const {
     while (this->task_running) {
         pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
 }
 
-bool AbstractChassis::is_settled() {
+bool AbstractChassis::is_settled() const {
     return this->task_running;
 }
 

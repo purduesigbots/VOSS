@@ -39,8 +39,8 @@ class AbstractChassis {
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
-    void wait_until_settled();
-    bool is_settled();
+    void wait_until_settled() const;
+    bool is_settled() const;
 
     void move(double distance, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE);
