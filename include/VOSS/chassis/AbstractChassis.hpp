@@ -21,7 +21,7 @@ class AbstractChassis {
     controller_ptr default_controller;
     ec_ptr default_ec;
     std::unique_ptr<pros::Task> task = nullptr;
-    bool task_running = false;
+    std::atomic_bool task_running = false;
     pros::motor_brake_mode_e brakeMode;
 
     void move_task(controller_ptr controller, ec_ptr ec, double max,
@@ -38,6 +38,9 @@ class AbstractChassis {
 
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
+
+    void wait_until_settled() const;
+    bool is_settled() const;
 
     void move(double distance, double max = 100.0,
               voss::Flags flags = voss::Flags::NONE);
