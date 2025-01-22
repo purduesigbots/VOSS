@@ -28,7 +28,6 @@ void TrackingWheelLocalizer::update() {
     double delta_right = 0.0;
     double delta_middle = 0.0;
     double delta_angle = 0.0;
-    double rotation_offset = to_radians(offset.theta.value_or(0.0));
 
     if (left_tracking_wheel) {
         delta_left = left_tracking_wheel->get_dist_travelled() - prev_left_pos;
@@ -51,6 +50,7 @@ void TrackingWheelLocalizer::update() {
         double rotation_avg = voss::get_avg(rotations);
         pose.theta = -to_radians(rotation_avg);
         delta_angle = real_pose.theta - prev_pose.theta;
+        real_pose.theta = pose.theta.load();
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
         pose.theta += delta_angle;
@@ -82,11 +82,11 @@ void TrackingWheelLocalizer::update() {
     double p = M_PI_4 + this->pose.theta - delta_angle / 2.0; // global angle
 
     // convert to absolute displacement
-    this->pose.x += cos(p) * local_x - sin(p) * local_y;
-    this->pose.y += sin(p) * local_x + cos(p) * local_y;
+    this->real_pose.x += cos(p) * local_x - sin(p) * local_y;
+    this->real_pose.y += sin(p) * local_x + cos(p) * local_y;
 
-    this->pose.x += horizontal_offset * cos(this->pose.theta);
-    this->pose.y += horizontal_offset * sin(this->pose.theta);
+    this->pose.x = real_pose.x + horizontal_offset * cos(this->pose.theta);
+    this->pose.y = real_pose.y + horizontal_offset * sin(this->pose.theta);
 }
 
 void TrackingWheelLocalizer::calibrate() {
@@ -115,8 +115,18 @@ void TrackingWheelLocalizer::calibrate() {
 }
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
-    this->AbstractLocalizer::set_pose(pose);
-    this->prev_pose = this->pose;
+    std::unique_lock<pros::Mutex> lock(this->mtx);
+    if (pose.theta.has_value()) {
+        this->pose =
+            AtomicPose{pose.x, pose.y, voss::to_radians(pose.theta.value())};
+    } else {
+        double h = this->pose.theta;
+        this->pose = AtomicPose{pose.x, pose.y, h};
+    }
+    this->real_pose.x = this->pose.x - horizontal_offset * cos(this->pose.theta);
+    this->real_pose.y = this->pose.y - horizontal_offset * sin(this->pose.theta);
+    this->real_pose.theta = this->pose.theta.load();
+    this->prev_pose = this->real_pose;
     if (!this->imu.empty() && pose.theta.has_value()) {
         for (const auto& s_imu : this->imu) {
             if (s_imu->is_installed()) {

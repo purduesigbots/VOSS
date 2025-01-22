@@ -143,7 +143,7 @@ TrackingWheelLocalizerBuilder::with_offset(Pose offset) {
 
 TrackingWheelLocalizerBuilder&
 TrackingWheelLocalizerBuilder::with_horizontal_offset(double offset) {
-    this->horizontal_offset = horizontal_offset;
+    this->horizontal_offset = offset;
     return *this;
 }
 
