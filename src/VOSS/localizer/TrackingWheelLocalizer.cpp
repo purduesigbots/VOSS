@@ -20,7 +20,7 @@ TrackingWheelLocalizer::TrackingWheelLocalizer(
       prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       offset({offset.x, offset.y, offset.theta.value_or(0.0)}) {
     this->left_right_dist += offset.y;
-    this->middle_dist += offset.y;
+    this->middle_dist += offset.x;
 }
 
 void TrackingWheelLocalizer::update() {
@@ -113,14 +113,8 @@ void TrackingWheelLocalizer::calibrate() {
                       { return !s_imu->is_installed(); });
 
         // calibrate imu without blocking should speed up the calibration process
-        for (const auto& s_imu : this->imu) {
-            s_imu->reset(false);
-        }
-
-        for (const auto& s_imu : this->imu) {
-            while (s_imu->is_calibrating()) {
-                pros::delay(voss::constants::SENSOR_UPDATE_DELAY);
-            }
+        for(auto& s_imu : this->imu) {
+          s_imu->reset(true);
         }
     }
     this->pose = AtomicPose{0, 0, 0.0};
