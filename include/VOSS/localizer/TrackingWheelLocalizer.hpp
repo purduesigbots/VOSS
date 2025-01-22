@@ -12,23 +12,27 @@ class TrackingWheelLocalizer : public AbstractLocalizer {
   protected:
     std::atomic<double> prev_left_pos, prev_right_pos, prev_middle_pos;
     AtomicPose prev_pose;
+    AtomicPose real_pose;
 
     std::atomic<double> left_right_dist, middle_dist;
     std::unique_ptr<AbstractTrackingWheel> left_tracking_wheel,
         right_tracking_wheel, middle_tracking_wheel;
     std::vector<std::unique_ptr<pros::IMU>> imu;
     Pose offset = {0, 0, 0.0};
+    std::atomic<double> horizontal_offset;
 
   public:
     TrackingWheelLocalizer(std::unique_ptr<AbstractTrackingWheel> left,
                            std::unique_ptr<AbstractTrackingWheel> right,
                            std::unique_ptr<AbstractTrackingWheel> middle,
                            std::vector<std::unique_ptr<pros::IMU>> imu,
-                           double left_right_dist, double middle_dist, Pose offset);
+                           double left_right_dist, double middle_dist,
+                           Pose offset);
     void update() override;
     void calibrate() override;
     void set_pose(Pose pose) override;
     void set_pose(double x, double y, double theta) override;
+    void set_horizontal_offset(double horizontal_offset);
 
     friend class TrackingWheelLocalizerBuilder;
 };

@@ -50,7 +50,7 @@ void TrackingWheelLocalizer::update() {
         }
         double rotation_avg = voss::get_avg(rotations);
         pose.theta = -to_radians(rotation_avg);
-        delta_angle = pose.theta - prev_pose.theta;
+        delta_angle = real_pose.theta - prev_pose.theta;
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
         pose.theta += delta_angle;
@@ -59,7 +59,7 @@ void TrackingWheelLocalizer::update() {
     prev_left_pos += delta_left;
     prev_right_pos += delta_right;
     prev_middle_pos += delta_middle;
-    prev_pose = pose;
+    prev_pose = real_pose;
 
     double local_x;
     double local_y;
@@ -79,20 +79,14 @@ void TrackingWheelLocalizer::update() {
         local_y = delta_middle;
     }
 
-    double p = this->pose.theta - delta_angle / 2.0; // global angle
-
-    if (rotation_offset) {
-        double rotated_x =
-            local_x * cos(rotation_offset) - local_y * sin(rotation_offset);
-        double rotated_y =
-            local_x * sin(rotation_offset) + local_y * cos(rotation_offset);
-        local_x = rotated_x;
-        local_y = rotated_y;
-    }
+    double p = M_PI_4 + this->pose.theta - delta_angle / 2.0; // global angle
 
     // convert to absolute displacement
     this->pose.x += cos(p) * local_x - sin(p) * local_y;
     this->pose.y += sin(p) * local_x + cos(p) * local_y;
+
+    this->pose.x += horizontal_offset * cos(this->pose.theta);
+    this->pose.y += horizontal_offset * sin(this->pose.theta);
 }
 
 void TrackingWheelLocalizer::calibrate() {
@@ -109,12 +103,12 @@ void TrackingWheelLocalizer::calibrate() {
         // check if IMU is installed
         // otherwise remove it from the list
         std::erase_if(imu,
-                      [](const auto& s_imu)
-                      { return !s_imu->is_installed(); });
+                      [](const auto& s_imu) { return !s_imu->is_installed(); });
 
-        // calibrate imu without blocking should speed up the calibration process
-        for(auto& s_imu : this->imu) {
-          s_imu->reset(true);
+        // calibrate imu without blocking should speed up the calibration
+        // process
+        for (auto& s_imu : this->imu) {
+            s_imu->reset(true);
         }
     }
     this->pose = AtomicPose{0, 0, 0.0};
@@ -134,6 +128,10 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
 
 void TrackingWheelLocalizer::set_pose(double x, double y, double theta) {
     this->set_pose({x, y, theta});
+}
+
+void TrackingWheelLocalizer::set_horizontal_offset(double horizontal_offset) {
+    this->horizontal_offset = horizontal_offset;
 }
 
 } // namespace voss::localizer
