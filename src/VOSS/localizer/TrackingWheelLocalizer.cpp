@@ -79,7 +79,7 @@ void TrackingWheelLocalizer::update() {
         local_y = delta_middle;
     }
 
-    double p = M_PI_4 + this->pose.theta - delta_angle / 2.0; // global angle
+    double p = -M_PI_4 + this->pose.theta - delta_angle / 2.0; // global angle
 
     // convert to absolute displacement
     this->real_pose.x += cos(p) * local_x - sin(p) * local_y;
