@@ -2,21 +2,22 @@
 
 //#include "SSOV/chassis/DiffChassis.hpp"
 #include "RobotOdom.h"
+#include "SSOV/chassis/DiffChassis.hpp"
 #include "SSOV/controller/PIDPointController.hpp"
 #include "SSOV/exit_condition/ToleranceExitCondition.hpp"
-#include "SSOV/Routines.hpp"
 
 #include "SSOV/trajectory/PathTrajectory.hpp"
 #include "SSOV/trajectory/QuinticSplinePath.hpp"
 #include "SSOV/controller/RamseteTrajectoryFollower.hpp"
+#include "SSOV/trajectory/CombinedTrajectory.hpp"
 
 #include "replay/replay.hpp"
 
 //ssov::DiffChassis chassis({-13, -14, -15}, {16, 18, 19});
 //RobotOdom odom({-13, -14, -15}, {16, 18, 19}, 12, 20);
 //ssov::PIDPointController controller({0, 0, 0}, {0, 0, 0}, 0);
-auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19});
-auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13, -14, -15}, std::initializer_list<int8_t>{16, 18, 19}, 12, 20);
+auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13}, std::initializer_list<int8_t>{16}, 12, 20);
+auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19}, odom);
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
 auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -30,10 +31,8 @@ auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
-	ssov::defaults::chassis = chassis;
-	ssov::defaults::localizer = odom;
-	ssov::defaults::point_controller = pid;
-	ssov::defaults::exit_condition = ec;
+	chassis->default_point_controller = pid;
+	chassis->default_ec = ec;
 	odom->begin_localization();
 }
 
@@ -87,22 +86,27 @@ void opcontrol() {
 	const double kV_ang = 8.3411535;
 	bool log_data = false;
 	//replay::FileLogger logger("poses.txt");
-	ssov::QuinticSplinePath path({{0, 0, 0}, {0, 48, 0}}, false);
+	ssov::QuinticSplinePath path1({{0, 0, 0}, {24, 24, M_PI_2}}, false);
+	ssov::QuinticSplinePath path2({{24, 24, M_PI_2}, {48, 0, M_PI}}, true);
+	ssov::QuinticSplinePath path3({{48, 0, M_PI}, {24, -24, -M_PI_2}}, false);
+	ssov::QuinticSplinePath path4({{24, -24, -M_PI_2}, {0, 0, 0}}, true);
 	ssov::TrajectoryConstraints constraints = {
 		50,
 		100,
 		-60,
 		18.6,
-		40,
+		50,
 		10.7
 	};
-	ssov::PathTrajectory traj(&path, constraints);
-	/*
-	for (double i = 0.0; i <= traj.duration(); i += 0.01) {
-		auto state = traj.at(i);
-		printf("%f, %f\n", state.vel.x, state.vel.theta);
-	}
-	*/
+	ssov::PathTrajectory traj1(&path1, constraints);
+	ssov::PathTrajectory traj2(&path2, constraints);
+	ssov::PathTrajectory traj3(&path3, constraints);
+	ssov::PathTrajectory traj4(&path4, constraints);
+	ssov::CombinedTrajectory traj({&traj1, &traj2, &traj3, &traj4});
+	//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
+	//	auto state = traj.at(i);
+	//	printf("%f, %f, %f, %f, %f\n", state.pose.x, state.pose.y, state.pose.theta, state.vel.x, state.vel.theta);
+	//}
 	FILE *file = fopen("/usd/vel_measurement.txt", "w");
 
 	while (true) {
@@ -116,6 +120,9 @@ void opcontrol() {
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 		chassis->arcade(dir / 1.27, turn / 1.27);
+		//int left = master.get_analog(ANALOG_LEFT_Y);
+		//int right = master.get_analog(ANALOG_RIGHT_Y);
+		//chassis->tank(left / 1.27, right / 1.27);
 		//if (master.get_digital_new_press(DIGITAL_A)) {
 		//	odom->set_pose({0, 0, 0});
 		//	ssov::move({-24, 0}, {.reverse = true});
@@ -124,17 +131,25 @@ void opcontrol() {
 			log_data = !log_data;
 		}
 		if(master.get_digital_new_press(DIGITAL_A)) {
-			FILE *file = fopen("/usd/ff.txt", "w");
+			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
 			for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				auto vel = odom->get_velocities();
 				auto pose = odom->get_pose();
 				auto state = traj.at(i);
-				chassis->set_speeds(ramsete->compute(pose, vel, state));
-				fprintf(file, "%f, %f, %f, %f, %f\n", state.vel.x, state.vel.theta, vel.x, vel.y, vel.theta);
+				auto speeds = ramsete->compute(pose, vel, state);
+				chassis->execute(speeds);
+				//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
+				//fprintf(file, "%f, %f, %f, %f, %f\n", state.vel.x, state.vel.theta, vel.x, vel.y, vel.theta);
 				pros::delay(10);
 			}
 			fclose(file);
+		}
+		if (master.get_digital_new_press(DIGITAL_B)) {
+			odom->set_pose({0, 0, 0});
+			chassis->move({24, 24});
+			pros::delay(500);
+			odom->set_pose({24, 24, 0});
 		}
 		//auto local_change = odom->get_local_change();
 		auto vel = odom->get_velocities();
@@ -142,7 +157,7 @@ void opcontrol() {
 			auto speeds = chassis->get_speeds();
 			//printf("%.2f %.2f %.2f\n", odom->get_left_velocity(), odom->get_right_velocity(), odom->get_rot_velocity());
 			//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
-			fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
+			//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
 		}
 		pros::delay(10);                               // Run for 20 ms then update
 	}

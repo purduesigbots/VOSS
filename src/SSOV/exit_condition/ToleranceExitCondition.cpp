@@ -1,7 +1,7 @@
 #include "SSOV/exit_condition/ToleranceExitCondition.hpp"
 
 #include "pros/rtos.hpp"
-#include "SSOV/common/Angle.hpp"
+#include "SSOV/common/Math.hpp"
 
 namespace ssov {
 

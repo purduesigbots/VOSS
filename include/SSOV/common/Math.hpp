@@ -23,4 +23,15 @@ inline double norm_delta(double radians) {
     return std::remainder(radians, 2 * M_PI);
 }
 
+inline double slew(double target, double current, double slew) {
+    if (!slew) return target;
+    if (target > current + slew && current >= 0) {
+        target = current + slew;
+    }
+    else if (target < current - slew && current <= 0) {
+        target = current - slew;
+    }
+    return target;
+}
+
 }

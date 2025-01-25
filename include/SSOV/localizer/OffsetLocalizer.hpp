@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SSOV/localizer/Localizer.hpp"
-#include "SSOV/common/Angle.hpp"
+#include "SSOV/common/Math.hpp"
 
 namespace ssov {
 

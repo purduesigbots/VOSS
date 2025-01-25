@@ -1,11 +1,11 @@
 #include "SSOV/controller/PIDPointController.hpp"
 
-#include "SSOV/common/Angle.hpp"
+#include "SSOV/common/Math.hpp"
 
 #include <cmath>
 
 namespace ssov {
-ChassisSpeeds PIDPointController::compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) {
+DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) {
     int dir = reverse ? -1 : 1;
     double dx = target_point.x - current_pose.x;
     double dy = target_point.y - current_pose.y;
@@ -43,7 +43,7 @@ ChassisSpeeds PIDPointController::compute(const Pose &current_pose, const Point 
     }
 
     lin_speed = std::clamp(lin_speed, -100.0, 100.0);
-    return {lin_speed - ang_speed, lin_speed + ang_speed};
+    return {lin_speed, 0, ang_speed};
 }
 
 void PIDPointController::reset() {

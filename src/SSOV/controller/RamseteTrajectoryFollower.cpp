@@ -2,7 +2,7 @@
 
 namespace ssov {
 
-ChassisSpeeds RamseteTrajectoryFollower::compute(Pose current_pose, Pose current_velocities, TrajectoryState target_state) {
+DriveSignal RamseteTrajectoryFollower::compute(Pose current_pose, Pose current_velocities, TrajectoryState target_state) {
     double x_error = target_state.pose.x - current_pose.x;
     double y_error = target_state.pose.y - current_pose.y;
     double angle_error = target_state.pose.theta - current_pose.theta;
@@ -24,9 +24,11 @@ ChassisSpeeds RamseteTrajectoryFollower::compute(Pose current_pose, Pose current
 
     double lin_vel_err = vel - current_velocities.x;
     double ang_vel_err = ang_vel - current_velocities.theta;
+	double lin_speed = kP_lin * lin_vel_err + kV_lin * vel;
+	double ang_speed = kP_ang * ang_vel_err + kV_ang * ang_vel;
     double left_speed = kP_lin * lin_vel_err - kP_ang * ang_vel_err + kV_lin * vel - kV_ang * ang_vel;
     double right_speed = kP_lin * lin_vel_err + kP_ang * ang_vel_err + kV_lin * vel + kV_ang * ang_vel;
-    return {left_speed, right_speed};
+    return {lin_speed, 0, ang_speed};
 }
 
 }

@@ -22,7 +22,8 @@ class RobotOdom : public ssov::OdometryLocalizer {
         const double smoothing_factor = 0.3;
         const double motor_tpi = 45.46;
         const double rot_tpi = 4037.04908;
-        const double tracking_wheel_offset = 4.61;
+        const double tracking_wheel_offset = 4.716;
+        //const double tracking_wheel_offset = 0.0;
     public:
         RobotOdom(std::initializer_list<int8_t> left_ports,
                   std::initializer_list<int8_t> right_ports,
@@ -90,7 +91,7 @@ class RobotOdom : public ssov::OdometryLocalizer {
             double dx = (left_pos - prev_left + right_pos - prev_right) / 2;
             double dtheta = angle - prev_angle;
             double dy = (rot - prev_rot) + dtheta * tracking_wheel_offset;
-            radial_velocity = smoothing_factor * (dy * 100) + (1 - smoothing_factor) * radial_velocity;
+            radial_velocity = dy * 100;
             prev_left = left_pos;
             prev_right = right_pos;
             prev_rot = rot;

@@ -134,7 +134,7 @@ TrajectoryState PathTrajectory::at(double t) {
     TrajectoryState result = {pose.pose, {state.vel, 0, state.vel * pose.curvature}};
     if (path->is_reversed()) {
         result.vel.x *= -1;
-        result.vel.theta *= -1;
+        //result.vel.theta *= -1;
     }
     return result;
 }

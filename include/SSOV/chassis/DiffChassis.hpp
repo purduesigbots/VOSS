@@ -7,6 +7,10 @@
 
 #include "pros/motor_group.hpp"
 #include "SSOV/common/Pose.hpp"
+#include "SSOV/exit_condition/ExitCondition.hpp"
+#include "SSOV/localizer/Localizer.hpp"
+#include "SSOV/routines/Routine.hpp"
+#include "SSOV/controller/PointController.hpp"
 
 namespace ssov {
 struct ChassisSpeeds {
@@ -19,15 +23,20 @@ private:
     std::shared_ptr<pros::MotorGroup> right_mtrs;
     double left_speed = 0.0;
     double right_speed = 0.0;
+    std::shared_ptr<Routine> current_routine = nullptr;
+    void task_fn();
+    pros::task_t chassis_task;
+    pros::Mutex mtx;
+    std::shared_ptr<Localizer> localizer;
 
 public:
     DiffChassis(std::initializer_list<int8_t> left_mtr_ports,
-                std::initializer_list<int8_t> right_mtr_ports):
-        left_mtrs(std::make_shared<pros::MotorGroup>(left_mtr_ports)),
-        right_mtrs(std::make_shared<pros::MotorGroup>(right_mtr_ports)) {}
+                std::initializer_list<int8_t> right_mtr_ports,
+                std::shared_ptr<Localizer> localizer);
     static std::shared_ptr<DiffChassis> create(std::initializer_list<int8_t> left_mtr_ports,
-                              std::initializer_list<int8_t> right_mtr_ports) {
-        return std::make_shared<DiffChassis>(left_mtr_ports, right_mtr_ports);
+                              std::initializer_list<int8_t> right_mtr_ports,
+                              std::shared_ptr<Localizer> localizer) {
+        return std::make_shared<DiffChassis>(left_mtr_ports, right_mtr_ports, localizer);
     }
     void tank(double left_speed, double right_speed) {
         left_speed = std::clamp(left_speed, -100.0, 100.0);
@@ -54,5 +63,19 @@ public:
     std::array<std::shared_ptr<pros::MotorGroup>, 2> get_motors() const {
         return {left_mtrs, right_mtrs};
     }
+    void execute(ChassisCommand command);
+
+    void run_routine(std::shared_ptr<Routine> routine);
+    void wait_until_done() {
+        while (current_routine) pros::delay(10);
+    }
+    void cancel_routine() {
+        std::lock_guard<pros::Mutex> lock(mtx);
+        current_routine = nullptr;
+    }
+
+    void move(Point target);
+    std::shared_ptr<PointController> default_point_controller = nullptr;
+    std::shared_ptr<ExitCondition> default_ec = nullptr;
 };
 }
