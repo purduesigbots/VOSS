@@ -4,7 +4,7 @@
 
 namespace ssov {
 
-template <typename T> int insert_index(std::vector<T> array, T element) {
+template <typename T> int insert_index(const std::vector<T>& array, T element) {
     int start = 0;
     int end = array.size() - 1;
 

@@ -11,12 +11,19 @@
 #include "SSOV/controller/RamseteTrajectoryFollower.hpp"
 #include "SSOV/trajectory/CombinedTrajectory.hpp"
 
+#include "SSOV/localizer/TrackingWheelLocalizer.hpp"
+#include "SSOV/localizer/ADITrackingWheel.hpp"
+
 #include "replay/replay.hpp"
 
 //ssov::DiffChassis chassis({-13, -14, -15}, {16, 18, 19});
 //RobotOdom odom({-13, -14, -15}, {16, 18, 19}, 12, 20);
 //ssov::PIDPointController controller({0, 0, 0}, {0, 0, 0}, 0);
-auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13}, std::initializer_list<int8_t>{16}, 12, 20);
+// auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13}, std::initializer_list<int8_t>{16}, 12, 20);
+std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>(5, 310.7);
+std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>(7, 310.7);
+auto imu = std::make_unique<pros::IMU>(1);
+auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19}, odom);
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
@@ -34,6 +41,7 @@ void initialize() {
 	chassis->default_point_controller = pid;
 	chassis->default_ec = ec;
 	odom->begin_localization();
+	odom->set_pose({0, 0, 0});
 }
 
 /**

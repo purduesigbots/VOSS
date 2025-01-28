@@ -28,7 +28,7 @@ class RobotOdom : public ssov::OdometryLocalizer {
         RobotOdom(std::initializer_list<int8_t> left_ports,
                   std::initializer_list<int8_t> right_ports,
                   int8_t rot_port, uint8_t imu_port):
-            ssov::OdometryLocalizer(10),
+            ssov::OdometryLocalizer({}, 10),
             left_motors(left_ports),
             right_motors(right_ports),
             rotation(rot_port),
