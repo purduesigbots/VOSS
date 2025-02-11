@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SSOV/routines/Routine.hpp"
-#include "SSOV/controller/PointController.hpp"
+#include "SSOV/controller/PoseController.hpp"
 #include "SSOV/exit_condition/ExitCondition.hpp"
 #include "SSOV/localizer/Localizer.hpp"
 #include "SSOV/common/Math.hpp"
@@ -9,33 +9,33 @@
 
 namespace ssov {
 
-class MoveToPoint: public Routine {
+class MoveToPose: public Routine {
     public:
-    struct Params {
-        std::shared_ptr<PointController> controller;
-        std::shared_ptr<ExitCondition> exit;
-        std::shared_ptr<Localizer> localizer;
-        double slew;
-        bool reverse;
-        bool thru;
-    };
+        struct Params {
+            std::shared_ptr<PoseController> controller;
+            std::shared_ptr<ExitCondition> ec;
+            std::shared_ptr<Localizer> localizer;
+            double slew;
+            bool reverse;
+            bool thru;
+        };
     private:
-        std::shared_ptr<PointController> controller;
+        std::shared_ptr<PoseController> controller;
         std::shared_ptr<ExitCondition> exit;
         std::shared_ptr<Localizer> localizer;
-        Point target;
+        Pose target;
         DriveSignal prev_speeds;
         double slew;
         bool reverse;
         bool thru;
         bool done = false;
     public:
-        MoveToPoint(Point target, MoveToPoint::Params params, DriveSignal initial_speeds):
+        MoveToPose(Pose target, Params params, DriveSignal initial_speeds):
             target(target),
             controller(params.controller),
-            exit(params.exit),
+            exit(params.ec),
             localizer(params.localizer),
-            slew(params.slew),
+            slew(params.thru),
             reverse(params.reverse),
             thru(params.thru),
             prev_speeds(initial_speeds) {};
@@ -48,7 +48,7 @@ class MoveToPoint: public Routine {
         }
         ChassisCommand update() {
             DriveSignal result;
-            done = exit->is_met(localizer->get_pose(), {target.x, target.y, localizer->get_pose().theta}, thru);
+            done = exit->is_met(localizer->get_pose(), target, thru);
             if (done && !thru) {
                 result = {0, 0, 0};
             } else {

@@ -33,6 +33,9 @@ namespace ssov {
         Point to_point() const {
             return {x, y};
         }
+        UserPose to_user_pose() const {
+            return {x, y, to_degrees(theta)};
+        }
 
         Pose rotate(double radians) const {
             double c = cos(radians);
@@ -55,6 +58,17 @@ namespace ssov {
         Pose operator-(const Point &other) const {
             Point rotated = other.rotate(theta);
             return {x - rotated.x, y - rotated.y, theta};
+        }
+    };
+
+    struct UserPose {
+        double x;
+        double y;
+        double theta_deg;
+        UserPose(double x, double y, double theta_deg): x(x), y(y), theta_deg(theta_deg) {};
+        UserPose(): UserPose(0, 0, 0) {};
+        Pose to_pose() const {
+            return {x, y, to_radians(theta_deg)};
         }
     };
 

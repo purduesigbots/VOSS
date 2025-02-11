@@ -11,23 +11,28 @@
 #include "SSOV/localizer/Localizer.hpp"
 #include "SSOV/routines/Routine.hpp"
 #include "SSOV/controller/PointController.hpp"
+#include "SSOV/controller/PoseController.hpp"
+#include "SSOV/controller/TurnController.hpp"
+#include "SSOV/Defaults.hpp"
 
 namespace ssov {
-struct ChassisSpeeds {
-    double left_speed;
-    double right_speed;
-};
 class DiffChassis {
 private:
     std::shared_ptr<pros::MotorGroup> left_mtrs;
     std::shared_ptr<pros::MotorGroup> right_mtrs;
-    double left_speed = 0.0;
-    double right_speed = 0.0;
+    DriveSignal current_drive_signal = {};
     std::shared_ptr<Routine> current_routine = nullptr;
+    double max_speed = 100;
+
     void task_fn();
     pros::task_t chassis_task;
     pros::Mutex mtx;
+
     std::shared_ptr<Localizer> localizer;
+    std::shared_ptr<PointController> default_point_controller = nullptr;
+    std::shared_ptr<PoseController> default_pose_controller = nullptr;
+    std::shared_ptr<TurnController> default_turn_controller = nullptr;
+    std::shared_ptr<ExitCondition> default_ec = nullptr;
 
 public:
     DiffChassis(std::initializer_list<int8_t> left_mtr_ports,
@@ -38,31 +43,17 @@ public:
                               std::shared_ptr<Localizer> localizer) {
         return std::make_shared<DiffChassis>(left_mtr_ports, right_mtr_ports, localizer);
     }
-    void tank(double left_speed, double right_speed) {
-        left_speed = std::clamp(left_speed, -100.0, 100.0);
-        right_speed = std::clamp(right_speed, -100.0, 100.0);
-        this->left_speed = left_speed;
-        this->right_speed = right_speed;
-        left_mtrs->move_voltage(left_speed * 120);
-        right_mtrs->move_voltage(right_speed * 120);
-    }
-    void arcade(double forward_speed, double turn_speed) {
-        left_speed = forward_speed + turn_speed;
-        right_speed = forward_speed - turn_speed;
-        left_speed = std::clamp(left_speed, -100.0, 100.0);
-        right_speed = std::clamp(right_speed, -100.0, 100.0);
-        left_mtrs->move_voltage(left_speed * 120);
-        right_mtrs->move_voltage(right_speed * 120);
-    }
-    void set_speeds(const ChassisSpeeds& speeds) {
-        tank(speeds.left_speed, speeds.right_speed);
-    }
-    ChassisSpeeds get_speeds() const {
-        return {left_speed, right_speed};
+
+    void tank(double left_speed, double right_speed);
+    void arcade(double y_axis, double x_axis);
+
+    DriveSignal get_current_drive_signal() const {
+        return current_drive_signal;
     }
     std::array<std::shared_ptr<pros::MotorGroup>, 2> get_motors() const {
         return {left_mtrs, right_mtrs};
     }
+
     void execute(ChassisCommand command);
 
     void run_routine(std::shared_ptr<Routine> routine);
@@ -72,10 +63,41 @@ public:
     void cancel_routine() {
         std::lock_guard<pros::Mutex> lock(mtx);
         current_routine = nullptr;
+        max_speed = 100;
     }
 
-    void move(Point target);
-    std::shared_ptr<PointController> default_point_controller = nullptr;
-    std::shared_ptr<ExitCondition> default_ec = nullptr;
+    struct PointMoveParams {
+        std::shared_ptr<PointController> controller = nullptr;
+        std::shared_ptr<ExitCondition> ec = nullptr;
+        double max = 100;
+        double slew = defaults::slew;
+        bool reverse = false;
+        bool thru = false;
+        bool async = false;
+    };
+    void move(Point target, PointMoveParams params = {});
+
+    struct PoseMoveParams {
+        std::shared_ptr<PoseController> controller = nullptr;
+        std::shared_ptr<ExitCondition> ec = nullptr;
+        double max = 100;
+        double slew = defaults::slew;
+        bool reverse = false;
+        bool thru = false;
+        bool async = false;
+    };
+    void move(Pose target, PoseMoveParams params = {});
+
+    struct TurnParams {
+        std::shared_ptr<TurnController> controller = nullptr;
+        std::shared_ptr<ExitCondition> ec = nullptr;
+        double max = 100;
+        double slew = defaults::slew;
+        TurnDirection direction = TurnDirection::AUTO;
+        bool thru = false;
+        bool async = false;
+    };
+    void turn(double target, TurnParams params = {});
+    void turn(Point target, TurnParams params = {});
 };
 }

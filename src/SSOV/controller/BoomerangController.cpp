@@ -1,22 +1,27 @@
-#include "SSOV/controller/PIDPointController.hpp"
-
-#include "SSOV/common/Math.hpp"
+#include "SSOV/controller/BoomerangController.hpp"
 
 #include <algorithm>
 
 namespace ssov {
-DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) {
+
+DriveSignal BoomerangController::compute(const Pose &current_pose, const Pose &target_pose, bool reverse, bool thru) {
     int dir = reverse ? -1 : 1;
-    double dx = target_point.x - current_pose.x;
-    double dy = target_point.y - current_pose.y;
-    double distance_error = sqrt(dx * dx + dy * dy);
+    double distance_error = distance(target_pose.to_point(), current_pose.to_point());
+    Point carrot_point;
+    if (!reverse) {
+        carrot_point = (target_pose - Point{distance_error * lead_pct, 0}).to_point();
+    } else {
+        carrot_point = (target_pose + Point{distance_error * lead_pct, 0}).to_point();
+    }
+    double dx = carrot_point.x - current_pose.x;
+    double dy = carrot_point.y - current_pose.y;
     double angle_error;
     if (!reverse) {
         angle_error = atan2(dy, dx) - current_pose.theta;
     } else {
         angle_error = atan2(-dy, -dx) - current_pose.theta;
     }
-    angle_error = norm_delta(angle_error);
+
     double lin_speed =
         (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
 
@@ -48,9 +53,10 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     return {lin_speed, 0, ang_speed};
 }
 
-void PIDPointController::reset() {
+void BoomerangController::reset() {
     linear_pid.reset();
     angular_pid.reset();
     can_reverse = false;
 }
+
 }

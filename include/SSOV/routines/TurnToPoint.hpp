@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SSOV/routines/Routine.hpp"
-#include "SSOV/controller/PointController.hpp"
+#include "SSOV/controller/TurnController.hpp"
 #include "SSOV/exit_condition/ExitCondition.hpp"
 #include "SSOV/localizer/Localizer.hpp"
 #include "SSOV/common/Math.hpp"
@@ -9,34 +9,34 @@
 
 namespace ssov {
 
-class MoveToPoint: public Routine {
+class TurnToPoint: public Routine {
     public:
     struct Params {
-        std::shared_ptr<PointController> controller;
+        std::shared_ptr<TurnController> controller;
         std::shared_ptr<ExitCondition> exit;
         std::shared_ptr<Localizer> localizer;
         double slew;
-        bool reverse;
+        TurnDirection direction;
         bool thru;
     };
     private:
-        std::shared_ptr<PointController> controller;
+        std::shared_ptr<TurnController> controller;
         std::shared_ptr<ExitCondition> exit;
         std::shared_ptr<Localizer> localizer;
         Point target;
         DriveSignal prev_speeds;
         double slew;
-        bool reverse;
+        TurnDirection direction;
         bool thru;
         bool done = false;
     public:
-        MoveToPoint(Point target, MoveToPoint::Params params, DriveSignal initial_speeds):
+        TurnToPoint(Point target, Params params, DriveSignal initial_speeds):
             target(target),
             controller(params.controller),
             exit(params.exit),
             localizer(params.localizer),
             slew(params.slew),
-            reverse(params.reverse),
+            direction(params.direction),
             thru(params.thru),
             prev_speeds(initial_speeds) {};
         void start() override {
@@ -48,11 +48,14 @@ class MoveToPoint: public Routine {
         }
         ChassisCommand update() {
             DriveSignal result;
-            done = exit->is_met(localizer->get_pose(), {target.x, target.y, localizer->get_pose().theta}, thru);
+            Pose current_pose = localizer->get_pose();
+            double target_heading = atan2(target.y - current_pose.y, target.x - current_pose.x);
+            done = exit->is_met(current_pose, {current_pose.x, current_pose.y, target_heading}, thru);
             if (done && !thru) {
                 result = {0, 0, 0};
             } else {
-                result = controller->compute(localizer->get_pose(), target, reverse, thru);
+                double turn_speed = controller->compute(current_pose.theta, target_heading, direction, thru);
+                result = {0, 0, turn_speed};
                 result.x = ssov::slew(result.x, prev_speeds.x, slew);
                 result.y = ssov::slew(result.y, prev_speeds.y, slew);
                 result.theta = ssov::slew(result.theta, prev_speeds.theta, slew);

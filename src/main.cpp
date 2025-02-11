@@ -106,11 +106,6 @@ void opcontrol() {
 		50,
 		10.7
 	};
-	ssov::PathTrajectory traj1(&path1, constraints);
-	ssov::PathTrajectory traj2(&path2, constraints);
-	ssov::PathTrajectory traj3(&path3, constraints);
-	ssov::PathTrajectory traj4(&path4, constraints);
-	ssov::CombinedTrajectory traj({&traj1, &traj2, &traj3, &traj4});
 	//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 	//	auto state = traj.at(i);
 	//	printf("%f, %f, %f, %f, %f\n", state.pose.x, state.pose.y, state.pose.theta, state.vel.x, state.vel.theta);
@@ -141,16 +136,16 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			for (double i = 0.0; i <= traj.duration(); i += 0.01) {
-				auto vel = odom->get_velocities();
-				auto pose = odom->get_pose();
-				auto state = traj.at(i);
-				auto speeds = ramsete->compute(pose, vel, state);
-				chassis->execute(speeds);
+			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
+				//auto vel = odom->get_velocities();
+				//auto pose = odom->get_pose();
+				//auto state = traj.at(i);
+				//auto speeds = ramsete->compute(pose, vel, state);
+				//chassis->execute(speeds);
 				//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
 				//fprintf(file, "%f, %f, %f, %f, %f\n", state.vel.x, state.vel.theta, vel.x, vel.y, vel.theta);
-				pros::delay(10);
-			}
+				//pros::delay(10);
+			//}
 			fclose(file);
 		}
 		if (master.get_digital_new_press(DIGITAL_B)) {

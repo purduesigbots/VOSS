@@ -11,9 +11,9 @@ namespace ssov {
 class PathTrajectory : public Trajectory{
     private:
         MotionProfile profile;
-        Path *path;
+        std::shared_ptr<Path> path;
     public:
-        PathTrajectory(Path *path, const TrajectoryConstraints& constraints);
+        PathTrajectory(std::shared_ptr<Path> path, const TrajectoryConstraints& constraints);
         TrajectoryState at(double t) override;
         double duration() override {
             return profile.duration();

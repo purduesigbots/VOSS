@@ -3,12 +3,13 @@
 namespace ssov {
     class AbstractTrackingWheel {
         protected:
-            AbstractTrackingWheel();
+            AbstractTrackingWheel(double tpi): tpi(tpi) {};
             double tpi;
             virtual double get_raw_position() = 0;
         public:
-            double get_dist_travelled();
-            void set_tpi(double new_tpi);
+            double get_dist_travelled() {
+                return get_raw_position() / tpi;
+            }
             virtual void reset() = 0;
     };
 }

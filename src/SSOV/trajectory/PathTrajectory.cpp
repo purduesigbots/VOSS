@@ -2,7 +2,7 @@
 
 namespace ssov {
 
-PathTrajectory::PathTrajectory(Path *path, const TrajectoryConstraints& constraints): path(path) {
+PathTrajectory::PathTrajectory(std::shared_ptr<Path> path, const TrajectoryConstraints& constraints): path(path) {
     auto path_samples = path->sample(0.25);
     std::vector<MotionState> profile_samples;
 
