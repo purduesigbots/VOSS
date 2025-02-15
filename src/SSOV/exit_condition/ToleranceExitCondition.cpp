@@ -5,7 +5,7 @@
 
 namespace ssov {
 
-bool ToleranceExitCondition::is_met(const Pose &current_pose, const Pose &target_pose, const bool &thru) {
+bool ToleranceExitCondition::is_met(const Pose &current_pose, const Pose &target_pose, bool thru) {
     double lin_error = distance(target_pose.to_point(), current_pose.to_point());
     double ang_error = norm_delta(target_pose.theta - current_pose.theta);
     if (lin_error < linear_tolerance && ang_error < angular_tolerance) {
@@ -16,7 +16,7 @@ bool ToleranceExitCondition::is_met(const Pose &current_pose, const Pose &target
         in_tolerance_time = 0;
     }
     prev_time = pros::c::millis();
-    return in_tolerance_time > tolerance_time;
+    return in_tolerance_time >= tolerance_time;
 }
 
 void ToleranceExitCondition::reset() {

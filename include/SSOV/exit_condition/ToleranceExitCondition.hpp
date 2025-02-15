@@ -19,7 +19,7 @@ class ToleranceExitCondition : public ExitCondition {
             linear_tolerance(linear_tolerance),
             angular_tolerance(angular_tolerance),
             tolerance_time(tolerance_time) {};
-        bool is_met(const Pose &current_pose, const Pose &target_pose, const bool &thru) override;
+        bool is_met(const Pose &current_pose, const Pose &target_pose, bool thru) override;
         void reset() override;
 };
 }

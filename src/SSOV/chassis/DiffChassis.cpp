@@ -20,7 +20,9 @@ DiffChassis::DiffChassis(std::initializer_list<int8_t> left_mtr_ports,
     chassis_task = pros::Task::create([this]() {
         this->task_fn();
     });
-    localizer->add_listener(chassis_task);
+    if (localizer) {
+        localizer->add_listener(chassis_task);
+    }
 }
 
 void DiffChassis::tank(double left_speed, double right_speed) {
