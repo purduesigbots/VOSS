@@ -1,17 +1,22 @@
 
 #include "VOSS/exit_conditions/ToleranceExitCondition.hpp"
+#include "VOSS/utils/debug.hpp"
 
 namespace voss::controller {
 
 bool ToleranceExitCondition::is_met(Pose pose, bool thru) {
+    bool exit = false;
     if (this->target_has_coordinate() && this->target_has_heading()) {
-        return ang_exit->is_met(pose, thru) && lin_exit->is_met(pose, thru);
+        exit = ang_exit->is_met(pose, thru) && lin_exit->is_met(pose, thru);
     } else if (this->target_has_coordinate()) {
-        return lin_exit->is_met(pose, thru);
+        exit = lin_exit->is_met(pose, thru);
     } else if (this->target_has_heading()) {
-        return ang_exit->is_met(pose, thru);
+        exit = ang_exit->is_met(pose, thru);
     }
-    return false;
+    if (get_debug() && exit) {
+        printf("Tolerance Condition Met\n");
+    }
+    return exit;
 }
 
 void ToleranceExitCondition::set_target(Pose target) {

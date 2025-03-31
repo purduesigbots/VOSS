@@ -13,6 +13,16 @@ AbstractChassis::AbstractChassis(controller_ptr default_controller, ec_ptr ec) {
     this->default_ec = std::move(ec);
 }
 
+void AbstractChassis::wait_until_done() const {
+    while (task_running) {
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
+    }
+}
+
+bool AbstractChassis::is_running() const {
+    return task_running;
+}
+
 void AbstractChassis::move_task(controller_ptr controller, ec_ptr ec,
                                 double max, voss::Flags flags) {
 
@@ -154,7 +164,7 @@ void AbstractChassis::turn_to(Point target, controller_ptr controller,
                               ec_ptr ec, double max, voss::Flags flags,
                               voss::AngularDirection direction) {
     while (this->task_running) {
-        pros::delay(10);
+        pros::delay(constants::MOTOR_UPDATE_DELAY);
     }
     this->task_running = true;
 

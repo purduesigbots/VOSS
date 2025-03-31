@@ -3,6 +3,7 @@
 #include "PIDController.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
+#include "VOSS/utils/debug.hpp"
 #include <cmath>
 
 namespace voss::controller {
@@ -23,18 +24,23 @@ BoomerangController::get_command(bool reverse, bool thru,
     Point current_pos = this->l->get_position();
 
     int dir = reverse ? -1 : 1;
-    Pose trueTarget;
     double dx = target.x - current_pos.x;
     double dy = target.y - current_pos.y;
 
     double distance_error = sqrt(dx * dx + dy * dy);
-    double at = target.theta.value();
+    double target_angle = target.theta.value();
 
-    this->carrotPoint = {this->target.x - distance_error * cos(at) * lead_pct,
-                         this->target.y - distance_error * sin(at) * lead_pct,
-                         target.theta};
-    dx = carrotPoint.x - current_pos.x;
-    dy = carrotPoint.y - current_pos.y;
+    Point carrot_point;
+    if (!reverse) {
+        carrot_point = {target.x - distance_error * cos(target_angle) * lead_pct,
+                        target.y - distance_error * sin(target_angle) * lead_pct};
+    } else {
+        carrot_point = {target.x + distance_error * cos(target_angle) * lead_pct,
+                        target.y + distance_error * sin(target_angle) * lead_pct};
+    }
+
+    dx = carrot_point.x - current_pos.x;
+    dy = carrot_point.y - current_pos.y;
     double current_angle = this->l->get_orientation_rad();
 
     double angle_error;
@@ -48,42 +54,57 @@ BoomerangController::get_command(bool reverse, bool thru,
 
     double lin_speed = linear_pid.update(distance_error);
     if (thru) {
-        lin_speed = copysign(fmax(fabs(lin_speed), this->min_vel), lin_speed);
+        if (thru_behavior == ThruBehavior::FULL_SPEED) {
+            lin_speed = 100;
+        } else {
+            lin_speed = fmax(lin_speed, min_vel);
+        }
+    }
+    if (cosine_scaling == CosineScaling::ALL_THE_TIME || distance_error < min_error) {
+        lin_speed *= cos(angle_error);
     }
     lin_speed *= dir;
-
-    double pose_error = voss::norm_delta(target.theta.value() - current_angle);
 
     double ang_speed;
     if (distance_error < min_error) {
         this->can_reverse = true;
+        double pose_error = voss::norm_delta(target_angle - current_angle);
 
-        ang_speed = angular_pid.update(pose_error);
-    } else if (distance_error < 2 * min_error) {
-        double scale_factor = (distance_error - min_error) / min_error;
-        double scaled_angle_error = voss::norm_delta(
-            scale_factor * angle_error + (1 - scale_factor) * pose_error);
-
-        ang_speed = angular_pid.update(scaled_angle_error);
+        if (min_err_behavior == MinErrBehavior::TARGET_HEADING) {
+            ang_speed = angular_pid.update(pose_error);
+        } else {
+            double min_err_2 = min_error / 2;
+            double scale_factor = (distance_error - min_err_2) / min_err_2;
+            scale_factor = fmax(0.0, scale_factor);
+            double scaled_angle_error = norm_delta(scale_factor * angle_error + (1 - scale_factor) * pose_error);
+            ang_speed = angular_pid.update(scaled_angle_error);
+        }
     } else {
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
                 angle_error - (angle_error / fabs(angle_error)) * M_PI;
-            lin_speed = -lin_speed;
+            if (cosine_scaling != CosineScaling::ALL_THE_TIME) {
+                lin_speed = -lin_speed;
+            }
         }
 
         ang_speed = angular_pid.update(angle_error);
     }
 
-    lin_speed *= cos(angle_error);
+    lin_speed = std::clamp(lin_speed, -100.0, 100.0);
+    if (enable_overturn) {
+        ang_speed = std::clamp(ang_speed, -100.0, 100.0);
+        lin_speed = std::clamp(lin_speed, -100 + fabs(ang_speed), 100 - fabs(ang_speed));
+    }
 
-    lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
+    if (get_debug()) {
+        printf("dist_err: %.2f, ang_err: %.2f, lin_speed: %.2f, ang_speed: %.2f\n", distance_error, angle_error, lin_speed, ang_speed);
+    }
 
     if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
-                dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
-                dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+                lin_speed - ang_speed, lin_speed + ang_speed}};
         } else {
             return chassis::Stop{};
         }
@@ -146,6 +167,22 @@ BoomerangController::modify_lead_pct(double lead_pct) {
     this->p = pid_mod;
 
     return this->p;
+}
+
+void BoomerangController::set_thru_behavior(ThruBehavior thru_behavior) {
+    this->thru_behavior = thru_behavior;
+}
+
+void BoomerangController::set_cosine_scaling(CosineScaling cosine_scaling) {
+    this->cosine_scaling = cosine_scaling;
+}
+
+void BoomerangController::set_min_err_behavior(MinErrBehavior min_err_behavior) {
+    this->min_err_behavior = min_err_behavior;
+}
+
+void BoomerangController::set_overturn(bool overturn) {
+    enable_overturn = overturn;
 }
 
 } // namespace voss::controller
