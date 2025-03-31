@@ -98,7 +98,7 @@ BoomerangController::get_command(bool reverse, bool thru,
     }
 
     if (get_debug()) {
-        printf("dist_err: %.2f, ang_err: %.2f, lin_speed: %.2f, ang_speed: %.2f\n", distance_error, angle_error, lin_speed, ang_speed);
+        printf("carrot point: %.2f, %.2f, dist_err: %.2f, ang_err: %.2f, lin_speed: %.2f, ang_speed: %.2f\n", carrot_point.x, carrot_point.y, angle_error, lin_speed, ang_speed);
     }
 
     if (ec->is_met(this->l->get_pose(), thru)) {

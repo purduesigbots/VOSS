@@ -141,7 +141,9 @@ void opcontrol() {
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 0});
-            chassis.move({36, 36, 90}, boomerang, 70);
+            voss::enable_debug();
+            chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
+            voss::disable_debug();
         }
 
         pros::lcd::clear_line(1);
