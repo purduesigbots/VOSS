@@ -79,7 +79,8 @@ void TrackingWheelLocalizer::update() {
         local_y = delta_middle;
     }
 
-    double p = -M_PI_4 + this->pose.theta - delta_angle / 2.0; // global angle
+    double p =
+        (0 * -M_PI_4) + this->pose.theta - delta_angle / 2.0; // global angle
 
     // convert to absolute displacement
     this->real_pose.x += cos(p) * local_x - sin(p) * local_y;
@@ -123,8 +124,10 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
         double h = this->pose.theta;
         this->pose = AtomicPose{pose.x, pose.y, h};
     }
-    this->real_pose.x = this->pose.x - horizontal_offset * cos(this->pose.theta);
-    this->real_pose.y = this->pose.y - horizontal_offset * sin(this->pose.theta);
+    this->real_pose.x =
+        this->pose.x - horizontal_offset * cos(this->pose.theta);
+    this->real_pose.y =
+        this->pose.y - horizontal_offset * sin(this->pose.theta);
     this->real_pose.theta = this->pose.theta.load();
     this->prev_pose = this->real_pose;
     if (!this->imu.empty() && pose.theta.has_value()) {
