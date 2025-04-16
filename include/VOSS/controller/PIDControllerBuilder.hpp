@@ -9,10 +9,10 @@ class PIDControllerBuilder {
     controller::PIDController ctrl;
 
   public:
-    PIDControllerBuilder(std::shared_ptr<localizer::AbstractLocalizer> l);
+    PIDControllerBuilder(std::shared_ptr<voss::localizer::AbstractLocalizer> l);
 
     static PIDControllerBuilder
-    new_builder(std::shared_ptr<localizer::AbstractLocalizer> l);
+    new_builder(std::shared_ptr<voss::localizer::AbstractLocalizer> l);
 
     static PIDControllerBuilder from(PIDController pid);
 

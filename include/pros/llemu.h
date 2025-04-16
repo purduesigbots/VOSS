@@ -14,7 +14,7 @@
 /**   included into api.h.                                                   **/
 /******************************************************************************/
 #ifdef _PROS_INCLUDE_LIBLVGL_LLEMU_H
-#include "liblvgl/llemu.h"
+// #include "liblvgl/llemu.h"
 #endif
 
 #ifdef __cplusplus

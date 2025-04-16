@@ -35,7 +35,8 @@ class TrackingWheelLocalizerBuilder {
                                                        int adi_port);
     TrackingWheelLocalizerBuilder& with_middle_rotation(int port);
     TrackingWheelLocalizerBuilder& with_middle_motor(int port);
-    TrackingWheelLocalizerBuilder& with_left_right_tpi(double tpi);
+    TrackingWheelLocalizerBuilder& with_left_tpi(double tpi);
+    TrackingWheelLocalizerBuilder& with_right_tpi(double tpi);
     TrackingWheelLocalizerBuilder& with_middle_tpi(double tpi);
     TrackingWheelLocalizerBuilder& with_track_width(double track_width);
     TrackingWheelLocalizerBuilder& with_middle_dist(double middle_dist);
