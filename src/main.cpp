@@ -1,9 +1,11 @@
 #include "main.h"
+#include "pros/motors.h"
 #include "VOSS/api.hpp"
 #include "VOSS/localizer/IMELocalizerBuilder.hpp"
 
 #define LEFT_DRIVE_MOTOR_PORTS {-10, -9, 8, -7, 6}
 #define RIGHT_DRIVE_MOTOR_PORTS {20, -19, 18, -17, 16}
+// #define RIGHT_DRIVE_MOTOR_PORTS {20, 19, -18, 17, -16}
 
 #define ADI_EXPANDER_PORT (11)
 #define MIDDLE_TRACKER_PORT ('A') // and 'B'
@@ -21,7 +23,7 @@ std::shared_ptr<voss::localizer::TrackingWheelLocalizer> odom =
         .with_left_tpi(416.0625)
         .with_right_tpi(415.604166667)
         // .with_right_tpi(408.479084953)
-        .with_track_width(3.495)
+        .with_track_width(3.495 * 366.289 / 360.0 * 359.789 / 360.0 * 360.556 / 360.0)
         .with_middle_dist(-2.8)
         .build();
 
@@ -38,14 +40,11 @@ std::shared_ptr<voss::controller::PIDController> pid =
         .with_linear_constants(12, 0, 90)
         .with_angular_constants(180, 0, 1500)
         .with_min_error(5)
-        .with_min_vel_for_thru(50)
         .build();
 
 std::shared_ptr<voss::controller::ExitConditions> ec =
     voss::controller::ExitConditions::new_conditions()
         .add_settle(100, 0.25, 100)
-        .add_timeout(5000)
-        .add_thru_smoothness(8)
         .build();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -76,24 +75,82 @@ inline void print_odom() {
               << "R: " << odom->right_tracking_wheel->get_dist_travelled()
               << " : " << odom->right_tracking_wheel->get_raw_position() << "\n"
               << std::endl;
+    return;
+    std::cout << pros::millis() << ","
+              << odom->middle_tracking_wheel->get_raw_position() << ","
+              << odom->left_tracking_wheel->get_raw_position() << ","
+              << odom->right_tracking_wheel->get_raw_position() << ","
+              << p.theta.value() << std::endl;
 }
 
 void initialize() {
     odom->begin_localization();
     pros::Task([] {
         while (true) {
-            if (master.get_digital_new_press(DIGITAL_UP)) {
+            if (false || master.get_digital_new_press(DIGITAL_UP)) {
                 print_odom();
             }
-            pros::delay(50);
+            pros::delay(10);
         }
     });
 }
 
+inline bool auton_wait() {
+    chassis.arcade(0, 0);
+    while (!master.get_digital(DIGITAL_X) && !master.get_digital(DIGITAL_B)) {
+        pros::delay(10);
+    }
+    return master.get_digital(DIGITAL_B);
+}
+
+void autonomous() {
+    std::cout << "Starting\n";
+    print_odom();
+    chassis.move(24, 25);
+    std::cout << "After first forward\n";
+    print_odom();
+    auton_wait();
+    chassis.turn(-90, 25);
+    std::cout << "After first turn\n";
+    print_odom();
+    auton_wait();
+
+    chassis.move(24, 25);
+    std::cout << "After second forward\n";
+    print_odom();
+    auton_wait();
+    chassis.turn(-180, 25);
+    std::cout << "After second turn\n";
+    print_odom();
+    auton_wait();
+
+    chassis.move(24, 25);
+    std::cout << "After third forward\n";
+    print_odom();
+    auton_wait();
+    chassis.turn(-270, 25);
+    std::cout << "After third turn\n";
+    print_odom();
+    auton_wait();
+
+    chassis.move(24, 25);
+    std::cout << "After fourth forward\n";
+    print_odom();
+    auton_wait();
+    chassis.turn(0, 25);
+    std::cout << "After fourth turn\n";
+    print_odom();
+}
+
 void opcontrol() {
+    chassis.set_brake_mode(MOTOR_BRAKE_BRAKE);
     while (true) {
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
+
+        if (master.get_digital_new_press(DIGITAL_X)) {
+            autonomous();
+        }
 
         pros::delay(10);
     }

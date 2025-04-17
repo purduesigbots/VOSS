@@ -18,8 +18,8 @@ class AbstractLocalizer {
     virtual void update() = 0;
     void begin_localization();
 
-    virtual void set_pose(Pose pose);
-    virtual void set_pose(double x, double y, double theta);
+    virtual void set_pose(Pose pose) = 0;
+    virtual void set_pose(double x, double y, double theta) = 0;
 
     Pose get_pose();
     double get_x();

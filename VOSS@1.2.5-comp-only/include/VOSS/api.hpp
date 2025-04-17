@@ -32,8 +32,6 @@
 #include "localizer/TrackingWheelLocalizer.hpp"
 #include "localizer/TrackingWheelLocalizerBuilder.hpp"
 
-#include "selector/Selector.hpp"
-
 #include "utils/angle.hpp"
 #include "utils/flags.hpp"
 #include "utils/Point.hpp"
