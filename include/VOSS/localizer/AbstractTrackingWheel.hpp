@@ -12,6 +12,7 @@ class AbstractTrackingWheel {
   public:
     virtual double get_raw_position() = 0;
     double get_dist_travelled();
+    double get_dist_travelled(double delta_ticks);
     double get_tpi() {
         return tpi;
     }

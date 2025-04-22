@@ -11,59 +11,138 @@ TrackingWheelLocalizer::TrackingWheelLocalizer(
     std::unique_ptr<AbstractTrackingWheel> left,
     std::unique_ptr<AbstractTrackingWheel> right,
     std::unique_ptr<AbstractTrackingWheel> middle,
-    std::vector<std::unique_ptr<pros::IMU>> imu, double left_right_dist,
-    double middle_dist, Pose offset)
+    std::vector<std::unique_ptr<pros::IMU>> imu, double left_distance,
+    double right_distance, double middle_dist, Pose offset)
     : AbstractLocalizer(), left_tracking_wheel(std::move(left)),
       right_tracking_wheel(std::move(right)),
       middle_tracking_wheel(std::move(middle)), imu(std::move(imu)),
-      left_right_dist(left_right_dist), middle_dist(middle_dist),
-      prev_left(0.0), prev_right(0.0), prev_middle(0.0),
-      prev_pose(AtomicPose{0.0, 0.0, 0.0}),
+      left_distance(left_distance), right_distance(right_distance),
+      middle_dist(middle_dist), prev_left(0.0), prev_right(0.0),
+      prev_middle(0.0),
       offset({offset.x, offset.y, offset.theta.value_or(0.0)}) {
 }
 
 void TrackingWheelLocalizer::update() {
+
+    /*
+    delta_fwd = (R * left_distance - L * right_distance) / (left_distance -
+    right_distance)
+     delta_str: delta_strafe = M - middle_distance * delta_theta
+
+    delta_theta
+
+     theta = (R - L) / (left_distance - right_distance)
+
+     r_0 = delta_fwd / delta_theta
+     r_1 = delta_str / delta_theta
+
+     delta_x_ref = r_0 * sin(delta_theta) - r_1 * (1.0 - cos(delta_theta))
+     delta_y_ref = r_1 * sin(delta_theta) + r_0 * (1.0 - cos(delta_theta))
+
+     cur_x = prev_x + delta_x_ref * cos(cur_theta) - delta_y_ref *
+    sin(cur_theta)
+     cur_y = prev_y + delta_y_ref * cos(cur_theta) + delta_x_ref *
+    sin(cur_theta)
+     */
+
     double left_pos = left_tracking_wheel->get_raw_position();
     double right_pos = right_tracking_wheel->get_raw_position();
     double middle_pos = middle_tracking_wheel->get_raw_position();
-    double track_width = 2.0 * left_right_dist;
 
-    double delta_left = 0.0;
-    delta_left = (left_pos - prev_left) / left_tracking_wheel->get_tpi();
-
-    double delta_right = 0.0;
-    delta_right = (right_pos - prev_right) / right_tracking_wheel->get_tpi();
-
-    double delta_middle = 0.0;
-    delta_middle =
-        (middle_pos - prev_middle) / middle_tracking_wheel->get_tpi();
-
-    double delta_angle = 0.0;
-    delta_angle = (delta_right - delta_left) / track_width;
-    this->pose.theta += delta_angle;
+    double delta_left =
+        left_tracking_wheel->get_dist_travelled(left_pos - prev_left);
+    double delta_right =
+        right_tracking_wheel->get_dist_travelled(right_pos - prev_right);
+    double delta_middle =
+        middle_tracking_wheel->get_dist_travelled(middle_pos - prev_middle);
 
     prev_left = left_pos;
     prev_right = right_pos;
     prev_middle = middle_pos;
-    prev_pose = pose;
 
-    double local_x;
-    double local_y;
+    double delta_fwd =
+        (delta_right * left_distance - delta_left * right_distance) /
+        (left_distance - right_distance);
 
-    if (delta_angle) {
-        double i = sin(delta_angle / 2.0) * 2.0;
-        local_x = (delta_right / delta_angle - left_right_dist) * i;
-        local_y = (delta_middle / delta_angle + middle_dist) * i;
+    double delta_theta =
+        (delta_right - delta_left) / (left_distance - right_distance);
+
+    //    double delta_theta = cur_theta - this->pose.theta;
+    double delta_str = delta_middle - middle_dist * delta_theta;
+
+    double r_0 = delta_fwd / delta_theta;
+    double r_1 = delta_str / delta_theta;
+    double delta_x_ref, delta_y_ref;
+    if (delta_theta != 0.0) {
+        delta_x_ref = r_0 * sin(delta_theta) - r_1 * (1.0 - cos(delta_theta));
+        delta_y_ref = r_1 * sin(delta_theta) + r_0 * (1.0 - cos(delta_theta));
     } else {
-        local_x = delta_right;
-        local_y = delta_middle;
+        delta_x_ref = delta_fwd;
+        delta_y_ref = delta_str;
     }
 
-    double p = this->pose.theta - delta_angle / 2.0; // global angle
+    // update current pose
+    this->pose.theta += delta_theta;
+//    this->pose.theta = voss::norm(this->pose.theta);
+    double cur_theta = this->pose.theta;
+    this->pose.x += delta_x_ref * cos(cur_theta) - delta_y_ref * sin(cur_theta);
+    this->pose.y += delta_y_ref * cos(cur_theta) + delta_x_ref * sin(cur_theta);
 
-    // convert to absolute displacement
-    this->pose.x += cos(p) * local_x - sin(p) * local_y;
-    this->pose.y += sin(p) * local_x + cos(p) * local_y;
+    // if(left_tracking_wheel) {
+    //        left_pos = left_tracking_wheel->get_raw_position();
+    //    }
+    //    if(right_tracking_wheel) {
+    //        right_pos = right_tracking_wheel->get_raw_position();
+    //    }
+    //    if(middle_tracking_wheel) {
+    //        middle_pos = middle_tracking_wheel->get_raw_position();
+    //    }
+    //    if(!left_tracking_wheel || !right_tracking_wheel && !imu.empty()) {
+    //        std::accumulate(imu.begin(), imu.end(), 0.0,
+    //            [](double acc, std::unique_ptr<pros::IMU>& imu) {
+    //                return acc + -imu->get_rotation();
+    //            });
+    //    }
+
+    //    double track_width = 2.0 * left_right_dist;
+    //
+    //    double delta_left = 0.0;
+    //    delta_left = (left_pos - prev_left) / left_tracking_wheel->get_tpi();
+    //
+    //    double delta_right = 0.0;
+    //    delta_right = (right_pos - prev_right) /
+    //    right_tracking_wheel->get_tpi();
+    //
+    //    double delta_middle = 0.0;
+    //    delta_middle =
+    //        (middle_pos - prev_middle) / middle_tracking_wheel->get_tpi();
+    //
+    //    double delta_angle = 0.0;
+    //    delta_angle = (delta_right - delta_left) / track_width;
+    //    this->pose.theta += delta_angle;
+    //
+    //    prev_left = left_pos;
+    //    prev_right = right_pos;
+    //    prev_middle = middle_pos;
+    //    prev_pose = pose;
+    //
+    //    double local_x;
+    //    double local_y;
+    //
+    //    if (delta_angle) {
+    //        double i = sin(delta_angle / 2.0) * 2.0;
+    //        local_x = (delta_right / delta_angle - left_right_dist) * i;
+    //        local_y = (delta_middle / delta_angle + middle_dist) * i;
+    //    } else {
+    //        local_x = delta_right;
+    //        local_y = delta_middle;
+    //    }
+    //
+    //    double p = this->pose.theta - delta_angle / 2.0; // global angle
+    //
+    //    // convert to absolute displacement
+    //    this->pose.x += cos(p) * local_x - sin(p) * local_y;
+    //    this->pose.y += sin(p) * local_x + cos(p) * local_y;
     /*double left = left_tracking_wheel->get_raw_position();
     double right = right_tracking_wheel->get_raw_position();
     double middle = middle_tracking_wheel->get_raw_position();
@@ -180,7 +259,6 @@ void TrackingWheelLocalizer::set_pose(Pose pose) {
         double h = this->pose.theta;
         this->pose = AtomicPose{pose.x, pose.y, h};
     }
-    this->prev_pose = this->pose;
 }
 
 void TrackingWheelLocalizer::set_pose(double x, double y, double theta) {

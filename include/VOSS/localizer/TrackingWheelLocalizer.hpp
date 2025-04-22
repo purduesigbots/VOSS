@@ -11,9 +11,8 @@ namespace voss::localizer {
 class TrackingWheelLocalizer : public AbstractLocalizer {
   protected:
     std::atomic<double> prev_left, prev_right, prev_middle;
-    AtomicPose prev_pose;
 
-    std::atomic<double> left_right_dist, middle_dist;
+    std::atomic<double> left_distance, right_distance, middle_dist;
     std::vector<std::unique_ptr<pros::IMU>> imu;
     Pose offset = {0, 0, 0.0};
     std::atomic<double> horizontal_offset;
@@ -23,7 +22,7 @@ class TrackingWheelLocalizer : public AbstractLocalizer {
                            std::unique_ptr<AbstractTrackingWheel> right,
                            std::unique_ptr<AbstractTrackingWheel> middle,
                            std::vector<std::unique_ptr<pros::IMU>> imu,
-                           double left_right_dist, double middle_dist,
+                           double left_distance, double right_distance, double middle_dist,
                            Pose offset);
     void update() override;
     void calibrate() override;

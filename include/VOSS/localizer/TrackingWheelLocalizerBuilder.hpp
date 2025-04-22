@@ -6,9 +6,10 @@ namespace voss::localizer {
 
 class TrackingWheelLocalizerBuilder {
   private:
-    double left_right_dist;
     double middle_dist;
     double horizontal_offset;
+    double left_distance;
+    double right_distance;
     std::unique_ptr<AbstractTrackingWheel> left_tracking_wheel;
     std::unique_ptr<AbstractTrackingWheel> right_tracking_wheel;
     std::unique_ptr<AbstractTrackingWheel> middle_tracking_wheel;
@@ -39,9 +40,11 @@ class TrackingWheelLocalizerBuilder {
     TrackingWheelLocalizerBuilder& with_right_tpi(double tpi);
     TrackingWheelLocalizerBuilder& with_middle_tpi(double tpi);
     TrackingWheelLocalizerBuilder& with_track_width(double track_width);
+    TrackingWheelLocalizerBuilder& with_left_right_dist(double left_dist,
+                                                        double right_dist);
     TrackingWheelLocalizerBuilder& with_middle_dist(double middle_dist);
-    TrackingWheelLocalizerBuilder& with_imu(uint8_t port);
-    TrackingWheelLocalizerBuilder&
+    [[deprecated("This version does not support imu cuz im lazy")]]TrackingWheelLocalizerBuilder& with_imu(uint8_t port);
+    [[deprecated("This version does not support imu cuz im lazy")]]TrackingWheelLocalizerBuilder&
     with_imus(std::initializer_list<uint8_t> ports);
     TrackingWheelLocalizerBuilder&
     with_horizontal_offset(double horizontal_offset);
