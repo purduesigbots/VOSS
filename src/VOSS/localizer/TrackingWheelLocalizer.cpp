@@ -70,39 +70,33 @@ void TrackingWheelLocalizer::update() {
     //    double delta_theta = cur_theta - this->pose.theta;
     double delta_str = delta_middle - middle_dist * delta_theta;
 
-    double r_0 = delta_fwd / delta_theta;
-    double r_1 = delta_str / delta_theta;
+
     double delta_x_ref, delta_y_ref;
-    if (delta_theta != 0.0) {
-        delta_x_ref = r_0 * sin(delta_theta) - r_1 * (1.0 - cos(delta_theta));
-        delta_y_ref = r_1 * sin(delta_theta) + r_0 * (1.0 - cos(delta_theta));
+    static constexpr double epsilon = 1e-6;
+    if (std::abs(delta_theta) > epsilon) {
+        double r_0 = delta_fwd / delta_theta;
+        double r_1 = delta_str / delta_theta;
+
+        double sin_theta = sin(delta_theta);
+        double cos_theta = cos(delta_theta);
+
+
+        delta_x_ref = r_0 * sin_theta - r_1 * (1.0 - cos_theta);
+        delta_y_ref = r_1 * sin_theta + r_0 * (1.0 - cos_theta);
     } else {
         delta_x_ref = delta_fwd;
         delta_y_ref = delta_str;
     }
 
-    // update current pose
-    this->pose.theta += delta_theta;
-//    this->pose.theta = voss::norm(this->pose.theta);
-    double cur_theta = this->pose.theta;
-    this->pose.x += delta_x_ref * cos(cur_theta) - delta_y_ref * sin(cur_theta);
-    this->pose.y += delta_y_ref * cos(cur_theta) + delta_x_ref * sin(cur_theta);
 
-    // if(left_tracking_wheel) {
-    //        left_pos = left_tracking_wheel->get_raw_position();
-    //    }
-    //    if(right_tracking_wheel) {
-    //        right_pos = right_tracking_wheel->get_raw_position();
-    //    }
-    //    if(middle_tracking_wheel) {
-    //        middle_pos = middle_tracking_wheel->get_raw_position();
-    //    }
-    //    if(!left_tracking_wheel || !right_tracking_wheel && !imu.empty()) {
-    //        std::accumulate(imu.begin(), imu.end(), 0.0,
-    //            [](double acc, std::unique_ptr<pros::IMU>& imu) {
-    //                return acc + -imu->get_rotation();
-    //            });
-    //    }
+
+    double prev_theta = this->pose.theta;
+    this->pose.theta += delta_theta;
+    double mid_theta = prev_theta + delta_theta / 2.0;
+    // update current pose
+    this->pose.x += delta_x_ref * cos(mid_theta) - delta_y_ref * sin(mid_theta);
+    this->pose.y += delta_y_ref * cos(mid_theta) + delta_x_ref * sin(mid_theta);
+
 
     //    double track_width = 2.0 * left_right_dist;
     //
