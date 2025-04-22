@@ -31,6 +31,7 @@ std::shared_ptr<voss::localizer::TrackingWheelLocalizer> odom =
         .with_right_tpi(tpi)
         .with_left_right_dist(2.1, -2.1)
         .with_middle_dist(-2.8)
+        .with_imu(1)
         .build();
 
 /*std::shared_ptr<voss::localizer::IMELocalizer> odom =

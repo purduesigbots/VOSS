@@ -131,17 +131,18 @@ TrackingWheelLocalizerBuilder::with_middle_dist(double middle_dist) {
 
 TrackingWheelLocalizerBuilder&
 TrackingWheelLocalizerBuilder::with_imu(uint8_t port) {
-    imu.push_back(std::make_unique<pros::IMU>(port));
+//    imu.push_back(std::make_unique<pros::IMU>(port));
+    imu = std::make_shared<pros::IMU>(port);
     return *this;
 }
 
-TrackingWheelLocalizerBuilder&
-TrackingWheelLocalizerBuilder::with_imus(std::initializer_list<uint8_t> ports) {
-    for (auto port : ports) {
-        imu.push_back(std::make_unique<pros::IMU>(port));
-    }
-    return *this;
-}
+//TrackingWheelLocalizerBuilder&
+//TrackingWheelLocalizerBuilder::with_imus(std::initializer_list<uint8_t> ports) {
+//    for (auto port : ports) {
+//        imu.push_back(std::make_unique<pros::IMU>(port));
+//    }
+//    return *this;
+//}
 
 TrackingWheelLocalizerBuilder&
 TrackingWheelLocalizerBuilder::with_offset(Pose offset) {
