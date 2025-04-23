@@ -1,5 +1,7 @@
 #include "VOSS/localizer/TrackingWheelLocalizer.hpp"
 
+#include "pros/misc.h"
+#include "pros/misc.hpp"
 #include "VOSS/constants.hpp"
 #include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/math.hpp"
@@ -22,10 +24,54 @@ TrackingWheelLocalizer::TrackingWheelLocalizer(
       offset({offset.x, offset.y, offset.theta.value_or(0.0)}) {
 }
 
+static double left_max, right_max, middle_max;
+static double left_min, right_min, middle_min;
+
+auto master = pros::Controller(pros::E_CONTROLLER_MASTER);
+
 void TrackingWheelLocalizer::update() {
     double left_pos = left_tracking_wheel->get_raw_position();
     double right_pos = right_tracking_wheel->get_raw_position();
     double middle_pos = middle_tracking_wheel->get_raw_position();
+
+    if (left_pos > left_max) {
+        left_max = left_pos;
+    } else if (left_pos < left_min) {
+        left_min = left_pos;
+    }
+    if (right_pos > right_max) {
+        right_max = right_pos;
+    } else if (right_pos < right_min) {
+        right_min = right_pos;
+    }
+    if (middle_pos > middle_max) {
+        middle_max = middle_pos;
+    } else if (middle_pos < middle_min) {
+        middle_min = middle_pos;
+    }
+
+    if (std::abs(left_pos) > 1E6) {
+        std::cout << "left_pos above 1E6: " << left_pos << std::endl;
+        left_pos = prev_left;
+    }
+    if (std::abs(right_pos) > 1E6) {
+        std::cout << "right_pos above 1E6: " << right_pos << std::endl;
+        right_pos = prev_right;
+    }
+    if (std::abs(middle_pos) > 1E6) {
+        std::cout << "middle_pos above 1E6: " << middle_pos << std::endl;
+        middle_pos = prev_middle;
+    }
+
+    if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
+        std::cout << "left max: " << left_max << " left min: " << left_min
+                  << std::endl
+                  << "right max: " << right_max << " right min: " << right_min
+                  << std::endl
+                  << "middle max: " << middle_max
+                  << " middle min: " << middle_min << std::endl;
+    }
+
     double track_width = 2.0 * left_right_dist;
 
     double delta_left = 0.0;

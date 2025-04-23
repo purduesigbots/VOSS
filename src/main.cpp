@@ -3,28 +3,24 @@
 #include "VOSS/api.hpp"
 #include "VOSS/localizer/IMELocalizerBuilder.hpp"
 
-#define LEFT_DRIVE_MOTOR_PORTS {-10, -9, 8, -7, 6}
+#define LEFT_DRIVE_MOTOR_PORTS {-1, 3, -4, -5, 6}
 #define RIGHT_DRIVE_MOTOR_PORTS {20, -19, 18, -17, 16}
-// #define RIGHT_DRIVE_MOTOR_PORTS {20, 19, -18, 17, -16}
 
-#define ADI_EXPANDER_PORT (11)
-#define MIDDLE_TRACKER_PORT ('A') // and 'B'
-#define LEFT_TRACKER_PORT ('C')   // and 'D'
-#define RIGHT_TRACKER_PORT ('E')  // and 'F'
+#define ADI_EXPANDER_PORT (13)
+#define MIDDLE_TRACKER_PORT ('C') // and 'D'
+#define LEFT_TRACKER_PORT ('E')   // and 'F'
+#define RIGHT_TRACKER_PORT ('A')  // and 'B'
 
 std::shared_ptr<voss::localizer::TrackingWheelLocalizer> odom =
     voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
         .with_middle_encoder(ADI_EXPANDER_PORT, MIDDLE_TRACKER_PORT)
         .with_left_encoder(ADI_EXPANDER_PORT, LEFT_TRACKER_PORT)
         .with_right_encoder(ADI_EXPANDER_PORT, RIGHT_TRACKER_PORT)
-        // .with_middle_tpi(419.44790793)
-        .with_middle_tpi(415.874775083)
-        // .with_left_tpi(415.874775083)
-        .with_left_tpi(416.0625)
-        .with_right_tpi(415.604166667)
-        // .with_right_tpi(408.479084953)
-        .with_track_width(3.495 * 366.289 / 360.0 * 359.789 / 360.0 * 360.556 / 360.0)
-        .with_middle_dist(-2.8)
+        .with_middle_tpi(424.958333333)
+        .with_left_tpi(420.25)
+        .with_right_tpi(419.416666667)
+        .with_track_width(4.21362825311)
+        .with_middle_dist(-1.125)
         .build();
 
 /*std::shared_ptr<voss::localizer::IMELocalizer> odom =
@@ -63,6 +59,9 @@ inline pros::adi::Encoder right_encoder({ADI_EXPANDER_PORT, RIGHT_TRACKER_PORT,
 
 inline void print_odom() {
     auto p = odom->get_pose();
+    /*std::cout << odom->left_tracking_wheel->get_raw_position() << ","
+              << odom->right_tracking_wheel->get_raw_position() << std::endl;
+    return;*/
     std::cout << "X: " << p.x << "\n"
               << "Y: " << p.y << "\n"
               << "A: " << voss::to_degrees(p.theta.value()) << "\n"
@@ -143,7 +142,7 @@ void autonomous() {
 }
 
 void opcontrol() {
-    chassis.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    chassis.set_brake_mode(MOTOR_BRAKE_COAST);
     while (true) {
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
