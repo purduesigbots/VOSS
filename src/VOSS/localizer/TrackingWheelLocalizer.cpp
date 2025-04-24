@@ -31,7 +31,8 @@ auto master = pros::Controller(pros::E_CONTROLLER_MASTER);
 
 void TrackingWheelLocalizer::update() {
     double left_pos = left_tracking_wheel->get_raw_position();
-    double right_pos = right_tracking_wheel->get_raw_position();
+    double right_pos =
+        right_tracking_wheel ? right_tracking_wheel->get_raw_position() : 0;
     double middle_pos = middle_tracking_wheel->get_raw_position();
 
     if (left_pos > left_max) {
@@ -39,11 +40,11 @@ void TrackingWheelLocalizer::update() {
     } else if (left_pos < left_min) {
         left_min = left_pos;
     }
-    if (right_pos > right_max) {
-        right_max = right_pos;
-    } else if (right_pos < right_min) {
-        right_min = right_pos;
-    }
+    // if (right_pos > right_max) {
+    // right_max = right_pos;
+    // } else if (right_pos < right_min) {
+    // right_min = right_pos;
+    // }
     if (middle_pos > middle_max) {
         middle_max = middle_pos;
     } else if (middle_pos < middle_min) {
@@ -54,22 +55,23 @@ void TrackingWheelLocalizer::update() {
         std::cout << "left_pos above 1E6: " << left_pos << std::endl;
         left_pos = prev_left;
     }
-    if (std::abs(right_pos) > 1E6) {
-        std::cout << "right_pos above 1E6: " << right_pos << std::endl;
-        right_pos = prev_right;
-    }
+    // if (std::abs(right_pos) > 1E6) {
+    // std::cout << "right_pos above 1E6: " << right_pos << std::endl;
+    // right_pos = prev_right;
+    // }
     if (std::abs(middle_pos) > 1E6) {
         std::cout << "middle_pos above 1E6: " << middle_pos << std::endl;
         middle_pos = prev_middle;
     }
 
     if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
-        std::cout << "left max: " << left_max << " left min: " << left_min
-                  << std::endl
-                  << "right max: " << right_max << " right min: " << right_min
-                  << std::endl
-                  << "middle max: " << middle_max
-                  << " middle min: " << middle_min << std::endl;
+        std::cout
+            << "left max: " << left_max << " left min: " << left_min
+            << std::endl
+            // << "right max: " << right_max << " right min: " << right_min
+            // << std::endl
+            << "middle max: " << middle_max << " middle min: " << middle_min
+            << std::endl;
     }
 
     double track_width = 2.0 * left_right_dist;
@@ -77,19 +79,40 @@ void TrackingWheelLocalizer::update() {
     double delta_left = 0.0;
     delta_left = (left_pos - prev_left) / left_tracking_wheel->get_tpi();
 
-    double delta_right = 0.0;
-    delta_right = (right_pos - prev_right) / right_tracking_wheel->get_tpi();
+    if (right_tracking_wheel) {
+        double delta_right = 0.0;
+        delta_right =
+            (right_pos - prev_right) / right_tracking_wheel->get_tpi();
+    }
 
     double delta_middle = 0.0;
     delta_middle =
         (middle_pos - prev_middle) / middle_tracking_wheel->get_tpi();
 
     double delta_angle = 0.0;
-    delta_angle = (delta_right - delta_left) / track_width;
-    this->pose.theta += delta_angle;
+    if (imu.size() > 0) {
+        std::vector<double> rotations;
+        for (const auto& s_imu : this->imu) {
+            if (s_imu->is_installed()) {
+                rotations.push_back(s_imu->get_rotation());
+            }
+        }
+        double rotation_avg = voss::get_avg(rotations);
+        pose.theta = -to_radians(rotation_avg);
+    } else if (right_tracking_wheel) {
+        pose.theta = (right_pos / right_tracking_wheel->get_tpi() -
+                      left_pos / left_tracking_wheel->get_tpi()) /
+                     track_width;
+    }
+    delta_angle = this->pose.theta - prev_pose.theta;
+    // if (std::abs(delta_angle) > 0.16) {
+    // delta_angle = 0.0;
+    // std::cout << "Delta angle above 0.16\n";
+    // } else {
+    // }
 
     prev_left = left_pos;
-    prev_right = right_pos;
+    // prev_right = right_pos;
     prev_middle = middle_pos;
     prev_pose = pose;
 
@@ -98,10 +121,10 @@ void TrackingWheelLocalizer::update() {
 
     if (delta_angle) {
         double i = sin(delta_angle / 2.0) * 2.0;
-        local_x = (delta_right / delta_angle - left_right_dist) * i;
+        local_x = (delta_left / delta_angle + left_right_dist) * i;
         local_y = (delta_middle / delta_angle + middle_dist) * i;
     } else {
-        local_x = delta_right;
+        local_x = delta_left;
         local_y = delta_middle;
     }
 
@@ -214,6 +237,9 @@ void TrackingWheelLocalizer::calibrate() {
     if (middle_tracking_wheel) {
         middle_tracking_wheel->reset();
     }
+    /*for (const auto &i : this->imu) {
+        i->reset(true);
+    }*/
     this->pose = AtomicPose{0, 0, 0.0};
 }
 
