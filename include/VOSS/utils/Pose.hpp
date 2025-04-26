@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Eigen/Dense"
 #include <atomic>
 #include <cmath>
 #include <optional>
@@ -11,6 +12,16 @@ struct Pose {
     double x;
     double y;
     std::optional<double> theta = std::nullopt;
+
+    void operator=(const Eigen::Vector3d& other) {
+        x = other.x();
+        y = other.y();
+        theta = other.z();
+    }
+
+    operator Eigen::Vector3d() const {
+        return {x, y, theta.value_or(0.0)};
+    }
 };
 
 struct AtomicPose {
@@ -32,6 +43,16 @@ struct AtomicPose {
         x = pose.x.load();
         y = pose.y.load();
         theta = pose.theta.load();
+    }
+
+    void operator=(const Eigen::Vector3d& other) {
+        x = other.x();
+        y = other.y();
+        theta = other.z();
+    }
+
+    operator Eigen::Vector3d() const {
+        return {x.load(), y.load(), theta.load()};
     }
 };
 

@@ -5,59 +5,80 @@
 #include "VOSS/controller/SwingControllerBuilder.hpp"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
+#include "Eigen/Dense"
 
-#define LEFT_MOTORS                                                            \
-    { -4, -1, -21, 8, 13 }
-#define RIGHT_MOTORS                                                           \
-    { 10, 3, 9, -7, -15 }
 
-auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_right_motor(10)
-                .with_left_motor(-4)
-                .with_track_width(11)
-                .with_left_right_tpi(18.43)
-                .with_imu(16)
-                .build();
+#define MIDDLE_TRACKER_PORT ('E')
+#define LEFT_TRACKER_PORT ('C')
+#define RIGHT_TRACKER_PORT ('A')
 
-auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_min_vel_for_thru(100)
-               .build();
+#define MIDDLE_TRACKER_PORT_2 ('G')
+#define LEFT_TRACKER_PORT_2 ('A')
+//
+//std::shared_ptr<voss::localizer::TrackingWheelLocalizer> odom =
+//    voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
+//        .with_middle_encoder(MIDDLE_TRACKER_PORT)
+//        .with_left_encoder(LEFT_TRACKER_PORT)
+//        .with_right_encoder(RIGHT_TRACKER_PORT)
+//        .with_middle_tpi(5000 / 24.0)
+//        .with_left_tpi(4988 / 24.0)
+//        .with_right_tpi(4988 / 24.0)
+//        .with_track_width(4.0625)
+//        .with_middle_dist(-4.625)
+//        .build();
 
-auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
-                     .with_min_vel_for_thru(70)
-                     .with_min_error(5)
-                     .build();
+std::shared_ptr<voss::localizer::TrackingWheelLocalizer> odom2 =
+    voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
+        .with_middle_encoder(MIDDLE_TRACKER_PORT_2)
+        .with_left_encoder(LEFT_TRACKER_PORT_2)
+        .with_middle_tpi(300.0 * 13.4 / 12.0 * 11.95 / 12.0 * 21.7 / 24.0 *
+                         26.2 / 24.0)
+        .with_left_right_tpi(300.0 * 13.4 / 12.0 * 11.95 / 12.0)
+        .with_track_width(2.375 * 2.0)
+        .with_middle_dist(4.625)
+        .with_imus({7, 10})
+        .build();
 
-auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
-                 .with_angular_constants(250, 0.05, 2435)
-                 .build();
-
-auto arc = voss::controller::ArcPIDControllerBuilder(odom)
-               .with_track_width(16)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
-               .with_min_error(5)
-               .with_slew(8)
-               .build();
+//auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
+//               .with_linear_constants(20, 0.02, 169)
+//               .with_angular_constants(250, 0.05, 2435)
+//               .with_min_error(5)s
+//               .with_min_vel_for_thru(100)
+//               .build();
+//
+//auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
+//                     .with_linear_constants(20, 0.02, 169)
+//                     .with_angular_constants(250, 0.05, 2435)
+//                     .with_lead_pct(0.5)
+//                     .with_min_vel_for_thru(70)
+//                     .with_min_error(5)
+//                     .build();
+//
+//auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
+//                 .with_angular_constants(250, 0.05, 2435)
+//                 .build();
+//
+//auto arc = voss::controller::ArcPIDControllerBuilder(odom)
+//               .with_track_width(16)
+//               .with_linear_constants(20, 0.02, 169)
+//               .with_angular_constants(250, 0.05, 2435)
+//               .with_min_error(5)
+//               .with_slew(8)
+//               .build();
 
 pros::Controller master(pros::E_CONTROLLER_MASTER);
-auto ec = voss::controller::ExitConditions::new_conditions()
-              .add_settle(400, 0.5, 400)
-              .add_tolerance(1.0, 2.0, 200)
-              .add_timeout(22500)
-              .add_thru_smoothness(4)
-              .build() -> exit_if([]() {
-                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
-              });
+//auto ec = voss::controller::ExitConditions::new_conditions()
+//              .add_settle(400, 0.5, 400)
+//              .add_tolerance(1.0, 2.0, 200)
+//              .add_timeout(22500)
+//              .add_thru_smoothness(4)
+//              .build()
+//              ->exit_if([]() {
+//                  return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
+//              });
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
-                                          pros::E_MOTOR_BRAKE_COAST);
+//auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
+//                                          pros::E_MOTOR_BRAKE_COAST);
 
 pros::IMU imu(16);
 
@@ -69,7 +90,7 @@ pros::IMU imu(16);
  */
 void initialize() {
     pros::lcd::initialize();
-    odom->begin_localization();
+    odom2->begin_localization();
 }
 
 /**
@@ -132,25 +153,16 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+    pros::screen::touch_callback([] { odom2->set_pose(0, 0, 0); },
+                                 pros::E_TOUCH_RELEASED);
+
+
 
     while (true) {
-        voss::Pose p = odom->get_pose();
-
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
-                       master.get_analog(ANALOG_RIGHT_X));
-
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
-        }
-
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
+        voss::Pose pp = odom2->get_pose();
+        std::cout << std::format("{:.2f},{:.2f},{:.2f}", pp.x,
+                                 pp.y, pp.theta.value())
+                  << std::endl;
         pros::delay(10);
     }
 }

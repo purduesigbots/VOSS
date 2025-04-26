@@ -8,11 +8,11 @@ namespace voss::localizer {
 TrackingWheelLocalizerBuilder::TrackingWheelLocalizerBuilder()
     : left_right_dist(0.0), middle_dist(0.0), left_tracking_wheel(nullptr),
       right_tracking_wheel(nullptr), middle_tracking_wheel(nullptr),
-      imu(nullptr) {
+      imus() {
 }
 
 TrackingWheelLocalizerBuilder TrackingWheelLocalizerBuilder::new_builder() {
-    return TrackingWheelLocalizerBuilder();
+    return {};
 }
 
 TrackingWheelLocalizerBuilder&
@@ -123,14 +123,23 @@ TrackingWheelLocalizerBuilder::with_middle_dist(double middle_dist) {
 
 TrackingWheelLocalizerBuilder&
 TrackingWheelLocalizerBuilder::with_imu(int port) {
-    imu = std::make_unique<pros::IMU>(port);
+    imus.emplace_back(std::make_unique<pros::IMU>(port));
+    return *this;
+}
+
+TrackingWheelLocalizerBuilder&
+TrackingWheelLocalizerBuilder::with_imus(std::initializer_list<int> ports) {
+    imus.reserve(ports.size());
+    for (const auto port : ports) {
+        imus.emplace_back(std::make_shared<pros::IMU>(port));
+    }
     return *this;
 }
 
 std::shared_ptr<TrackingWheelLocalizer> TrackingWheelLocalizerBuilder::build() {
     return std::make_shared<TrackingWheelLocalizer>(
         std::move(left_tracking_wheel), std::move(right_tracking_wheel),
-        std::move(middle_tracking_wheel), std::move(imu), left_right_dist,
+        std::move(middle_tracking_wheel), std::move(std::move(imus)), left_right_dist,
         middle_dist);
 }
 
