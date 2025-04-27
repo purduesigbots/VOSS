@@ -5,10 +5,9 @@
 #include <algorithm>
 #include <numeric>
 
-namespace voss::localizer {
 
-static constexpr double meter_to_inch = 39.3701;
-static constexpr double inch_to_meter = 1.0 / meter_to_inch;
+
+namespace voss::localizer {
 
 TrackingWheelLocalizer::TrackingWheelLocalizer(
     std::unique_ptr<AbstractTrackingWheel> left,
@@ -53,7 +52,7 @@ void TrackingWheelLocalizer::update() {
         delta_angle = theta - prev_theta;
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
-        pose.theta += delta_angle;
+//        pose.theta += delta_angle;
     }
 
     prev_left_pos += delta_left;
@@ -83,11 +82,11 @@ void TrackingWheelLocalizer::update() {
     if (kalman_filter && gps) {
         kalman_filter->predict({local_x, local_y}, delta_angle);
 
-        if (this->enable_gps && gps->get_error() > 0) {
+        if (this->gps_enabled && gps->get_error() > 0) {
             auto gps_pose = gps->get_position_and_orientation();
             Eigen::Vector3d gps_pos = {
                 gps_pose.x * meter_to_inch, gps_pose.y * meter_to_inch,
-                voss::to_radians(-gps_pose.yaw + 180.f)};
+                voss::to_radians(-gps_pose.yaw)};
             kalman_filter->update_gps_pose_and_error(
                 gps_pos, gps->get_error() * meter_to_inch);
         }
@@ -95,13 +94,14 @@ void TrackingWheelLocalizer::update() {
         auto new_state = kalman_filter->get_state();
         this->pose = new_state;
     } else {
-        std::cerr << "kalman filter or gps not inited, using pure odom only"
-                  << std::endl;
+//        std::cerr << "kalman filter or gps not inited, using pure odom only"
+//                  << std::endl;
         double p = this->pose.theta - delta_angle / 2.0; // global angle
 
         // convert to absolute displacement
         this->pose.x += cos(p) * local_x - sin(p) * local_y;
         this->pose.y += sin(p) * local_x + cos(p) * local_y;
+        this->pose.theta += delta_angle;
     }
 }
 

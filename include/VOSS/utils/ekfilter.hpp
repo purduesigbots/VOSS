@@ -1,17 +1,27 @@
 #pragma once
 #include "Eigen/Dense"
 #include "pros/gps.hpp"
+#include "VOSS/utils/angle.hpp"
 
 namespace voss {
 
 class EKFilter {
   public:
+    /**
+     *
+     * The lower the value is the more trust
+     * @param odom_x_noise
+     * @param odom_y_noise
+     * @param imu_theta_noise
+     * @param gps_heading_noise_scalar
+     * @param init_pose
+     */
     EKFilter(double odom_x_noise, double odom_y_noise, double imu_theta_noise,
              double gps_heading_noise_scalar,
-             Eigen::Vector3d init_pose = Eigen::Vector3d::Zero())
+             Eigen::Vector3d init_pose = Eigen::Vector3d::Zero(), double init_identity = 0.0001)
         : state(std::move(init_pose)),
           gps_heading_noise_scalar(gps_heading_noise_scalar) {
-        P.setIdentity();
+        P = P.setIdentity() * init_identity;
         Q = Eigen::Matrix3d({{odom_x_noise, 0, 0},
                              {0, odom_y_noise, 0},
                              {0, 0, imu_theta_noise}});
@@ -62,7 +72,7 @@ class EKFilter {
         F(0, 2) = -sin_theta * odom_delta.x() - cos_theta * odom_delta.y();
         F(1, 2) = cos_theta * odom_delta.x() - sin_theta * odom_delta.y();
 
-        P = F * P * F.transpose() + Q;
+        this->P = F * P * F.transpose() + Q;
     }
 
 
@@ -106,12 +116,14 @@ class EKFilter {
         new_state.z() = normalize_angle(new_state.z());
         P = (Eigen::Matrix3d::Identity() - K * H) * P;
 
-        state = new_state;
+        this->state = new_state;
     }
 
     [[nodiscard("Returns current state")]]
     Eigen::Vector3d get_state() const {
-        return state;
+        Eigen::Vector3d ret_state = this->state;
+        ret_state.z() = voss::norm(state.z());
+        return ret_state;
     }
 
     [[nodiscard("Returns odom_init boolean")]]

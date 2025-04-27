@@ -20,6 +20,13 @@ inline double norm(double radians) {
     return radians;
 }
 
+inline double norm_deg(double degrees) {
+    degrees = fmod(degrees, 360.0);
+    if (degrees < 0)
+        degrees += 360.0;
+    return degrees;
+}
+
 inline double norm_delta(double radians) {
     return std::remainder(radians, 2 * M_PI);
 }
