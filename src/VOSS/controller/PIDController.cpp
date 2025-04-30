@@ -2,6 +2,7 @@
 #include "PIDControllerBuilder.hpp"
 #include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/utils/angle.hpp"
+#include "VOSS/utils/debug.hpp"
 #include <cmath>
 #include <memory>
 #include <utility>
@@ -26,7 +27,6 @@ PIDController::get_command(bool reverse, bool thru,
     int dir = reverse ? -1 : 1;
     Point current_pos = this->l->get_position();
     double current_angle = this->l->get_orientation_rad();
-    bool chainedExecutable = false;
     bool noPose = !this->target.theta.has_value();
 
     double dx = target.x - current_pos.x;
@@ -42,16 +42,46 @@ PIDController::get_command(bool reverse, bool thru,
 
     angle_error = voss::norm_delta(angle_error);
 
-    double lin_speed =
-        (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
+    double lin_speed = linear_pid.update(distance_error);
+    if (thru) {
+        if (thru_behavior == ThruBehavior::FULL_SPEED) {
+            lin_speed = 100;
+        } else {
+            lin_speed = fmax(lin_speed, min_vel);
+        }
+    }
+
+    if (cosine_scaling == CosineScaling::ALL_THE_TIME || distance_error < min_error) {
+        lin_speed *= cos(angle_error);
+    }
+
+    lin_speed *= dir;
 
     double ang_speed;
     if (distance_error < min_error) {
         this->can_reverse = true;
 
         if (noPose) {
-            ang_speed = 0; // disable turning when close to the point to prevent
-                           // spinning
+            switch (min_err_behavior) {
+                case MinErrBehavior::NO_ANG_PID:
+                    ang_speed = 0;
+                    break;
+                case MinErrBehavior::SCALE_ANG_PID: {
+                    double min_err_2 = min_error / 2;
+                    double scale_factor = (distance_error - min_err_2) / min_err_2;
+                    scale_factor = fmax(0.0, scale_factor);
+                    ang_speed = scale_factor * angular_pid.update(angle_error);
+                    break;
+                }
+                case MinErrBehavior::MAINTAIN_HEADING: {
+                    if (std::isnan(min_err_heading)) {
+                        min_err_heading = current_angle;
+                    }
+                    double min_err_heading_error = norm_delta(min_err_heading - current_angle);
+                    ang_speed = angular_pid.update(min_err_heading_error);
+                    break;
+                }
+            }
         } else {
             // turn to face the finale pose angle if executing a pose movement
             double poseError = target.theta.value() - current_angle;
@@ -61,29 +91,33 @@ PIDController::get_command(bool reverse, bool thru,
             ang_speed = angular_pid.update(poseError);
         }
 
-        // reduce the linear speed if the bot is tangent to the target
-        lin_speed *= cos(angle_error);
-
-    } else if (distance_error < 2 * min_error) {
-        // scale angular speed down to 0 as distance_error approaches min_error
-        ang_speed = angular_pid.update(angle_error);
-        ang_speed *= (distance_error - min_error) / min_error;
     } else {
+        min_err_heading = NAN;
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
                 angle_error - (angle_error / fabs(angle_error)) * M_PI;
-            lin_speed = -lin_speed;
+            if (cosine_scaling != CosineScaling::ALL_THE_TIME) {
+                lin_speed = -lin_speed;
+            }
         }
 
         ang_speed = angular_pid.update(angle_error);
     }
-    lin_speed = std::max(-100.0, std::min(100.0, lin_speed));
+    lin_speed = std::clamp(lin_speed, -100.0, 100.0);
+    if (enable_overturn) {
+        ang_speed = std::clamp(ang_speed, -100.0, 100.0);
+        lin_speed = std::clamp(lin_speed, -100 + fabs(ang_speed), 100 - fabs(ang_speed));
+    }
+
+    if (get_debug()) {
+        printf("dist_err: %.2f, ang_err: %.2f, lin_speed: %.2f, ang_speed: %.2f\n", distance_error, angle_error, lin_speed, ang_speed);
+    }
+
     // Runs at the end of a through movement
     if (ec->is_met(this->l->get_pose(), thru)) {
         if (thru) {
             return chassis::DiffChassisCommand{chassis::diff_commands::Chained{
-                dir * std::fmax(lin_speed, this->min_vel) - ang_speed,
-                dir * std::fmax(lin_speed, this->min_vel) + ang_speed}};
+                lin_speed - ang_speed, lin_speed + ang_speed}};
         } else {
             return chassis::Stop{};
         }
@@ -152,6 +186,7 @@ void PIDController::reset() {
     this->angular_pid.reset();
     this->can_reverse = false;
     this->turn_overshoot = false;
+    min_err_heading = NAN;
 }
 
 std::shared_ptr<PIDController>
@@ -184,6 +219,22 @@ PIDController::modify_min_error(double min_error) {
     this->p = pid_mod;
 
     return this->p;
+}
+
+void PIDController::set_thru_behavior(ThruBehavior thru_behavior) {
+    this->thru_behavior = thru_behavior;
+}
+
+void PIDController::set_cosine_scaling(CosineScaling cosine_scaling) {
+    this->cosine_scaling = cosine_scaling;
+}
+
+void PIDController::set_min_err_behavior(MinErrBehavior min_err_behavior) {
+    this->min_err_behavior = min_err_behavior;
+}
+
+void PIDController::set_overturn(bool overturn) {
+    enable_overturn = overturn;
 }
 
 } // namespace voss::controller

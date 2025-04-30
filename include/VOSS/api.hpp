@@ -35,6 +35,7 @@
 #include "selector/Selector.hpp"
 
 #include "utils/angle.hpp"
+#include "utils/debug.hpp"
 #include "utils/flags.hpp"
 #include "utils/Point.hpp"
 #include "utils/Pose.hpp"

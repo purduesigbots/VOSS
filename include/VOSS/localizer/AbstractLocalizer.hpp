@@ -27,6 +27,8 @@ class AbstractLocalizer {
     double get_orientation_rad();
     double get_orientation_deg();
     Point get_position();
+    void wait_until_near(Point target, double tolerance);
+    void wait_until_distance(double distance);
     virtual void calibrate() = 0;
 };
 

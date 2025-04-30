@@ -7,31 +7,33 @@
 #include "VOSS/utils/flags.hpp"
 
 #define LEFT_MOTORS                                                            \
-    { -4, -1, -21, 8, 13 }
+    { -10, -12, 14, -15, 20 }
 #define RIGHT_MOTORS                                                           \
-    { 10, 3, 9, -7, -15 }
+    { 1, 2, -3, -4, 5 }
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_right_motor(10)
-                .with_left_motor(-4)
-                .with_track_width(11)
-                .with_left_right_tpi(18.43)
-                .with_imu(16)
+                .with_left_encoder(3)
+                .with_middle_encoder(1)
+                .with_imu(19)
+                .with_left_right_tpi(522)
+                .with_middle_tpi(522)
+                .with_track_width(2)
+                .with_middle_dist(1.5)
                 .build();
 
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(20, 0.02, 169)
-               .with_angular_constants(250, 0.05, 2435)
+               .with_linear_constants(8, 0, 70)
+               .with_angular_constants(250, 0.001, 2500)
                .with_min_error(5)
-               .with_min_vel_for_thru(100)
+               .with_min_vel_for_thru(40)
                .build();
 
 auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(20, 0.02, 169)
-                     .with_angular_constants(250, 0.05, 2435)
-                     .with_lead_pct(0.5)
+                     .with_linear_constants(8, 0, 70)
+                     .with_angular_constants(250, 0.001, 2500)
+                     .with_lead_pct(0.6)
                      .with_min_vel_for_thru(70)
-                     .with_min_error(5)
+                     .with_min_error(10)
                      .build();
 
 auto swing = voss::controller::SwingControllerBuilder::new_builder(odom)
@@ -58,8 +60,6 @@ auto ec = voss::controller::ExitConditions::new_conditions()
 
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
                                           pros::E_MOTOR_BRAKE_COAST);
-
-pros::IMU imu(16);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -140,8 +140,10 @@ void opcontrol() {
                        master.get_analog(ANALOG_RIGHT_X));
 
         if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 90});
-            chassis.move({-24, 24}, arc);
+            odom->set_pose({0.0, 0.0, 0});
+            voss::enable_debug();
+            chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
+            voss::disable_debug();
         }
 
         pros::lcd::clear_line(1);

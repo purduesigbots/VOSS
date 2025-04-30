@@ -3,6 +3,7 @@
 #include "VOSS/exit_conditions/AbstractExitCondition.hpp"
 #include "VOSS/utils/angle.hpp"
 #include "VOSS/utils/Pose.hpp"
+#include "VOSS/utils/debug.hpp"
 #include <cmath>
 #include <cstdio>
 
@@ -31,7 +32,9 @@ bool SettleExitCondition::is_met(Pose current_pose, bool thru) {
             prev_pose = current_pose;
         }
     } else {
-        // printf("settle condition met\n");
+        if (get_debug()) {
+            printf("Settle Condition Met\n");
+        }
         return true;
     }
     return false;

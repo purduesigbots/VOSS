@@ -34,17 +34,17 @@ void TrackingWheelLocalizer::update() {
             middle_tracking_wheel->get_dist_travelled() - prev_middle_pos;
     }
     if (imu) {
-        pose.theta = -to_radians(imu->get_rotation());
-        delta_angle = pose.theta - prev_pose.theta;
+        real_pose.theta = -to_radians(imu->get_rotation());
+        delta_angle = real_pose.theta - prev_pose.theta;
     } else {
         delta_angle = (delta_right - delta_left) / (2 * left_right_dist);
-        pose.theta += delta_angle;
+        real_pose.theta += delta_angle;
     }
 
     prev_left_pos += delta_left;
     prev_right_pos += delta_right;
     prev_middle_pos += delta_middle;
-    prev_pose = pose;
+    prev_pose = real_pose;
 
     double local_x;
     double local_y;
@@ -64,11 +64,15 @@ void TrackingWheelLocalizer::update() {
         local_y = delta_middle;
     }
 
-    double p = this->pose.theta - delta_angle / 2.0; // global angle
+    double p = this->real_pose.theta - delta_angle / 2.0; // global angle
 
     // convert to absolute displacement
-    this->pose.x += cos(p) * local_x - sin(p) * local_y;
-    this->pose.y += sin(p) * local_x + cos(p) * local_y;
+    this->real_pose.x += cos(p) * local_x - sin(p) * local_y;
+    this->real_pose.y += sin(p) * local_x + cos(p) * local_y;
+
+    this->pose.theta = this->real_pose.theta - local_offset.theta.value();
+    this->pose.x = this->real_pose.x - (local_offset.x * cos(pose.theta) - local_offset.y * sin(pose.theta));
+    this->pose.y = this->real_pose.y - (local_offset.x * sin(pose.theta) + local_offset.y * cos(pose.theta));
 }
 
 void TrackingWheelLocalizer::calibrate() {
@@ -92,14 +96,22 @@ void TrackingWheelLocalizer::calibrate() {
 
 void TrackingWheelLocalizer::set_pose(Pose pose) {
     this->AbstractLocalizer::set_pose(pose);
-    this->prev_pose = this->pose;
-    if (this->imu && pose.theta.has_value()) {
-        this->imu->set_rotation(-pose.theta.value());
+    this->real_pose.theta = this->pose.theta + local_offset.theta.value();
+    this->real_pose.x = pose.x + (local_offset.x * cos(this->pose.theta) - local_offset.y * sin(this->pose.theta));
+    this->real_pose.y = pose.y + (local_offset.x * sin(this->pose.theta) + local_offset.y * cos(this->pose.theta));
+    this->prev_pose = this->real_pose;
+    if (this->imu) {
+        this->imu->set_rotation(-to_degrees(real_pose.theta));
     }
 }
 
 void TrackingWheelLocalizer::set_pose(double x, double y, double theta) {
     this->set_pose({x, y, theta});
+}
+
+void TrackingWheelLocalizer::set_local_offset(Pose local_offset) {
+    this->local_offset = {local_offset.x, local_offset.y, to_radians(local_offset.theta.value())};
+    set_pose(get_pose());
 }
 
 } // namespace voss::localizer
