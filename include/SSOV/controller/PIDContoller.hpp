@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace ssov {
     struct PIDConstants {
         double kP;

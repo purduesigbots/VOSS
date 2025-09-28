@@ -25,7 +25,7 @@ class SettleExitCondition: public ExitCondition {
             angular_tolerance(angular_tolerance),
             initial_delay(initial_delay),
             settle_time(settle_time) {};
-        bool is_met(const Pose &current_pose, const Pose &target_pose, bool thru) = 0;
+        bool is_met(const Pose &current_pose, const Pose &target_pose, bool thru) override;
         void reset() override;
 };
 

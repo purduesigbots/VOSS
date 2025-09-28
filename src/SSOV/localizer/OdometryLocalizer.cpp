@@ -7,7 +7,7 @@ void OdometryLocalizer::update() {
     Pose local_change = get_local_change();
     double dtheta = local_change.theta;
     double s, c;
-    if (abs(dtheta) < 1e-9) {
+    if (fabs(dtheta) < 1e-9) {
         s = 1 - dtheta * dtheta / 6;
         c = dtheta / 2;
     } else {

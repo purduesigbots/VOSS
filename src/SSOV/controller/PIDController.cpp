@@ -7,6 +7,10 @@ namespace ssov {
 double PIDController::update(double error) {
     uint32_t current_time = pros::millis();
     double dt = 0.001 * (current_time - prev_time); // convert time to seconds
+    // safeguard to prevent divide by zero.
+    if (dt == 0) {
+        dt = 0.01;
+    }
     total_error += 0.5 * (prev_error + error) * dt; // trapezoidal integration
     double output = gain.kP * error + gain.kI * total_error + gain.kD * (error - prev_error) / dt;
     prev_error = error;

@@ -24,7 +24,7 @@ std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITr
 std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>(7, 310.7);
 auto imu = std::make_unique<pros::IMU>(1);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
-auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19}, odom);
+auto chassis = ssov::DiffChassis::create({-13, -14, -15}, {16, 18, 19});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
 auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -38,9 +38,8 @@ auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
-	chassis->default_point_controller = pid;
-	chassis->default_ec = ec;
 	odom->begin_localization();
+	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
 }
 
@@ -157,7 +156,7 @@ void opcontrol() {
 		//auto local_change = odom->get_local_change();
 		auto vel = odom->get_velocities();
 		if (log_data) {
-			auto speeds = chassis->get_speeds();
+			// auto speeds = chassis->get_speeds();
 			//printf("%.2f %.2f %.2f\n", odom->get_left_velocity(), odom->get_right_velocity(), odom->get_rot_velocity());
 			//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
 			//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);

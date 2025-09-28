@@ -23,18 +23,15 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     double ang_speed;
     if (distance_error < min_error) {
         this->can_reverse = true;
-
-        ang_speed = 0; // disable turning when close to the point to prevent
-                           // spinning
-
         // reduce the linear speed if the bot is tangent to the target
         lin_speed *= cos(angle_error);
-
-    } else if (distance_error < 2 * min_error) {
-        // scale angular speed down to 0 as distance_error approaches min_error
-        ang_speed = angular_pid.update(angle_error);
-        ang_speed *= (distance_error - min_error) / min_error;
+        if (std::isnan(min_dist_angle)) {
+            min_dist_angle = current_pose.theta;
+        }
+        double min_dist_ang_err = norm_delta(min_dist_angle - current_pose.theta);
+        ang_speed = angular_pid.update(min_dist_ang_err);
     } else {
+        min_dist_angle = NAN;
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
                 angle_error - (std::signbit(angle_error) ? -1 : 1) * M_PI;
@@ -45,6 +42,9 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     }
 
     lin_speed = std::clamp(lin_speed, -100.0, 100.0);
+    if (debug) {
+        printf("%.2f, %.2f\n", distance_error, angle_error);
+    }
     return {lin_speed, 0, ang_speed};
 }
 
@@ -52,5 +52,6 @@ void PIDPointController::reset() {
     linear_pid.reset();
     angular_pid.reset();
     can_reverse = false;
+    min_dist_angle = NAN;
 }
 }

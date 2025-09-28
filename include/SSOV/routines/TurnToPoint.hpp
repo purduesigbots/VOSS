@@ -17,6 +17,7 @@ class TurnToPoint: public Routine {
         std::shared_ptr<Localizer> localizer;
         double slew;
         TurnDirection direction;
+        bool reverse;
         bool thru;
     };
     private:
@@ -27,6 +28,7 @@ class TurnToPoint: public Routine {
         DriveSignal prev_speeds;
         double slew;
         TurnDirection direction;
+        bool reverse;
         bool thru;
         bool done = false;
     public:
@@ -37,6 +39,7 @@ class TurnToPoint: public Routine {
             localizer(params.localizer),
             slew(params.slew),
             direction(params.direction),
+            reverse(params.reverse),
             thru(params.thru),
             prev_speeds(initial_speeds) {};
         void start() override {
@@ -49,7 +52,12 @@ class TurnToPoint: public Routine {
         ChassisCommand update() {
             DriveSignal result;
             Pose current_pose = localizer->get_pose();
-            double target_heading = atan2(target.y - current_pose.y, target.x - current_pose.x);
+            double target_heading;
+            if (!reverse) {
+                target_heading = atan2(target.y - current_pose.y, target.x - current_pose.x);
+            } else {
+                target_heading = atan2(current_pose.y - target.y, current_pose.x - target.x);
+            }
             done = exit->is_met(current_pose, {current_pose.x, current_pose.y, target_heading}, thru);
             if (done && !thru) {
                 result = {0, 0, 0};

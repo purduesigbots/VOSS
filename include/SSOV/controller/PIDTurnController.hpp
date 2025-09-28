@@ -9,6 +9,7 @@ class PIDTurnController: public TurnController {
     private:
         PIDController turn_pid;
         const double min_error;
+        bool debug = false;
     public:
         PIDTurnController(PIDConstants turn_constants, double min_error):
             turn_pid(turn_constants),
@@ -16,6 +17,9 @@ class PIDTurnController: public TurnController {
 
         double compute(double current_heading, double target_heading, TurnDirection direction, bool thru) override;
         void reset() override;
+        void set_debug(bool debug) {
+            this->debug = debug;
+        }
 };
 
 }

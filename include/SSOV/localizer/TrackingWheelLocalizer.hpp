@@ -10,14 +10,14 @@ namespace ssov {
 class TrackingWheelLocalizer: public OdometryLocalizer {
     private:
         double prev_left_pos, prev_right_pos, prev_middle_pos, prev_angle;
-        std::unique_ptr<AbstractTrackingWheel> left, right, middle;
-        std::unique_ptr<pros::IMU> imu;
+        std::shared_ptr<AbstractTrackingWheel> left, right, middle;
+        std::shared_ptr<pros::IMU> imu;
         double left_right_dist, middle_dist;
     public:
-        TrackingWheelLocalizer(std::unique_ptr<AbstractTrackingWheel> left,
-                           std::unique_ptr<AbstractTrackingWheel> right,
-                           std::unique_ptr<AbstractTrackingWheel> middle,
-                           std::unique_ptr<pros::IMU> imu,
+        TrackingWheelLocalizer(std::shared_ptr<AbstractTrackingWheel> left,
+                           std::shared_ptr<AbstractTrackingWheel> right,
+                           std::shared_ptr<AbstractTrackingWheel> middle,
+                           std::shared_ptr<pros::IMU> imu,
                            double left_right_dist, double middle_dist, Pose local_offset = {}, uint32_t update_time = 10):
             OdometryLocalizer(local_offset, update_time),
             left(std::move(left)), right(std::move(right)),
@@ -34,7 +34,7 @@ class TrackingWheelLocalizer: public OdometryLocalizer {
             prev_left_pos = 0;
             prev_right_pos = 0;
             prev_middle_pos = 0;
-            prev_angle = 0;
+            prev_angle = -to_radians(imu->get_rotation());
         }
 
         Pose get_local_change() {
@@ -54,10 +54,11 @@ class TrackingWheelLocalizer: public OdometryLocalizer {
 
             if (imu) {
                 double angle = -to_radians(imu->get_rotation());
-                dtheta = angle - prev_angle;
-                prev_angle = angle;
+                dtheta = norm_delta(angle - prev_angle);
+                prev_angle += dtheta;
             } else if (left && right) {
                 dtheta = (delta_right - delta_left) / (2 * left_right_dist);
+                prev_angle += dtheta;
             }
 
             if (left && right) {

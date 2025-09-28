@@ -12,17 +12,12 @@ inline DriveSignal speeds_to_drive_signal(double left_speed, double right_speed)
 }
 
 DiffChassis::DiffChassis(std::initializer_list<int8_t> left_mtr_ports,
-                         std::initializer_list<int8_t> right_mtr_ports,
-                         std::shared_ptr<Localizer> localizer):
+                         std::initializer_list<int8_t> right_mtr_ports):
     left_mtrs(std::make_shared<pros::MotorGroup>(left_mtr_ports)),
-    right_mtrs(std::make_shared<pros::MotorGroup>(right_mtr_ports)),
-    localizer(localizer) {
+    right_mtrs(std::make_shared<pros::MotorGroup>(right_mtr_ports)) {
     chassis_task = pros::Task::create([this]() {
         this->task_fn();
     });
-    if (localizer) {
-        localizer->add_listener(chassis_task);
-    }
 }
 
 void DiffChassis::tank(double left_speed, double right_speed) {
@@ -55,6 +50,9 @@ void DiffChassis::execute(ChassisCommand command) {
                 right_speed *= speed_scalar;
             }
             current_drive_signal = speeds_to_drive_signal(left_speed, right_speed);
+            if (debug) {
+                printf("left %f, right %f\n", left_speed, right_speed);
+            }
             left_mtrs->move_voltage(left_speed * 120);
             right_mtrs->move_voltage(right_speed * 120);
         }
@@ -104,7 +102,7 @@ void DiffChassis::move(Point target, PointMoveParams params) {
     }
 }
 
-void DiffChassis::move(Pose target, PoseMoveParams params) {
+void DiffChassis::move(UserPose target, PoseMoveParams params) {
     MoveToPose::Params routine_params = {
         params.controller,
         params.ec,
@@ -120,14 +118,14 @@ void DiffChassis::move(Pose target, PoseMoveParams params) {
         routine_params.ec = default_ec;
     }
     max_speed = params.max;
-    run_routine(std::make_shared<MoveToPose>(target, routine_params, current_drive_signal));
+    run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();
     }
 }
 
 void DiffChassis::turn(double target, TurnParams params) {
-    TurnToPoint::Params routine_params = {
+    TurnToHeading::Params routine_params = {
         params.controller,
         params.ec,
         localizer,
@@ -142,7 +140,7 @@ void DiffChassis::turn(double target, TurnParams params) {
         routine_params.exit = default_ec;
     }
     max_speed = params.max;
-    run_routine(std::make_shared<MoveToPose>(target, routine_params, current_drive_signal));
+    run_routine(std::make_shared<TurnToHeading>(to_radians(target), routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();
     }
@@ -155,6 +153,7 @@ void DiffChassis::turn(Point target, TurnParams params) {
         localizer,
         params.slew,
         params.direction,
+        params.reverse,
         params.thru
     };
     if (!routine_params.controller) {
@@ -164,7 +163,7 @@ void DiffChassis::turn(Point target, TurnParams params) {
         routine_params.exit = default_ec;
     }
     max_speed = params.max;
-    run_routine(std::make_shared<MoveToPose>(target, routine_params, current_drive_signal));
+    run_routine(std::make_shared<TurnToPoint>(target, routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();
     }

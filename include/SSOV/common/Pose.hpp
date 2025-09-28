@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include "SSOV/common/Math.hpp"
 
 namespace ssov {
     struct Point {
@@ -32,9 +33,6 @@ namespace ssov {
         Pose(): Pose(0, 0, 0) {};
         Point to_point() const {
             return {x, y};
-        }
-        UserPose to_user_pose() const {
-            return {x, y, to_degrees(theta)};
         }
 
         Pose rotate(double radians) const {

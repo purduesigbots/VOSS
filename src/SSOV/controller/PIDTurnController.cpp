@@ -1,6 +1,7 @@
 #include "SSOV/controller/PIDTurnController.hpp"
 
 #include "SSOV/common/Math.hpp"
+#include <cstdio>
 
 namespace ssov {
 
@@ -12,6 +13,9 @@ double PIDTurnController::compute(double current_heading, double target_heading,
         } else if (direction == TurnDirection::CW && angle_error > 0) {
             angle_error -= 2 * M_PI;
         }
+    }
+    if (debug) {
+        printf("%f\n", angle_error);
     }
     return turn_pid.update(angle_error);
 }

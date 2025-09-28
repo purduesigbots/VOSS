@@ -21,6 +21,7 @@ bool SettleExitCondition::is_met(const Pose &current_pose, const Pose &target_po
     }
     prev_time = current_time;
     prev_pose = current_pose;
+    return false;
 }
 
 void SettleExitCondition::reset() {

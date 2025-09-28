@@ -7,7 +7,7 @@ namespace ssov {
 
 bool ToleranceExitCondition::is_met(const Pose &current_pose, const Pose &target_pose, bool thru) {
     double lin_error = distance(target_pose.to_point(), current_pose.to_point());
-    double ang_error = norm_delta(target_pose.theta - current_pose.theta);
+    double ang_error = fabs(norm_delta(target_pose.theta - current_pose.theta));
     if (lin_error < linear_tolerance && ang_error < angular_tolerance) {
         if (thru) return true;
         uint32_t dt = pros::c::millis() - prev_time;
