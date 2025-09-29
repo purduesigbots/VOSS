@@ -17,8 +17,8 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 // .with_imu(19)
                 .with_left_motor(12)
                 .with_right_motor(16)
-                .with_left_right_tpi(522)
-                .with_middle_tpi(522)
+                //.with_left_right_tpi(522)
+                //.with_middle_tpi(522)
                 .with_track_width(2)
                 .with_middle_dist(1.5)
                 .build();
@@ -71,7 +71,7 @@ auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
  */
 void initialize() {
     pros::lcd::initialize();
-    odom->begin_localization();
+    //odom->begin_localization();
 }
 
 /**
@@ -141,7 +141,7 @@ void autonomous() {
 void opcontrol() {
 
     while (true) {
-        voss::Pose p = odom->get_pose();
+        // voss::Pose p = odom->get_pose();
 
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
