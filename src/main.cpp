@@ -7,7 +7,7 @@
 #include "VOSS/utils/flags.hpp"
 
 #define LEFT_MOTORS                                                            \
-    { -11, 12, -13, 14, -15 }
+    { 12, -13, 14, -15 }
 #define RIGHT_MOTORS                                                           \
     { 16, -17, 18, -19, 20 }
 
@@ -15,7 +15,7 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 // .with_left_encoder(3)
                 // .with_middle_encoder(1)
                 // .with_imu(19)
-                .with_left_motor(12)
+                .with_left_motor(14)
                 .with_right_motor(16)
                 //.with_left_right_tpi(522)
                 //.with_middle_tpi(522)
@@ -119,7 +119,11 @@ void autonomous() {
 
     // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
 
-    chassis.move({0, 10, 0});
+    chassis.move({-40, 0, -10}, boomerang, 60, voss::Flags::REVERSE | voss::Flags::THRU);
+
+    chassis.move({40, 0, 20}, boomerang, 40, voss::Flags::THRU);
+
+    chassis.move({-40, 0, 20}, boomerang, 55, voss::Flags::REVERSE);
 
     //boomerang->set_target({36, 36, 90}, false, ec);
     pros::delay(500);
