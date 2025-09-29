@@ -7,9 +7,9 @@
 #include "VOSS/utils/flags.hpp"
 
 #define LEFT_MOTORS                                                            \
-    { -10, -12, 14, -15, 20 }
+    { -11, 12, -13, 14, -15 }
 #define RIGHT_MOTORS                                                           \
-    { 1, 2, -3, -4, 5 }
+    { 16, -17, 18, -19, 20 }
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_left_encoder(3)
@@ -116,6 +116,9 @@ void autonomous() {
     // //                 .build();
 
     // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
+
+    boomerang->set_target({36, 36, 90}, false, ec);
+    pros::delay(500);
 }
 
 /**
@@ -139,20 +142,20 @@ void opcontrol() {
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
 
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 0});
-            voss::enable_debug();
-            chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
-            voss::disable_debug();
-        }
+        // if (master.get_digital_new_press(DIGITAL_Y)) {
+        //     odom->set_pose({0.0, 0.0, 0});
+        //     voss::enable_debug();
+        //     chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
+        //     voss::disable_debug();
+        // }
 
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
+        // pros::lcd::clear_line(1);
+        // pros::lcd::clear_line(2);
+        // pros::lcd::clear_line(3);
+        // pros::lcd::print(1, "%lf", p.x);
+        // pros::lcd::print(2, "%lf", p.y);
+        // pros::lcd::print(3, "%lf", odom->get_orientation_deg());
+        // pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
         pros::delay(10);
     }
 }
