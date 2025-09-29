@@ -12,9 +12,11 @@
     { 16, -17, 18, -19, 20 }
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
-                .with_left_encoder(3)
-                .with_middle_encoder(1)
-                .with_imu(19)
+                // .with_left_encoder(3)
+                // .with_middle_encoder(1)
+                // .with_imu(19)
+                .with_left_motor(12)
+                .with_right_motor(16)
                 .with_left_right_tpi(522)
                 .with_middle_tpi(522)
                 .with_track_width(2)
@@ -22,15 +24,15 @@ auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .build();
 
 auto pid = voss::controller::PIDControllerBuilder::new_builder(odom)
-               .with_linear_constants(8, 0, 70)
-               .with_angular_constants(250, 0.001, 2500)
+               .with_linear_constants(6, 0, 120)
+               .with_angular_constants(50, 0, 95)
                .with_min_error(5)
-               .with_min_vel_for_thru(40)
-               .build();
+               .with_min_vel_for_thru(100)
+               .build();   
 
 auto boomerang = voss::controller::BoomerangControllerBuilder::new_builder(odom)
-                     .with_linear_constants(8, 0, 70)
-                     .with_angular_constants(250, 0.001, 2500)
+                     .with_linear_constants(6, 0, 120)
+                     .with_angular_constants(50, 0, 95)
                      .with_lead_pct(0.6)
                      .with_min_vel_for_thru(70)
                      .with_min_error(10)
@@ -59,7 +61,7 @@ auto ec = voss::controller::ExitConditions::new_conditions()
               });
 
 auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
-                                          pros::E_MOTOR_BRAKE_COAST);
+                                          pros::E_MOTOR_BRAKE_BRAKE);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -117,7 +119,9 @@ void autonomous() {
 
     // auto pid2 = voss::controller::ControllerCopy(pid).modify_lead_pct(65);
 
-    boomerang->set_target({36, 36, 90}, false, ec);
+    chassis.move({0, 10, 0});
+
+    //boomerang->set_target({36, 36, 90}, false, ec);
     pros::delay(500);
 }
 
