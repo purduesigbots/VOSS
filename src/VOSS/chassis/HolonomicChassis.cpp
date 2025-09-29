@@ -79,7 +79,7 @@ void HolonomicChassis::set_brake_mode(pros::motor_brake_mode_e mode) {
 
 // Evoke the chassis to move according to how it was set up using the
 // constructor, returns true if movement is complete
-bool HolonomicChassis::execute(HoloChassisCommand cmd, double max) {
+bool HolonomicChassis::execute(HoloChassisCommand cmd, double max, int type) {
     return std::visit(
         overload{[this](Stop&) -> bool {
                      this->set_brake_mode(this->brakeMode);

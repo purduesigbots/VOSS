@@ -6,10 +6,26 @@
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
 
-#define LEFT_MOTORS                                                            \
-    { -10, -12, 14, -15, 20 }
-#define RIGHT_MOTORS                                                           \
-    { 1, 2, -3, -4, 5 }
+#define LEFT_FRONT                                                            \
+    { 10, -9 }
+#define RIGHT_FRONT                                                           \
+    { 7, -8 }
+#define LEFT_BACK                                                           \
+    { 5, -6 }
+#define RIGHT_BACK                                                           \
+    { 4, -3 }
+
+pros::Motor Back_Intake (-19);
+pros::Motor Front_Intake (-2);
+pros::Motor Middle_Intake (-11);
+pros::Motor Back_Right (-17);
+pros::Motor Back_Left (18);
+pros::Optical Front_optical (16);
+pros::Optical Back_optical (1);
+pros::adi::Pneumatics extendoIntake ('a', false);
+pros::adi::Pneumatics rearIntake ('c', false);
+pros::adi::Pneumatics colorSort ('b', false);
+pros::adi::Pneumatics aligner ('d', false);
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_left_encoder(3)
@@ -58,8 +74,18 @@ auto ec = voss::controller::ExitConditions::new_conditions()
                   return master.get_digital(pros::E_CONTROLLER_DIGITAL_UP);
               });
 
-auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
+auto chassis = voss::chassis::HolonomicChassis(LEFT_FRONT, RIGHT_FRONT, LEFT_BACK, RIGHT_BACK, pid, ec, 8,
                                           pros::E_MOTOR_BRAKE_COAST);
+
+void on_center_button() {
+	static bool pressed = false;
+	pressed = !pressed;
+	if (pressed) {
+		pros::lcd::set_text(2, "I was pressed!");
+	} else {
+		pros::lcd::clear_line(2);
+	}
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -70,6 +96,18 @@ auto chassis = voss::chassis::DiffChassis(LEFT_MOTORS, RIGHT_MOTORS, pid, ec, 8,
 void initialize() {
     pros::lcd::initialize();
     odom->begin_localization();
+
+    pros::lcd::register_btn1_cb(on_center_button);
+
+    Front_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+	Front_Intake.set_gearing(MOTOR_GEARSET_36);
+	Back_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+	Back_Intake.set_gearing(MOTOR_GEARSET_36);
+	Middle_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+	Middle_Intake.set_gearing(MOTOR_GEARSET_36);
+	Back_Right.set_gearing(MOTOR_GEARSET_18);
+	Back_Left.set_gearing(MOTOR_GEARSET_18);
+	Front_optical.set_integration_time(10);
 }
 
 /**
@@ -132,27 +170,104 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+    double filtered_value = 20;
+	bool colorState = false;
+	int toggle_counter = 0;
+	while (true) {
+		std::string fmt_string = std::format("{}", Front_optical.get_proximity());
+		master.set_text(1,1, fmt_string);
+		//printf("Hue: %lf\n", Front_optical.get_hue());		
 
-    while (true) {
-        voss::Pose p = odom->get_pose();
+		//Front Intake Controlls
+		if (master.get_digital(DIGITAL_R1)){
+			Front_Intake.move_velocity(100);
+			Back_Intake.move_velocity(100);
+			Middle_Intake.move_velocity(100);
+			Back_Right.move_voltage(13000);
+			Back_Left.move_voltage(13000);
+			//Ball Hue Values
+			//red = 15
+			//blue = 212
+			// printf("Distance: %lf\t", Back_optical.get_proximity());
+			// printf("Hue: %lf\n", Back_optical.get_hue());
+			if (Front_optical.get_led_pwm() > 25 && colorState != (Front_optical.get_hue() > 100 && Front_optical.get_hue() < 200) && toggle_counter > 20){
+			Front_Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
+			Back_Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
+				Middle_Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
+				Front_Intake.brake();
+				Back_Intake.brake();
+				Middle_Intake.brake();
+				colorSort.set_value(!colorState);
+				colorState = !colorState;
+				toggle_counter = 0;
+				// Middle_Intake.move_voltage(3000);
+				pros::delay(40);
+				// pros::delay(200);
+				// Front_Intake.move_velocity(100);
+				// Back_Intake.move_velocity(100);
+				// Middle_Intake.move_velocity(100);
+				// Back_Right.move_voltage(13000);
+				// Back_Left.move_voltage(13000);
+				Middle_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+				Front_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+				Back_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+			}
+		}
+		else if (master.get_digital(DIGITAL_R2)){
+			Front_Intake.move_velocity(100);
+			Back_Intake.move_velocity(-100);
+			Middle_Intake.move_velocity(-100);
+		}
+		else {
+			Front_Intake.brake();
+			Back_Intake.brake();
+			Middle_Intake.brake();
+			Back_Right.brake();
+			Back_Left.brake();
+			Back_optical.set_led_pwm(0);
+		}
 
-        chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
-                       master.get_analog(ANALOG_RIGHT_X));
+		if (master.get_digital(DIGITAL_L1)){
+			Back_Intake.move_velocity(20);
+			Front_Intake.move_velocity(100);
+			Middle_Intake.move_velocity(-100);
+		}
 
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-            odom->set_pose({0.0, 0.0, 0});
-            voss::enable_debug();
-            chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
-            voss::disable_debug();
-        }
+		else {
+			
+			Back_Intake.set_brake_mode(MOTOR_BRAKE_COAST);
+		}
 
-        pros::lcd::clear_line(1);
-        pros::lcd::clear_line(2);
-        pros::lcd::clear_line(3);
-        pros::lcd::print(1, "%lf", p.x);
-        pros::lcd::print(2, "%lf", p.y);
-        pros::lcd::print(3, "%lf", odom->get_orientation_deg());
-        pros::lcd::print(4, "%s", (odom == nullptr) ? "true" : "false");
-        pros::delay(10);
-    }
+		if (Front_optical.get_proximity() > 240){
+				Front_optical.set_led_pwm(50);
+		}
+		else{
+			Front_optical.set_led_pwm(5);
+		}
+        
+		//Pneumatic Controls
+		if(master.get_digital_new_press(DIGITAL_L2)){
+			extendoIntake.toggle();
+		}
+		else if (master.get_digital_new_press(DIGITAL_X)){
+			rearIntake.toggle();
+		}
+		else if (master.get_digital_new_press(DIGITAL_A)){
+			colorSort.toggle();
+		}
+		else if (master.get_digital_new_press(DIGITAL_B)){
+			aligner.toggle();
+		}
+
+		// Arcade control scheme
+		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
+		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
+		int strafe = master.get_analog(ANALOG_LEFT_X); // Gets the turn left/right from left joystick
+
+        chassis.holonomic(dir, strafe, turn);
+		
+		//
+		pros::delay(10);
+		toggle_counter++;                               // Run for 20 ms then update
+	}
 }

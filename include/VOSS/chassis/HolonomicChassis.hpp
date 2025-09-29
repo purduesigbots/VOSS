@@ -30,9 +30,12 @@ class HolonomicChassis : public AbstractChassis {
                 pros::motor_brake_mode_e brakeMode =
                     pros::motor_brake_mode_e::E_MOTOR_BRAKE_COAST);
 
+    void arcade(double forward_speed, double turn_speed);
+    void tank(double left_speed, double right_speed);
     void holonomic(double forward_speed, double sideways_speed, double turn_speed);
 
-    bool execute(HoloChassisCommand cmd, double max);
+    bool execute(DiffChassisCommand cmd, double max);
+    bool execute(HoloChassisCommand cmd, double max, int type);
     void set_brake_mode(pros::motor_brake_mode_e mode) override;
 
     auto getMotors() const {

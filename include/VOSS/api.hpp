@@ -5,6 +5,7 @@
 #include "chassis/DiffChassis.hpp"
 #include "chassis/HDriveChassis.hpp"
 #include "chassis/XDriveChassis.hpp"
+#include "chassis/HolonomicChassis.hpp"
 
 #include "controller/AbstractController.hpp"
 #include "controller/ArcPIDController.hpp"

@@ -37,6 +37,7 @@ class AbstractChassis {
     virtual void arcade(double forward_speed, double turn_speed) = 0;
 
     virtual bool execute(DiffChassisCommand cmd, double max) = 0;
+    virtual bool execute(HoloChassisCommand cmd, double max, int type) = 0;
     virtual void set_brake_mode(pros::motor_brake_mode_e mode) = 0;
 
     void wait_until_done() const;

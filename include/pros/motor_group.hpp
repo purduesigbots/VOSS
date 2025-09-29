@@ -10,7 +10,7 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2023, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -54,7 +54,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * 		  A reversed motor will reverse the input or output movement functions and movement related
 	 * 		  telemetry in order to produce consistant behavior with non-reversed motors
 	 *
-	 * \param gearset =  pros::v5::MotorGears::invalid
+	 * \param gearset = pros::v5::MotorGears::invalid
 	 * 		  Optional parameter for the gearset for the motor.
 	 * 		  Does not explicitly set the motor gearset if it is invalid or not specified
 	 *
@@ -65,7 +65,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
-	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1  and a reversed motor on port 2
+	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1 and a reversed motor on port 2
 	 *  MotorGroup rotations_mg({4, 5}, pros::v5::MotorGears::blue, pros::v5::MotorUnits::rotations);
 	 *  //Creates a motor group on ports 4 and 5 with blue motors using rotaions as the encoder units
 	 * }
@@ -91,7 +91,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * 		  A reversed motor will reverse the input or output movement functions and movement related
 	 * 		  telemetry in order to produce consistant behavior with non-reversed motors
 	 *
-	 * \param gearset =  pros::v5::MotorGears::invalid
+	 * \param gearset = pros::v5::MotorGears::invalid
 	 * \param gearset = pros::v5::MotorGears::green
 	 * 		  Optional parameter for the gearset for the motor.
 	 * 		  Does not explicitly set the motor gearset if it is invalid or not specified
@@ -103,7 +103,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
-	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1  and a reversed motor on port 2 with
+	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1 and a reversed motor on port 2 with
 	 *  with both motors using the green gearset and degrees as the encoder units
 	 *  MotorGroup rotations_mg({4, 5}, pros::v5::MotorGears::blue, pros::v5::MotorUnits::rotations);
 	 *  //Creates a motor group on ports 4 and 5 with blue motors using rotaions as the encoder units
@@ -126,14 +126,14 @@ class MotorGroup : public virtual AbstractMotor {
 	 * EDOM - The motor group is empty
 	 *
 	 * \param abstract_motor
-	 * 		  THe abstract motor to turn into a motor group
+	 * 		  The abstract motor to turn into a motor group
 	 * 		  Uses abstract_motor.get_port_all() to get the vector of ports
 	 *
 	 *
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
-	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1  and a reversed motor on port 2 with
+	 * 	MotorGroup first_mg({1, -2}); //Creates a motor on port 1 and a reversed motor on port 2 with
 	 *  with both motors using the green gearset and degrees as the encoder units
 	 * 	AbstractMotor abs_mtr_group = first_mg;
 	 * 	MotorGroup new_mg = (MotorGroup) abs_mtr_group;
@@ -141,7 +141,8 @@ class MotorGroup : public virtual AbstractMotor {
 	 * \endcode
 	 */
 
-	MotorGroup(MotorGroup& motor_group);
+	MotorGroup(AbstractMotor& motor_group);
+
 	/// \name Motor movement functions
 	/// These functions allow programmers to make motors move
 	///@{
@@ -917,7 +918,7 @@ class MotorGroup : public virtual AbstractMotor {
 	std::vector<double> get_position_all(void) const;
 
 	/**
-	 * Gets the power drawn by a motor in  the motor group in Watts.
+	 * Gets the power drawn by a motor in the motor group in Watts.
 	 *
 	 * This function uses the following values of errno when an error state is
 	 * reached:
@@ -1067,7 +1068,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 */
 	double get_temperature(const std::uint8_t index = 0) const;
 	/**
-	 * Gets the temperature of each motor  in the motor group in degrees Celsius.
+	 * Gets the temperature of each motor in the motor group in degrees Celsius.
 	 *
 	 * This function uses the following values of errno when an error state is
 	 * reached:
@@ -1431,7 +1432,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *
 	 * \param index Optional parameter, 0 by default.
 	 * 				The zero indexed index of the motor in the motor group
-	 * 
+	 *
 	 * \return One of MotorUnits according to what is set for the
 	 * motor or E_MOTOR_ENCODER_INVALID if the operation failed.
 	 *
@@ -1477,7 +1478,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *
 	 *\param index Optional parameter, 0 by default.
 	 * 				The zero indexed index of the motor in the motor group
-	 * 
+	 *
 	 * \return One of MotorGears according to what is set for the motor,
 	 * or pros::MotorGears::invalid if the operation failed.
 	 *
@@ -1498,7 +1499,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * ENODEV - The port cannot be configured as a motor
 	 * EDOM - The motor group is empty
 	 *
-	 * 
+	 *
 	 * \return A vector with one of MotorGears according to what is set for the motor,
 	 * or pros::MotorGears::invalid if the operation failed for each motor.
 	 *
@@ -1619,6 +1620,51 @@ class MotorGroup : public virtual AbstractMotor {
 	std::vector<std::int32_t> is_reversed_all(void) const;
 
 	/**
+	 * Gets the type of a motor in the motor group.
+	 *
+	 * This function uses the following values of errno when an error state is
+	 * reached:
+	 * ENODEV - The port cannot be configured as a motor
+	 * EDOM - The motor group is empty
+	 * EOVERFLOW - The index is greater than or equal to MotorGroup::size()
+	 *
+	 *\param index Optional parameter, 0 by default.
+	 * 				The zero indexed index of the motor in the motor group
+	 *
+	 * \return One of MotorType according to the type of the motor,
+	 * or pros::MotorType::invalid if the operation failed.
+	 *
+	 * \b Example
+	 * \code
+	 * void initialize() {
+	 *   pros::MotorGroup mg ({1,3}, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+	 *   std::cout << "Motor Type: " << mg.get_type();
+	 * }
+	 * \endcode
+	 */
+	MotorType get_type(const std::uint8_t index = 0) const;
+	/**
+	 * Gets a vector of the type of each motor.
+	 *
+	 * This function uses the following values of errno when an error state is
+	 * reached:
+	 * ENODEV - The port cannot be configured as a motor
+	 * EDOM - The motor group is empty
+	 *
+	 * \return A vector with one of MotorType according to the type of the motor,
+	 * or pros::MotorType::invalid if the operation failed for each motor.
+	 *
+	 * \b Example
+	 * \code
+	 * void initialize() {
+	 *   pros::MotorGroup mg ({1,3}, E_MOTOR_GEARSET_06, false, E_MOTOR_ENCODER_COUNTS);
+	 *   std::cout << "Motor Type: " << mg.get_type_all()[0];
+	 * }
+	 * \endcode
+	 */
+	std::vector<MotorType> get_type_all(void) const;
+
+	/**
 	 * Sets one of MotorBrake to a motor in the motor group. Works with the C enum
 	 * and the C++ enum class.
 	 *
@@ -1630,7 +1676,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *
 	 * \param mode
 	 *        The MotorBrake to set for the motor
-	 * 
+	 *
 	 * \param index Optional parameter, 0 by default.
 	 * 				The zero indexed index of the motor in the motor group
 	 *
@@ -1660,7 +1706,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *
 	 * \param mode
 	 *        The MotorBrake to set for the motor
-	 * 
+	 *
 	 * \param index Optional parameter, 0 by default.
 	 * 				The zero indexed index of the motor in the motor group
 	 *
@@ -1689,7 +1735,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *
 	 * \param mode
 	 *        The MotorBrake to set for the motor
-	 * 
+	 *
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
@@ -1998,6 +2044,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * \endcode
 	 */
 	std::int32_t set_gearing(std::vector<MotorGears> gearsets) const;
+
 	/**
 	 * Sets one of the gear cartridge (red, green, blue) for one motor in the motor group. Usable with
 	 * the C++ enum class and the C enum.
@@ -2229,7 +2276,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *   mg.move_absolute(100, 100); // This does not cause a movement
 	 *   mg.set_zero_position(80);
 	 *   mg.set_zero_position(80, 1);
-	 *   mg.move_absolute(100, 100); // Moves 80 units forward
+	 *   mg.move_absolute(100, 100); // Moves 20 units forward
 	 * }
 	 * \endcode
 	 *
@@ -2260,7 +2307,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 *   mg.move_absolute(100, 100); // This does not cause a movement
 	 *
 	 *   mg.set_zero_position_all(80);
-	 *   mg.move_absolute(100, 100); // Moves 80 units forward
+	 *   mg.move_absolute(100, 100); // Moves 20 units forward
 	 * }
 	 * \endcode
 	 *
@@ -2329,9 +2376,9 @@ class MotorGroup : public virtual AbstractMotor {
 	std::int8_t size(void) const;
 
 	/**
-	 * Gets the port of a motor in the motor group
+	 * Gets the port of a motor in the motor group via index
 	 *
-	 * 	 * \param index Optional parameter, 0 by default.
+	 * \param index Optional parameter, 0 by default.
 	 * 				The zero indexed index of the motor in the motor group
 	 *
 	 * \return The port of the motor at the specified index.
@@ -2345,7 +2392,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * Maintains the order of the other motor group
 	 *
 	 */
-	void operator+=(MotorGroup&);
+	void operator+=(AbstractMotor&);
 
 	/**
 	 * Appends all the motors in the other motor group reference to this motor group
@@ -2353,7 +2400,7 @@ class MotorGroup : public virtual AbstractMotor {
 	 * Maintains the order of the other motor group
 	 *
 	 */
-	void append(MotorGroup&);
+	void append(AbstractMotor&);
 
 	/**
 	 * Removes the all motors on the port (regardless of reversal) from the motor group
