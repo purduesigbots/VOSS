@@ -54,7 +54,15 @@ HolonomicChassis::HolonomicChassis(std::initializer_list<int8_t> front_left_moto
     this->back_left_motors->set_brake_mode_all(this->brakeMode);
     this->back_right_motors->set_brake_mode_all(this->brakeMode);
 
-    this->prev_voltages = {0, 0};
+    this->prev_voltages = {0, 0, 0};
+}
+
+void HolonomicChassis::tank(double left_speed, double right_speed) {
+
+}
+
+void HolonomicChassis::arcade(double forward_speed, double turn_speed) {
+
 }
 
 void HolonomicChassis::holonomic(double forward_speed, double sideways_speed, double turn_speed) {
@@ -77,6 +85,10 @@ void HolonomicChassis::set_brake_mode(pros::motor_brake_mode_e mode) {
     this->back_right_motors->set_brake_mode_all(mode);
 }
 
+bool HolonomicChassis::execute(DiffChassisCommand cmd, double max) {
+    return false;
+}
+
 // Evoke the chassis to move according to how it was set up using the
 // constructor, returns true if movement is complete
 bool HolonomicChassis::execute(HoloChassisCommand cmd, double max, int type) {
@@ -91,7 +103,7 @@ bool HolonomicChassis::execute(HoloChassisCommand cmd, double max, int type) {
                      return true;
                  },
                  [this, max](holo_commands::Voltages& v) -> bool {
-                     double v_max = std::max(fabs(v.v_x), fabs(v.v_y), fabs(v.v_theta));
+                     double v_max = std::max(fabs(v.v_theta), std::max(fabs(v.v_x), fabs(v.v_y)));
                      if (v_max > max) {
                          v.v_x = v.v_x * max / v_max;
                          v.v_y = v.v_y * max / v_max;
@@ -115,7 +127,7 @@ bool HolonomicChassis::execute(HoloChassisCommand cmd, double max, int type) {
                  // movements to be registered at completed even though robot
                  // may still be moving
                  [this, max](holo_commands::Chained& v) -> bool {
-                     double v_max = std::max(fabs(v.v_x), fabs(v.v_y), fabs(v.v_theta));
+                     double v_max = std::max(fabs(v.v_theta), std::max(fabs(v.v_x), fabs(v.v_y)));
                      if (v_max > max) {
                          v.v_x = v.v_x * max / v_max;
                          v.v_y = v.v_y * max / v_max;
@@ -136,7 +148,7 @@ bool HolonomicChassis::execute(HoloChassisCommand cmd, double max, int type) {
                  // around the side of the robot and returning true when the
                  // turn is finished
                  [this, max](holo_commands::Swing& v) {
-                     double v_max = std::max(fabs(v.v_x), fabs(v.v_y), fabs(v.v_theta));
+                     double v_max = std::max(fabs(v.v_theta), std::max(fabs(v.v_x), fabs(v.v_y)));
                      if (v_max > max) {
                          v.v_x = v.v_x * max / v_max;
                          v.v_y = v.v_y * max / v_max;
