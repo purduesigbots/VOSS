@@ -66,10 +66,10 @@ void HolonomicChassis::arcade(double forward_speed, double turn_speed) {
 }
 
 void HolonomicChassis::holonomic(double forward_speed, double sideways_speed, double turn_speed) {
-    double front_left = forward_speed - sideways_speed - turn_speed;
-    double front_right = forward_speed + sideways_speed + turn_speed;
-    double back_left = forward_speed + sideways_speed - turn_speed;
-    double back_right = forward_speed - sideways_speed + turn_speed;
+    double front_left = forward_speed + sideways_speed + turn_speed;
+    double front_right = forward_speed - sideways_speed + turn_speed;
+    double back_left = forward_speed - sideways_speed - turn_speed;
+    double back_right = forward_speed + sideways_speed - turn_speed;
 
     this->front_left_motors->move_voltage(120.0 * front_left);
     this->front_right_motors->move_voltage(120.0 * front_right);
