@@ -30,7 +30,7 @@ class MoveToPoint: public Routine {
         bool reverse;
         bool thru;
         bool done = false;
-        bool holonomic;
+        bool holonomic = false;
     public:
         MoveToPoint(Point target, MoveToPoint::Params params, DriveSignal initial_speeds):
             target(target),

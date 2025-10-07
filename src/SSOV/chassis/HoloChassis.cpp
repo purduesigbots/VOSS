@@ -114,8 +114,9 @@ void HolonomicChassis::move(Point target, PointMoveParams params) {
         routine_params.exit = default_ec;
     }
     max_speed = params.max;
+    routine_params.holonomic = true;
     run_routine(std::make_shared<MoveToPoint>(target, routine_params, current_drive_signal));
-    std::cout << "I am getting here" << std::endl;
+    //std::cout << "I am getting here" << std::endl;
     if (!params.async) {
         wait_until_done();
     }
@@ -138,8 +139,8 @@ void HolonomicChassis::move(UserPose target, PoseMoveParams params) {
         routine_params.ec = default_ec;
     }
     max_speed = params.max;
-    std::cout << "I am getting here" << std::endl;
     run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
+    std::cout << "I am getting here" << std::endl;
     if (!params.async) {
         wait_until_done();
     }
@@ -184,6 +185,7 @@ void HolonomicChassis::turn(Point target, TurnParams params) {
         routine_params.exit = default_ec;
     }
     max_speed = params.max;
+
     run_routine(std::make_shared<TurnToPoint>(target, routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();

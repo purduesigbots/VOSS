@@ -2,6 +2,8 @@
 
 #include "SSOV/common/Math.hpp"
 
+#include <iostream>
+
 #include <algorithm>
 
 namespace ssov {
@@ -13,6 +15,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     double angle_error;
     double lin_speed;
     double hor_speed;
+    std::cout << "I am getting here 2" << std::endl;
     if (!reverse) {
         angle_error = atan2(dy, dx) - current_pose.theta;
     } else {
