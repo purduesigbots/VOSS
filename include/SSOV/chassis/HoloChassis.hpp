@@ -93,11 +93,13 @@ class HolonomicChassis {
         bool reverse = false;
         bool thru = false;
         bool async = false;
+        bool holonomic = false;
         static PointMoveParams Default() {
             return {};
         }
     };
     void move(Point target, PointMoveParams params = PointMoveParams::Default());
+
 
     struct PoseMoveParams {
         std::shared_ptr<PoseController> controller = nullptr;
@@ -107,6 +109,7 @@ class HolonomicChassis {
         bool reverse = false;
         bool thru = false;
         bool async = false;
+        bool holonomic = false;
         static PoseMoveParams Default() {
             return {};
         }

@@ -17,18 +17,20 @@
 
 #include "replay/replay.hpp"
 
-//ssov::DiffChassis chassis({-13, -14, -15}, {16, 18, 19});
-//RobotOdom odom({-13, -14, -15}, {16, 18, 19}, 12, 20);
-//ssov::PIDPointController controller({0, 0, 0}, {0, 0, 0}, 0);
-// auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{-13}, std::initializer_list<int8_t>{16}, 12, 20);
+//Tracker wheels
 std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>(5, 310.7);
 std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>(7, 310.7);
-auto imu = std::make_unique<pros::IMU>(1);
+//----------------------------------------------------------------------------------------------------------
+
+auto imu = std::make_unique<pros::IMU>(15);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
-auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
+
+
+// auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
+// auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -39,6 +41,9 @@ auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
+	// chassis->default_point_controller = pid;
+	// chassis->default_pose_controller = pid;
+	// chassis->default_ec = ec;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
@@ -137,6 +142,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
+			chassis->move({24,24,90});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();

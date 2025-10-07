@@ -18,6 +18,7 @@ class MoveToPose: public Routine {
             double slew;
             bool reverse;
             bool thru;
+            bool holonomic;
         };
     private:
         std::shared_ptr<PoseController> controller;
@@ -29,6 +30,7 @@ class MoveToPose: public Routine {
         bool reverse;
         bool thru;
         bool done = false;
+        bool holonomic;
     public:
         MoveToPose(Pose target, Params params, DriveSignal initial_speeds):
             target(target),
@@ -38,6 +40,7 @@ class MoveToPose: public Routine {
             slew(params.thru),
             reverse(params.reverse),
             thru(params.thru),
+            holonomic(params.holonomic),
             prev_speeds(initial_speeds) {};
         void start() override {
             controller->reset();
@@ -52,7 +55,7 @@ class MoveToPose: public Routine {
             if (done && !thru) {
                 result = {0, 0, 0};
             } else {
-                result = controller->compute(localizer->get_pose(), target, reverse, thru);
+                result = controller->compute(localizer->get_pose(), target, reverse, thru, holonomic);
                 result.x = ssov::slew(result.x, prev_speeds.x, slew);
                 result.y = ssov::slew(result.y, prev_speeds.y, slew);
                 result.theta = ssov::slew(result.theta, prev_speeds.theta, slew);

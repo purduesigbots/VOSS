@@ -30,7 +30,7 @@ namespace ssov {
                 return std::make_shared<BoomerangController>(linear_constants, angular_constants, min_error, lead_pct);
             }
 
-            DriveSignal compute(const Pose &current_pose, const Pose &target_pose, bool reverse, bool thru) override;
+            DriveSignal compute(const Pose &current_pose, const Pose &target_pose, bool reverse, bool thru, bool holonomic) override;
             void reset() override;
             void set_debug(bool debug) {
                 this->debug = debug;

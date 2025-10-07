@@ -48,7 +48,7 @@ namespace ssov {
                 return mod;
             }
 
-            DriveSignal compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru) override;
+            DriveSignal compute(const Pose &current_pose, const Point &target_point, bool reverse, bool thru, bool holonomic) override;
             void reset() override;
     };
 }
