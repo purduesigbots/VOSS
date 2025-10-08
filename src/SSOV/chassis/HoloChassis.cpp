@@ -65,6 +65,7 @@ void HolonomicChassis::execute(ChassisCommand command) {
                 back_right_speed *= speed_scalar;
             }
             current_drive_signal = speeds_to_drive_signal(front_left_speed, front_right_speed, back_left_speed, back_right_speed);
+            debug = true;
             if (debug) {
                 printf("front left %f, front right %f, back left %f, back right %f\n", front_left_speed, front_right_speed, back_left_speed, back_right_speed);
             }
@@ -140,7 +141,6 @@ void HolonomicChassis::move(UserPose target, PoseMoveParams params) {
     }
     max_speed = params.max;
     run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
-    std::cout << "I am getting here" << std::endl;
     if (!params.async) {
         wait_until_done();
     }

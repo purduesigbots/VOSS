@@ -15,7 +15,6 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     double angle_error;
     double lin_speed;
     double hor_speed;
-    std::cout << "I am getting here 2" << std::endl;
     if (!reverse) {
         angle_error = atan2(dy, dx) - current_pose.theta;
     } else {
@@ -27,6 +26,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * sin(angle_error);
         hor_speed = direct_speed * cos(angle_error);
+        printf("Direct speed: %f   Lin speed: %f  Hor speed: %f\n", direct_speed, lin_speed, hor_speed);
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;

@@ -36,14 +36,16 @@ class HolonomicChassis {
     std::shared_ptr<Localizer> localizer;
     // to set the default controllers and exit condition last year, I just made these public,
     // but they should be set either through the constructor, or using a method.
+
+    double slew(double target, double direction);
+
+  public:
+
     std::shared_ptr<PointController> default_point_controller = nullptr;
     std::shared_ptr<PoseController> default_pose_controller = nullptr;
     std::shared_ptr<TurnController> default_turn_controller = nullptr;
     std::shared_ptr<ExitCondition> default_ec = nullptr;
 
-    double slew(double target, double direction);
-
-  public:
     HolonomicChassis(std::initializer_list<int8_t> front_left_mtr_pts,
                 std::initializer_list<int8_t> front_right_mtr_pts,
                 std::initializer_list<int8_t> back_left_mtr_pts,
