@@ -30,7 +30,7 @@ class MoveToPose: public Routine {
         bool reverse;
         bool thru;
         bool done = false;
-        bool holonomic;
+        bool holonomic = false;
     public:
         MoveToPose(Pose target, Params params, DriveSignal initial_speeds):
             target(target),
