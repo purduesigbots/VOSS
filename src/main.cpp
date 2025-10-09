@@ -81,7 +81,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis->move({2, 0, 0});
+	chassis->move({0, 2, 0});
 }
 
 /**

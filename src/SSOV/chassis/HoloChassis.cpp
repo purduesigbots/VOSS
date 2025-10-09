@@ -11,10 +11,15 @@ namespace ssov {
 // Not sure what this does but was in DiffChassis
 
 inline DriveSignal speeds_to_drive_signal(double front_left_speed, double front_right_speed, double back_left_speed, double back_right_speed) {
-    double side_speed = (front_right_speed - back_left_speed)/-2.0;
+    // double side_speed = (front_right_speed - back_left_speed)/-2.0;
+    // double turn_speed = (back_left_speed - front_right_speed)/2.0;
+    // double forward_speed = (front_left_speed - side_speed - turn_speed); 
+    // return {forward_speed, side_speed, turn_speed};
+
+    double side_speed = (back_left_speed - front_left_speed)/-2.0;
     double turn_speed = (back_left_speed - front_right_speed)/2.0;
     double forward_speed = (front_left_speed - side_speed - turn_speed); 
-    return {forward_speed,side_speed,turn_speed};
+    return {forward_speed, side_speed, turn_speed};
 }
 
 HolonomicChassis::HolonomicChassis(std::initializer_list<int8_t> front_left_mtr_pts, std::initializer_list<int8_t> front_right_mtr_pts, std::initializer_list<int8_t> back_left_mtr_pts, std::initializer_list<int8_t> back_right_mtr_pts):

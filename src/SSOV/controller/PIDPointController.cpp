@@ -30,7 +30,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * cos(angle_error);
         hor_speed = direct_speed * sin(angle_error);
-        printf("Direct speed: %f   Lin speed: %f  Hor speed: %f\n", direct_speed, lin_speed, hor_speed);
+        //printf("Direct speed: %f   Lin speed: %f  Hor speed: %f\n", direct_speed, lin_speed, hor_speed);
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
