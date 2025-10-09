@@ -5,7 +5,7 @@
 #include "SSOV/chassis/DiffChassis.hpp"
 #include "SSOV/chassis/HoloChassis.hpp"
 #include "SSOV/controller/PIDPointController.hpp"
-#include "SSOV/controller/BoomerangController.hpp"
+#include "SSOV/controller/PIDPoseController.hpp"
 #include "SSOV/exit_condition/ToleranceExitCondition.hpp"
 
 #include "SSOV/trajectory/PathTrajectory.hpp"
@@ -23,12 +23,12 @@ std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITr
 std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>(7, 310.7);
 //----------------------------------------------------------------------------------------------------------
 
-auto imu = std::make_unique<pros::IMU>(15);
+auto imu = std::make_unique<pros::IMU>(13);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
-auto boomerang = std::make_shared<ssov::BoomerangController>(ssov::PIDConstants{7.5, 0, 1}, ssov::PIDConstants{90, 0.1, 19},10, 0.6);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{7.5, 0, 1}, ssov::PIDConstants{250, 5, 24.35}, 5);
 
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
@@ -44,7 +44,7 @@ void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
 	chassis->default_point_controller = pid;
-	chassis->default_pose_controller = boomerang;
+	chassis->default_pose_controller = pid_pose;
 	chassis->default_ec = ec;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
@@ -123,7 +123,7 @@ void opcontrol() {
 
 	while (true) {
 		ssov::Pose pose = odom->get_pose();
-		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, pose.theta);
+		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, ssov::to_degrees(pose.theta));
 		//replay::Packet packet;
 		//packet.add_pose("robot location", pose.x, pose.y, pose.theta);
 		//logger.log(packet);
@@ -146,7 +146,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({2,2}, {.holonomic = true});
+			chassis->move({2,2, 90}, {.holonomic = true});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();
@@ -157,7 +157,7 @@ void opcontrol() {
 				//fprintf(file, "%f, %f, %f, %f, %f\n", state.vel.x, state.vel.theta, vel.x, vel.y, vel.theta);
 				//pros::delay(10);
 			//}
-			fclose(file);
+			//fclose(file);
 		}
 		//auto local_change = odom->get_local_change();
 		auto vel = odom->get_velocities();
