@@ -28,7 +28,7 @@ auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), null
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
-auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{7.5, 0, 1}, ssov::PIDConstants{250, 5, 24.35}, 5);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{7.5, 0, 1}, ssov::PIDConstants{250, 5, 24.35}, 1);
 
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
@@ -81,7 +81,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis->move({10, 10, 0});
+	chassis->move({2, 0, 0});
 }
 
 /**

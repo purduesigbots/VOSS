@@ -21,12 +21,16 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         angle_error = atan2(-dy, -dx) - current_pose.theta;
     }
     angle_error = norm_delta(angle_error);
+
+    if (angle_error == NAN){
+        angle_error = 0;
+    }
     
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
-        lin_speed = direct_speed * sin(angle_error);
-        hor_speed = direct_speed * cos(angle_error);
-        printf("Direct speed: %f   Lin speed: %f  Hor speed: %f", direct_speed, lin_speed, hor_speed);
+        lin_speed = direct_speed * cos(angle_error);
+        hor_speed = direct_speed * sin(angle_error);
+        printf("Direct speed: %f   Lin speed: %f  Hor speed: %f  Angle error: %f", direct_speed, lin_speed, hor_speed, angle_error);
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
@@ -46,7 +50,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         }
         double min_dist_ang_err = norm_delta(min_dist_angle - current_pose.theta);
         ang_speed = angular_pid.update(min_dist_ang_err);
-        printf("  Angular speed: %f\n", ang_speed);
+        printf("  Angular speed norm: %f\n", ang_speed);
     } else {
         min_dist_angle = NAN;
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {

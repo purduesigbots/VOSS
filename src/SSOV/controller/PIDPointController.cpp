@@ -21,11 +21,15 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
         angle_error = atan2(-dy, -dx) - current_pose.theta;
     }
     angle_error = norm_delta(angle_error);
+
+    if (angle_error == NAN){
+        angle_error = 0;
+    }
     
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
-        lin_speed = direct_speed * sin(angle_error);
-        hor_speed = direct_speed * cos(angle_error);
+        lin_speed = direct_speed * cos(angle_error);
+        hor_speed = direct_speed * sin(angle_error);
         printf("Direct speed: %f   Lin speed: %f  Hor speed: %f\n", direct_speed, lin_speed, hor_speed);
     }
     else {

@@ -52,10 +52,11 @@ void HolonomicChassis::arcade(double forward_speed, double turn_speed, double si
 void HolonomicChassis::execute(ChassisCommand command) {
     std::visit(overloaded{
         [this](const DriveSignal &signal) {
-            double front_left_speed = signal.y + signal.x + signal.theta;
-            double front_right_speed = signal.y - signal.x + signal.theta;
-            double back_left_speed = signal.y - signal.x - signal.theta;
-            double back_right_speed =  signal.y + signal.x - signal.theta;
+            printf("Drive signal x: %f, y: %f, theta: %f\n", signal.x, signal.y, signal.theta);
+            double front_left_speed = signal.x + signal.y + signal.theta;
+            double front_right_speed = signal.x - signal.y - signal.theta;
+            double back_left_speed = signal.x - signal.y + signal.theta;
+            double back_right_speed =  signal.x + signal.y - signal.theta;
             double signal_max_speed = std::max(fabs(front_left_speed), std::max(fabs(front_right_speed), std::max(fabs(back_left_speed), fabs(back_right_speed))));
             double speed_scalar = max_speed / signal_max_speed;
             if (speed_scalar < 1) {
@@ -65,7 +66,7 @@ void HolonomicChassis::execute(ChassisCommand command) {
                 back_right_speed *= speed_scalar;
             }
             current_drive_signal = speeds_to_drive_signal(front_left_speed, front_right_speed, back_left_speed, back_right_speed);
-            debug = true;
+            debug = false;
             if (debug) {
                 printf("front left %f, front right %f, back left %f, back right %f\n", front_left_speed, front_right_speed, back_left_speed, back_right_speed);
             }
@@ -140,6 +141,7 @@ void HolonomicChassis::move(UserPose target, PoseMoveParams params) {
         routine_params.ec = default_ec;
     }
     max_speed = params.max;
+    routine_params.holonomic = true;
     run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();
