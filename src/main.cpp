@@ -80,9 +80,7 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-	chassis->move({0, 2, 0});
-}
+void autonomous() {}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -99,27 +97,32 @@ void autonomous() {
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	const double kV_lin = 1.47410043;
-	const double kV_ang = 8.3411535;
+
+	// PP Testing ---------------------------------------------------------------
+	// const double kV_lin = 1.47410043;
+	// const double kV_ang = 8.3411535;
 	bool log_data = false;
 	//replay::FileLogger logger("poses.txt");
-	ssov::QuinticSplinePath path1({{0, 0, 0}, {24, 24, M_PI_2}}, false);
-	ssov::QuinticSplinePath path2({{24, 24, M_PI_2}, {48, 0, M_PI}}, true);
-	ssov::QuinticSplinePath path3({{48, 0, M_PI}, {24, -24, -M_PI_2}}, false);
-	ssov::QuinticSplinePath path4({{24, -24, -M_PI_2}, {0, 0, 0}}, true);
-	ssov::TrajectoryConstraints constraints = {
-		50,
-		100,
-		-60,
-		18.6,
-		50,
-		10.7
-	};
+	// ssov::QuinticSplinePath path1({{0, 0, 0}, {24, 24, M_PI_2}}, false);
+	// ssov::QuinticSplinePath path2({{24, 24, M_PI_2}, {48, 0, M_PI}}, true);
+	// ssov::QuinticSplinePath path3({{48, 0, M_PI}, {24, -24, -M_PI_2}}, false);
+	// ssov::QuinticSplinePath path4({{24, -24, -M_PI_2}, {0, 0, 0}}, true);
+	// ssov::TrajectoryConstraints constraints = {
+	// 	50,
+	// 	100,
+	// 	-60,
+	// 	18.6,
+	// 	50,
+	// 	10.7
+	// };
 	//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 	//	auto state = traj.at(i);
 	//	printf("%f, %f, %f, %f, %f\n", state.pose.x, state.pose.y, state.pose.theta, state.vel.x, state.vel.theta);
 	//}
-	FILE *file = fopen("/usd/vel_measurement.txt", "w");
+	// FILE *file = fopen("/usd/vel_measurement.txt", "w");
+
+
+	//-------------------------------------------------------------------------------
 
 	while (true) {
 		ssov::Pose pose = odom->get_pose();
