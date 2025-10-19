@@ -80,13 +80,7 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-<<<<<<< HEAD
-void autonomous() {
-	chassis->move({2, 2, 0});
-}
-=======
 void autonomous() {}
->>>>>>> 45aee7cdc06d4cb95a9ad87a185da352f16e0880
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -155,7 +149,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({2,2, 90}, 0, {.holonomic = true});
+			chassis->move({2,2, ssov::to_radians(90)}, 0, {.holonomic = true});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();
@@ -170,12 +164,12 @@ void opcontrol() {
 		}
 		//auto local_change = odom->get_local_change();
 		auto vel = odom->get_velocities();
-		if (log_data) {
-			// auto speeds = chassis->get_speeds();
-			//printf("%.2f %.2f %.2f\n", odom->get_left_velocity(), odom->get_right_velocity(), odom->get_rot_velocity());
-			//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
-			//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
-		}
+		// if (log_data) {
+		// 	// auto speeds = chassis->get_speeds();
+		// 	//printf("%.2f %.2f %.2f\n", odom->get_left_velocity(), odom->get_right_velocity(), odom->get_rot_velocity());
+		// 	//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
+		// 	//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
+		// }
 		pros::delay(10);                               // Run for 20 ms then update
 	}
 }
