@@ -81,7 +81,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis->move({0, 2, 0});
+	chassis->move({2, 2, 0});
 }
 
 /**
@@ -146,7 +146,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({2,2, 90}, {.holonomic = true});
+			chassis->move({2,2, 90}, 0, {.holonomic = true});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();

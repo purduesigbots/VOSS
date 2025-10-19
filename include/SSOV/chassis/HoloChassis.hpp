@@ -118,7 +118,7 @@ class HolonomicChassis {
     };
     // move accepts UserPose, which has target heading in degrees,
     // and converts to radians when creating the MoveToPose routine
-    void move(UserPose target, PoseMoveParams params = PoseMoveParams::Default());
+    void move(UserPose target, int strafe_angle = 0, PoseMoveParams params = PoseMoveParams::Default());
 
     struct TurnParams {
         std::shared_ptr<TurnController> controller = nullptr;

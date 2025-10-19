@@ -6,8 +6,10 @@
 
 #include <algorithm>
 
+#include <numbers>
+
 namespace ssov {
-DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &target_point, bool reverse, bool thru, bool holonomic) {
+DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &target_point, bool reverse, bool thru, bool holonomic, int strafe_angle) {
     int dir = reverse ? -1 : 1;
     double dx = target_point.x - current_pose.x;
     double dy = target_point.y - current_pose.y;
@@ -20,7 +22,11 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     } else {
         angle_error = atan2(-dy, -dx) - current_pose.theta;
     }
-    angle_error = norm_delta(angle_error);
+
+    if (distance_error > min_error * 5)
+        angle_error = norm_delta(angle_error) * strafe_angle * (std::numbers::pi/180);
+    else
+        angle_error = norm_delta(target_point.theta - current_pose.theta);
 
     if (angle_error == NAN){
         angle_error = 0;

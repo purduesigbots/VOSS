@@ -129,7 +129,7 @@ void HolonomicChassis::move(Point target, PointMoveParams params) {
     }
 }
 
-void HolonomicChassis::move(UserPose target, PoseMoveParams params) {
+void HolonomicChassis::move(UserPose target, int strafe_angle, PoseMoveParams params) {
     MoveToPose::Params routine_params = {
         params.controller,
         params.ec,
@@ -147,6 +147,7 @@ void HolonomicChassis::move(UserPose target, PoseMoveParams params) {
     }
     max_speed = params.max;
     routine_params.holonomic = true;
+    routine_params.strafe_angle = strafe_angle;
     run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();

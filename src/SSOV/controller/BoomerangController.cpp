@@ -4,7 +4,7 @@
 
 namespace ssov {
 
-DriveSignal BoomerangController::compute(const Pose &current_pose, const Pose &target_pose, bool reverse, bool thru, bool holonomic) {
+DriveSignal BoomerangController::compute(const Pose &current_pose, const Pose &target_pose, bool reverse, bool thru, bool holonomic, int strafe_angle) {
     int dir = reverse ? -1 : 1;
     double distance_error = distance(target_pose.to_point(), current_pose.to_point());
     Point carrot_point;
