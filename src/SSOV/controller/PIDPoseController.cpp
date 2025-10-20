@@ -9,10 +9,12 @@
 #include <numbers>
 
 namespace ssov {
-DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &target_point, bool reverse, bool thru, bool holonomic, int strafe_angle) {
+DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &target_point, bool reverse, bool thru, bool holonomic, float strafe_angle) {
     int dir = reverse ? -1 : 1;
     double dx = target_point.x - current_pose.x;
     double dy = target_point.y - current_pose.y;
+
+    //printf("DX: %f DY: %f\n", dx, dy);
     double distance_error = sqrt(dx * dx + dy * dy);
     double angle_error;
     double lin_speed;
@@ -23,15 +25,13 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         angle_error = atan2(-dy, -dx) - current_pose.theta;
     }
 
-    if (distance_error > min_error * 5)
-        angle_error = norm_delta(angle_error) * strafe_angle * (std::numbers::pi/180);
-    else
-        angle_error = norm_delta(target_point.theta - current_pose.theta);
-
     if (angle_error == NAN){
         angle_error = 0;
     }
-    
+    printf("Angle Error: %f\n", strafe_angle);
+
+    //printf("Angle Error: %f\n", angle_error);
+
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * cos(angle_error);
@@ -40,6 +40,11 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
     }
+
+    if (distance_error > min_error)
+        angle_error = norm_delta(angle_error + strafe_angle);
+    else
+        angle_error = norm_delta(target_point.theta - current_pose.theta);
     
     double ang_speed;
     if (distance_error < min_error) {
@@ -64,7 +69,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
             lin_speed = -lin_speed;
         }
         ang_speed = angular_pid.update(angle_error);
-        printf("  Angular speed: %f\n", ang_speed);
+        //printf("  Angular speed: %f\n", ang_speed);
     }
 
     lin_speed = std::clamp(lin_speed, -100.0, 100.0);
@@ -72,7 +77,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     if (debug) {
         printf("%.2f, %.2f\n", distance_error, angle_error);
     }
-    printf("Direct speed: %f   Lin speed: %f  Hor speed: %f  Angle error: %f", 0, lin_speed, hor_speed, angle_error);
+    printf("Angle speed: %f  Lin speed: %f  Hor speed: %f  Angle error: %f DX: %f DY: %f\n", ang_speed, lin_speed, hor_speed, angle_error, dx, dy);
     return {lin_speed, hor_speed, ang_speed};
 }
 

@@ -19,7 +19,7 @@ class MoveToPose: public Routine {
             bool reverse;
             bool thru;
             bool holonomic;
-            int strafe_angle;
+            float strafe_angle;
         };
     private:
         std::shared_ptr<PoseController> controller;
@@ -32,7 +32,7 @@ class MoveToPose: public Routine {
         bool thru;
         bool done = false;
         bool holonomic = false;
-        int strage_angle = 0;
+        float strage_angle = 0;
     public:
         MoveToPose(Pose target, Params params, DriveSignal initial_speeds):
             target(target),

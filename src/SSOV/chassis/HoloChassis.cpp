@@ -57,7 +57,7 @@ void HolonomicChassis::arcade(double forward_speed, double turn_speed, double si
 void HolonomicChassis::execute(ChassisCommand command) {
     std::visit(overloaded{
         [this](const DriveSignal &signal) {
-            printf("Drive signal x: %f, y: %f, theta: %f\n", signal.x, signal.y, signal.theta);
+            //printf("Drive signal x: %f, y: %f, theta: %f\n", signal.x, signal.y, signal.theta);
             double front_left_speed = signal.x + signal.y + signal.theta;
             double front_right_speed = signal.x - signal.y - signal.theta;
             double back_left_speed = signal.x - signal.y + signal.theta;
@@ -129,7 +129,7 @@ void HolonomicChassis::move(Point target, PointMoveParams params) {
     }
 }
 
-void HolonomicChassis::move(UserPose target, int strafe_angle, PoseMoveParams params) {
+void HolonomicChassis::move(UserPose target, float strafe_angle, PoseMoveParams params) {
     MoveToPose::Params routine_params = {
         params.controller,
         params.ec,

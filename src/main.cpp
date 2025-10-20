@@ -19,12 +19,13 @@
 #include "replay/replay.hpp"
 
 //Tracker wheels
-std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>(5, 310.7);
-std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>(7, 310.7);
+std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>(10, 310.7);
+std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADITrackingWheel>(5, 310.7);
+std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 310.7);
 //----------------------------------------------------------------------------------------------------------
 
 auto imu = std::make_unique<pros::IMU>(13);
-auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
+auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), std::move(right), std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
@@ -124,9 +125,10 @@ void opcontrol() {
 
 	//-------------------------------------------------------------------------------
 
+	int timer = 0;
 	while (true) {
 		ssov::Pose pose = odom->get_pose();
-		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, ssov::to_degrees(pose.theta));
+		//pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, ssov::to_degrees(pose.theta));
 		//replay::Packet packet;
 		//packet.add_pose("robot location", pose.x, pose.y, pose.theta);
 		//logger.log(packet);
@@ -149,7 +151,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({2,2, ssov::to_radians(90)}, 0, {.holonomic = true});
+			chassis->move({2,2, ssov::to_radians(0)}, ssov::to_radians(0), {.holonomic = true});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();
@@ -170,6 +172,7 @@ void opcontrol() {
 		// 	//printf("%.2f %.2f %.2f %.2f %.2f %.2f\n", local_change.x * 100, local_change.y * 100, local_change.theta * 100, vel.x, vel.y, vel.theta);
 		// 	//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
 		// }
+		
 		pros::delay(10);                               // Run for 20 ms then update
 	}
 }
