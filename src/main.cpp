@@ -1,15 +1,18 @@
 #include "main.h"
 #include "VOSS/api.hpp"
+#include "VOSS/chassis/ChassisCommand.hpp"
 #include "VOSS/controller/BoomerangControllerBuilder.hpp"
 #include "VOSS/controller/PIDControllerBuilder.hpp"
 #include "VOSS/controller/SwingControllerBuilder.hpp"
 #include "VOSS/localizer/ADILocalizerBuilder.hpp"
 #include "VOSS/utils/flags.hpp"
+#include "pros/device.hpp"
+#include "pros/rtos.hpp"
 
 #define LEFT_MOTORS                                                            \
-    { -10, -12, 14, -15, 20 }
+    {11, -12, 13, -14, 15}
 #define RIGHT_MOTORS                                                           \
-    { 1, 2, -3, -4, 5 }
+    {-3, 2, -1, 4, -7}
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_left_encoder(3)
@@ -142,7 +145,10 @@ void opcontrol() {
         if (master.get_digital_new_press(DIGITAL_Y)) {
             odom->set_pose({0.0, 0.0, 0});
             voss::enable_debug();
-            chassis.move({-36, -36, 90}, boomerang, 70, voss::Flags::REVERSE);
+            for (int i = 0; i < 100; i++) {
+                chassis.execute(voss::chassis::diff_commands::Velocities{70, 70}, 70);
+                pros::delay(10);
+            }
             voss::disable_debug();
         }
 

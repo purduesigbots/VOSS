@@ -15,6 +15,7 @@ class DiffChassis : public AbstractChassis {
     std::unique_ptr<pros::MotorGroup> right_motors;
     double slew_step;
     diff_commands::Voltages prev_voltages;
+    diff_commands::Velocities prev_velocities;
 
     double slew(double target, bool is_left);
 

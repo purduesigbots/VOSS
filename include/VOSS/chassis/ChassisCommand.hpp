@@ -11,6 +11,11 @@ struct Voltages {
     double left;
     double right;
 };
+
+struct Velocities {
+    double left;
+    double right;
+};
 struct Chained {
     double left;
     double right;
@@ -31,7 +36,7 @@ struct Voltages {
 
 using DiffChassisCommand =
     std::variant<Stop, diff_commands::Voltages, diff_commands::Chained,
-                 diff_commands::Swing>;
+                 diff_commands::Swing, diff_commands::Velocities>;
 using HoloChassisCommand = std::variant<Stop, holo_commands::Voltages>;
 
 template <class... Ts> struct overload : Ts... { using Ts::operator()...; };

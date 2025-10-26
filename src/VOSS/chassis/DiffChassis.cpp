@@ -1,6 +1,9 @@
 #include "VOSS/chassis/DiffChassis.hpp"
+#include "pros/abstract_motor.hpp"
 #include "pros/motors.h"
 #include <cmath>
+#include <cstdio>
+#include "VOSS/utils//debug.hpp"
 
 namespace voss::chassis {
 
@@ -137,7 +140,38 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                      }
 
                      return false;
-                 }},
+                 },
+                [this, max](diff_commands::Velocities& v) {
+                    double v_max = std::max(fabs(v.left), fabs(v.right));
+                    v.left = slew(v.left, true);
+                    v.right = slew(v.right, false);
+                    double rpm = 1.0;
+
+                    if(left_motors->get_gearing() == pros::MotorGears::rpm_100) {
+                        rpm = 1.0;
+                    }
+                    else if (left_motors->get_gearing() == pros::MotorGears::rpm_200) {
+                        rpm = 2.0;
+                    }
+                    else if (left_motors->get_gearing() == pros::MotorGears::rpm_600) {
+                        rpm = 6.0;
+                    }
+
+                    if (v_max > max) {
+                         v.left = v.left * max / v_max;
+                         v.right = v.right * max / v_max;
+                    }
+
+                    this->left_motors->move_velocity(rpm*v.right);
+                    this->right_motors->move_velocity(rpm*v.left);
+
+                    if (get_debug()) {
+                        std::cout<<this->left_motors->get_actual_velocity()<<", "<<rpm*v.left<<", "<<this->right_motors->get_actual_velocity()<<", "<<rpm*v.right<<"\n";
+                    }
+
+                    this->prev_voltages = {v.left, v.right};
+                    return false;
+                }},
         cmd);
 }
 
