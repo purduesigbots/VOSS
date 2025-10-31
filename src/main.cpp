@@ -173,11 +173,11 @@ void opcontrol() {
 		// 	//fprintf(file, "%.2f, %.2f, %.2f, %.2f, %.2f\n", speeds.left_speed * 0.12, speeds.right_speed * 0.12, vel.x, vel.y, vel.theta);
 		// }
 
-		// if (timer > 50){
-		// 	std::cout << "X: " << pose.x << ", Y: " << pose.y << std::endl;
-		// 	timer = 0;
-		// }
-		// timer++;
+		if (timer > 50){
+			std::cout << "X: " << pose.x << ", Y: " << pose.y << ", Theta: " << pose.theta << std::endl;
+			timer = 0;
+		}
+		timer++;
 		
 		pros::delay(10);                               // Run for 20 ms then update
 	}
