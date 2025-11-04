@@ -28,7 +28,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     if (angle_error == NAN){
         angle_error = 0;
     }
-    printf("Angle Error: %f\n", strafe_angle);
+    //printf("Angle Error: %f\n", strafe_angle);
 
     //printf("Angle Error: %f\n", angle_error);
 
@@ -36,6 +36,8 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * cos(angle_error);
         hor_speed = direct_speed * sin(angle_error);
+
+        //printf("%.2f, %.2f\n", lin_speed, hor_speed);
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
@@ -60,7 +62,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         }
         double min_dist_ang_err = norm_delta(min_dist_angle - current_pose.theta);
         ang_speed = angular_pid.update(min_dist_ang_err);
-        printf("  Angular speed norm: %f\n", ang_speed);
+        //printf("  Angular speed norm: %f\n", ang_speed);
     } else {
         min_dist_angle = NAN;
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
@@ -78,7 +80,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         printf("%.2f, %.2f\n", distance_error, angle_error);
     }
     //printf("Angle speed: %f  Lin speed: %f  Hor speed: %f  Angle error: %f DX: %f DY: %f\n", ang_speed, lin_speed, hor_speed, angle_error, dx, dy);
-    return {lin_speed, hor_speed, ang_speed};
+    return {lin_speed, ang_speed, hor_speed};
 }
 
 void PIDPoseController::reset() {

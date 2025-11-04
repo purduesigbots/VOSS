@@ -62,7 +62,7 @@ void HolonomicChassis::execute(ChassisCommand command) {
             double front_right_speed = signal.x - signal.y - signal.theta;
             double back_left_speed = signal.x - signal.y + signal.theta;
             double back_right_speed =  signal.x + signal.y - signal.theta;
-            max_speed = 30;
+            max_speed = 50;
             double signal_max_speed = std::max(fabs(front_left_speed), std::max(fabs(front_right_speed), std::max(fabs(back_left_speed), fabs(back_right_speed))));
             double speed_scalar = max_speed / signal_max_speed;
             if (speed_scalar < 1) {
