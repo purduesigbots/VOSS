@@ -66,7 +66,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     if (debug) {
         printf("%.2f, %.2f\n", distance_error, angle_error);
     }
-    return {lin_speed, hor_speed, ang_speed};
+    return {lin_speed, ang_speed, hor_speed};
 }
 
 void PIDPointController::reset() {
