@@ -48,6 +48,7 @@ void initialize() {
 	chassis->default_point_controller = pid;
 	chassis->default_pose_controller = pid_pose;
 	chassis->default_ec = ec;
+	odom->imu_dir = -1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
