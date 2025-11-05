@@ -57,7 +57,7 @@ class TrackingWheelLocalizer: public OdometryLocalizer {
             timer++;
 
             if (imu) {
-                double angle = -to_radians(imu->get_rotation());
+                double angle = to_radians(imu->get_rotation());
                 dtheta = norm_delta(angle - prev_angle);
                 prev_angle += dtheta;
             } else if (left && right) {

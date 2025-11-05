@@ -29,7 +29,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * cos(angle_error);
-        hor_speed = direct_speed * sin(angle_error);
+        hor_speed = direct_speed * sin(angle_error) * 1.5;
         //printf("Direct speed: %f   Lin speed: %f  Hor speed: %f\n", direct_speed, lin_speed, hor_speed);
     }
     else {
@@ -66,7 +66,7 @@ DriveSignal PIDPointController::compute(const Pose &current_pose, const Point &t
     if (debug) {
         printf("%.2f, %.2f\n", distance_error, angle_error);
     }
-    return {lin_speed, ang_speed, hor_speed};
+    return {lin_speed, hor_speed, ang_speed};
 }
 
 void PIDPointController::reset() {

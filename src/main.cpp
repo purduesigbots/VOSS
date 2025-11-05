@@ -21,16 +21,17 @@
 //Tracker wheels
 //std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>('e', 310.7);
 std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADITrackingWheel>('e', 310.7*3.5);
-std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 310.7*3.5);
+std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 310.7*3);
 //----------------------------------------------------------------------------------------------------------
 //std::move(middle)
-auto imu = std::make_unique<pros::IMU>(1);
-//auto imu = std::make_unique<pros::IMU>(20);
+//auto imu = std::make_unique<pros::IMU>(1);
+auto imu = std::make_unique<pros::IMU>(20);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
-auto ec = std::make_shared<ssov::ToleranceExitCondition>(1.0, 0.04, 200);
-auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{7.5, 0, 1}, ssov::PIDConstants{250, 5, 24.35}, 1);
+auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 200);
+auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{280, 5, 24.35}, 1);
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -83,8 +84,16 @@ void competition_initialize() {}
  */
 void autonomous() {
 	odom->set_pose({0, 0, 0});
-	chassis->move({20, 0, ssov::to_radians(0)}, ssov::to_radians(0), {.holonomic = true});
-	//chassis->move({20, 10, ssov::to_radians(0)}, ssov::to_radians(0), {.holonomic = true});
+	
+	chassis->default_ec = ec_thru;
+
+	chassis->move({15, 0, ssov::to_radians(0)}, ssov::to_radians(0), {.max=25, .thru=true, .holonomic = true});
+
+	chassis->move({15, -50, ssov::to_radians(0)}, ssov::to_radians(0), {.max=60, .thru=true, .holonomic = true});
+
+	chassis->move({0, -50, ssov::to_radians(0)}, ssov::to_radians(0), {.max=25, .thru=true, .holonomic = true});
+
+	chassis->move({0, 0, ssov::to_radians(0)}, ssov::to_radians(0), {.max=65, .thru=false, .holonomic = true});
 }
 
 /**

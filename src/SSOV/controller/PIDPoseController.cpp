@@ -34,8 +34,8 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
 
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
-        lin_speed = direct_speed * cos(angle_error);
-        hor_speed = direct_speed * sin(angle_error);
+        lin_speed = direct_speed * cos(angle_error); //* (std::abs(angle_error) > 1 ? -1 : 1);
+        hor_speed = direct_speed * sin(angle_error) * 1.6;
 
         //printf("%.2f, %.2f\n", lin_speed, hor_speed);
     }
@@ -43,10 +43,11 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
     }
 
-    if (distance_error > min_error)
-        angle_error = norm_delta(angle_error + strafe_angle);
-    else
-        angle_error = norm_delta(target_point.theta - current_pose.theta);
+    if(std::abs(strafe_angle) <= 2){
+        angle_error = strafe_angle - current_pose.theta;
+    }
+
+    angle_error = norm_delta(angle_error);
     
     double ang_speed;
     if (distance_error < min_error) {
@@ -64,6 +65,9 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         ang_speed = angular_pid.update(min_dist_ang_err);
         //printf("  Angular speed norm: %f\n", ang_speed);
     } else {
+        if (distance_error < min_error*3.2)
+            angle_error = norm_delta(target_point.theta - current_pose.theta);
+            
         min_dist_angle = NAN;
         if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
             angle_error =
@@ -80,7 +84,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         printf("%.2f, %.2f\n", distance_error, angle_error);
     }
     //printf("Angle speed: %f  Lin speed: %f  Hor speed: %f  Angle error: %f DX: %f DY: %f\n", ang_speed, lin_speed, hor_speed, angle_error, dx, dy);
-    return {lin_speed, ang_speed, hor_speed};
+    return {lin_speed, hor_speed, ang_speed};
 }
 
 void PIDPoseController::reset() {
