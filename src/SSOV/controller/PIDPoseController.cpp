@@ -8,6 +8,8 @@
 
 #include <numbers>
 
+//#include <math.h>
+
 namespace ssov {
 DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &target_point, bool reverse, bool thru, bool holonomic, float strafe_angle) {
     int dir = reverse ? -1 : 1;
@@ -43,7 +45,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
     }
 
-    if(std::abs(strafe_angle) <= 2){
+    if(std::abs(strafe_angle) <= 2 * M_PI){
         angle_error = strafe_angle - current_pose.theta;
     }
 
