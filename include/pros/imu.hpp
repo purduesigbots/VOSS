@@ -7,7 +7,7 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2023, Purdue University ACM SIGBots.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -55,7 +55,7 @@ inline namespace v5 {
 class Imu : public Device {
 	/**
 	 * \addtogroup cpp-imu
-	 * @{
+	 * ///@{
 	 */
 
 	public:
@@ -83,8 +83,8 @@ class Imu : public Device {
 	 * \endcode
 	 */
 
+	Imu(const std::uint8_t port) : Device(port, DeviceType::imu) {};
 
-	Imu(const std::uint8_t port) : Device(port, DeviceType::imu){};
 
 	Imu(const Device& device) : Imu(device.get_port()){};
 
@@ -136,7 +136,7 @@ class Imu : public Device {
 	 *
 	 * void opcontrol() {
 	 *   pros::Imu imu(IMU_PORT);
-	 *
+	 *   imu.calibrate();
 	 *   // Block until calibration is complete
 	 *   imu.reset(true);
 	 * }
@@ -189,20 +189,6 @@ class Imu : public Device {
 	 * \endcode
 	 */
 	virtual std::int32_t set_data_rate(std::uint32_t rate) const;
-
-
-	/**
-	 * Gets all IMU sensors.
-	 * 
-	 * \return A vector of Imu sensor objects.
-	 *
-	 * \b Example
- 	 * \code
-	 * void opcontrol() {
-	 *   std::vector<Imu> imu_all = pros::Imu::get_all_devices();  // All IMU sensors that are connected
-	 * }
- 	 * \endcode
-	 */
 
 	static std::vector<Imu> get_all_devices();
 
@@ -1011,7 +997,7 @@ class Imu : public Device {
 	 *
 	 *   while (true) {
 	 *     // Calibrate the sensor
-	 *     imu.reset();
+	 *     imu.calibrate();
 	 *     delay(20);
 	 *
 	 *     // Check if the sensor is calibrating
@@ -1054,19 +1040,6 @@ class Imu : public Device {
 };
 
 namespace literals {
-/**
- * Constructs a Imu from a literal ending in _imu via calling the constructor
- *
- * \return a pros::Imu for the corresponding port
- *
- * \b Example
- * \code
- * using namespace pros::literals;
- * void opcontrol() {
- *	pros::Imu imu = 2_imu; //Makes an IMU object on port 2
- * }
- * \endcode
- */
 const pros::Imu operator"" _imu(const unsigned long long int i);
 }  // namespace literals
 

@@ -7,7 +7,7 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2023, Purdue University ACM SIGBots.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -223,19 +223,6 @@ class Gps : public Device {
 	 */
 	virtual std::int32_t set_offset(double xOffset, double yOffset) const;
 
-	/**
-
-	 * Gets all GPS sensors.
-	 *
-	 * \return A vector of Gps sensor objects.
-	 *
-	 * \b Example
-	 * \code
-	 * void opcontrol() {
-	 *   std::vector<Gps> gps_all = pros::Gps::get_all_devices();  // All GPS sensors that are connected
-	 * }
-	 * \endcode
-	 */
 	static std::vector<Gps> get_all_devices();
 
 	/**

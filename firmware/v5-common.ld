@@ -132,6 +132,12 @@ SECTIONS
    *(.gcc_except_table)
 } > RAM
 
+.mmu_tbl (ALIGN(16384)) : {
+   __mmu_tbl_start = .;
+   *(.mmu_tbl)
+   __mmu_tbl_end = .;
+} > RAM
+
 .ARM.exidx : {
    __exidx_start = .;
    *(.ARM.exidx*)
@@ -160,9 +166,11 @@ SECTIONS
    __fini_array_end = .;
 } > RAM
 
-/DISCARD/ : {
-  *(.ARM.attributes*)
-}
+.ARM.attributes : {
+   __ARM.attributes_start = .;
+   *(.ARM.attributes)
+   __ARM.attributes_end = .;
+} > RAM
 
 .sdata : {
    __sdata_start = .;
@@ -220,7 +228,36 @@ _SDA2_BASE_ = __sdata2_start + ((__sbss2_end - __sdata2_start) / 2 );
    _heap_end = .;
    HeapLimit = .;
 } > HEAP
-/* There are no sections for the stack. This is intentional, since VEXOs sets up a stack before
-   starting the program, and FreeRTOS task stacks are dynamically allocated. */
+
+.stack (NOLOAD) : {
+   . = ALIGN(16);
+   _stack_end = .;
+   . += _STACK_SIZE;
+   . = ALIGN(16);
+   _stack = .;
+   __stack = _stack;
+   . = ALIGN(16);
+   _irq_stack_end = .;
+   . += _IRQ_STACK_SIZE;
+   . = ALIGN(16);
+   __irq_stack = .;
+   _supervisor_stack_end = .;
+   . += _SUPERVISOR_STACK_SIZE;
+   . = ALIGN(16);
+   __supervisor_stack = .;
+   _abort_stack_end = .;
+   . += _ABORT_STACK_SIZE;
+   . = ALIGN(16);
+   __abort_stack = .;
+   _fiq_stack_end = .;
+   . += _FIQ_STACK_SIZE;
+   . = ALIGN(16);
+   __fiq_stack = .;
+   _undef_stack_end = .;
+   . += _UNDEF_STACK_SIZE;
+   . = ALIGN(16);
+   __undef_stack = .;
+} > COLD_MEMORY
+
 _end = .;
 }

@@ -8,13 +8,13 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2023, Purdue University ACM SIGBots.
  * All rights reservered.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
+ * 
  * \defgroup cpp-misc Miscellaneous C++ API
  * \note Additional example code for this module can be found in its [Tutorial.](@ref controller)
  */
@@ -22,10 +22,10 @@
 #ifndef _PROS_MISC_HPP_
 #define _PROS_MISC_HPP_
 
+#include "pros/misc.h"
+
 #include <cstdint>
 #include <string>
-
-#include "pros/misc.h"
 
 namespace pros {
 inline namespace v5 {
@@ -56,13 +56,13 @@ class Controller {
 	 * port.
 	 *
 	 * \return 1 if the controller is connected, 0 otherwise
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void status_display_controller(){
 	 *   pros::Controller master(pros::E_CONTROLLER_MASTER);
 	 *   if(!master.is_connected()) {
-	 * 	   pros::lcd::print(0, "Main controller is not connected!");
+  	 * 	   pros::lcd::print(0, "Main controller is not connected!");
 	 *   }
 	 * }
 	 * \endcode
@@ -84,7 +84,7 @@ class Controller {
 	 *
 	 * \return The current reading of the analog channel: [-127, 127].
 	 * If the controller was not connected, then 0 is returned
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -107,7 +107,7 @@ class Controller {
 	 * port.
 	 *
 	 * \return The controller's battery capacity
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void initialize() {
@@ -127,7 +127,7 @@ class Controller {
 	 * port.
 	 *
 	 * \return The controller's battery level
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void initialize() {
@@ -153,7 +153,7 @@ class Controller {
 	 *
 	 * \return 1 if the button on the controller is pressed.
 	 * If the controller was not connected, then 0 is returned
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -194,7 +194,7 @@ class Controller {
 	 *
 	 * \return 1 if the button on the controller is pressed and had not been
 	 * pressed the last time this function was called, 0 otherwise.
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -203,52 +203,13 @@ class Controller {
 	 *   if (master.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
 	 *     // Toggle pneumatics or other similar actions
 	 *   }
-	 *
+	 * 
 	 *   delay(2);
 	 *   }
 	 * }
 	 * \endcode
 	 */
 	std::int32_t get_digital_new_press(controller_digital_e_t button);
-
-	/**
-	 * Returns a falling-edge case for a controller button press.
-	 *
-	 * This function is not thread-safe.
-	 * Multiple tasks polling a single button may return different results under
-	 * the same circumstances, so only one task should call this function for any
-	 * given button. E.g., Task A calls this function for buttons 1 and 2.
-	 * Task B may call this function for button 3, but should not for buttons
-	 * 1 or 2. A typical use-case for this function is to call inside opcontrol
-	 * to detect new button releases, and not in any other tasks.
-	 *
-	 * This function uses the following values of errno when an error state is
-	 * reached:
-	 * EACCES - Another resource is currently trying to access the controller
-	 * port.
-	 *
-	 * \param button
-	 * 			  The button to read. Must be one of
-	 *        DIGITAL_{RIGHT,DOWN,LEFT,UP,A,B,Y,X,R1,R2,L1,L2}
-	 *
-	 * \return 1 if the button on the controller is not pressed and had been
-	 * pressed the last time this function was called, 0 otherwise.
-	 *
-	 * \b Example
-	 * \code
-	 * void opcontrol() {
-	 * 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	 * 	while (true) {
-	 *   if (master.get_digital_new_release(pros::E_CONTROLLER_DIGITAL_A)) {
-	 *     // Toggle pneumatics or other similar actions
-	 *   }
-	 *
-	 *   delay(2);
-	 *   }
-	 * }
-	 * \endcode
-	 */
-	std::int32_t get_digital_new_release(controller_digital_e_t button);
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-function"
@@ -283,7 +244,7 @@ class Controller {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -325,22 +286,22 @@ class Controller {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
-	 * \code
-	 * void opcontrol() {
-	 *   int count = 0;
+ 	 * \code
+ 	 * void opcontrol() {
+ 	 *   int count = 0;
 	 *   pros::Controller master(pros::E_CONTROLLER_MASTER);
-	 *   while (true) {
-	 *     if (!(count % 25)) {
-	 *       // Only print every 50ms, the controller text update rate is slow
-	 *       master.set_text(0, 0, "Example text");
-	 *     }
-	 *   count++;
-	 *   delay(2);
-	 *   }
-	 * }
-	 * \endcode
+ 	 *   while (true) {
+ 	 *     if (!(count % 25)) {
+ 	 *       // Only print every 50ms, the controller text update rate is slow
+ 	 *       master.set_text(0, 0, "Example text");
+ 	 *     }
+ 	 *   count++;
+ 	 *   delay(2);
+ 	 *   }
+ 	 * }
+ 	 * \endcode
 	 */
 	std::int32_t set_text(std::uint8_t line, std::uint8_t col, const char* str);
 	std::int32_t set_text(std::uint8_t line, std::uint8_t col, const std::string& str);
@@ -361,16 +322,16 @@ class Controller {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
-	 * \code
-	 * void opcontrol() {
-	 *   pros::Controller master(pros::E_CONTROLLER_MASTER);
-	 *   master.set_text(0, 0, "Example");
-	 *   delay(100);
-	 *   master.clear_line(0);
-	 * }
-	 * \endcode
+ 	 * \code
+ 	 * void opcontrol() {
+ 	 *   pros::Controller master(pros::E_CONTROLLER_MASTER);
+ 	 *   master.set_text(0, 0, "Example");
+ 	 *   delay(100);
+ 	 *   master.clear_line(0);
+ 	 * }
+ 	 * \endcode
 	 */
 	std::int32_t clear_line(std::uint8_t line);
 
@@ -392,7 +353,7 @@ class Controller {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -425,7 +386,7 @@ class Controller {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -442,7 +403,7 @@ class Controller {
 	controller_id_e_t _id;
 	///@}
 };
-}  //  namespace v5
+} //  namespace v5
 
 namespace battery {
 /**
@@ -457,7 +418,7 @@ namespace battery {
  * EACCES - Another resource is currently trying to access the battery port.
  *
  * \return The current voltage of the battery
- *
+ * 
  * \b Example
  * \code
  * void initialize() {
@@ -475,7 +436,7 @@ double get_capacity(void);
  * EACCES - Another resource is currently trying to access the battery port.
  *
  * \return The current current of the battery
- *
+ * 
  * \b Example
  * \code
  * void initialize() {
@@ -493,7 +454,7 @@ int32_t get_current(void);
  * EACCES - Another resource is currently trying to access the battery port.
  *
  * \return The current temperature of the battery
- *
+ * 
  * \b Example
  * \code
  * void initialize() {
@@ -511,7 +472,7 @@ double get_temperature(void);
  * EACCES - Another resource is currently trying to access the battery port.
  *
  * \return The current capacity of the battery
- *
+ * 
  * \b Example
  * \code
  * void initialize() {
@@ -529,7 +490,7 @@ namespace competition {
  *
  * \return The competition control status as a mask of bits with
  * COMPETITION_{ENABLED,AUTONOMOUS,CONNECTED}.
- *
+ * 
  * \b Example
  * \code
  * void status_display_task(){
@@ -557,7 +518,7 @@ namespace usd {
  * Checks if the SD card is installed.
  *
  * \return 1 if the SD card is installed, 0 otherwise
- *
+ * 
  * \b Example
  * \code
  * void opcontrol() {
@@ -567,7 +528,7 @@ namespace usd {
  */
 std::int32_t is_installed(void);
 /**
- * Lists the files in a directory specified by the path
+Lists the files in a directory specified by the path
  * Puts the list of file names (NOT DIRECTORIES) into the buffer seperated by newlines
  * 
  * This function uses the following values of errno when an error state is
@@ -580,18 +541,18 @@ std::int32_t is_installed(void);
  * EINVAL - the path name format is invalid
  * EACCES - Access denied or directory full
  * EEXIST - Access denied
- * EROFS - SD card is write protected
+ * EROFS - SD card is write protected 
  * ENXIO - drive number is invalid or not a FAT32 drive
  * ENOBUFS - drive has no work area
  * ENFILE - too many open files
- *
- *
- *
+ * 
+ * 
+ *  
  * \note use a path of "\" to list the files in the main directory NOT "/usd/"
  *  DO NOT PREPEND YOUR PATHS WITH "/usd/"
- *
+ * 
  * \return 1 on success or PROS_ERR on failure setting errno
- *
+ * 
  * \b Example
  * \code
  * void opcontrol() {
@@ -606,8 +567,7 @@ std::int32_t is_installed(void);
  *  pros::delay(100);
  * }
  * \endcode
- */
-
+*/
 std::int32_t list_files(const char* path, char* buffer, std::int32_t len);
 }  // namespace usd
 

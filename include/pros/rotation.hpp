@@ -7,12 +7,12 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2023, Purdue University ACM SIGBots.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
+ * 
  * \defgroup cpp-rotation VEX Rotation Sensor C++ API
  */
 #ifndef _PROS_ROTATION_HPP_
@@ -21,8 +21,8 @@
 #include <cstdint>
 #include <iostream>
 
-#include "pros/device.hpp"
 #include "pros/rotation.h"
+#include "pros/device.hpp"
 
 namespace pros {
 inline namespace v5 {
@@ -38,25 +38,25 @@ class Rotation : public Device {
 	public:
 	/**
 	 * Constructs a new Rotation Sensor object
-	 *
+	 * 
 	 * ENXIO - The given value is not within the range of V5 ports |1-21|.
-	 * ENODEV - The port cannot be configured as a Rotation Sensor
-	 *
+ 	 * ENODEV - The port cannot be configured as a Rotation Sensor
+	 * 
 	 * \param port
-	 *        The V5 port number from 1 to 21, or from -21 to -1 for reversed Rotation Sensors.
-	 *
+ 	 *        The V5 port number from 1 to 21, or from -21 to -1 for reversed Rotation Sensors. 
+	 * 		  
 	 * 	\b Example
-	 * \code
-	 * void opcontrol() {
+ 	 * \code
+ 	 * void opcontrol() {
 	 * 	 pros::Rotation rotation_sensor(1); //Creates a Rotation Sensor on port 1
 	 *   pros::Rotation reversed_rotation_sensor(-2); //Creates a reversed Rotation Sensor on port 2
-	 * }
-	 * \endcode
-	 */
+ 	 * }
+ 	 * \endcode
+	*/
 	Rotation(const std::int8_t port);
 
-	Rotation(const Device& device) : Rotation(device.get_port()){};
-
+	Rotation(const Device& device)
+		: Rotation(device.get_port()) {};
 
 	/**
 	 * Reset the Rotation Sensor
@@ -71,7 +71,7 @@ class Rotation : public Device {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
@@ -108,14 +108,14 @@ class Rotation : public Device {
 	 * \param rate The data refresh interval in milliseconds
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 *  \b Example
-	 * \code
-	 * void initialize() {
-	 *   pros::Rotation rotation_sensor(1);
-	 *   rotation_sensor.set_data_rate(5);
-	 * }
-	 * \endcode
+ 	 * \code
+ 	 * void initialize() {
+ 	 *   pros::Rotation rotation_sensor(1);
+ 	 *   rotation_sensor.set_data_rate(5);
+ 	 * }
+ 	 * \endcode
 	 */
 	virtual std::int32_t set_data_rate(std::uint32_t rate) const;
 
@@ -131,7 +131,7 @@ class Rotation : public Device {
 	 * 		  The position in terms of ticks
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
@@ -146,7 +146,7 @@ class Rotation : public Device {
 	 * }
 	 * \endcode
 	 */
-	virtual std::int32_t set_position(std::int32_t position) const;
+	virtual std::int32_t set_position(std::uint32_t position) const;
 
 	/**
 	 * Reset the Rotation Sensor position to 0
@@ -160,7 +160,7 @@ class Rotation : public Device {
 	 * 		  The position in terms of ticks
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * void opcontrol() {
@@ -178,20 +178,6 @@ class Rotation : public Device {
 	virtual std::int32_t reset_position(void) const;
 
 	/**
-	 * Gets all rotation sensors.
-	 * 
-	 * \return A vector of Rotation sensor objects.
-	 *
-	 * \b Example
- 	 * \code
-	 * void opcontrol() {
-	 *   std::vector<Rotation> rotation_all = pros::Rotation::get_all_devices();  // All rotation sensors that are connected
-	 * }
- 	 * \endcode
-	 */
-	static std::vector<Rotation> get_all_devices();
-
-	/**
 	 * Get the Rotation Sensor's current position in centidegrees
 	 *
 	 * This function uses the following values of errno when an error state is
@@ -201,17 +187,17 @@ class Rotation : public Device {
 	 *
 	 * \return The position value or PROS_ERR if the operation failed, setting
 	 * errno.
-	 *
+	 * 
 	 *  \b Example
-	 * \code
-	 * void opcontrol() {
+ 	 * \code
+ 	 * void opcontrol() {
 	 * 	 pros::Rotation rotation_sensor(1);
-	 *   while (true) {
-	 *     printf("Position: %d Ticks \n", rotation_sensor.get_position());
-	 *     delay(20);
-	 *   }
-	 * }
-	 * \endcode
+ 	 *   while (true) {
+ 	 *     printf("Position: %d Ticks \n", rotation_sensor.get_position());
+ 	 *     delay(20);
+ 	 *   }
+ 	 * }
+ 	 * \endcode
 	 */
 	virtual std::int32_t get_position() const;
 
@@ -227,17 +213,17 @@ class Rotation : public Device {
 	 * 				 The V5 Rotation Sensor port number from 1-21
 	 * \return The velocity value or PROS_ERR if the operation failed, setting
 	 * errno.
-	 *
+	 * 	 
 	 *  \b Example
-	 * \code
-	 * void opcontrol() {
+ 	 * \code
+ 	 * void opcontrol() {
 	 * 	 pros::Rotation rotation_sensor(1);
-	 *   while (true) {
-	 *     printf("Velocity: %d centidegrees per second \n", rotation_sensor.get_velocity));
-	 *     delay(20);
-	 *   }
-	 * }
-	 * \endcode
+ 	 *   while (true) {
+ 	 *     printf("Velocity: %d centidegrees per second \n", rotation_sensor.get_velocity));
+ 	 *     delay(20);
+ 	 *   }
+ 	 * }
+ 	 * \endcode
 	 */
 	virtual std::int32_t get_velocity() const;
 
@@ -251,17 +237,17 @@ class Rotation : public Device {
 	 *
 	 * \return The angle value or PROS_ERR if the operation failed, setting
 	 * errno.
-	 *
+	 * 
 	 *  \b Example
-	 * \code
-	 * void opcontrol() {
+ 	 * \code
+ 	 * void opcontrol() {
 	 * 	 pros::Rotation rotation_sensor(1);
-	 *   while (true) {
-	 *     printf("Angle: %d centidegrees \n", rotation_sensor.get_angle());
-	 *     delay(20);
-	 *   }
-	 * }
-	 * \endcode
+ 	 *   while (true) {
+ 	 *     printf("Angle: %d centidegrees \n", rotation_sensor.get_angle());
+ 	 *     delay(20);
+ 	 *   }
+ 	 * }
+ 	 * \endcode
 	 */
 	virtual std::int32_t get_angle() const;
 
@@ -279,7 +265,7 @@ class Rotation : public Device {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
@@ -306,7 +292,7 @@ class Rotation : public Device {
 	 *
 	 * \return 1 if the operation was successful or PROS_ERR if the operation
 	 * failed, setting errno.
-	 *
+	 * 
 	 *  \b Example
 	 * \code
 	 * void opcontrol() {
@@ -333,27 +319,27 @@ class Rotation : public Device {
 	 *
 	 * \return Reversed value or PROS_ERR if the operation failed, setting
 	 * errno.
-	 *
+	 * 
 	 *  \b Example
-	 * \code
-	 * void opcontrol() {
+ 	 * \code
+ 	 * void opcontrol() {
 	 * 	 pros::Rotation rotation_sensor(1);
-	 *   while (true) {
-	 *     printf("Reversed: %d \n", rotation_sensor.get_reversed());
-	 *     delay(20);
-	 *   }
-	 * }
-	 * \endcode
+ 	 *   while (true) {
+ 	 *     printf("Reversed: %d \n", rotation_sensor.get_reversed());
+ 	 *     delay(20);
+ 	 *   }
+ 	 * }
+ 	 * \endcode	 
 	 */
 	virtual std::int32_t get_reversed() const;
 
 	/**
 	 * This is the overload for the << operator for printing to streams
-	 *
+	 * 
 	 * Prints in format(this below is all in one line with no new line):
-	 * Rotation [port: rotation._port, position: (rotation position), velocity: (rotation velocity),
+	 * Rotation [port: rotation._port, position: (rotation position), velocity: (rotation velocity), 
 	 * angle: (rotation angle), reversed: (reversed boolean)]
-	 *
+	 * 
 	 * \b Example
 	 * \code
 	 * #define ROTATION_PORT 1
@@ -369,26 +355,13 @@ class Rotation : public Device {
 	 */
 	friend std::ostream& operator<<(std::ostream& os, const pros::Rotation& rotation);
 
-	///@}
+///@}
 };
 
 namespace literals {
-/**
- * Constructs a Rotation sensor from a literal ending in _rot
- *
- * \return a pros::Rotation for the corresponding port
- *
- * \b Example
- * \code
- * using namespace pros::literals;
- * void opcontrol() {
- *	pros::Rotation rotation = 2_rot; //Makes an Motor object on port 2
- * }
- * \endcode
- */
 const pros::Rotation operator"" _rot(const unsigned long long int r);
 }  // namespace literals
-}  // namespace v5
+}
 }  // namespace pros
 
 #endif
