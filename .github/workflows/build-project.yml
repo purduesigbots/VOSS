@@ -12,9 +12,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         -   name: Install ARM Toolchain
-            uses: carlosperate/arm-none-eabi-gcc-action@v1.8.1
+            uses: carlosperate/arm-none-eabi-gcc-action@v1.11.0
             with:
-                release: "10.3-2021.10"
+                release: "14.3.Rel1"
         -   name: Setup Python
             uses: actions/setup-python@v5
             with:
