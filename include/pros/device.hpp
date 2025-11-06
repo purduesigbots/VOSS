@@ -6,7 +6,7 @@
  * This file should not be modified by users, since it gets replaced whenever
  * a kernel upgrade occurs.
  *
- * \copyright (c) 2017-2021, Purdue University ACM SIGBots.
+ * \copyright (c) 2017-2024, Purdue University ACM SIGBots.
  *
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -51,6 +51,7 @@ enum class DeviceType {
 	adi = 12, ///< This port is an ADI expander
 	optical = 16, ///< An optical sensor is plugged into the port
 	gps = 20, ///< A GPS sensor is plugged into the port
+	aivision = 29, ///< An AI vision sensor is plugged into the port
 	serial = 129, ///< A serial device is plugged into the port
 	undefined = 255 ///< The device type is not defined, or is not a valid device
 };
@@ -137,7 +138,47 @@ class Device {
 	 */
 	pros::DeviceType get_plugged_type() const;
 
+
+	/**
+	 * Gets the type of device on a given port.
+	 * 
+	 * This function uses the following values of errno when an error state is
+	 * reached:
+	 * EACCES - Mutex of port cannot be taken (access denied).
+	 * 
+	 * \param port The V5 port number from 1-21
+	 * 
+	 * \return The device type as an enum.
+	 *
+	 * \b Example
+ 	 * \code
+	 * #define DEVICE_PORT 1
+	 *
+	 * void opcontrol() {
+	 *   while (true) { 
+	 *     DeviceType dt = pros::Device::get_plugged_type(DEVICE_PORT);
+	 *     printf("device plugged type: {plugged type: %d}\n", dt);
+	 *     delay(20);
+	 *   }
+	 * }
+ 	 * \endcode
+	 */
 	static pros::DeviceType get_plugged_type(std::uint8_t port);
+
+	/**
+	 * Gets all devices of a given device type.
+	 * 
+	 * \param device_type The pros::DeviceType enum that matches the type of device desired.
+	 * 
+	 * \return A vector of Device objects for the given device type.
+	 *
+	 * \b Example
+ 	 * \code
+	 * void opcontrol() {
+	 *   std::vector<Device> motor_devices = pros::Device::get_all_devices(pros::DeviceType::motor);  // All Device objects are motors
+	 * }
+ 	 * \endcode
+	 */
 
 	static std::vector<Device> get_all_devices(pros::DeviceType device_type = pros::DeviceType::undefined);
 
