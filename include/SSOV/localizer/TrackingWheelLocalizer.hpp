@@ -24,9 +24,6 @@ class TrackingWheelLocalizer: public OdometryLocalizer {
             middle(std::move(middle)), imu(std::move(imu)),
             left_right_dist(left_right_dist), middle_dist(middle_dist) {};
 
-        int timer = 0;
-        int imu_dir = 1;
-
         void calibrate() override {
             if (left) left->reset();
             if (right) right->reset();
@@ -54,8 +51,6 @@ class TrackingWheelLocalizer: public OdometryLocalizer {
             double delta_left = left_pos - prev_left_pos;
             double delta_right = right_pos - prev_right_pos;
             double delta_middle = middle_pos - prev_middle_pos;
-                
-            timer++;
 
             if (imu) {
                 double angle = -to_radians(imu->get_rotation()) * imu_dir;

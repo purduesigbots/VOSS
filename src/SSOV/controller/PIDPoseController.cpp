@@ -37,7 +37,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     if (holonomic){
         double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
         lin_speed = direct_speed * cos(angle_error); //* (std::abs(angle_error) > 1 ? -1 : 1);
-        hor_speed = direct_speed * sin(angle_error) * 1.6;
+        hor_speed = direct_speed * sin(angle_error) * sideways_multiplier;
 
         //printf("%.2f, %.2f\n", lin_speed, hor_speed);
     }
@@ -63,11 +63,11 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         if (std::isnan(min_dist_angle)) {
             min_dist_angle = current_pose.theta;
         }
-        double min_dist_ang_err = norm_delta(min_dist_angle - current_pose.theta);
+        double min_dist_ang_err = norm_delta(target_point.theta - current_pose.theta);
         ang_speed = angular_pid.update(min_dist_ang_err);
-        //printf("  Angular speed norm: %f\n", ang_speed);
+        //printf("Angular speed norm: %0.2f, Angle: %0.2f, Desired Angle: %0.2f\n", ang_speed, current_pose.theta, target_point.theta);
     } else {
-        if (distance_error < min_error*3.2)
+        if (distance_error < min_error * final_angle_multiplier)
             angle_error = norm_delta(target_point.theta - current_pose.theta);
             
         min_dist_angle = NAN;

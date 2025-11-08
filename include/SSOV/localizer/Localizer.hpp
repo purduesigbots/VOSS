@@ -15,6 +15,7 @@ namespace ssov {
         protected:
             pros::Mutex mtx;
         public:
+            int imu_dir = 1;
             Localizer(uint32_t update_time = 10): update_time(update_time) {};
             virtual void calibrate() = 0;
             virtual void update() = 0;

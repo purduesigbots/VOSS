@@ -18,12 +18,14 @@ namespace ssov {
             double min_dist_angle;
             bool debug = false;
         public:
+            float final_angle_multiplier = 1;
+            float sideways_multiplier = 1;
             PIDPoseController(PIDConstants linear_constants,
                                PIDConstants angular_constants,
                                double min_error):
                 linear_pid(linear_constants),
                 angular_pid(angular_constants),
-                min_error(min_error) {};
+                min_error(min_error){};
             static std::shared_ptr<PIDPoseController> create(PIDConstants linear_constants,
                                                               PIDConstants angular_constants,
                                                               double min_error) {
