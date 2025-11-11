@@ -63,7 +63,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
         printf("  Angular speed norm: %f\n", ang_speed);
     } else {
         min_dist_angle = NAN;
-        if (fabs(angle_error) > M_PI_2 && this->can_reverse) {
+        if (fabs(angle_error) > M_PI && this->can_reverse) {
             angle_error =
                 angle_error - (std::signbit(angle_error) ? -1 : 1) * M_PI;
             lin_speed = -lin_speed;
