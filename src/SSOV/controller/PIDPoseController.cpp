@@ -36,7 +36,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     if (holonomic){
         //We split our speed into linear and horizontal speeds for our drive train
         double lin_speed = (thru ? 100.0 : (linear_pid.update(cos(distance_error)))) * dir;
-        double hor_speed = (thru ? 100.0 : (horizontal_pid.update((distance_error)) * sideways_multiplier)) * dir;
+        double hor_speed = (thru ? 100.0 : (horizontal_pid.update(sin(distance_error)))) * dir;
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
