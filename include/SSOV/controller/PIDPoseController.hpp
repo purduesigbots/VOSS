@@ -9,6 +9,7 @@ namespace ssov {
     class PIDPoseController: public PoseController {
         private:
             PIDController linear_pid;
+            PIDController horizontal_pid;
             PIDController angular_pid;
             const double min_error;
             bool can_reverse;
@@ -21,31 +22,39 @@ namespace ssov {
             float final_angle_multiplier = 1;
             float sideways_multiplier = 1;
             PIDPoseController(PIDConstants linear_constants,
+                               PIDConstants horizontal_constants,
                                PIDConstants angular_constants,
                                double min_error):
                 linear_pid(linear_constants),
+                horizontal_pid(horizontal_constants),
                 angular_pid(angular_constants),
                 min_error(min_error){};
             static std::shared_ptr<PIDPoseController> create(PIDConstants linear_constants,
+                                                              PIDConstants horizontal_constants,
                                                               PIDConstants angular_constants,
                                                               double min_error) {
-                return std::make_shared<PIDPoseController>(linear_constants, angular_constants, min_error);
+                return std::make_shared<PIDPoseController>(linear_constants, horizontal_constants, angular_constants, min_error);
             }
             void set_debug(bool debug) {
                 this->debug = debug;
             }
             std::shared_ptr<PIDPoseController> modify_linear_pid(PIDConstants linear_constants) {
-                auto mod = PIDPoseController::create(linear_constants, angular_pid.get_constants(), min_error);
+                auto mod = PIDPoseController::create(linear_constants, horizontal_pid.get_constants(), angular_pid.get_constants(), min_error);
+                mod->set_debug(debug);
+                return mod;
+            }
+            std::shared_ptr<PIDPoseController> modify_horizontal_pid(PIDConstants horizontal_constants) {
+                auto mod = PIDPoseController::create(linear_pid.get_constants(), horizontal_constants, angular_pid.get_constants(), min_error);
                 mod->set_debug(debug);
                 return mod;
             }
             std::shared_ptr<PIDPoseController> modify_angular_pid(PIDConstants angular_constants) {
-                auto mod = PIDPoseController::create(linear_pid.get_constants(), angular_constants, min_error);
+                auto mod = PIDPoseController::create(linear_pid.get_constants(), horizontal_pid.get_constants(), angular_constants, min_error);
                 mod->set_debug(debug);
                 return mod;
             }
             std::shared_ptr<PIDPoseController> modify_min_error(double min_error) {
-                auto mod = PIDPoseController::create(linear_pid.get_constants(), angular_pid.get_constants(), min_error);
+                auto mod = PIDPoseController::create(linear_pid.get_constants(), horizontal_pid.get_constants(), angular_pid.get_constants(), min_error);
                 mod->set_debug(debug);
                 return mod;
             }

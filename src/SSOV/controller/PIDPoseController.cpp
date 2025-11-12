@@ -35,9 +35,8 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     //If we are on a holonomic drive we have different logic
     if (holonomic){
         //We split our speed into linear and horizontal speeds for our drive train
-        double direct_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
-        lin_speed = direct_speed * cos(angle_error);
-        hor_speed = direct_speed * sin(angle_error) * sideways_multiplier;
+        double lin_speed = (thru ? 100.0 : (linear_pid.update(cos(distance_error)))) * dir;
+        double hor_speed = (thru ? 100.0 : (horizontal_pid.update((distance_error)) * sideways_multiplier)) * dir;
     }
     else {
         lin_speed = (thru ? 100.0 : (linear_pid.update(distance_error))) * dir;
@@ -77,8 +76,7 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
             
         min_dist_angle = NAN;
         if (fabs(angle_error) > M_PI && this->can_reverse) {
-            angle_error =
-                angle_error - (std::signbit(angle_error) ? -1 : 1) * M_PI;
+            angle_error = angle_error - (std::signbit(angle_error) ? -1 : 1) * M_PI;
             lin_speed = -lin_speed;
         }
         ang_speed = angular_pid.update(angle_error);
