@@ -33,7 +33,7 @@ auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 200);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
-auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{280, 5, 24.35}, 1);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{10, 0, 2}, 1);
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
