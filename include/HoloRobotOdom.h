@@ -132,7 +132,8 @@ class HoloRobotOdom : public ssov::OdometryLocalizer {
             double angle = get_imu_angle();
             double dx = (front_left_pos - (((front_right_pos-back_left_pos)/-2) - ((back_left_pos-front_left_pos)/2))-(prev_front_left - (((prev_front_right-prev_back_left)/-2) - ((prev_back_left-prev_front_left)/2))));
             double dy = ((front_right_pos-back_left_pos)/-2)-((prev_front_right-prev_back_left)/-2);
-            double dtheta = angle - prev_angle;
+            //double dtheta = angle - prev_angle;
+            double dtheta = (((front_right_pos + front_right_pos)/2) - ((front_left_pos + back_left_pos)/2)/2 * 9) - prev_angle;
             // double dx = (left_pos - prev_left + right_pos - prev_right) / 2;
             // double dy = (rot - prev_rot) + dtheta * tracking_wheel_offset;
             radial_velocity = dy * 100;
