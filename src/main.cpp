@@ -1,21 +1,20 @@
 #include "main.h"
 
-//#include "SSOV/chassis/DiffChassis.hpp"
-#include "RobotOdom.h"
 #include "SSOV/chassis/DiffChassis.hpp"
 #include "SSOV/chassis/HoloChassis.hpp"
-#include "SSOV/controller/PIDPointController.hpp"
-#include "SSOV/controller/PIDPoseController.hpp"
-#include "SSOV/exit_condition/ToleranceExitCondition.hpp"
 
 #include "SSOV/trajectory/PathTrajectory.hpp"
 #include "SSOV/trajectory/QuinticSplinePath.hpp"
 #include "SSOV/controller/RamseteTrajectoryFollower.hpp"
 #include "SSOV/trajectory/CombinedTrajectory.hpp"
+#include "SSOV/controller/PIDPointController.hpp"
+#include "SSOV/controller/PIDPoseController.hpp"
+#include "SSOV/exit_condition/ToleranceExitCondition.hpp"
 
 #include "SSOV/localizer/TrackingWheelLocalizer.hpp"
 #include "SSOV/localizer/ADITrackingWheel.hpp"
-#include "HoloRobotOdom.h"
+#include "SSOV/localizer/HoloRobotOdom.h"
+#include "SSOV/localizer/RobotOdom.h"
 
 #include "replay/replay.hpp"
 
@@ -26,7 +25,7 @@ std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADI
 //----------------------------------------------------------------------------------------------------------
 //std::move(middle)
 //auto imu = std::make_unique<pros::IMU>(1);
-auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,-9}, std::initializer_list<int8_t>{5,-6}, std::initializer_list<int8_t>{7,-8}, std::initializer_list<int8_t>{4,-3}, 1, 20);
+auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,-9}, std::initializer_list<int8_t>{5,-6}, std::initializer_list<int8_t>{7,-8}, std::initializer_list<int8_t>{4,-3}, 20);
 auto imu = std::make_unique<pros::IMU>(20);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});

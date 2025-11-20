@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SSOV/localizer/Localizer.hpp"
+#include "Localizer.hpp"
 
 namespace ssov {
 class OdometryLocalizer: public Localizer {

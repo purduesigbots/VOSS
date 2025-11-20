@@ -149,6 +149,7 @@ void HolonomicChassis::move(UserPose target, float strafe_angle, PoseMoveParams 
     max_speed = params.max;
     routine_params.holonomic = true;
     routine_params.strafe_angle = strafe_angle;
+    target.theta_deg = ssov::to_radians(target.theta_deg);
     run_routine(std::make_shared<MoveToPose>(target.to_pose(), routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();
