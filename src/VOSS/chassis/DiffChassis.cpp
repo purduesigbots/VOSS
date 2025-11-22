@@ -157,16 +157,30 @@ bool DiffChassis::execute(DiffChassisCommand cmd, double max) {
                         rpm = 6.0;
                     }
 
+                    kF = 120/rpm*100;
+
+                    double left_target = v.left*rpm;
+                    double right_target = v.right*rpm;
+
+                    double left_acc = this->left_motors->get_actual_velocity();
+                    double right_acc = this->right_motors->get_actual_velocity();
+
+                    double left_error = left_target - left_acc;
+                    double right_error = right_target - right_acc;
+
+                    double left = pid.update(left_error) + kF*left_target;
+                    double right = pid.update(right_error) + kF*right_target;
+
                     if (v_max > max) {
                          v.left = v.left * max / v_max;
                          v.right = v.right * max / v_max;
                     }
 
-                    this->left_motors->move_velocity(rpm*v.right);
-                    this->right_motors->move_velocity(rpm*v.left);
+                    this->left_motors->move_velocity(left);
+                    this->right_motors->move_velocity(right);
 
                     if (get_debug()) {
-                        std::cout<<this->left_motors->get_actual_velocity()<<", "<<rpm*v.left<<", "<<this->right_motors->get_actual_velocity()<<", "<<rpm*v.right<<"\n";
+                        std::cout<<this->left_motors->get_actual_velocity()<<", "<<left_target<<", "<<this->right_motors->get_actual_velocity()<<", "<<right_target<<"\n";
                     }
 
                     this->prev_voltages = {v.left, v.right};

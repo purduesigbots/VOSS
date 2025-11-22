@@ -5,6 +5,7 @@
 #include "pros/motor_group.hpp"
 #include <initializer_list>
 #include <memory>
+#include "VOSS/utils//PID.hpp"
 
 namespace voss::chassis {
 
@@ -18,6 +19,9 @@ class DiffChassis : public AbstractChassis {
     diff_commands::Velocities prev_velocities;
 
     double slew(double target, bool is_left);
+
+    utils::PID pid;
+    double kF;
 
   public:
     DiffChassis(std::initializer_list<int8_t> left_motors,

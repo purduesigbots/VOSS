@@ -10,9 +10,9 @@
 #include "pros/rtos.hpp"
 
 #define LEFT_MOTORS                                                            \
-    {11, -12, 13, -14, 15}
+    {11, -12, 13, -14, 15, 16}
 #define RIGHT_MOTORS                                                           \
-    {-3, 2, -1, 4, -7}
+    {-1, 2, -3, 4, -5, -6}
 
 auto odom = voss::localizer::TrackingWheelLocalizerBuilder::new_builder()
                 .with_left_encoder(3)
@@ -142,11 +142,11 @@ void opcontrol() {
         chassis.arcade(master.get_analog(ANALOG_LEFT_Y),
                        master.get_analog(ANALOG_RIGHT_X));
 
-        if (master.get_digital_new_press(DIGITAL_Y)) {
+        if (master.get_digital_new_press(DIGITAL_B)) {
             odom->set_pose({0.0, 0.0, 0});
             voss::enable_debug();
             for (int i = 0; i < 100; i++) {
-                chassis.execute(voss::chassis::diff_commands::Velocities{70, 70}, 70);
+                chassis.execute(voss::chassis::diff_commands::Velocities{20, 20}, 20);
                 pros::delay(10);
             }
             voss::disable_debug();
