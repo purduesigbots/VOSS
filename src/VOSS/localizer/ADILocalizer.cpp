@@ -11,7 +11,7 @@ namespace voss::localizer {
 // Creating a localizer object with varibale option based on adi imput sensors
 ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
                            double mid_tpi, double track_width,
-                           double middle_dist, int imu_port)
+                           double middle_dist, int imu_port, bool degree_45)
     : prev_left_pos(0.0), prev_right_pos(0.0), prev_middle_pos(0.0),
       left_right_tpi(lr_tpi), middle_tpi(mid_tpi), track_width(track_width),
       middle_dist(middle_dist), imu_ports(imu_port) {
@@ -22,6 +22,7 @@ ADILocalizer::ADILocalizer(int left, int right, int mid, double lr_tpi,
     this->right_encoder = nullptr;
     this->middle_encoder = nullptr;
     this->imu = nullptr;
+    this->degree_45 = degree_45;
 
     if (left != 0)
         this->left_encoder = std::make_unique<pros::adi::Encoder>(
@@ -132,14 +133,26 @@ void ADILocalizer::update() {
     double local_x;
     double local_y;
 
-    if (delta_angle) {
-        double i = sin(delta_angle / 2.0) * 2.0;
-        local_x = (delta_right / delta_angle - left_right_dist) * i;
-        local_y = (delta_middle / delta_angle + middle_dist) * i;
-    } else {
-        local_x = delta_right;
-        local_y = delta_middle;
+    if(degree_45){
+        if (delta_angle) {
+            double i = sin(delta_angle / 2.0) * 2.0;
+            local_x = (delta_right * cos(M_PI/4) +  delta_left * cos(M_PI/4))* i;
+            local_y = (delta_right * cos(M_PI/4) +  delta_left * cos(M_PI/4)) * i;
+        } else {
+            local_x = (delta_right * cos(M_PI/4) +  delta_left * cos(M_PI/4));
+            local_y = (delta_right * cos(M_PI/4) +  delta_left * cos(M_PI/4));
+        }
+    }else{
+        if (delta_angle) {
+            double i = sin(delta_angle / 2.0) * 2.0;
+            local_x = (delta_right / delta_angle - left_right_dist) * i;
+            local_y = (delta_middle / delta_angle + middle_dist) * i;
+        } else {
+            local_x = delta_right;
+            local_y = delta_middle;
+        }
     }
+    
 
     double p = this->pose.theta - delta_angle / 2.0; // global angle
 

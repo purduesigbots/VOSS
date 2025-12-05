@@ -24,9 +24,11 @@ class ADILocalizer : public AbstractLocalizer {
     std::unique_ptr<pros::adi::Encoder> middle_encoder;
     std::unique_ptr<pros::IMU> imu;
 
+    bool degree_45 = false;
+
   public:
     ADILocalizer(int left, int right, int mid, double lr_tpi, double mid_tpi,
-                 double track_width, double middle_dist, int imu_port);
+                 double track_width, double middle_dist, int imu_port, bool degree_45);
 
     double get_left_encoder_value();
     double get_right_encoder_value();
