@@ -16,6 +16,7 @@ class OdometryLocalizer: public Localizer {
         }
         void set_pose(Pose pose) override {
             std::lock_guard<pros::Mutex> guard(mtx);
+            pose.theta = to_radians(pose.theta);
             current_pose = pose + local_offset;
         }
         virtual Pose get_local_change() = 0;
