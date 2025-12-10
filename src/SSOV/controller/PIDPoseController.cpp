@@ -44,10 +44,10 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
     }
 
     //We want the ability to strafe
-    //As long as our strafe angle is within [-2p, 2pi] we actually strafe
+    //As long as our strafe angle is within [-360, 360] we actually strafe
     //To not use a strafe angle just set the strafe angle higher than 2pi or lower than -2pi
-    if(std::abs(strafe_angle) <= 2 * M_PI){
-        angle_error = strafe_angle - current_pose.theta;
+    if(std::abs(strafe_angle) <= 360){
+        angle_error = ssov::to_radians(strafe_angle) - current_pose.theta;
     }
 
     //Norm delta the angle
@@ -66,14 +66,12 @@ DriveSignal PIDPoseController::compute(const Pose &current_pose, const Pose &tar
             min_dist_angle = current_pose.theta;
         }
         double min_dist_ang_err = norm_delta(target_point.theta - current_pose.theta);
-        ang_speed = angular_pid.update(min_dist_ang_err);
+        ang_speed = angular_pid.update(angle_error);
         //printf("Angular speed norm: %0.2f, Angle: %0.2f, Desired Angle: %0.2f\n", ang_speed, current_pose.theta, target_point.theta);
     } else {
-        //FIX THIS OR YOU DIE YOU GOOBERS IT WILL NOT LOSE MORE SLEEP
-        //AHGHGHGHGHGHGHHGHHHHHHHHHHH
         //If we are close enough to our target we want to turn to our target pose
-        if (distance_error < final_angle_distance)
-            angle_error = norm_delta(target_point.theta - current_pose.theta);
+        // if (distance_error < final_angle_distance)
+        //     angle_error = norm_delta(target_point.theta - current_pose.theta);
             
         // min_dist_angle = NAN;
         // if (fabs(angle_error) > M_PI && this->can_reverse) {

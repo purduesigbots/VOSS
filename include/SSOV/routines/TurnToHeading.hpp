@@ -49,6 +49,7 @@ class TurnToHeading: public Routine {
         ChassisCommand update() {
             DriveSignal result;
             Pose current_pose = localizer->get_pose();
+            current_pose.theta = to_radians(current_pose.theta);
             done = exit->is_met(current_pose, {current_pose.x, current_pose.y, target}, thru);
             if (done && !thru) {
                 result = {0, 0, 0};

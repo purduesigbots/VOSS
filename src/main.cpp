@@ -9,6 +9,7 @@
 #include "SSOV/trajectory/CombinedTrajectory.hpp"
 #include "SSOV/controller/PIDPointController.hpp"
 #include "SSOV/controller/PIDPoseController.hpp"
+#include "SSOV/controller/PIDTurnController.hpp"
 #include "SSOV/exit_condition/ToleranceExitCondition.hpp"
 
 #include "SSOV/localizer/TrackingWheelLocalizer.hpp"
@@ -32,7 +33,8 @@ auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 200);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
-auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{10, 0, 2}, 1);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
+auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -47,8 +49,11 @@ void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
 	chassis->default_point_controller = pid;
+	pid_pose->final_angle_distance = 0;
+	pid_pose->sideways_multiplier = 2;
 	chassis->default_pose_controller = pid_pose;
 	chassis->default_ec = ec;
+	chassis->default_turn_controller = turn_pid;
 	odom->imu_dir = -1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
@@ -87,15 +92,13 @@ void competition_initialize() {}
 void autonomous() {
 	odom->set_pose({0, 0, 0});
 	
-	chassis->default_ec = ec_thru;
+	//chassis->default_ec = ec_thru;
 
-	chassis->move({15, 0, ssov::to_radians(0)}, ssov::to_radians(0), {.max=25, .thru=true, .holonomic = true});
+	chassis->turn(-90);
 
-	chassis->move({15, -50, ssov::to_radians(0)}, ssov::to_radians(0), {.max=60, .thru=true, .holonomic = true});
+	chassis->move({15, 0, 0}, 0, {.max=25, .thru=false, .holonomic = true});
 
-	chassis->move({0, -50, ssov::to_radians(0)}, ssov::to_radians(0), {.max=25, .thru=true, .holonomic = true});
-
-	chassis->move({0, 0, ssov::to_radians(0)}, ssov::to_radians(0), {.max=65, .thru=false, .holonomic = true});
+	chassis->move({15, 15, 0}, 0, {.max=50, .thru=false, .holonomic = true});
 }
 
 /**
