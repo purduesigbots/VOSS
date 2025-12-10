@@ -2,6 +2,7 @@
 
 #include "Localizer.hpp"
 
+
 namespace ssov {
 class OdometryLocalizer: public Localizer {
     private:
