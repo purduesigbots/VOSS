@@ -31,9 +31,9 @@ auto imu = std::make_unique<pros::IMU>(20);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
-auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 200);
+auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 400);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
-auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
+auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{10, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
@@ -169,7 +169,8 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({10,0, 90}, 0, {.holonomic = true});
+			// chassis->move({10,0, 90}, 0, {.holonomic = true});
+			chassis->turn(90);
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();

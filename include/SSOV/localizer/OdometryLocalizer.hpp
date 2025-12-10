@@ -13,10 +13,8 @@ class OdometryLocalizer: public Localizer {
         OdometryLocalizer(Pose local_offset = {}, uint32_t update_time = 10): Localizer(update_time), local_offset(local_offset) {};
         void update() override;
         Pose get_pose() override {
-            std::lock_guard<pros::Mutex> guard(mtx);
-            adjusted_pose = current_pose - local_offset;
-            adjusted_pose.theta = to_degrees(adjusted_pose.theta);
-            return adjusted_pose;
+            std::lock_guard<pros::Mutex> guard(mtx); 
+            return current_pose - local_offset;
         }
         void set_pose(Pose pose) override {
             std::lock_guard<pros::Mutex> guard(mtx);
