@@ -195,7 +195,6 @@ void HolonomicChassis::turn(Point target, TurnParams params) {
         routine_params.exit = default_ec;
     }
     max_speed = params.max;
-
     run_routine(std::make_shared<TurnToPoint>(target, routine_params, current_drive_signal));
     if (!params.async) {
         wait_until_done();

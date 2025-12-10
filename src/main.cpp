@@ -20,8 +20,8 @@
 
 //Tracker wheels
 //std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>('e', 310.7);
-std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADITrackingWheel>('e', 310.7*3.5);
-std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 310.7*3);
+std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADITrackingWheel>('e', 155.35); //310.7*3.5
+std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 1553.5); //310.7*3.5
 //----------------------------------------------------------------------------------------------------------
 //std::move(middle)
 //auto imu = std::make_unique<pros::IMU>(1);
@@ -29,7 +29,7 @@ auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,
 auto imu = std::make_unique<pros::IMU>(20);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
-auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{250, 5, 24.35}, 5);
+auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 1, 200);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{10, 0, 2}, 1);
@@ -143,7 +143,7 @@ void opcontrol() {
 	int timer = 0;
 	while (true) {
 		ssov::Pose pose = odom->get_pose();
-		//pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, ssov::to_degrees(pose.theta));
+		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, pose.theta);
 		//replay::Packet packet;
 		//packet.add_pose("robot location", pose.x, pose.y, pose.theta);
 		//logger.log(packet);
@@ -166,7 +166,7 @@ void opcontrol() {
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
 			odom->set_pose({0, 0, 0});
-			chassis->move({10,0, ssov::to_radians(0)}, ssov::to_radians(0), {.holonomic = true});
+			chassis->move({10,0, 90}, 0, {.holonomic = true});
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();
