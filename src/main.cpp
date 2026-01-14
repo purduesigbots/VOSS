@@ -22,12 +22,11 @@
 //Tracker wheels
 //std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>('e', 310.7);
 std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADITrackingWheel>('e', 155.35); //310.7*3.5
-std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 1553.5); //310.7*3.5
+std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', -153.5); //310.7*3.5
 //----------------------------------------------------------------------------------------------------------
 //std::move(middle)
-//auto imu = std::make_unique<pros::IMU>(1);
 auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,-9}, std::initializer_list<int8_t>{5,-6}, std::initializer_list<int8_t>{7,-8}, std::initializer_list<int8_t>{4,-3}, 20);
-auto imu = std::make_unique<pros::IMU>(20);
+auto imu = std::make_unique<pros::IMU>(1);
 auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
@@ -54,10 +53,10 @@ void initialize() {
 	chassis->default_pose_controller = pid_pose;
 	chassis->default_ec = ec;
 	chassis->default_turn_controller = turn_pid;
-	odom->imu_dir = -1;
+	odom->imu_dir = 1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
-	odom->set_pose({0, 0, 0});
+	odom->set_pose({0, 0, 90});
 }
 
 /**
@@ -93,9 +92,9 @@ void autonomous() {
 	odom->set_pose({0, 0, 0});
 	
 	//chassis->default_ec = ec_thru;
-
-	chassis->turn(-90);
-
+	std::cout << "Running auto";
+	// chassis->turn(-90);
+	// exit(0);
 	chassis->move({15, 0, 0}, 0, {.max=25, .thru=false, .holonomic = true});
 
 	chassis->move({15, 15, 0}, 0, {.max=50, .thru=false, .holonomic = true});
@@ -168,9 +167,7 @@ void opcontrol() {
 		}
 		if(master.get_digital_new_press(DIGITAL_A)) {
 			//FILE *file = fopen("/usd/ff.txt", "w");
-			odom->set_pose({0, 0, 0});
-			// chassis->move({10,0, 90}, 0, {.holonomic = true});
-			chassis->turn(90);
+			autonomous();
 			//for (double i = 0.0; i <= traj.duration(); i += 0.01) {
 				//auto vel = odom->get_velocities();
 				//auto pose = odom->get_pose();
