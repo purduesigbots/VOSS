@@ -11,6 +11,7 @@
 #include "SSOV/controller/PIDPoseController.hpp"
 #include "SSOV/controller/PIDTurnController.hpp"
 #include "SSOV/exit_condition/ToleranceExitCondition.hpp"
+#include "SSOV/exit_condition/TimeoutExitCondition.hpp"
 
 #include "SSOV/localizer/TrackingWheelLocalizer.hpp"
 #include "SSOV/localizer/ADITrackingWheel.hpp"
@@ -31,6 +32,7 @@ auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(ri
 auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 2, 400);
+auto ec_time = std::make_shared<ssov::TimeoutExitCondition>(10000);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
@@ -51,9 +53,10 @@ void initialize() {
 	pid_pose->final_angle_distance = 0;
 	pid_pose->sideways_multiplier = 2;
 	chassis->default_pose_controller = pid_pose;
-	chassis->default_ec = ec;
+	chassis->default_ec = ec_time;
 	chassis->default_turn_controller = turn_pid;
-	odom->imu_dir = 1;
+	turn_pid->set_debug(true);
+	odom->imu_dir = -1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
@@ -93,11 +96,13 @@ void autonomous() {
 	
 	//chassis->default_ec = ec_thru;
 	std::cout << "Running auto"<< std::endl;
-	chassis->turn(150);
-	return;
-	chassis->move({24, 0, 0}, 0, {.max=25, .thru=false, .holonomic = true});
+	chassis->turn(45);
 
-	chassis->move({24, 15, 0}, 0, {.max=50, .thru=false, .holonomic = true});
+	// pros::delay(20000);
+
+	// chassis->move({24, 0, 0}, 0, {.max=25, .thru=false, .holonomic = true});
+
+	// chassis->move({24, 15, 0}, 0, {.max=50, .thru=false, .holonomic = true});
 }
 
 /**
@@ -130,7 +135,7 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	ssov::Pose pose = odom->get_pose();
 	bool log_data = false;
-	pros::Task print_odom(print_odom_val);
+	//pros::Task print_odom(print_odom_val);
 
 	int timer = 0;
 	while (true) {
