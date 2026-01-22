@@ -11,9 +11,11 @@ Logger::~Logger(){
 }
 
 void Logger::start_log(){
+    // Copying data from the input data (variable and name)
      for (auto& item : Logger::items){
             items_type.push_back({item.name, item.ptr, log_type::None});
             auto& typed_item = items_type.back();
+    //Checking the data type of the pointer and assigning one of the enums: CHASSIS, ODOM, INT, DOUBLE, BOOL
         const std::type_info& type = item.ptr.type();
             if (type == typeid(ssov::DiffChassis*)){
                 typed_item.type = Logger::log_type::CHASSIS;
@@ -28,7 +30,7 @@ void Logger::start_log(){
                 typed_item.type = Logger::log_type::INT;
             }
             else if (type == typeid(float*)){
-                typed_item.type = Logger::log_type::DOUBLE;
+                typed_item.type = Logger::log_type::FLOAT;
             }
             else if (type == typeid(double*)){
                 typed_item.type = Logger::log_type::DOUBLE;
@@ -37,6 +39,7 @@ void Logger::start_log(){
                 typed_item.type = Logger::log_type::BOOL;
             }
     }
+    // Creating the logging task
     task = new pros::Task(Logger::task_entry, this, "LoggerTask");
 }
 
@@ -51,6 +54,7 @@ void Logger::stop_log(){
     }
 }
 
+// Function that allows us to pause and resume the logger without stopping it or the program
 void Logger::toggle_log(){
     if (task){
         task->notify();
@@ -61,40 +65,50 @@ void Logger::toggle_log(){
     }
 }
 
+// Handles making the parameters to the task static
 void Logger::task_entry(void* param){
     static_cast<Logger*>(param)->run();
 }
 
+//The code that is being run inside the task
 void Logger::run(){
     bool running = true;
     while(true){
+        // Running is the variable that is toggled to pause/resume the task
         if (running){
+        // For each item input to log it prints the name, checks the data type enum value, then prints according to the data type enum
             for(auto& item : items_type){
                 std::cout << item.name << ": ";
                 switch (item.type){
-                    case Logger::log_type::CHASSIS:
-                        auto* chassis = std::any_cast<ssov::DiffChassis*>(item.ptr);
-                        auto signal = chassis->get_current_drive_signal();
-                        std::cout << "X power: " << signal.x << ", Y power: " << signal.y << ", Theta power: " << signal.theta << std::endl;
+                    case Logger::log_type::CHASSIS: {
+                        auto* chassis_log = std::any_cast<ssov::DiffChassis*>(item.ptr);
+                        auto signal_log = chassis_log->get_current_drive_signal();
+                        std::cout << "X power: " << signal_log.x << ", Y power: " << signal_log.y << ", Theta power: " << signal_log.theta << std::endl;
                         break;
-                    case Logger::log_type::ODOM:
-                        auto* odom = std::any_cast<ssov::Localizer*>(item.ptr);
-                        auto pose = odom->get_pose();
-                        std::cout << "X: " << pose.x << ", Y: " << pose.y << ", Theta: " << pose.theta << std::endl;
+                    }
+                    case Logger::log_type::ODOM: {
+                        auto* odom_log = std::any_cast<ssov::Localizer*>(item.ptr);
+                        auto pose_log = odom_log->get_pose();
+                        std::cout << "X: " << pose_log.x << ", Y: " << pose_log.y << ", Theta: " << pose_log.theta << std::endl;
                         break;
-                    case Logger::log_type::INT:
-                        int* value_int = std::any_cast<int*>(item.ptr);
-                        std::cout << value_int << std::endl;
+                    }
+                    case Logger::log_type::INT: {
+                        int* value_int_log = std::any_cast<int*>(item.ptr);
+                        std::cout << value_int_log << std::endl;
                         break;
-                    case Logger::log_type::FLOAT:
-                        float* value_float = std::any_cast<float*>(item.ptr);
-                        std::cout << value_float << std::endl;
-                    case Logger::log_type::DOUBLE:
-                        double* value_double = std::any_cast<double*>(item.ptr);
-                        std::cout << value_double << std::endl;
-                    case Logger::log_type::BOOL:
-                        bool* value_bool = std::any_cast<bool*>(item.ptr);
-                        std::cout << value_bool << std::endl;
+                    }
+                    case Logger::log_type::FLOAT: {
+                        float* value_float_log = std::any_cast<float*>(item.ptr);
+                        std::cout << value_float_log << std::endl;
+                    }
+                    case Logger::log_type::DOUBLE: {
+                        double* value_double_log = std::any_cast<double*>(item.ptr);
+                        std::cout << value_double_log << std::endl;
+                    }
+                    case Logger::log_type::BOOL: {
+                        bool* value_bool_log = std::any_cast<bool*>(item.ptr);
+                        std::cout << value_bool_log << std::endl;
+                    }
                     default:
                         std::cout << "Value with unknown datatype" << std::endl;
                         break;
@@ -102,6 +116,7 @@ void Logger::run(){
 
             }
         }
+        // Checks to see if the task recieved a notificaion and flipps the running boolian if it got one. Clears the notificaion after grabbing it.
         if (pros::Task::notify_take(true,0) > 0){
             running = !running;
         }

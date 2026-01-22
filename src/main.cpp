@@ -18,7 +18,7 @@
 #include "SSOV/localizer/RobotOdom.h"
 
 #include "replay/replay.hpp"
-#include "common/logger.hpp"
+#include "SSOV/common/logger.hpp"
 #include <vector>
 
 //Tracker wheels
@@ -36,7 +36,7 @@ auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 2, 400);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
-auto localizer = std::make_shared<ssov::Localizer>(odom);
+// auto localizer = std::make_shared<ssov::Localizer>(odom);
 int timer = 0;
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -60,7 +60,17 @@ void initialize() {
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
-	ssov::Logger data_logger(std::vector<ssov::Logger::log_item>{{std::any(&chassis), "Chassis"}, {std::any(&localizer), "Odom"}, {std::any(&timer), "Timer"}}, 100);
+	// ssov::Logger data_logger(std::vector<ssov::Logger::log_item>{
+	// 															{std::any(&chassis), "Chassis"},
+	// 															{std::any(&localizer), "Odom"}, 
+	// 															{std::any(&timer), "Timer"}},
+	// 															100);
+	std::vector<ssov::Logger::log_item> logger_vars = {{ std::any(&chassis), "Chassis" },
+        											  { std::any(&odom), "Odom" },
+       												  { std::any(&timer), "Timer" }};
+
+	ssov::Logger data_logger(logger_vars, 100);
+	data_logger.start_log();
 }
 
 /**
