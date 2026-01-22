@@ -18,6 +18,8 @@
 #include "SSOV/localizer/RobotOdom.h"
 
 #include "replay/replay.hpp"
+#include "common/logger.hpp"
+#include <vector>
 
 //Tracker wheels
 //std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>('e', 310.7);
@@ -34,7 +36,8 @@ auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 2, 400);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
-
+auto localizer = std::make_shared<ssov::Localizer>(odom);
+int timer = 0;
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
 
@@ -57,6 +60,7 @@ void initialize() {
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
+	ssov::Logger data_logger(std::vector<ssov::Logger::log_item>{{std::any(&chassis), "Chassis"}, {std::any(&localizer), "Odom"}, {std::any(&timer), "Timer"}}, 100);
 }
 
 /**
@@ -130,9 +134,9 @@ void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 	ssov::Pose pose = odom->get_pose();
 	bool log_data = false;
-	pros::Task print_odom(print_odom_val);
+	// pros::Task print_odom(print_odom_val);
 
-	int timer = 0;
+	// int timer = 0;
 	while (true) {
 		pose = odom->get_pose();
 		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, pose.theta);
@@ -184,7 +188,7 @@ void opcontrol() {
 		// 	timer = 0;
 		// }
 		// timer++;
-		
+		timer++;
 		pros::delay(10);
 	}
 }
