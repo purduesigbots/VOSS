@@ -11,6 +11,9 @@ Logger::~Logger(){
 }
 
 void Logger::start_log(){
+
+    printf("Initalizing Logger\n");
+    printf("Logger Items Length: %d\n", Logger::items.size());
     // Copying data from the input data (variable and name)
      for (auto& item : Logger::items){
             items_type.push_back({item.name, item.ptr, log_type::None});
@@ -40,6 +43,7 @@ void Logger::start_log(){
             }
     }
     // Creating the logging task
+    printf("Creating task\n");
     task = new pros::Task(Logger::task_entry, this, "LoggerTask");
 }
 
@@ -67,12 +71,14 @@ void Logger::toggle_log(){
 
 // Handles making the parameters to the task static
 void Logger::task_entry(void* param){
+    printf("Task Entry\n");
     static_cast<Logger*>(param)->run();
 }
 
 //The code that is being run inside the task
 void Logger::run(){
     bool running = true;
+    printf("Logger Started\n");
     while(true){
         // Running is the variable that is toggled to pause/resume the task
         if (running){

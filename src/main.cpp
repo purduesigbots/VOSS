@@ -65,11 +65,12 @@ void initialize() {
 	// 															{std::any(&localizer), "Odom"}, 
 	// 															{std::any(&timer), "Timer"}},
 	// 															100);
+	std::vector<ssov::Logger::log_item> test_log = {{std::any(&timer), "Timer"}};
 	std::vector<ssov::Logger::log_item> logger_vars = {{ std::any(&chassis), "Chassis" },
         											  { std::any(&odom), "Odom" },
        												  { std::any(&timer), "Timer" }};
 
-	ssov::Logger data_logger(logger_vars, 100);
+	ssov::Logger data_logger(test_log, 100);
 	data_logger.start_log();
 }
 
