@@ -4,6 +4,7 @@
 #include "SSOV/chassis/DiffChassis.hpp"
 #include "SSOV/chassis/HoloChassis.hpp"
 #include "SSOV/localizer/Localizer.hpp"
+#include "SSOV/localizer/TrackingWheelLocalizer.hpp"
 #include "api.h"
 #include <vector>
 #include <any>
@@ -31,6 +32,8 @@ class Logger{
         // Kills the task
         void stop_log();
 
+        pros::Task* task = nullptr;
+
     private:
         // Enum created to represent each of the data types the logger is able to handle
         enum class log_type { INT, FLOAT, DOUBLE, BOOL, CHASSIS, ODOM, None };
@@ -45,7 +48,6 @@ class Logger{
         // Two vectors: items is the input to the logger that the user gives, items_type is used in the background once the type of the object is determined 
         std::vector<log_item> items;
         std::vector<log_item_datatype> items_type;
-        pros::Task* task = nullptr;
 
         // Variable to determine the delay in the logger. Defaults at 10ms
         int time_delay = 10;

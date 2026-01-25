@@ -20,13 +20,13 @@ void Logger::start_log(){
             auto& typed_item = items_type.back();
     //Checking the data type of the pointer and assigning one of the enums: CHASSIS, ODOM, INT, DOUBLE, BOOL
         const std::type_info& type = item.ptr.type();
-            if (type == typeid(ssov::DiffChassis*)){
+            if (type == typeid(std::shared_ptr<ssov::DiffChassis>)){
                 typed_item.type = Logger::log_type::CHASSIS;
             }
-            else if (type == typeid(ssov::HolonomicChassis*)){
+            else if (type == typeid(std::shared_ptr<ssov::HolonomicChassis>)){
                 typed_item.type = Logger::log_type::CHASSIS;
             }
-            else if (type == typeid(ssov::Localizer*)){
+            else if (type == typeid(std::shared_ptr<ssov::TrackingWheelLocalizer>)){
                 typed_item.type = Logger::log_type::ODOM;
             }
             else if (type == typeid(int*)){
@@ -42,9 +42,14 @@ void Logger::start_log(){
                 typed_item.type = Logger::log_type::BOOL;
             }
     }
+
+    for (auto item : items_type){
+        std::cout << static_cast<int>(item.type) << std::endl;
+    }
+    
     // Creating the logging task
     printf("Creating task\n");
-    task = new pros::Task(Logger::task_entry, this, "LoggerTask");
+    this->task = new pros::Task(Logger::task_entry, this);
 }
 
 void Logger::stop_log(){
@@ -83,37 +88,38 @@ void Logger::run(){
         // Running is the variable that is toggled to pause/resume the task
         if (running){
         // For each item input to log it prints the name, checks the data type enum value, then prints according to the data type enum
-            for(auto& item : items_type){
+            for(auto item : items_type){
+                //std::cout << "Brain ache" << std::endl;
                 std::cout << item.name << ": ";
                 switch (item.type){
                     case Logger::log_type::CHASSIS: {
-                        auto* chassis_log = std::any_cast<ssov::DiffChassis*>(item.ptr);
+                        auto chassis_log = std::any_cast<std::shared_ptr<ssov::HolonomicChassis>>(item.ptr);
                         auto signal_log = chassis_log->get_current_drive_signal();
                         std::cout << "X power: " << signal_log.x << ", Y power: " << signal_log.y << ", Theta power: " << signal_log.theta << std::endl;
                         break;
                     }
                     case Logger::log_type::ODOM: {
-                        auto* odom_log = std::any_cast<ssov::Localizer*>(item.ptr);
+                        auto odom_log = std::any_cast<std::shared_ptr<ssov::TrackingWheelLocalizer>>(item.ptr);
                         auto pose_log = odom_log->get_pose();
                         std::cout << "X: " << pose_log.x << ", Y: " << pose_log.y << ", Theta: " << pose_log.theta << std::endl;
                         break;
                     }
                     case Logger::log_type::INT: {
                         int* value_int_log = std::any_cast<int*>(item.ptr);
-                        std::cout << value_int_log << std::endl;
+                        std::cout << *value_int_log << std::endl;
                         break;
                     }
                     case Logger::log_type::FLOAT: {
                         float* value_float_log = std::any_cast<float*>(item.ptr);
-                        std::cout << value_float_log << std::endl;
+                        std::cout << *value_float_log << std::endl;
                     }
                     case Logger::log_type::DOUBLE: {
                         double* value_double_log = std::any_cast<double*>(item.ptr);
-                        std::cout << value_double_log << std::endl;
+                        std::cout << *value_double_log << std::endl;
                     }
                     case Logger::log_type::BOOL: {
                         bool* value_bool_log = std::any_cast<bool*>(item.ptr);
-                        std::cout << value_bool_log << std::endl;
+                        std::cout << *value_bool_log << std::endl;
                     }
                     default:
                         std::cout << "Value with unknown datatype" << std::endl;

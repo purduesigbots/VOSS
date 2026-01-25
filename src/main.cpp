@@ -20,6 +20,7 @@
 #include "replay/replay.hpp"
 #include "SSOV/common/logger.hpp"
 #include <vector>
+#include <any>
 
 //Tracker wheels
 //std::unique_ptr<ssov::AbstractTrackingWheel> left = std::make_unique<ssov::ADITrackingWheel>('e', 310.7);
@@ -37,9 +38,16 @@ auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
 // auto localizer = std::make_shared<ssov::Localizer>(odom);
-int timer = 0;
+auto timer = 0;
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
+
+std::vector<ssov::Logger::log_item> test_log = {{std::any(timer), "Timer"}};
+std::vector<ssov::Logger::log_item> logger_vars = {{ std::any(chassis), "Chassis" },
+													{ std::any(odom), "Odom" },
+													{ std::any(&timer), "Timer" }};
+
+ssov::Logger data_logger(logger_vars, 500);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -65,12 +73,7 @@ void initialize() {
 	// 															{std::any(&localizer), "Odom"}, 
 	// 															{std::any(&timer), "Timer"}},
 	// 															100);
-	std::vector<ssov::Logger::log_item> test_log = {{std::any(&timer), "Timer"}};
-	std::vector<ssov::Logger::log_item> logger_vars = {{ std::any(&chassis), "Chassis" },
-        											  { std::any(&odom), "Odom" },
-       												  { std::any(&timer), "Timer" }};
-
-	ssov::Logger data_logger(test_log, 100);
+	
 	data_logger.start_log();
 }
 
@@ -151,6 +154,9 @@ void opcontrol() {
 	while (true) {
 		pose = odom->get_pose();
 		pros::lcd::print(1, "%.2f %.2f %.2f", pose.x, pose.y, pose.theta);
+
+		//std::cout << "Task State: " << data_logger.task->get_state() << std::endl;
+
 		//replay::Packet packet;
 		//packet.add_pose("robot location", pose.x, pose.y, pose.theta);
 		//logger.log(packet);
