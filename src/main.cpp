@@ -55,7 +55,6 @@ void initialize() {
 	chassis->default_pose_controller = pid_pose;
 	chassis->default_ec = ec_time;
 	chassis->default_turn_controller = turn_pid;
-	turn_pid->set_debug(true);
 	odom->imu_dir = -1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
