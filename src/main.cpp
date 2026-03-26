@@ -18,6 +18,8 @@
 #include "SSOV/localizer/HoloRobotOdom.h"
 #include "SSOV/localizer/RobotOdom.h"
 
+#include "SSOV/controller/ArcPIDController.hpp"
+
 #include "replay/replay.hpp"
 
 //Tracker wheels
@@ -26,16 +28,19 @@ std::unique_ptr<ssov::AbstractTrackingWheel> right = std::make_unique<ssov::ADIT
 std::unique_ptr<ssov::AbstractTrackingWheel> middle = std::make_unique<ssov::ADITrackingWheel>('g', 153.5); //310.7*3.5
 //----------------------------------------------------------------------------------------------------------
 //std::move(middle)
-auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,-9}, std::initializer_list<int8_t>{5,-6}, std::initializer_list<int8_t>{7,-8}, std::initializer_list<int8_t>{4,-3}, 20);
+// auto imuOdom = std::make_shared<HoloRobotOdom>(std::initializer_list<int8_t>{10,-9}, std::initializer_list<int8_t>{5,-6}, std::initializer_list<int8_t>{7,-8}, std::initializer_list<int8_t>{4,-3}, 20);
 auto imu = std::make_unique<pros::IMU>(1);
-auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
-auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
+// auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(nullptr, std::move(right), std::move(middle), std::move(imu), 3.75, -1.5, ssov::Pose{0, 0, 0});
+// auto chassis = ssov::HolonomicChassis::create({10,-9}, {5,-6}, {7,-8}, {4,-3});
+auto chassis = ssov::DiffChassis::create({1, 11}, {-20, -10});
+auto odom = std::make_shared<RobotOdom>(std::initializer_list<int8_t>{1, 11}, std::initializer_list<int8_t>{-20, -10}, 2, 19);
 auto pid = std::make_shared<ssov::PIDPointController>(ssov::PIDConstants{20, 2, 1.69}, ssov::PIDConstants{2, 0, 0}, 5);
 auto ec = std::make_shared<ssov::ToleranceExitCondition>(2, 2, 400);
 auto ec_time = std::make_shared<ssov::TimeoutExitCondition>(10000);
 auto ec_thru = std::make_shared<ssov::ToleranceExitCondition>(6, 1, 200);
 auto pid_pose = std::make_shared<ssov::PIDPoseController>(ssov::PIDConstants{10, 0, 2}, ssov::PIDConstants{150, 0, 2}, 1);
 auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150, 0, 2}, 1);
+auto arc_pid = std::make_shared<ssov::ArcPIDController>(ssov::PIDConstants{6, 0, 1}, ssov::PIDConstants{80, 0, 10}, 2);
 
 // auto odom = std::make_shared<ssov::TrackingWheelLocalizer>(std::move(left), nullptr, std::move(middle), std::move(imu), 0, 0, ssov::Pose{-2.125, 0, -M_PI_4});
 // auto ramsete = std::make_shared<ssov::RamseteTrajectoryFollower>(0.00258064, 0.7, 1.47410043, 8.3411535, 2.09563917, 14.6568819);
@@ -49,13 +54,13 @@ auto turn_pid = std::make_shared<ssov::PIDTurnController>(ssov::PIDConstants{150
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
-	chassis->default_point_controller = pid;
+	//chassis->default_point_controller = pid;
 	pid_pose->final_angle_distance = 0;
 	pid_pose->sideways_multiplier = 2;
-	chassis->default_pose_controller = pid_pose;
-	chassis->default_ec = ec_time;
-	chassis->default_turn_controller = turn_pid;
-	odom->imu_dir = -1;
+	//chassis->default_pose_controller = pid_pose;
+	//chassis->default_ec = ec_time;
+	//chassis->default_turn_controller = turn_pid;
+	odom->imu_dir = 1;
 	odom->begin_localization();
 	chassis->register_localizer(odom);
 	odom->set_pose({0, 0, 0});
@@ -95,7 +100,7 @@ void autonomous() {
 	
 	//chassis->default_ec = ec_thru;
 	std::cout << "Running auto"<< std::endl;
-	chassis->turn(45);
+	chassis->move({20, 0, 75}, {.controller = arc_pid, .ec = ec});
 
 	// pros::delay(20000);
 
@@ -148,8 +153,8 @@ void opcontrol() {
 		int dir = master.get_analog(ANALOG_LEFT_Y);    // Gets amount forward/backward from left joystick
 		int turn = master.get_analog(ANALOG_RIGHT_X);  // Gets the turn left/right from right joystick
 		int strafe = master.get_analog(ANALOG_LEFT_X);
-		chassis->arcade(dir / 1.27, turn / 1.27, strafe / 1.27);
-
+		//chassis->arcade(dir / 1.27, turn / 1.27, strafe / 1.27);
+		chassis->arcade(dir, turn);
 		// Diff drive tank control----------------------------------------
 		//int left = master.get_analog(ANALOG_LEFT_Y);
 		//int right = master.get_analog(ANALOG_RIGHT_Y);
